@@ -4,6 +4,7 @@ import globals from 'globals';
 import pluginReact from 'eslint-plugin-react';
 
 export default defineConfig([
+  pluginReact.configs.flat.recommended,
   {
     files: ['**/*.{js,mjs,cjs,jsx}'],
     plugins: { js, react: pluginReact },
@@ -20,5 +21,4 @@ export default defineConfig([
       'react/react-in-jsx-scope': 'off',
     },
   },
-  pluginReact.configs.flat.recommended,
 ]);
