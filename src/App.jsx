@@ -1,6 +1,6 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
-import MainPage from './pages/MainPage/MainPage';
+import MainPage from './pages/MainPage/index';
 import UserInfoPage from './pages/UserInfoPage';
 import CompanyInfoPage from './pages/CompanyInfoPage';
 import RecruitmentInfo from './pages/RecruitmentInfo';
