@@ -1,0 +1,47 @@
+name: Deploy To Dev NCP
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Github Repository 파일 불러오기
+        uses: actions/checkout@v4
+
+      - name: 의존성 설치
+        run: npm install
+
+      #      - name: .env 파일 생성
+      #        run: |
+      #          echo "VITE_KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" >> .env
+      #          echo "VITE_KAKAO_REDIRECT_URI=${{ secrets.DEV_KAKAO_REDIRECT_URI }}" >> .env
+      #          echo "VITE_KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" >> .env
+      #          echo "VITE_NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}" >> .env
+      #          echo "VITE_NAVER_REDIRECT_URI=${{ secrets.DEV_NAVER_REDIRECT_URI }}" >> .env
+      #          echo "VITE_NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}" >> .env
+
+      - name: 빌드
+        run: npm run build -- --mode development
+
+      - name: n3cmd 설치
+        run: sudo apt-get update && sudo apt-get install -y s3cmd
+
+      - name: NCP 인증 설정
+        run: |
+          echo "[default]" > ~/.s3cfg
+          echo "access_key = ${{ secrets.NCP_ACCESS_KEY }}" >> ~/.s3cfg
+          echo "secret_key = ${{ secrets.NCP_SECRET_KEY }}" >> ~/.s3cfg
+          echo "host_base = kr.object.ncloudstorage.com" >> ~/.s3cfg
+          echo "host_bucket = {bucket}.kr.object.ncloudstorage.com" >> ~/.s3cfg
+
+      - name: Object Storage 기존 파일들 삭제 후 새로 업로드
+        run: |
+          s3cmd sync dist/ s3://${{ secrets.DEV_NCP_BUCKET }}/ --exclude '*.DS_Store'  # dist 폴더 업로드
