@@ -1,0 +1,89 @@
+$main-color: #0F8C3B;
+$orange-light: #FFA82F;
+
+.gnb {
+    width: 100%;
+    background-color: white;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+.gnb_inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .left_nav {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+
+        .logo {
+        cursor: pointer;
+
+        img {
+            height: 60px;
+        }
+        }
+
+        .nav_links {
+        display: flex;
+        gap: 24px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            cursor: pointer;
+            font-size: 16px;
+            color: #444;
+
+            &:hover {
+            color: $main-color;
+            }
+        }
+        }
+    }
+
+    .menu {
+        display: flex;
+        gap: 12px;
+
+        button {
+        font-size: 15px;
+        padding: 8px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+        background: none;
+
+        &.signup_btn,
+        &.mypage_btn,
+        &.companypage_btn {
+            border: 1px solid $orange-light;
+            color: $orange-light;
+
+            &:hover {
+            background-color: $orange-light;
+            color: white;
+            }
+        }
+
+        &.login_btn,
+        &.logout_btn {
+            border: 1px solid $main-color;
+            color: $main-color;
+
+            &:hover {
+            background-color: $main-color;
+            color: white;
+            }
+        }
+        }
+    }
+    }
+}
