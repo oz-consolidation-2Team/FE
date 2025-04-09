@@ -18,6 +18,7 @@ function MainPage() {
   return (
     <>
       <h1> 메인 페이지</h1>
+      <h2>진짜 됐어...? 나 울어...?</h2>
       <button onClick={handleRecruitmentClick}> 채용 정보</button>
       <button onClick={handleCompanyClick}> 기업 정보</button>
       <button onClick={handleUserClick}> 개인 정보</button>
