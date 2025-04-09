@@ -1,7 +1,7 @@
 // pages/Main/MainPage.jsx
 import React from 'react';
 import './MainPage.scss';
-import Header from '../../components/Header/Header.jsx';
+import Header from '../../components/Header/Header.jsx';
 
 const MainPage = () => {
     return (
