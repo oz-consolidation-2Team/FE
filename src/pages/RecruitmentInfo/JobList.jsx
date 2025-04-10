@@ -166,7 +166,7 @@ const JobList = ({ jobs = [] }) => {
                 </div>
                 <div className="job-title">{job.title}</div>
                 <div className="job-description">{job.other_conditions}</div>
-                <div className="job-footer">{new Date(job.deadline_at).toLocaleDateString()} 마감</div>
+                <div className="job-footer">{new Date(job.deadline_at).toLocaleDateString()} 마감.</div>
             </div>
         ))}
         </div>
