@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import './UserSignUpPage.scss';
 import { FaUserCircle } from 'react-icons/fa';
 import { LiaEyeSolid, LiaEyeSlashSolid } from 'react-icons/lia';
+import Modal from '../../components/Modal';
+import { useNavigate } from 'react-router-dom';
 
 const UserSignUpPage = () => {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -16,18 +20,24 @@ const UserSignUpPage = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [emailChecked, setEmailChecked] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordCheck, setShowPasswordCheck] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalProps, setModalProps] = useState({});
 
   const validatePassword = (pw) =>
     /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/.test(pw);
   const isValidPhone = (phone) => /^010-\d{4}-\d{4}$/.test(phone);
   const isValidBirth = (birth) => /^\d{4}-\d{2}-\d{2}$/.test(birth);
 
+  const showModalMessage = ({ type, title, message, onConfirm }) => {
+    setModalProps({ type, title, message, onConfirm });
+    setShowModal(true);
+  };
+
   const handlePasswordChange = (e) => {
     const value = e.target.value;
-    if (/[\u3131-\u318E\uAC00-\uD7A3]/.test(value)) return; // 한글 차단
+    if (/[\u3131-\u318E\uAC00-\uD7A3]/.test(value)) return;
     setForm({ ...form, password: value });
     setErrors((prev) => ({
       ...prev,
@@ -72,15 +82,19 @@ const UserSignUpPage = () => {
       setErrors((prev) => ({ ...prev, email: '올바른 이메일 형식이 아닙니다.' }));
       return;
     }
-    setEmailChecked(true);
-    setErrors((prev) => ({ ...prev, email: '' }));
-    // TODO: 모달 오픈 예정
+
+    const isDuplicated = form.email === 'test@naver.com';
+
+    showModalMessage({
+      type: isDuplicated ? 'error' : 'success',
+      title: isDuplicated ? '중복된 이메일' : '사용 가능',
+      message: isDuplicated ? '이미 사용 중인 이메일입니다.' : '사용 가능한 이메일입니다.',
+      onConfirm: () => setShowModal(false),
+    });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const validateForm = () => {
     const newErrors = {};
-
     if (!form.name.trim()) newErrors.name = '이름을 입력해주세요.';
     if (!form.email.trim()) newErrors.email = '이메일을 입력해주세요.';
     if (!validatePassword(form.password))
@@ -93,13 +107,24 @@ const UserSignUpPage = () => {
     else if (!isValidBirth(form.birth)) newErrors.birth = '형식: YYYY-MM-DD';
     if (!form.gender) newErrors.gender = '성별을 선택해주세요.';
     if (!form.agree) newErrors.agree = '약관에 동의해주세요.';
+    return newErrors;
+  };
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
-    alert('회원가입 완료!');
+    showModalMessage({
+      title: '가입 완료',
+      message: '개인 회원가입이 완료되었습니다.',
+      type: 'success',
+      onConfirm: () => navigate('/login'),
+    });
   };
 
   return (
@@ -222,6 +247,8 @@ const UserSignUpPage = () => {
 
         <button className="submit_btn" type="submit">가입하기</button>
       </form>
+
+      {showModal && <Modal {...modalProps} />}
     </div>
   );
 };
