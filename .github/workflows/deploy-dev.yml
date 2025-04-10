@@ -42,6 +42,10 @@ jobs:
           echo "host_base = kr.object.ncloudstorage.com" >> ~/.s3cfg
           echo "host_bucket = {bucket}.kr.object.ncloudstorage.com" >> ~/.s3cfg
 
-      - name: Object Storage 기존 파일들 삭제 후 새로 업로드
+      - name: Object Storage 기존 파일들 삭제
+        run: |
+          s3cmd del --recursive s3://${{ secrets.DEV_NCP_BUCKET }}/
+
+      - name: Object Storage 기존 파일들 삭제
         run: |
           s3cmd sync dist/ s3://${{ secrets.DEV_NCP_BUCKET }}/ --exclude '*.DS_Store'  # dist 폴더 업로드
