@@ -25,6 +25,10 @@ export default function JobRequirement (props) {
             <InputDropDown {...props} text='학력' />
         </div>
         <div>
+            <Category text="직종" />
+            <InputDropDown {...props} text='직종' />
+        </div>
+        <div>
             <Category text="복리후생" essential={false} />
             <InputRadio type='복리후생' />
         </div>
