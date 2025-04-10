@@ -1,20 +1,27 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // https://vite.dev/config/
 export default defineConfig({
   base: './',
-  plugins: [
-    react(),
-    viteStaticCopy({
-      targets: [
-        { src: 'src/apis', dest: 'src' },
-        { src: 'src/assets', dest: 'src' },
-        { src: 'src/components', dest: 'src' },
-        { src: 'src/hooks', dest: 'src' },
-        { src: 'src/pages', dest: 'src' },
-        { src: 'src/utils', dest: 'src' },
-      ],
-    }),
-  ],
+  plugins: [react()],
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+      },
+      output: {
+        entryFileNames: 'assets/[name].js',
+        chunkFileNames: 'assets/[name].js',
+        assetFileNames: 'assets/[name][extname]',
+      },
+    },
+    assetsDir: '',
+    emptyOutDir: true,
+  },
 });
