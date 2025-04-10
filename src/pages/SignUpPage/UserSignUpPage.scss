@@ -1,6 +1,5 @@
-// 🎨 오렌지 메인 테마
-$user-main: #FFA82F;       // 라이트 오렌지
-$user-deep: #E27100;       // 딥 오렌지
+$user-main: #FFA82F;
+$user-deep: #E27100;
 $text-dark: #333;
 $text-light: #888;
 
@@ -8,8 +7,8 @@ $text-light: #888;
   max-width: 480px;
   margin: 0 auto;
   padding: 40px 20px;
-  font-family: 'Noto Sans KR', sans-serif;
   background-color: #fff;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .user_signup_form {
@@ -47,11 +46,6 @@ $text-light: #888;
     box-sizing: border-box;
   }
 
-  .form_input:-webkit-autofill {
-    box-shadow: 0 0 0px 1000px white inset;
-    -webkit-text-fill-color: #000;
-  }
-
   .form_group {
     display: flex;
     flex-direction: column;
@@ -69,34 +63,28 @@ $text-light: #888;
       font-size: 13px;
       color: #e53935;
     }
+  }
 
-    .success_msg {
-      margin-top: 6px;
-      font-size: 13px;
-      color: $user-main;
+  .email_row {
+    display: flex;
+    gap: 10px;
+
+    input {
+      flex: 1;
     }
 
-    .email_row {
-      display: flex;
-      gap: 10px;
+    button {
+      height: 48px;
+      padding: 0 16px;
+      font-size: 14px;
+      background: $user-main;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
 
-      input {
-        flex: 1;
-      }
-
-      button {
-        height: 48px;
-        padding: 0 16px;
-        font-size: 14px;
-        background: $user-main;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-
-        &:hover {
-          background: $user-deep;
-        }
+      &:hover {
+        background: $user-deep;
       }
     }
   }

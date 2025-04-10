@@ -21,34 +21,32 @@ const UserSignUpPage = () => {
   const [showPasswordCheck, setShowPasswordCheck] = useState(false);
 
   const validatePassword = (pw) =>
-    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~\\/-]).{8,}$/.test(pw);
+    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/.test(pw);
   const isValidPhone = (phone) => /^010-\d{4}-\d{4}$/.test(phone);
   const isValidBirth = (birth) => /^\d{4}-\d{2}-\d{2}$/.test(birth);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    if (/[\u3131-\u318E\uAC00-\uD7A3]/.test(value)) return; // 한글 차단
+    setForm({ ...form, password: value });
+    setErrors((prev) => ({
+      ...prev,
+      password: validatePassword(value) ? '' : '영문, 숫자, 특수문자 포함 8자 이상 입력해주세요.',
+    }));
+  };
+
+  const handlePasswordCheckChange = (e) => {
+    const value = e.target.value;
+    setForm({ ...form, passwordCheck: value });
+    setErrors((prev) => ({
+      ...prev,
+      passwordCheck: form.password !== value ? '비밀번호가 일치하지 않습니다.' : '',
+    }));
+  };
+
+  const handleInputChange = (e) => {
+    const { name, type, checked, value } = e.target;
     const val = type === 'checkbox' ? checked : value;
-
-    if (name === 'password') {
-      if (/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(value)) return;
-
-      setForm({ ...form, [name]: val });
-      setErrors((prev) => ({
-        ...prev,
-        password: validatePassword(value) ? '' : '영문, 숫자, 특수문자 포함 8자 이상 입력해주세요.',
-      }));
-      return;
-    }
-
-    if (name === 'passwordCheck') {
-      setForm({ ...form, [name]: val });
-      setErrors((prev) => ({
-        ...prev,
-        passwordCheck: form.password !== val ? '비밀번호가 일치하지 않습니다.' : '',
-      }));
-      return;
-    }
-
     setForm({ ...form, [name]: val });
   };
 
@@ -74,11 +72,9 @@ const UserSignUpPage = () => {
       setErrors((prev) => ({ ...prev, email: '올바른 이메일 형식이 아닙니다.' }));
       return;
     }
-
     setEmailChecked(true);
     setErrors((prev) => ({ ...prev, email: '' }));
-
-    // 추후 모달 열기 로직 연결 예정
+    // TODO: 모달 오픈 예정
   };
 
   const handleSubmit = (e) => {
@@ -91,19 +87,10 @@ const UserSignUpPage = () => {
       newErrors.password = '영문, 숫자, 특수문자 포함 8자 이상 입력해주세요.';
     if (form.password !== form.passwordCheck)
       newErrors.passwordCheck = '비밀번호가 일치하지 않습니다.';
-
-    if (!form.phone.trim()) {
-      newErrors.phone = '전화번호를 입력해주세요.';
-    } else if (!isValidPhone(form.phone)) {
-      newErrors.phone = '형식: 010-1234-5678';
-    }
-
-    if (!form.birth.trim()) {
-      newErrors.birth = '생년월일을 입력해주세요.';
-    } else if (!isValidBirth(form.birth)) {
-      newErrors.birth = '형식: YYYY-MM-DD';
-    }
-
+    if (!form.phone.trim()) newErrors.phone = '전화번호를 입력해주세요.';
+    else if (!isValidPhone(form.phone)) newErrors.phone = '형식: 010-1234-5678';
+    if (!form.birth.trim()) newErrors.birth = '생년월일을 입력해주세요.';
+    else if (!isValidBirth(form.birth)) newErrors.birth = '형식: YYYY-MM-DD';
     if (!form.gender) newErrors.gender = '성별을 선택해주세요.';
     if (!form.agree) newErrors.agree = '약관에 동의해주세요.';
 
@@ -125,14 +112,14 @@ const UserSignUpPage = () => {
 
         <div className="form_group">
           <label>이름</label>
-          <input className="form_input" name="name" value={form.name} onChange={handleChange} />
+          <input className="form_input" name="name" value={form.name} onChange={handleInputChange} />
           {errors.name && <p className="error_msg">{errors.name}</p>}
         </div>
 
         <div className="form_group">
           <label>이메일</label>
           <div className="email_row">
-            <input className="form_input" name="email" value={form.email} onChange={handleChange} />
+            <input className="form_input" name="email" value={form.email} onChange={handleInputChange} />
             <button type="button" onClick={handleEmailCheck}>중복확인</button>
           </div>
           {errors.email && <p className="error_msg">{errors.email}</p>}
@@ -146,7 +133,7 @@ const UserSignUpPage = () => {
               type={showPassword ? 'text' : 'password'}
               name="password"
               value={form.password}
-              onChange={handleChange}
+              onChange={handlePasswordChange}
               placeholder="영문+숫자+특수문자 8자 이상"
             />
             <span className="eye_icon" onClick={() => setShowPassword(!showPassword)}>
@@ -164,7 +151,7 @@ const UserSignUpPage = () => {
               type={showPasswordCheck ? 'text' : 'password'}
               name="passwordCheck"
               value={form.passwordCheck}
-              onChange={handleChange}
+              onChange={handlePasswordCheckChange}
             />
             <span className="eye_icon" onClick={() => setShowPasswordCheck(!showPasswordCheck)}>
               {showPasswordCheck ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
@@ -226,7 +213,7 @@ const UserSignUpPage = () => {
               type="checkbox"
               name="agree"
               checked={form.agree}
-              onChange={handleChange}
+              onChange={handleInputChange}
             />
             이용약관 및 개인정보처리방침에 동의합니다.
           </label>
