@@ -12,15 +12,15 @@ const districtsByCity = {
 };
 
 function SearchFilters({
-  searchQuery,
-  setSearchQuery,
-  selectedCity,
-  setSelectedCity,
-  selectedDistrict,
-  setSelectedDistrict,
-  selectedCategory,
-  setSelectedCategory,
-  onSearch,
+  searchQuery,          //검색창에 입력된 텍스트
+  setSearchQuery,       //검색어 상태를 업데이트
+  selectedCity,         //선택된 지역
+  setSelectedCity,      //지역 상태를 설정하는 함수
+  selectedDistrict,     //선택된 상세 지역
+  setSelectedDistrict,  //상세 지역 상태를 설정하느 함수
+  selectedCategory,     //선택된 직종
+  setSelectedCategory,  //직종 상태를 설정하는 함수
+  onSearch,             //검색 버튼 클릭시 호출되는 함수
 }) {
   return (
     <div className="search-filters">
