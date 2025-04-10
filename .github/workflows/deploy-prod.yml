@@ -33,7 +33,7 @@ jobs:
 
       - name: Object Storage 기존 파일들 삭제
         run: |
-          s3cmd del --recursive --force s3://${{ secrets.DEV_NCP_BUCKET }}/
+          s3cmd del --recursive --force s3://${{ secrets.NCP_BUCKET }}/
 
       - name: Object Storage 새 파일 등록
         run: |
