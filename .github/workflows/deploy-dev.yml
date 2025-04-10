@@ -29,18 +29,7 @@ jobs:
       #          echo "VITE_NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}" >> .env
 
       - name: 빌드
-        run: npm run build -- --mode development
-
-      - name: n3cmd 설치
-        run: sudo apt-get update && sudo apt-get install -y s3cmd
-
-      - name: NCP 인증 설정
-        run: |
-          echo "[default]" > ~/.s3cfg
-          echo "access_key = ${{ secrets.NCP_ACCESS_KEY }}" >> ~/.s3cfg
-          echo "secret_key = ${{ secrets.NCP_SECRET_KEY }}" >> ~/.s3cfg
-          echo "host_base = kr.object.ncloudstorage.com" >> ~/.s3cfg
-          echo "host_bucket = {bucket}.kr.object.ncloudstorage.com" >> ~/.s3cfg
+        run: npm run build
 
       - name: Object Storage 기존 파일들 삭제
         run: |
