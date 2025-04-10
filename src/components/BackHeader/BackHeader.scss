@@ -1,0 +1,52 @@
+$main-color: #0F8C3B;
+
+.back_header {
+  width: 100%;
+  padding: 16px 0;
+  background: white;
+  border-bottom: 1px solid #eee;
+
+  .inner {
+    max-width: 720px; // 본문 너비 기준
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+  }
+
+  .back_button {
+    position: absolute;
+    left: 0;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #333;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    width: 200px;   // 클릭 영역 넓게
+    height: 90px;   // 상하 클릭 여유 확보
+    padding-left: 12px;
+    gap: 10px;
+
+    svg {
+      font-size: 20px;
+    }
+
+    .back_text {
+      font-size: 15px;
+      font-weight: 500;
+      color: #333;
+    }
+  }
+
+  .logo_img {
+    height: 60px;
+    object-fit: contain;
+    cursor: pointer;
+  }
+}
