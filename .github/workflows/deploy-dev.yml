@@ -41,7 +41,6 @@ jobs:
           echo "secret_key = ${{ secrets.NCP_SECRET_KEY }}" >> ~/.s3cfg
           echo "host_base = kr.object.ncloudstorage.com" >> ~/.s3cfg
           echo "host_bucket = {bucket}.kr.object.ncloudstorage.com" >> ~/.s3cfg
-          echo "mime_type = True" >> ~/.s3cfg
 
       - name: Object Storage 기존 파일들 삭제
         run: |
@@ -49,4 +48,4 @@ jobs:
 
       - name: Object Storage 새 파일 등록
         run: |
-          s3cmd sync dist/ s3://${{ secrets.DEV_NCP_BUCKET }}/ --exclude '*.DS_Store' --guess-mime-type  # dist 폴더 업로드
+          s3cmd sync dist/ s3://${{ secrets.DEV_NCP_BUCKET }}/ --exclude '*.DS_Store' --guess-mime-type --no-mime-magic # dist 폴더 업로드
