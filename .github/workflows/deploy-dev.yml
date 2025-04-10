@@ -41,6 +41,7 @@ jobs:
           echo "secret_key = ${{ secrets.NCP_SECRET_KEY }}" >> ~/.s3cfg
           echo "host_base = kr.object.ncloudstorage.com" >> ~/.s3cfg
           echo "host_bucket = {bucket}.kr.object.ncloudstorage.com" >> ~/.s3cfg
+          echo "mime_type = True" >> ~/.s3cfg
 
       - name: Object Storage 기존 파일들 삭제
         run: |
