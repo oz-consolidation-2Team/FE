@@ -3,11 +3,14 @@ import './SignUpPage.scss';
 import UserSignUpPage from './UserSignUpPage';
 import CompanySignUpPage from './CompanySignPage';
 import { FaUser, FaBuilding } from 'react-icons/fa';
+import BackHeader from '../../components/BackHeader';
 
 const SignUpPage = () => {
   const [type, setType] = useState(null);
 
   return (
+    <>
+    <BackHeader />
     <div className="signup_fade_wrap">
       {!type && (
         <div className="type_select active">
@@ -51,6 +54,7 @@ const SignUpPage = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 
