@@ -43,7 +43,6 @@ const MainPage = () => {
   };
 
   return (
-Feature/Header
     <div className="main_page">
       <Header />
 
