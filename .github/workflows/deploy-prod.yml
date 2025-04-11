@@ -31,7 +31,7 @@ jobs:
       - name: 빌드
         run: npm run build -- --mode development
 
-      - name: n3cmd 설치
+      - name: s3cmd 설치
         run: sudo apt-get update && sudo apt-get install -y s3cmd
 
       - name: NCP 인증 설정
@@ -42,6 +42,10 @@ jobs:
           echo "host_base = kr.object.ncloudstorage.com" >> ~/.s3cfg
           echo "host_bucket = {bucket}.kr.object.ncloudstorage.com" >> ~/.s3cfg
 
-      - name: Object Storage 기존 파일들 삭제 후 새로 업로드
+      - name: Object Storage 기존 파일들 삭제
         run: |
-          s3cmd sync dist/ s3://${{ secrets.NCP_BUCKET }}/ --exclude '*.DS_Store'  # dist 폴더 업로드
+          s3cmd del --recursive --force s3://${{ secrets.DEV_NCP_BUCKET }}/
+
+      - name: Object Storage 새 파일 등록
+        run: |
+          s3cmd sync dist/ s3://${{ secrets.DEV_NCP_BUCKET }}/ --exclude '*.DS_Store' --guess-mime-type  # dist 폴더 업로드
