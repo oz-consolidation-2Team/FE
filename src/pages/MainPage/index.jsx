@@ -44,8 +44,6 @@ const MainPage = () => {
 
   return (
     <div className="main_page">
-      <Header />
-
       <section className="hero_section">
         <div className="hero_inner">
           <h1>시니어 세대가 다시 빛나는 순간!</h1>
