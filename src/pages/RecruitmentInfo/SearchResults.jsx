@@ -12,7 +12,7 @@ const SearchResults = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   const [selectedDistrict, setSelectedDistrict] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedJobCategory, setSelectedJobCategory] = useState('');
   const [isBookmarked, setIsBookmarked] = useState({});
 
   const toggleBookmark = (id) => {
@@ -30,7 +30,7 @@ const SearchResults = () => {
     const filteredResults = dummyData.filter((job) => {
       return (
         (!fullLocation || job.work_address.includes(fullLocation)) &&
-        (!selectedCategory || job.category === selectedCategory) &&
+        (!selectedJobCategory || job.job_category === selectedJobCategory) &&
         (!searchQuery || job.title.includes(searchQuery))
       );
     });
@@ -47,8 +47,8 @@ const SearchResults = () => {
         setSelectedCity={setSelectedCity}
         selectedDistrict={selectedDistrict}
         setSelectedDistrict={setSelectedDistrict}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
+        selectedJobCategory={selectedJobCategory}
+        setSelectedJobCategory={setSelectedJobCategory}
         onSearch={handleSearch}
       />
       <div className="search-results">

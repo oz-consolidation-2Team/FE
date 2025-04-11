@@ -8,6 +8,7 @@ import RecruitmentInfo from './pages/RecruitmentInfo';
 import AnnouncementAdd from './pages/AnnouncementAdd';
 import SearchResults from './pages/RecruitmentInfo/SearchResults';
 import Layout from './components/Layout';
+import JobDetail from './pages/RecruitmentInfo/JobDetail';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path="/company_announcement_add_page" element={<AnnouncementAdd />} />
 
       <Route path="/search-results" element={<SearchResults />} />
+      <Route path="/job-detail/:id" element={<JobDetail />} />
     </Routes>
   );
 }
