@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './SearchResults.scss'; 
 import SearchFilters from './SearchFilters';
 import { dummyData } from '../RecruitmentInfo/JobList';
-
+import JobCard from './JobCard';
+import './RecruitmentInfo.scss';
 const SearchResults = () => {
   const navigate = useNavigate();
   const { state } = useLocation();  // navigate로 전달된 state를 받음
@@ -13,6 +13,14 @@ const SearchResults = () => {
   const [selectedCity, setSelectedCity] = useState('');
   const [selectedDistrict, setSelectedDistrict] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [isBookmarked, setIsBookmarked] = useState({});
+
+  const toggleBookmark = (id) => {
+    setIsBookmarked((prev) => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
 
   const handleSearch = () => {
     const fullLocation = selectedCity && selectedDistrict
@@ -31,7 +39,7 @@ const SearchResults = () => {
   };
 
   return (
-    <div className="search-results-wrapper">
+    <div className="recruitment-container">
       <SearchFilters
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -47,15 +55,12 @@ const SearchResults = () => {
         <h2>검색 결과</h2>
         {results.length > 0 ? (
           results.map((job) => (
-            <div className="job-card" key={job.id}>
-              <div className="job-header">
-                <div className="company">{job.work_address}</div>
-                <button className="bookmark-button">북마크</button>
-              </div>
-              <div className="job-title">{job.title}</div>
-              <div className="job-description">{job.other_conditions}</div>
-              <div className="job-footer">{new Date(job.deadline_at).toLocaleDateString()} 마감</div>
-            </div>
+            <JobCard
+              key={job.id}
+              job={job}
+              isBookmarked={isBookmarked[job.id]}
+              toggleBookmark={() => toggleBookmark(job.id)}
+            />
           ))
         ) : (
           <p>검색된 결과가 없습니다.</p>
