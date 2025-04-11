@@ -1,4 +1,4 @@
-function UserInfoPage() {
+function UserMyPage() {
   return (
     <>
       <h1> 개인 마이 페이지</h1>
@@ -6,4 +6,4 @@ function UserInfoPage() {
   );
 }
 
-export default UserInfoPage;
+export default UserMyPage;
