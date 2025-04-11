@@ -1,0 +1,110 @@
+.job-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Pretendard', sans-serif;
+
+  .job-section {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+
+    p {
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+  }
+
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    .job-address,
+    .job-company {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+  }
+
+  .job-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+
+  .job-tags {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    span {
+      background-color: #f3f3f3;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+  }
+
+  .job-image {
+    width: 100%;
+    max-width: 250px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+
+  .job-description {
+    white-space: pre-wrap;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .job-action {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    .apply-button {
+      padding: 10px 24px;
+      background-color: #419D53;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+
+      &:hover {
+        background-color: #368146;
+      }
+    }
+  }
+
+  .job-conditions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 32px;
+
+    .condition-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      font-size: 0.95rem;
+      align-items: center;
+
+      .condition-label {
+        color: #999;
+        font-weight: 600;
+      }
+
+      .condition-value {
+        color: #333;
+        font-weight: 500;
+      }
+    }
+  }
+}

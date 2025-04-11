@@ -18,8 +18,8 @@ function SearchFilters({
   setSelectedCity,      //지역 상태를 설정하는 함수
   selectedDistrict,     //선택된 상세 지역
   setSelectedDistrict,  //상세 지역 상태를 설정하느 함수
-  selectedCategory,     //선택된 직종
-  setSelectedCategory,  //직종 상태를 설정하는 함수
+  selectedJobCategory,     //선택된 직종
+  setSelectedJobCategory,  //직종 상태를 설정하는 함수
   onSearch,             //검색 버튼 클릭시 호출되는 함수
 }) {
   return (
@@ -40,13 +40,20 @@ function SearchFilters({
         </select>
       )}
 
-      <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+      <select value={selectedJobCategory} onChange={(e) => setSelectedJobCategory(e.target.value)}>
         <option value="">직종 선택</option>
         <option value="IT">IT</option>
         <option value="교육">교육</option>
         <option value="서비스">서비스</option>
         <option value="생산">생산</option>
         <option value="기타">기타</option>
+        <option value="디자인">디자인</option>
+        <option value="제조">제조</option>
+        <option value="의료">의료</option>
+        <option value="기획">기획</option>
+        <option value="물류">물류</option>
+        <option value="운송">운송</option>
+        <option value="농업">농업</option>
       </select>
 
       <input
