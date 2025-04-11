@@ -35,7 +35,6 @@ function RecruitmentInfo() {
 
   return (
     <div className='recruitment-container'>
-      <button className="back-button" onClick={() => navigate('/')}>←</button>
       <h1 className='recruitment-title'>채용 정보</h1>
 
       <SearchFilters

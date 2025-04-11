@@ -17,14 +17,14 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/recruitment_info" element={<RecruitmentInfo />} />
         <Route path="/mypage/user" element={<UserMyPage />} />
+        <Route path="/search-results" element={<SearchResults />} />
+        <Route path="/job-detail/:id" element={<JobDetail />} />
       </Route>
       <Route path="/signup" element={<SignUpPage />} />
 
       <Route path="/company_info_page" element={<CompanyInfoPage />} />
       <Route path="/company_announcement_add_page" element={<AnnouncementAdd />} />
 
-      <Route path="/search-results" element={<SearchResults />} />
-      <Route path="/job-detail/:id" element={<JobDetail />} />
     </Routes>
   );
 }
