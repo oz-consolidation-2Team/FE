@@ -7,7 +7,7 @@ import CompanyInfoPage from './pages/CompanyInfoPage';
 import RecruitmentInfo from './pages/RecruitmentInfo';
 import AnnouncementAdd from './pages/AnnouncementAdd';
 import SearchResults from './pages/RecruitmentInfo/SearchResults';
-
+import JobDetail from './pages/RecruitmentInfo/JobDetail';
 function App() {
   return (
     <Routes>
@@ -20,6 +20,7 @@ function App() {
 
       <Route path="/recruitment_info" element={<RecruitmentInfo />} />
       <Route path="/search-results" element={<SearchResults />} />
+      <Route path="/job-detail/:id" element={<JobDetail />} />
     </Routes>
   );
 }

@@ -10,7 +10,7 @@ import SearchFilters from './SearchFilters';
 function RecruitmentInfo() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedJobCategory, setSelectedJobCategory] = useState(''); // Changed selectedCategory to selectedJobCategory
   const [selectedDistrict, setSelectedDistrict] = useState(''); // 1. selectedDistrict 상태 추가
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ function RecruitmentInfo() {
     const filteredResults = dummyData.filter(job => {
       return (
         (fullLocation ? job.work_address.includes(fullLocation) : true) &&
-        (selectedCategory ? job.category === selectedCategory : true) &&
+        (selectedJobCategory ? job.job_category === selectedJobCategory : true) && // Updated filter condition
         (searchQuery ? job.title.includes(searchQuery) : true)
       );
     });
@@ -45,8 +45,8 @@ function RecruitmentInfo() {
         setSelectedCity={setSelectedCity}
         selectedDistrict={selectedDistrict}
         setSelectedDistrict={setSelectedDistrict}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
+        selectedJobCategory={selectedJobCategory} 
+        setSelectedJobCategory={setSelectedJobCategory} 
         onSearch={handleSearch}
       />
 
