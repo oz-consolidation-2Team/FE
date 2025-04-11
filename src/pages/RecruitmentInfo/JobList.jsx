@@ -1,5 +1,6 @@
-import React from 'react';
-import './JobList.scss'; // CSS 파일을 import합니다.
+import React, { useState } from 'react';
+import './JobList.scss';
+import JobCard from './JobCard'; 
 
 // 더미 데이터
 export const dummyData = [
@@ -151,7 +152,14 @@ export const dummyData = [
   ];
 
 const JobList = ({ jobs = [] }) => {
-  
+const [isBookmarked, setIsBookmarked] = useState({});
+
+const toggleBookmark = (id) => {
+  setIsBookmarked((prev) => ({
+    ...prev,
+    [id]: !prev[id]
+  }));
+};
 
   // API가 준비될 때까지 더미 데이터 사용
   const data = jobs.length ? jobs : dummyData;
@@ -159,15 +167,12 @@ const JobList = ({ jobs = [] }) => {
   return (
         <div className="job-list">
         {data.map((job) => (
-            <div className="job-card" key={job.id}>
-                <div className="job-header">
-                    <div className="company">{job.work_address}</div>
-                    <button className="bookmark-button">북마크</button>
-                </div>
-                <div className="job-title">{job.title}</div>
-                <div className="job-description">{job.other_conditions}</div>
-                <div className="job-footer">{new Date(job.deadline_at).toLocaleDateString()} 마감.</div>
-            </div>
+          <JobCard
+            key={job.id}
+            job={job}
+            isBookmarked={isBookmarked[job.id]}
+            toggleBookmark={toggleBookmark}
+          />
         ))}
         </div>
   );
