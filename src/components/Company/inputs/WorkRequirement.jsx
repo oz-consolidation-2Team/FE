@@ -14,7 +14,7 @@ export default function WorkRequirement (props) {
             <CategoryTitle title='근무 조건' />
             <div>
                 <Category text='급여' />
-                <InputText text='급여' type='number' />
+                <InputText {...props} text='급여' type='number' placeholder={props.data.급여} />
             </div>
             <div>
                 <Category text='급여지급방법' />
@@ -23,12 +23,12 @@ export default function WorkRequirement (props) {
             <div>
                 <Category text='근무기간' />
                 <InputDropDown {...props} text='근무기간' />
-                <InputRadio type='협의가능' />
+                <InputRadio {...props} type='협의가능' />
             </div>
             <div>
                 <Category text='근무요일' />
-                <InputRadio type='근무요일' />
-                <InputRadio type='근무요일협의' />
+                <InputRadio {...props} type='근무요일' />
+                <InputRadio {...props} type='근무요일협의' />
             </div>
             <div>
                 <Category text='고용형태' />
@@ -37,7 +37,7 @@ export default function WorkRequirement (props) {
             <div>
                 <Category text='근무시간' />
                 <InputDropDown {...props} text='근무시간' />
-                <InputRadio type='협의가능' />
+                <InputRadio {...props} type='협의가능' />
             </div>
         </div>
     )
