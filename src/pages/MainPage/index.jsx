@@ -4,7 +4,7 @@ function MainPage() {
   const navigate = useNavigate();
 
   const handleUserClick = () => {
-    navigate('/user_info_page');
+    navigate('/user_mypage');
   };
 
   const handleCompanyClick = () => {
