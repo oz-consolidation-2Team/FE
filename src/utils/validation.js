@@ -13,3 +13,4 @@ export const validateEmail = (email) =>
   
   export const validateName = (name) => name.trim() !== '';
   
+  export const isValidStartDate = (date) => /^\d{8}$/.test(date);
