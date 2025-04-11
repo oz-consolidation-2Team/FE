@@ -1,0 +1,317 @@
+$company-main: #0F8C3B;
+$company-deep: #0b6c2d;
+$text-dark: #333;
+$text-light: #888;
+$error-color: #e53935;
+
+.company_signup_container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #fff;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.company_signup_form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+
+  .signup_title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 12px;
+
+    .icon {
+      font-size: 32px;
+      color: $company-main;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: $company-main;
+    }
+  }
+
+  .form_section_title {
+    font-size: 18px;
+    font-weight: bold;
+    color: $text-dark;
+    border-left: 4px solid $company-main;
+    padding-left: 10px;
+    margin-bottom: 16px;
+    text-align: left;
+  }
+
+  .form_group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    label {
+      font-size: 14px;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: $text-dark;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      height: 48px;
+      padding: 0 12px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+
+      &::placeholder {
+        color: $text-light;
+      }
+
+      &.error {
+        border-color: $error-color;
+      }
+    }
+
+    textarea {
+      height: 120px;
+      resize: none;
+      padding-top: 12px;
+    }
+
+    .error_msg {
+      margin-top: 6px;
+      font-size: 13px;
+      color: $error-color;
+    }
+  }
+
+  .email_row {
+    display: flex;
+    gap: 10px;
+
+    input {
+      flex: 1;
+    }
+
+    button {
+      height: 48px;
+      padding: 0 16px;
+      font-size: 14px;
+      background: $company-main;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+
+      &:hover {
+        background: $company-deep;
+      }
+    }
+  }
+
+  .password_group {
+    .password_row {
+      position: relative;
+
+      input {
+        padding-right: 44px;
+      }
+
+      .eye_icon {
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        transform: translateY(-50%);
+        font-size: 20px;
+        color: $text-light;
+        cursor: pointer;
+
+        &:hover {
+          color: $company-main;
+        }
+      }
+    }
+  }
+
+  .checkbox_group {
+    label {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: $text-dark;
+      margin-bottom: 0;
+  
+      input {
+        margin-right: 10px;
+        width: auto;
+      }
+    }
+        .error_msg {
+          margin-top: 6px;
+          font-size: 13px;
+          color: $error-color;
+      }
+    }
+
+  .submit_btn {
+    margin-top: 10px;
+    height: 48px;
+    padding: 0 16px;
+    font-size: 16px;
+    background-color: $company-main;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &:hover {
+      background-color: $company-deep;
+    }
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+
+  .button_group {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 20px;
+
+    .next_btn,
+    .prev_btn {
+      width: 48%;
+      height: 48px;
+      padding: 0 16px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .next_btn {
+      background-color: $company-main;
+      color: white;
+
+      &:hover {
+        background-color: $company-deep;
+      }
+    }
+
+    .prev_btn {
+      background-color: #FFA82F;
+      color: white;
+
+      &:hover {
+        background-color: #E27100;
+      }
+    }
+  }
+}
+
+.biznum_group {
+  .label_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    label {
+      font-size: 14px;
+      font-weight: 500;
+      color: $text-dark;
+    }
+
+    .no_reg_btn {
+      font-size: 12px;
+      color: $company-main;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+
+      &:hover {
+        color: $company-deep;
+      }
+    }
+  }
+
+  .biznum_row {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+
+    input {
+      flex: 1;
+    }
+
+    button {
+      height: 48px;
+      padding: 0 12px;
+      font-size: 13px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    button:not(.no_reg_btn) {
+      background: $company-main;
+      color: white;
+
+      &:hover {
+        background: $company-deep;
+      }
+    }
+  }
+}
+
+.prev_btn,
+.next_btn {
+  height: 48px;
+  padding: 0 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  flex-grow: 1; /* 버튼이 부모의 50%씩 차지하도록 설정 */
+
+  &.prev_btn {
+    background-color: #FFA82F;
+    color: white;
+
+    &:hover {
+      background-color: #E27100;
+    }
+  }
+
+  &.next_btn {
+    background-color: $company-main;
+    color: white;
+
+    &:hover {
+      background-color: $company-deep;
+    }
+  }
+}
+
+.button_group {
+  display: flex;
+  gap: 10px; /* 버튼 사이의 간격 */
+  justify-content: space-between; /* 버튼 간 간격을 균등하게 배분 */
+}
