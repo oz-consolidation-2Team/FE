@@ -1,4 +1,4 @@
-name: Deploy To Dev NCP
+name: Deploy To Dev AWS
 
 on:
   push:
@@ -29,20 +29,19 @@ jobs:
       #          echo "VITE_NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}" >> .env
 
       - name: 빌드
-        run: npm run build -- --mode development
+        run: npm run build
 
-      - name: AWS 인증 설정
-        run: |
-          echo "[default]" > ~/.s3cfg
-          echo "access_key = ${{ secrets.NCP_ACCESS_KEY }}" >> ~/.s3cfg
-          echo "secret_key = ${{ secrets.NCP_SECRET_KEY }}" >> ~/.s3cfg
-          echo "host_base = kr.object.ncloudstorage.com" >> ~/.s3cfg
-          echo "host_bucket = {bucket}.kr.object.ncloudstorage.com" >> ~/.s3cfg
+      - name: AWS 인증 절차
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ap-northeast-2
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID}}
 
-      - name: Object Storage 기존 파일들 삭제
+      - name: S3 기존 파일들 삭제 후 새로 업로드
         run: |
-          s3cmd del --recursive --force s3://${{ secrets.DEV_NCP_BUCKET }}/
+          aws s3 rm --recursive s3://dev-toseniors
+          aws s3 cp ./dist s3://dev-toseniors/ --recursive
 
-      - name: Object Storage 새 파일 등록
-        run: |
-          s3cmd sync dist/ s3://${{ secrets.DEV_NCP_BUCKET }}/ --exclude '*.DS_Store' --guess-mime-type --no-mime-magic # dist 폴더 업로드
+      - name: Cloudfront 캐시 무효화
+        run: aws cloudfront create-invalidation --distribution-id E3MPL9A4PJ1VHL --paths "/*"
