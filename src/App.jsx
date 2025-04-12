@@ -10,6 +10,7 @@ import SearchResults from './pages/RecruitmentInfo/SearchResults';
 import AnnouncementEdit from './pages/AnnouncementEdit';
 import CompanyInfo from './pages/CompanyInfo';
 import CompanyResumes from './pages/CompanyResumes';
+import CompanyInfoEdit from './pages/CompanyInfoEdit';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
 
       <Route path="/company_my_page" element={<CompanyMyPage />} />
       <Route path="/company_info_page/:id" element={<CompanyInfo />} />
+      <Route path="/company_info_edit_page" element={<CompanyInfoEdit />} />
       <Route path="/company_announcement_add_page" element={<AnnouncementAdd />} />
       <Route path="/company_announcement_edit_page/:id" element={<AnnouncementEdit />} />
       <Route path="/company_resumes_page/:id" element={<CompanyResumes />} />
