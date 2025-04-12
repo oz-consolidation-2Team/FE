@@ -44,15 +44,15 @@ const MainPage = () => {
 
   return (
     <div className="main_page">
-      <Header />
-
       <section className="hero_section">
         <div className="hero_inner">
           <h1>시니어 세대가 다시 빛나는 순간!</h1>
           <p>
-            <strong>경험</strong>과 <strong>가치</strong>를 이어가는 새로운 일자리 매칭!<br />
+            <strong>경험</strong>과 <strong>가치</strong>를 이어가는 새로운 일자리 매칭!
+            <br />
             <span className="highlight">
-              <span className="underline-highlight">일자리</span>, 커뮤니티, <span className="underline-highlight">성장의 기회</span>
+              <span className="underline-highlight">일자리</span>, 커뮤니티,{' '}
+              <span className="underline-highlight">성장의 기회</span>
             </span>
             <br />
             <span className="bottom-call">— 지금 바로 시작 하세요!</span>
@@ -76,18 +76,22 @@ const MainPage = () => {
       <section className="section_area popular">
         <h2>인기 공고</h2>
         <div className="job_grid">
-          {Array(4).fill(0).map((_, i) => (
-            <JobCard key={i} />
-          ))}
+          {Array(4)
+            .fill(0)
+            .map((_, i) => (
+              <JobCard key={i} />
+            ))}
         </div>
       </section>
 
       <section className="section_area recent">
         <h2>최근에 등록된 공고</h2>
         <div className="job_grid">
-          {Array(4).fill(0).map((_, i) => (
-            <JobCard key={i} />
-          ))}
+          {Array(4)
+            .fill(0)
+            .map((_, i) => (
+              <JobCard key={i} />
+            ))}
         </div>
       </section>
     </div>

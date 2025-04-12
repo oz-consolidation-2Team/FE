@@ -33,7 +33,7 @@
     border: none;
     cursor: pointer;
     font-size: 1.2rem;
-    }
+  }
 }
 
 .job-title {
@@ -59,4 +59,36 @@
   font-weight: 700;
   margin: 2rem 0 1rem 0;
   color: #3c8942;
+}
+
+.star_icon {
+  font-size: 26px;
+  cursor: pointer;
+  color: #f6a100;
+  transition: transform 0.2s;
+
+  &.filled {
+    color:#f6a100;
+
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.search-results-wrapper {
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Pretendard', sans-serif;
+  background-color: #fff;
+
+  .search-results {
+    h2 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+  }
 }
