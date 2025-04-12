@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
  * @setModal 상태관리 (모달창 닫기 위함)
  * @title string; (모달제목)
  * @content string; (모달내용)
+ * @notNavigate boolean | undefind; (true 아니면 뒤로가기)
 } */
 export default function SimpleModal (props) {
     const navigate = useNavigate()
@@ -14,7 +15,7 @@ export default function SimpleModal (props) {
             <p>{props.content}</p>
             <button onClick={()=>{
                 props.setModal(false)
-                navigate(-1)
+                {props.setNavigate ? window.location.reload() : navigate(-1)}
             }}>완료</button>
         </div>
     )

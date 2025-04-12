@@ -6,14 +6,18 @@ import SimpleModal from "./SimpleModal"
 /**props = {
  * @setModal 상태관리(boolean) (모달관리 닫기 위함)
  * @data 상태관리(input값들) (출력을 위함)
- * @modalType 'add' | 'edit' | 'delete' | 'delete-Success' (모달 타입)
+ * @modalType 'add' | 'edit' | 'delete' | 'delete-Success' | 'cencel-resume' (모달 타입)
  * @setModalType 상태관리
 } */
 export default function Modal (props) {
     return (
         <div>
-            {props.modalType === 'delete-Success' ? 
-                <SimpleModal title="삭제가 완료 되었습니다" content="" setModal={props.setModal} />
+            {props.modalType === 'delete-Success' || props.modalType === 'cencel-resume' ? 
+                (
+                    props.modalType === 'delete-Success' ?
+                    <SimpleModal title="삭제가 완료 되었습니다" content="" setModal={props.setModal} />
+                    : <SimpleModal title="취소된 이력서입니다" content="이런! 그 사이에 취소된 이력서예요" setModal={props.setModal} setNavigate={true} />
+                )
                 : <>
                     <Title modalType={props.modalType} />
                     <Content data={props.data} modalType={props.modalType} />
