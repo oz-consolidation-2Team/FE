@@ -136,7 +136,6 @@ const CompanySignUpPage = () => {
   
       const status = result.data?.[0];
   
-      // ✅ 여기 수정 포인트!
       if (!status || status.valid !== "01") {
         showModal('error', '인증 실패', '유효하지 않은 사업자등록번호입니다.');
         return;
