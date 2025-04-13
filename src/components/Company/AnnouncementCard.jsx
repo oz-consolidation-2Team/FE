@@ -25,7 +25,7 @@ export default function AnnouncementCard (props) {
         <p>{props.time}</p>
         <div>
             <button onClick={handleAnnouncementEditClick}>수정하기</button>
-            <button onClick={()=>console.log('추후개발?')}>이력서 확인하기</button>
+            <button onClick={() => navigate(`/company_resumes_page/${props.id}`)}>이력서 확인하기</button>
         </div>
     </div>
     )

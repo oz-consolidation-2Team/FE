@@ -15,15 +15,11 @@ export default function InfoBox (props) {
         email: 'oz123@gmail.com',
         introduction: '기업 소개글입니다'
     }
-  
-    const handleCompanyEditClick = () => {
-      navigate('/company_edit_page');
-    };
 
     return <div>
         <p>담당자 전화번호: {data.phone}</p>
         <p>담당자 이메일: {data.email}</p>
         <p>기업 소개: {data.introduction}</p>
-        {props.type === 'company' && <button onClick={handleCompanyEditClick}>기업 정보 수정</button> }
+        {props.type === 'company' && <button onClick={() => navigate("/company_info_edit_page")}>기업 정보 수정</button> }
     </div>
 }
