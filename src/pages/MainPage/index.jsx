@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import './MainPage.scss';
-import Header from '../../components/Header';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const JobCard = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -33,7 +32,7 @@ const JobCard = () => {
 
 const MainPage = () => {
   const [keyword, setKeyword] = useState('');
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleSearch = () => {
     if (keyword.trim()) {

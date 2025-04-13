@@ -1,95 +1,116 @@
 .job-list {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 2rem;
+  margin-top: 20px;
 }
 
-.job-card {
-  display: flex;
-
+.job_list_container {
+  height: 180px;
   border: 1px solid #ddd;
   border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 16px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s;
 
   &:hover {
     transform: translateY(-4px);
   }
-}
 
-.job-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+  .job_card {
+    display: flex;
+    padding: 18px;
+    height: 180px;
 
-  .company {
-    font-weight: 600;
-    font-size: 0.95rem;
-  }
+    .company_card {
+      display: flex;
+      flex-direction: column;
+      width: 1000px;
 
-  .bookmark-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.2rem;
-  }
-}
+      .job-header {
+        width: 100%;
+        margin-bottom: 8px;
+        display: flex;
+        flex-direction: column;
 
-.job-title {
-  font-weight: bold;
-  font-size: 1rem;
-  margin-bottom: 4px;
-}
+        .company-info {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
 
-.job-description {
-  color: #555;
-  font-size: 0.9rem;
-  margin-bottom: 8px;
-}
+          .company-name {
+            font-weight: 400;
+            font-size: 0.95rem;
+            color: #888;
+            padding-bottom: 5px;
+          }
 
-.job-footer {
-  text-align: right;
-  font-size: 0.8rem;
-  color: #888;
-}
+          .job-title {
+            font-weight: bold;
+            font-size: 1.4rem;
+          }
 
-.main-title {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin: 2rem 0 1rem 0;
-  color: #3c8942;
-}
+          .job-description {
+            color: #555;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+          }
+        }
+      }
 
-.star_icon {
-  font-size: 26px;
-  cursor: pointer;
-  color: #f6a100;
-  transition: transform 0.2s;
+      .recruitment_info {
+        display: flex;
+        width: 103%;
+        justify-content: space-between;
 
-  &.filled {
-    color: #f6a100;
-  }
-
-  &:hover {
-    transform: scale(1.1);
-  }
-}
-
-.search-results-wrapper {
-  max-width: 768px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: 'Pretendard', sans-serif;
-  background-color: #fff;
-
-  .search-results {
-    h2 {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
+        p {
+          color: #979797;
+          font-size: 0.8rem;
+        }
+      }
     }
+
+    .star {
+      width: 26px;
+      height: 26px;
+      position: relative;
+      top: 25px;
+
+      .bookmark-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.2rem;
+      }
+
+      .star_icon {
+        font-size: 26px;
+        cursor: pointer;
+        color: #f6a100;
+        transition: transform 0.2s;
+
+        &.filled {
+          color: #f6a100;
+        }
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+
+  .job_footer {
+    position: relative;
+
+    bottom: 30px;
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    background-color: #3c8942;
   }
 }
