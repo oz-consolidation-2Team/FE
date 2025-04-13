@@ -1,0 +1,15 @@
+/**props = {
+ * @data 상태관리
+ * @setData 상태관리
+} */
+export default function InputImage (props) {
+    return (
+        <div>
+            <div>
+                <div>{props.data.이미지등록 || "선택된 파일이 없습니다"}</div>
+                <button>파일 선택</button>
+            </div>
+            <p>PNG, JPG ... 어쩌구 저쩌구 확장자의 파일만 등록할 수 있습니다</p>
+        </div>
+    )
+}

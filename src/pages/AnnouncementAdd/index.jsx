@@ -5,7 +5,7 @@ import WorkRequirement from "../../components/Company/inputs/WorkRequirement"
 import AnnouncementContent from "../../components/Company/inputs/AnnouncementContent"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-
+import Modal from "../../components/Company/Modal/Modal"
 
 export default function AnnouncementAdd () {
     const navigate = useNavigate()
@@ -13,13 +13,18 @@ export default function AnnouncementAdd () {
 
     // 더미데이터
     const [data, setData1] = useState({
+        공고제목: null,
+        근무요약: null,
         모집기간: null,
         모집기간상시: false,
         모집인원: null,
         학력: null,
         복리후생: null,
-        우대조건: null,
+        우대사항: null,
         기타조건: null,
+        근무지주소: null,
+        근무지명: null,
+        급여: null,
         급여지급방법: null,
         근무기간: null,
         근무기간협의: false,
@@ -28,22 +33,26 @@ export default function AnnouncementAdd () {
         근무요일변동: false,
         고용형태: null,
         근무시간: null,
-        근무시간협의: null
+        근무시간협의: false,
+        공고텍스트: null,
+        이미지등록: null
     })
+    const [modal, setModal] = useState(false)
 
     return (
     <div>
         <button onClick={() => navigate(-1)}>{`<-`}</button>
         <h1>채용 공고 등록</h1>
         <div>
-            <AnnouncementTitle />
+            <AnnouncementTitle data={data} setData={setData1} />
             <JobRequirement data={data} setData={setData1}/>
-            <WorkLocation />
+            <WorkLocation data={data} setData={setData1} />
             <WorkRequirement data={data} setData={setData1} />
-            <AnnouncementContent />
+            <AnnouncementContent data={data} setData={setData1} />
         </div>
-        <button>등록하기</button>
+        <button onClick={() => setModal(true)}>등록하기</button>
         <button>공고 미리보기</button>
+        {modal && <Modal setModal={setModal} data={data} type='add' />}
     </div>
     )
 }

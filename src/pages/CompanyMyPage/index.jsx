@@ -2,7 +2,7 @@ import InfoBox from "../../components/Company/InfoBox"
 import AnnouncementCard from "../../components/Company/AnnouncementCard"
 import { useNavigate } from 'react-router-dom';
 
-export default function CompanyInfoPage() {
+export default function CompanyMyPage() {
   const navigate = useNavigate();
 
   const handleAnnouncementAddClick = () => {
