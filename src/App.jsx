@@ -17,9 +17,6 @@ import JobDetail from './pages/RecruitmentInfo/JobDetail';
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />} />
-      <Route path='/signup' element={<SignUpPage />} />
-
       <Route element={<Layout />}>
         <Route path="/" element={<MainPage />} />
         <Route path="/recruitment_info" element={<RecruitmentInfo />} />
