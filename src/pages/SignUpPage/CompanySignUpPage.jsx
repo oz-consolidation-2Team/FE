@@ -5,17 +5,18 @@ import Modal from '@/components/common/Modal';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import {
   validateEmail,
-  validatePassword,
   isValidPhone,
   isValidDate,
   isValidBizNumber,
+  validateCompanyStep0,
+  validateCompanyStep1,
+  validateCompanyStep2,
 } from '@/utils/validation';
 import { useNavigate } from 'react-router-dom';
 import './CompanySignUpPage.scss';
 
-const CompanySignUpPage = ({ onBack }) => {
+const CompanySignUpPage = () => {
   const navigate = useNavigate();
-
   const [step, setStep] = useState(0);
   const [form, setForm] = useState({
     email: '',
@@ -30,7 +31,6 @@ const CompanySignUpPage = ({ onBack }) => {
     managerPhone: '',
     managerEmail: '',
   });
-
   const [errors, setErrors] = useState({});
   const [showPw, setShowPw] = useState(false);
   const [showPwCheck, setShowPwCheck] = useState(false);
@@ -38,31 +38,31 @@ const CompanySignUpPage = ({ onBack }) => {
   const [bizVerified, setBizVerified] = useState(false);
   const [modal, setModal] = useState(null);
 
+  const showModal = (type, title, message, callback) => {
+    setModal({
+      type,
+      title,
+      message,
+      onConfirm: () => {
+        if (callback) callback();
+        setModal(null);
+      },
+    });
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
 
     setErrors((prev) => {
       const next = { ...prev };
-
       if (name === 'email' && validateEmail(value)) delete next.email;
-      if (name === 'password' && validatePassword(value)) delete next.password;
-      if (name === 'passwordCheck' && value === form.password) delete next.passwordCheck;
       if (name === 'companyName' && value) delete next.companyName;
       if (name === 'ceoName' && value) delete next.ceoName;
       if (name === 'companyDesc' && value.length >= 50) delete next.companyDesc;
       if (name === 'managerName' && value) delete next.managerName;
       if (name === 'managerEmail' && validateEmail(value)) delete next.managerEmail;
-
       return next;
-    });
-  };
-
-  const handleBizNumberChange = (e) => {
-    const val = e.target.value.replace(/[^\d]/g, '').slice(0, 10);
-    setForm((prev) => ({ ...prev, businessNumber: val }));
-    if (isValidBizNumber(val)) setErrors((prev) => {
-      const next = { ...prev }; delete next.businessNumber; return next;
     });
   };
 
@@ -70,9 +70,25 @@ const CompanySignUpPage = ({ onBack }) => {
     let val = e.target.value.replace(/[^\d]/g, '').slice(0, 8);
     if (val.length >= 5) val = val.replace(/(\d{4})(\d{2})(\d{0,2})/, '$1-$2-$3').replace(/-$/, '');
     setForm((prev) => ({ ...prev, startDate: val }));
-    if (isValidDate(val)) setErrors((prev) => {
-      const next = { ...prev }; delete next.startDate; return next;
-    });
+    if (isValidDate(val)) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next.startDate;
+        return next;
+      });
+    }
+  };
+
+  const handleBizNumberChange = (e) => {
+    const val = e.target.value.replace(/[^\d]/g, '').slice(0, 10);
+    setForm((prev) => ({ ...prev, businessNumber: val }));
+    if (isValidBizNumber(val)) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next.businessNumber;
+        return next;
+      });
+    }
   };
 
   const handleManagerPhoneChange = (e) => {
@@ -80,9 +96,13 @@ const CompanySignUpPage = ({ onBack }) => {
     if (val.length === 11) val = val.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
     else if (val.length >= 7) val = val.replace(/(\d{3})(\d{3,4})/, '$1-$2');
     setForm((prev) => ({ ...prev, managerPhone: val }));
-    if (isValidPhone(val)) setErrors((prev) => {
-      const next = { ...prev }; delete next.managerPhone; return next;
-    });
+    if (isValidPhone(val)) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next.managerPhone;
+        return next;
+      });
+    }
   };
 
   const handleEmailCheck = () => {
@@ -92,107 +112,63 @@ const CompanySignUpPage = ({ onBack }) => {
     }
 
     const isDuplicate = form.email === 'test@company.com';
-    setModal({
-      type: isDuplicate ? 'error' : 'success',
-      title: isDuplicate ? '중복된 이메일' : '사용 가능',
-      message: isDuplicate ? '이미 등록된 이메일입니다.' : '사용 가능한 이메일입니다.',
-      onConfirm: () => {
-        setEmailChecked(!isDuplicate);
-        setModal(null);
-      },
-    });
+    if (isDuplicate) {
+      showModal('error', '중복된 이메일', '이미 등록된 이메일입니다.');
+    } else {
+      showModal('success', '사용 가능', '사용 가능한 이메일입니다.', () => {
+        setEmailChecked(true);
+      });
+    }
   };
 
   const handleBizCheck = () => {
     if (!isValidBizNumber(form.businessNumber)) {
-      setModal({
-        type: 'error',
-        title: '형식 오류',
-        message: '숫자 10자리로 입력해주세요.',
-        onConfirm: () => setModal(null),
-      });
+      showModal('error', '형식 오류', '숫자 10자리로 입력해주세요.');
       return;
     }
 
     if (form.businessNumber !== '1234567890') {
-      setModal({
-        type: 'error',
-        title: '인증 실패',
-        message: '유효하지 않은 사업자등록번호입니다.',
-        onConfirm: () => setModal(null),
-      });
+      showModal('error', '인증 실패', '유효하지 않은 사업자등록번호입니다.');
       return;
     }
 
-    setModal({
-      type: 'success',
-      title: '인증 성공',
-      message: '사업자등록번호가 인증되었습니다.',
-      onConfirm: () => {
-        setBizVerified(true);
-        setModal(null);
-      },
+    showModal('success', '인증 성공', '사업자등록번호가 인증되었습니다.', () => {
+      setBizVerified(true);
     });
   };
 
   const handleNext = () => {
-    const newErrors = {};
+    let newErrors = {};
 
     if (step === 0) {
-      if (!validateEmail(form.email)) newErrors.email = '이메일 형식이 올바르지 않습니다.';
-      else if (!emailChecked) {
-        setModal({
-          type: 'error',
-          title: '중복확인 필요',
-          message: '이메일 중복확인을 해주세요.',
-          onConfirm: () => setModal(null),
-        });
+      newErrors = validateCompanyStep0(form, emailChecked);
+      if (newErrors.email === '이메일 중복확인을 해주세요.') {
+        showModal('error', '중복확인 필요', newErrors.email);
         return;
       }
-
-      if (!validatePassword(form.password)) newErrors.password = '8자 이상, 영문+숫자+특수문자 포함';
-      if (form.password !== form.passwordCheck) newErrors.passwordCheck = '비밀번호가 일치하지 않습니다.';
     }
 
     if (step === 1) {
-      if (!form.companyName) newErrors.companyName = '기업명을 입력해주세요.';
-      if (!form.ceoName) newErrors.ceoName = '대표자명을 입력해주세요.';
-      if (!isValidDate(form.startDate)) newErrors.startDate = 'YYYY-MM-DD 형식으로 입력해주세요.';
-      if (!form.businessNumber) newErrors.businessNumber = '사업자등록번호를 입력해주세요.';
-      if (!bizVerified) {
-        setModal({
-          type: 'error',
-          title: '인증 필요',
-          message: '사업자등록번호 인증을 완료해주세요.',
-          onConfirm: () => setModal(null),
-        });
+      newErrors = validateCompanyStep1(form, bizVerified);
+      if (newErrors.businessNumber === '사업자등록번호 인증이 필요합니다.') {
+        showModal('error', '인증 필요', newErrors.businessNumber);
         return;
       }
-      if (form.companyDesc.length < 50) newErrors.companyDesc = '기업 소개는 최소 50자 이상 입력해주세요.';
     }
 
     setErrors(newErrors);
-    if (Object.keys(newErrors).length === 0) setStep((prev) => prev + 1);
+    if (Object.keys(newErrors).length === 0) {
+      setStep((prev) => prev + 1);
+    }
   };
 
   const handleSubmit = () => {
-    const newErrors = {};
-
-    if (!form.managerName) newErrors.managerName = '담당자 성함을 입력해주세요.';
-    if (!isValidPhone(form.managerPhone)) newErrors.managerPhone = '전화번호 형식이 올바르지 않습니다.';
-    if (!validateEmail(form.managerEmail)) newErrors.managerEmail = '이메일 형식이 올바르지 않습니다.';
-
+    const newErrors = validateCompanyStep2(form);
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      setModal({
-        type: 'success',
-        title: '회원가입 완료',
-        message: '정상적으로 회원가입이 완료되었습니다.',
-        onConfirm: () => {
-          setModal(null);
-          navigate('/login');
-        },
+      showModal('success', '회원가입 완료', '정상적으로 회원가입이 완료되었습니다.', () => {
+        navigate('/login');
       });
     }
   };
