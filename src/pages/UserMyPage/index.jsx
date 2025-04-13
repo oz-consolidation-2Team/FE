@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import JobList, { dummyData } from '../RecruitmentInfo/JobList';
-
+import JobPosting from './JobPosting';
+import './UserInfoPage.scss';
 function UserMyPage() {
   const navigate = useNavigate();
 
@@ -21,10 +21,7 @@ function UserMyPage() {
         >
           간단 이력서 작성하기
         </button>
-        <section>
-          <h3>내가 지원한 공고</h3>
-          <JobList jobs={dummyData.slice(0, 2)} />
-        </section>
+        <JobPosting />
       </section>
     </div>
   );

@@ -7,7 +7,7 @@ const Header = () => {
 
   // 임시 로그인 상태 확인
   const user = {
-    isLoggedIn: false, // false 비로그인
+    isLoggedIn: true, // false 비로그인
     type: 'user', // 'user'는 개인, 'company' 기업
   };
 
