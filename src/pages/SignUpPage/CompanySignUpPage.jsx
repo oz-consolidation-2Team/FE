@@ -1,3 +1,4 @@
+import { verifyBusinessNumber } from '@/apis/companyApi';
 import React, { useState } from 'react';
 import { FaBuilding } from 'react-icons/fa';
 import { LiaEyeSolid, LiaEyeSlashSolid } from 'react-icons/lia';
@@ -121,20 +122,33 @@ const CompanySignUpPage = () => {
     }
   };
 
-  const handleBizCheck = () => {
-    if (!isValidBizNumber(form.businessNumber)) {
-      showModal('error', '형식 오류', '숫자 10자리로 입력해주세요.');
-      return;
+  const handleBizCheck = async () => {
+    const { businessNumber, startDate, ceoName } = form;
+  
+    try {
+      const result = await verifyBusinessNumber(
+        businessNumber,
+        startDate.replace(/-/g, ''),
+        ceoName
+      );
+  
+      console.log('📦 API 응답:', result);
+  
+      const status = result.data?.[0];
+  
+      // ✅ 여기 수정 포인트!
+      if (!status || status.valid !== "01") {
+        showModal('error', '인증 실패', '유효하지 않은 사업자등록번호입니다.');
+        return;
+      }
+  
+      showModal('success', '인증 성공', '유효한 사업자등록번호입니다.', () => {
+        setBizVerified(true);
+      });
+    } catch (err) {
+      console.error('사업자 인증 에러:', err);
+      showModal('error', '서버 오류', '국세청과의 연결에 실패했습니다.');
     }
-
-    if (form.businessNumber !== '1234567890') {
-      showModal('error', '인증 실패', '유효하지 않은 사업자등록번호입니다.');
-      return;
-    }
-
-    showModal('success', '인증 성공', '사업자등록번호가 인증되었습니다.', () => {
-      setBizVerified(true);
-    });
   };
 
   const handleNext = () => {
@@ -264,7 +278,7 @@ const CompanySignUpPage = () => {
             <div className="form_group">
               <label>사업자등록번호</label>
               <div className="input_row">
-              <input name="businessNumber" value={form.businessNumber} onChange={handleBizNumberChange} />
+              <input name="businessNumber" value={form.businessNumber} onChange={handleBizNumberChange} disabled={bizVerified} />
                 <button
                   type="button"
                   onClick={handleBizCheck}
