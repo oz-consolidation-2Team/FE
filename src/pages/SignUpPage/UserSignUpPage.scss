@@ -1,170 +1,290 @@
-$user-main: #FFA82F;
-$user-deep: #E27100;
-$text-dark: #333;
-$text-light: #888;
+// src/pages/SignUpPage/UserSignUpPage.scss
+@use '@/utils/variables' as *;
 
-.user_signup_container {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  background-color: #fff;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-
-.user_signup_form {
+.user_signup_page {
+  margin-top: 60px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  gap: 28px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px 16px;
+  border-radius: 20px;
+
+  .signup_card {
+    max-width: 720px;
+    width: 100%;
+    background: white;
+    border-radius: 16px;
+    padding: 40px 32px;
+  }
 
   .signup_title {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 12px;
+    gap: 8px;
+    margin-bottom: 60px;
 
     .icon {
-      font-size: 32px;
-      color: $user-main;
+      font-size: 28px;
+      color: $orange;
     }
 
     h2 {
-      font-size: 24px;
-      font-weight: 700;
-      color: $user-main;
+      font-size: 30px;
+      font-weight: 750;
+      color: $orange;
     }
-  }
-
-  .form_input {
-    width: 100%;
-    height: 48px;
-    padding: 0 12px;
-    font-size: 15px;
-    line-height: 1.2;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
   }
 
   .form_group {
-    display: flex;
-    flex-direction: column;
+    margin-bottom: 20px;
     text-align: left;
+    position: relative;
 
     label {
-      font-size: 14px;
+      display: block;
       margin-bottom: 6px;
+      font-size: 14px;
       font-weight: 500;
-      color: $text-dark;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      height: 48px;
+      padding: 0 12px;
+      padding-right: 44px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      box-sizing: border-box;
+
+      &::placeholder {
+        color: #aaa;
+      }
+
+      &.error {
+        border-color: #e53935;
+      }
+    }
+
+    .eye_icon {
+      position: absolute;
+      right: 12px;
+      top: 36px;
+      font-size: 20px;
+      color: #999;
+      cursor: pointer;
+      z-index: 1;
+
+      &:hover {
+        color: $orange;
+      }
     }
 
     .error_msg {
-      margin-top: 6px;
       font-size: 13px;
       color: #e53935;
-    }
-  }
-
-  .email_row {
-    display: flex;
-    gap: 10px;
-
-    input {
-      flex: 1;
+      margin-top: 6px;
     }
 
-    button {
-      height: 48px;
-      padding: 0 16px;
-      font-size: 14px;
-      background: $user-main;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-
-      &:hover {
-        background: $user-deep;
-      }
-    }
-  }
-
-  .password_group {
-    .password_row {
-      position: relative;
+    .input_row {
+      display: flex;
+      gap: 8px;
 
       input {
-        padding-right: 44px;
+        flex: 1;
       }
 
-      .eye_icon {
-        position: absolute;
-        top: 50%;
-        right: 12px;
-        transform: translateY(-50%);
-        font-size: 20px;
-        color: $text-light;
+      button {
+        padding: 0 14px;
+        height: 48px;
+        font-size: 13px;
+        background-color: $orange;
+        color: white;
+        border: none;
+        border-radius: 8px;
         cursor: pointer;
 
         &:hover {
-          color: $user-main;
+          background-color: $deep-orange;
         }
       }
     }
-  }
 
-  .gender_group {
-    .gender_buttons {
+    .gender_group {
       display: flex;
-      gap: 10px;
+      gap: 12px;
+      margin-top: 8px;
 
       button {
         flex: 1;
-        height: 48px;
-        font-size: 15px;
+        height: 44px;
         border: 1px solid #ccc;
         border-radius: 8px;
-        background: #f5f5f5;
-        color: $text-dark;
+        background-color: #fff;
         cursor: pointer;
-        transition: 0.2s ease;
+        font-size: 14px;
 
-        &.active {
-          background: $user-main;
+        &.selected {
+          background-color: $orange;
+          border-color: $orange;
           color: white;
-          border-color: $user-main;
-          font-weight: bold;
+        }
+
+        &:hover {
+          border-color: $orange;
+          color: $orange;
         }
       }
     }
-  }
 
-  .checkbox_group {
-    label {
+    .checkbox_group {
       display: flex;
       align-items: center;
+      gap: 8px;
       font-size: 14px;
-      color: $text-dark;
+      color: #333;
 
-      input {
-        margin-right: 10px;
+      label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        input[type='checkbox'] {
+          width: 16px;
+          height: 16px;
+          margin: 0;
+        }
+      }
+
+      .error_msg {
+        margin-top: 6px;
+        font-size: 13px;
+        color: #e53935;
       }
     }
   }
 
-  .submit_btn {
-    margin-top: 10px;
-    height: 48px;
-    padding: 0 16px;
-    font-size: 16px;
-    background-color: $user-main;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+  .section_box {
+    margin-bottom: 32px;
 
-    &:hover {
-      background-color: $user-deep;
+    .section_title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #333;
+
+      span {
+        font-size: 13px;
+        font-weight: normal;
+        color: #888;
+        margin-left: 6px;
+      }
+    }
+
+    .error_msg {
+      font-size: 13px;
+      color: #e53935;
+      margin-top: 6px;
     }
   }
-}
+
+  .checkbox_grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .check_btn {
+    padding: 10px 16px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &.selected {
+      background-color: $orange;
+      color: white;
+      border-color: $orange;
+    }
+
+    &:hover {
+      background-color: #ffe0ba;
+    }
+  }
+
+  .button_group {
+    margin-top: 28px;
+    display: flex;
+    gap: 12px;
+
+    .prev_btn,
+    .next_btn {
+      flex: 1;
+      height: 48px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .prev_btn {
+      background-color: #ccc;
+      color: #333;
+    }
+
+    .next_btn {
+      background-color: $orange;
+      color: white;
+
+      &:hover {
+        background-color: $deep-orange;
+      }
+
+      &:disabled {
+        background-color: #ddd;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .step_indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 60px;
+
+    .step {
+      padding: 0 16px;
+      height: 36px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 36px;
+      text-align: center;
+      background-color: #eee;
+      color: #888;
+      white-space: nowrap;
+
+      &.active {
+        background-color: $orange;
+        color: white;
+      }
+    }
+
+    .step_line {
+      width: 24px;
+      height: 2px;
+      background-color: #ccc;
+    }
+  }
+} 
