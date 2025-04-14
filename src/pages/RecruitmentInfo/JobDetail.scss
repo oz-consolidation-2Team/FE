@@ -1,3 +1,5 @@
+@use "../../utils/variables" as v;
+
 .job-detail {
   max-width: 800px;
   margin: 0 auto;
@@ -73,7 +75,7 @@
     .apply-button {
       flex-grow: 1;
       padding: 10px 24px;
-      background-color: #419D53;
+      background-color: v.$green;
       color: white;
       border: none;
       border-radius: 6px;
