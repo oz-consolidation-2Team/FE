@@ -33,7 +33,7 @@ function UserInfo() {
           <div className="user_profile_img">
             <p>
               이미지를
-              <br /> 등록해주세요
+              <br /> 등록해주세요!!!!!!!!
             </p>
           </div>
           <div className="user_profile_text">
