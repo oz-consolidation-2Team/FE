@@ -1,5 +1,4 @@
-import BookmarkJobCard from './BookmarkJobCard';
-
+import BookmarkJobCard from './BookMarkJobCard.jsx';
 import './JobRecommend.scss';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import { useState } from 'react';
