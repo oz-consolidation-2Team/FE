@@ -146,6 +146,7 @@ const CompanySignUpPage = () => {
         setBizVerified(true);
       });
     } catch (err) {
+      console.error('사업자 인증 에러:', err);
       showModal('error', '서버 오류', '국세청과의 연결에 실패했습니다.');
     }
   };

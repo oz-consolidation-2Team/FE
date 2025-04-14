@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import FindUserEmailPage from './FindUserEmailPage';
 import FindCompanyEmailPage from './FindCompanyEmailPage';
 import { FaUser, FaBuilding } from 'react-icons/fa';
+import { RiMailSendLine } from 'react-icons/ri';
 import './FindEmailPage.scss';
 
 const FindEmailPage = () => {
@@ -11,7 +12,10 @@ const FindEmailPage = () => {
     <div className="findemail_container">
       {!type ? (
         <div className="findemail_select_box">
-          <h2 className="findemail_title">이메일 찾기</h2>
+          <div className="findemail_title">
+            <RiMailSendLine className="icon" />
+            <h2>이메일 찾기</h2>
+          </div>
           <p className="findemail_subtitle">가입 유형을 선택해주세요.</p>
 
           <div className="findemail_card_area">

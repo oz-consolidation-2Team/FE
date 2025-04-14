@@ -1,133 +1,156 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaUser } from 'react-icons/fa';
-import ErrorMessage from '@/components/common/ErrorMessage';
+import LabeledInput from '@/components/common/LabeledInput';
 import Modal from '@/components/common/Modal';
-import { validateName, isValidPhone, isValidBirth } from '@/utils/validation';
+import {
+  validateName,
+  isValidPhone,
+  isValidBirth,
+} from '@/utils/validation';
 import './FindUserEmailPage.scss';
 
 const FindUserEmailPage = ({ onBack }) => {
-  const [form, setForm] = useState({ name: '', phone: '', birth: '' });
+  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    name: '',
+    phone: '',
+    birth: '',
+  });
   const [errors, setErrors] = useState({});
   const [modal, setModal] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    let newValue = value;
+    setForm((prev) => ({ ...prev, [name]: value }));
 
-    if (name === 'phone') {
-      newValue = value.replace(/[^0-9]/g, '').slice(0, 11);
-      newValue = newValue.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-    }
-
-    if (name === 'birth') {
-      newValue = value.replace(/[^0-9]/g, '').slice(0, 8);
-      newValue = newValue.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-    }
-
-    const updatedForm = { ...form, [name]: newValue };
-
-    const updatedErrors = { ...errors };
-    if (name === 'name' && validateName(newValue)) delete updatedErrors.name;
-    if (name === 'phone' && isValidPhone(newValue)) delete updatedErrors.phone;
-    if (name === 'birth' && isValidBirth(newValue)) delete updatedErrors.birth;
-
-    setForm(updatedForm);
-    setErrors(updatedErrors);
+    setErrors((prev) => {
+      const next = { ...prev };
+      if (name === 'name' && validateName(value)) delete next.name;
+      if (name === 'phone' && isValidPhone(value)) delete next.phone;
+      if (name === 'birth' && isValidBirth(value)) delete next.birth;
+      return next;
+    });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handlePhoneChange = (e) => {
+    let val = e.target.value.replace(/[^\d]/g, '').slice(0, 11);
+    if (val.length === 11) val = val.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    else if (val.length >= 7) val = val.replace(/(\d{3})(\d{3,4})/, '$1-$2');
+    setForm((prev) => ({ ...prev, phone: val }));
+    if (isValidPhone(val)) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next.phone;
+        return next;
+      });
+    }
+  };
 
+  const handleBirthChange = (e) => {
+    let val = e.target.value.replace(/[^\d]/g, '').slice(0, 8);
+    if (val.length >= 5) val = val.replace(/(\d{4})(\d{2})(\d{0,2})/, '$1-$2-$3').replace(/-$/, '');
+    setForm((prev) => ({ ...prev, birth: val }));
+    if (isValidBirth(val)) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next.birth;
+        return next;
+      });
+    }
+  };
+
+  const handleSearch = () => {
     const newErrors = {};
-    if (!validateName(form.name)) newErrors.name = '이름을 입력해 주세요.';
+    if (!validateName(form.name)) newErrors.name = '이름을 입력해주세요.';
     if (!isValidPhone(form.phone)) newErrors.phone = '전화번호 형식이 올바르지 않습니다.';
     if (!isValidBirth(form.birth)) newErrors.birth = '생년월일 형식이 올바르지 않습니다.';
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
 
-    // 💡 실제 API 연동은 나중에 연결
+    const dummyUser = {
+      name: '개인',
+      phone: '010-0000-0000',
+      birth: '1111-11-11',
+      email: 'user@qwe.qwe',
+    };
+
+    const birthFormatted =
+      form.birth.length === 10
+        ? form.birth
+        : form.birth.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+
     if (
-      form.name === '홍길동' &&
-      form.phone === '010-1234-5678' &&
-      form.birth === '1990-01-01'
+      form.name === dummyUser.name &&
+      form.phone === dummyUser.phone &&
+      birthFormatted === dummyUser.birth
     ) {
       setModal({
         type: 'success',
-        message: '가입된 이메일은 "gildong@email.com" 입니다.',
-        onClose: () => setModal(null),
+        title: '이메일 찾기 완료',
+        message: `회원님의 이메일은 ${dummyUser.email} 입니다.`,
+        onConfirm: () => {
+          setModal(null);
+          navigate('/login'); // ✅ 로그인 페이지로 이동
+        },
       });
     } else {
       setModal({
         type: 'error',
-        message: '일치하는 회원 정보를 찾을 수 없습니다.',
-        onClose: () => setModal(null),
+        title: '일치하는 정보 없음',
+        message: '입력하신 정보와\n일치하는 이메일을 찾을 수 없습니다.',
+        onConfirm: () => setModal(null),
       });
     }
   };
 
   return (
-    <div className="finduser_page">
-      <div className="finduser_card">
-        <div className="finduser_title">
+    <div className="find_email_page">
+      <div className="find_email_card">
+        <div className="title">
           <FaUser className="icon" />
-          <h2>개인 회원 이메일 찾기</h2>
+          <h2>이메일 찾기</h2>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="form_group">
-            <label>이름</label>
-            <input
-              type="text"
-              name="name"
-              placeholder="이름을 입력해 주세요"
-              value={form.name}
-              onChange={handleChange}
-              className={errors.name ? 'error' : ''}
-            />
-            {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
-          </div>
+        <LabeledInput
+          label="이름"
+          name="name"
+          value={form.name}
+          onChange={handleChange}
+          placeholder="이름을 입력해 주세요"
+          error={errors.name}
+        />
 
-          <div className="form_group">
-            <label>전화번호</label>
-            <input
-              type="text"
-              name="phone"
-              placeholder="숫자만 입력해 주세요"
-              value={form.phone}
-              onChange={handleChange}
-              className={errors.phone ? 'error' : ''}
-            />
-            {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
-          </div>
+        <LabeledInput
+          label="전화번호"
+          name="phone"
+          value={form.phone}
+          onChange={handlePhoneChange}
+          placeholder="숫자만 입력해 주세요"
+          error={errors.phone}
+          inputMode="numeric"
+        />
 
-          <div className="form_group">
-            <label>생년월일</label>
-            <input
-              type="text"
-              name="birth"
-              placeholder="숫자만 입력해 주세요"
-              value={form.birth}
-              onChange={handleChange}
-              className={errors.birth ? 'error' : ''}
-            />
-            {errors.birth && <ErrorMessage>{errors.birth}</ErrorMessage>}
-          </div>
+        <LabeledInput
+          label="생년월일"
+          name="birth"
+          value={form.birth}
+          onChange={handleBirthChange}
+          placeholder="숫자만 입력해 주세요"
+          error={errors.birth}
+          inputMode="numeric"
+        />
 
-          <div className="button_row">
-            <button type="button" className="back_btn" onClick={onBack}>
-              뒤로가기
-            </button>
-            <button type="submit" className="submit_btn">
-              이메일 찾기
-            </button>
+        <div className="button_group">
+          <div className="dual_buttons">
+            <button className="back_btn" onClick={onBack}>뒤로가기</button>
+            <button className="next_btn" onClick={handleSearch}>이메일 찾기</button>
           </div>
-        </form>
+        </div>
+
+        {modal && <Modal {...modal} />}
       </div>
-
-      {modal && <Modal {...modal} />}
     </div>
   );
 };
