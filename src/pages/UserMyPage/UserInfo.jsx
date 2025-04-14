@@ -16,12 +16,6 @@ function UserInfo({ userInfo }) {
           개인정보 수정하기
         </p>
         <div className="user_detail">
-          <div className="user_profile_img">
-            <p>
-              이미지를
-              <br /> 등록해주세요
-            </p>
-          </div>
           <div className="user_profile_text">
             <p className="info_text"> 생일 : {userInfo.birthday}</p>
             <p className="info_text"> 전화번호 : {userInfo.phone_number}</p>

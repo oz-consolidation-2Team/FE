@@ -2,6 +2,7 @@ import JobPosting from './JobPosting';
 import './UserInfoPage.scss';
 import UserInfo from './UserInfo';
 import JobRecommend from './JobRecommend';
+import AgePopularity from './AgePopularity';
 
 function UserMyPage() {
   //더미데이터
@@ -27,6 +28,7 @@ function UserMyPage() {
       <UserInfo userInfo={userInfo} />
       <JobPosting userInfo={userInfo} />
       <JobRecommend userInfo={userInfo} />
+      <AgePopularity userInfo={userInfo} />
     </div>
   );
 }

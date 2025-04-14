@@ -1,18 +1,18 @@
 @use '@/utils/variables' as *;
 
-.job_recommend {
-  margin-top: 40px;
+.age_popularity {
+  margin-top: -10px;
+  margin-bottom: 40px;
   width: 100%;
   height: 350px;
 
-  .job_recommend_title {
-    margin-top: 70px;
-    margin-bottom: -15px;
+  .age_popularity_title {
     font-size: 20px;
     color: $deep-green;
+    margin-bottom: -15px;
   }
 
-  .job_recommend_btn_group {
+  .age_popularity_btn_group {
     width: 101%;
     display: flex;
     justify-content: space-between;
@@ -20,20 +20,20 @@
     position: relative;
     top: 93px;
     right: 15px;
-    .reco_left_btn,
-    .reco_right_btn {
+    .age_left_btn,
+    .age_right_btn {
       font-size: 35px;
       cursor: pointer;
       color: $green;
     }
   }
   /* 슬라이더 구조*/
-  .reco_slider-container {
+  .age_slider-container {
     width: 98%;
     overflow: hidden;
     display: flex;
 
-    .reco_slider-wrapper {
+    .age_slider-wrapper {
       width: fit-content;
       display: flex;
       justify-content: center;
