@@ -1,3 +1,5 @@
+@use "../../utils/variables" as v;
+
 .search-filters {
   display: flex;
   justify-content: space-between;
@@ -27,7 +29,7 @@
 
 .search-filters button {
   flex: 0 0 auto;
-  background-color: #3c8942;
+  background-color: v.$orange;
   color: #fff;
   border: none;
   padding: 10px 18px;
@@ -39,7 +41,7 @@
 }
 
 .search-filters button:hover {
-  background-color: #2f6f35;
+  background-color: v.$deep-orange;
 }
 
 @media (max-width: 600px) {

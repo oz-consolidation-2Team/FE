@@ -13,12 +13,16 @@ import CompanyInfoEdit from './pages/CompanyInfoEdit';
 import UserMyPage from './pages/UserMyPage';
 import Layout from './components/Layout';
 import JobDetail from './pages/RecruitmentInfo/JobDetail';
+import LoginPage from './pages/LoginPage';
+import AboutCompany from './pages/AboutCompany/About';
 
 function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<MainPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/about" element={<AboutCompany />} />
         <Route path="/recruitment_info" element={<RecruitmentInfo />} />
         <Route path="/mypage/user" element={<UserMyPage />} />
         <Route path="/search-results" element={<SearchResults />} />

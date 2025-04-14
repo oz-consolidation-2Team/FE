@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { FaStar, FaRegStar } from 'react-icons/fa';
 import './JobDetail.scss';
 
 const JobDetail = () => {
@@ -7,6 +8,12 @@ const JobDetail = () => {
   const job = location.state?.job;
 
   if (!job) return <div>로딩 중...</div>;
+
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  const handleBookmarkClick = () => {
+    setIsBookmarked(prev => !prev);
+  };
 
   return (
     <div className="job-detail">
@@ -87,6 +94,13 @@ const JobDetail = () => {
 
       <div className="job-action">
         <button className="apply-button">지원하기</button>
+        <div className="bookmark-button">
+          {isBookmarked ? (
+            <FaStar className="star_icon filled" onClick={handleBookmarkClick} />
+          ) : (
+            <FaRegStar className="star_icon" onClick={handleBookmarkClick} />
+          )}
+        </div>
       </div>
     </div>
   );

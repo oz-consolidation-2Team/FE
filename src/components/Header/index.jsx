@@ -1,17 +1,18 @@
 import React from 'react';
 import './Header.scss';
 import { useNavigate } from 'react-router-dom';
+import useUserStore from '@/utils/userStore';
 
 const Header = () => {
   const navigate = useNavigate();
-
-  // 임시 로그인 상태 확인
-  const user = {
-    isLoggedIn: false, // false 비로그인
-    type: 'user', // 'user'는 개인, 'company' 기업
-  };
+  const { user, logout } = useUserStore();
 
   const goTo = (path) => () => navigate(path);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <header className="gnb">
@@ -27,7 +28,7 @@ const Header = () => {
         </div>
 
         <nav className="menu">
-          {user.isLoggedIn ? (
+          {user ? (
             <>
               {user.type === 'user' && (
                 <button className="mypage_btn" onClick={goTo('/mypage/user')}>
@@ -39,7 +40,9 @@ const Header = () => {
                   기업페이지
                 </button>
               )}
-              <button className="logout_btn">로그아웃</button>
+              <button className="logout_btn" onClick={handleLogout}>
+                로그아웃
+              </button>
             </>
           ) : (
             <>

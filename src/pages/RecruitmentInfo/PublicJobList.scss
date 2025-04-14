@@ -1,0 +1,65 @@
+@use "../../utils/variables" as v;
+
+.public-job-section {
+    padding: 0px;
+    max-width: 1080px; 
+    margin: 0 auto; 
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: v.$green;
+    }
+  
+    .public-job-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, auto);
+      gap: 20px;
+      max-width: 100%;
+    }
+  
+    .page-buttons {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 16px;
+  
+      button {
+        background-color: v.$green;
+        color: white;
+        border: none;
+        padding: 5px 10px;;
+        font-size: 18px;
+        border-radius: 8px;
+        cursor: pointer;
+  
+        &:disabled {
+          background-color: #ddd;
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    .job-title {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .region {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+}
