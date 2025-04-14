@@ -14,7 +14,6 @@
     border-radius: 16px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
   }
 
   .login_title {
@@ -22,11 +21,13 @@
     text-align: center;
     font-weight: 700;
     color: $gray-dark;
+    margin-bottom: 24px;
   }
 
   .user_type_toggle {
     display: flex;
     gap: 12px;
+    margin-bottom: 24px;
 
     button {
       flex: 1;
@@ -79,7 +80,16 @@
         border-color: $orange;
         outline: none;
       }
+
+      &.error {
+        border-color: #e53935;
+      }
     }
+  }
+
+  // ✅ 비밀번호 input만 위 여백 추가
+  .input_group + .input_group {
+    margin-top: 12px;
   }
 
   .password_wrapper {
@@ -101,6 +111,7 @@
   }
 
   .login_btn {
+    margin-top: 20px;
     height: 48px;
     font-size: 16px;
     font-weight: 700;
@@ -135,6 +146,7 @@
     font-size: 14px;
     font-weight: 500;
     color: $gray-text;
+    margin-top: 20px;
 
     span {
       cursor: pointer;
@@ -159,6 +171,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-top: 20px;
 
     button {
       height: 48px;

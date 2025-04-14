@@ -20,22 +20,22 @@
     justify-content: center;
     gap: 8px;
     margin-bottom: 10px;
-  
+
     .icon {
       font-size: 30px;
     }
-  
+
     h2 {
       font-size: 28px;
       font-weight: 700;
-      color: #333;
+      color: $gray-dark;
       margin: 0;
     }
   }
 
   .findemail_subtitle {
     font-size: 14px;
-    color: #777;
+    color: $gray-text;
     margin-bottom: 32px;
   }
 
@@ -54,10 +54,10 @@
       padding: 60px 20px;
       border-radius: 16px;
       background-color: #fff;
-      cursor: pointer;
       border: 2px solid #e0e0e0;
-      transition: all 0.25s ease;
+      cursor: pointer;
       text-align: center;
+      transition: all 0.25s ease;
 
       display: flex;
       flex-direction: column;
@@ -72,14 +72,14 @@
       strong {
         font-size: 16px;
         font-weight: 600;
-        color: #333;
+        color: $gray-dark;
         margin-bottom: 8px;
         transition: color 0.3s ease;
       }
 
       p {
         font-size: 13px;
-        color: #666;
+        color: $gray-text;
         line-height: 1.4;
         transition: color 0.3s ease;
       }

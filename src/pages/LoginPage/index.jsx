@@ -4,13 +4,14 @@ import { LiaEyeSolid, LiaEyeSlashSolid } from 'react-icons/lia';
 import { FaUser, FaBuilding } from 'react-icons/fa';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import Modal from '@/components/common/Modal';
+import LabeledInput from '@/components/common/LabeledInput';
 import { validateEmail, validatePassword } from '@/utils/validation';
-import useUserStore from '@/utils/userStore'; // ✅ Zustand store import
+import useUserStore from '@/utils/userStore';
 import './LoginPage.scss';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { setUser } = useUserStore(); // ✅ 로그인 상태 저장 함수
+  const { setUser } = useUserStore();
 
   const [userType, setUserType] = useState('user');
   const [form, setForm] = useState({ email: '', password: '' });
@@ -43,7 +44,7 @@ const LoginPage = () => {
     const isMatch = form.email === current.email && form.password === current.password;
 
     if (isMatch) {
-      setUser({ email: form.email, type: userType }); // ✅ 상태 저장
+      setUser({ email: form.email, type: userType });
       setModal({
         type: 'success',
         message: '로그인 완료!',
@@ -85,17 +86,15 @@ const LoginPage = () => {
           </button>
         </div>
 
-        <div className="input_group">
-          <label>이메일</label>
-          <input
-            type="text"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            placeholder="이메일을 입력하세요"
-          />
-          {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
-        </div>
+        <LabeledInput
+          label="이메일"
+          name="email"
+          value={form.email}
+          onChange={handleChange}
+          placeholder="이메일을 입력하세요"
+          error={errors.email}
+          className="no_margin"
+        />
 
         <div className="input_group">
           <label>비밀번호</label>
@@ -107,6 +106,7 @@ const LoginPage = () => {
               onChange={handleChange}
               onKeyDown={handleEnterKey}
               placeholder="비밀번호를 입력하세요"
+              className={errors.password ? 'error' : ''}
             />
             <span onClick={() => setShowPassword((prev) => !prev)}>
               {showPassword ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}

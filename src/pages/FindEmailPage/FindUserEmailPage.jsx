@@ -20,6 +20,13 @@ const FindUserEmailPage = ({ onBack }) => {
   const [errors, setErrors] = useState({});
   const [modal, setModal] = useState(null);
 
+  const dummyUser = {
+    name: '개인',
+    phone: '010-0000-0000',
+    birth: '1111-11-11',
+    email: 'user@qwe.qwe',
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -37,72 +44,48 @@ const FindUserEmailPage = ({ onBack }) => {
     let val = e.target.value.replace(/[^\d]/g, '').slice(0, 11);
     if (val.length === 11) val = val.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
     else if (val.length >= 7) val = val.replace(/(\d{3})(\d{3,4})/, '$1-$2');
-    setForm((prev) => ({ ...prev, phone: val }));
-    if (isValidPhone(val)) {
-      setErrors((prev) => {
-        const next = { ...prev };
-        delete next.phone;
-        return next;
-      });
-    }
+    handleChange({ target: { name: 'phone', value: val } });
   };
 
   const handleBirthChange = (e) => {
     let val = e.target.value.replace(/[^\d]/g, '').slice(0, 8);
     if (val.length >= 5) val = val.replace(/(\d{4})(\d{2})(\d{0,2})/, '$1-$2-$3').replace(/-$/, '');
-    setForm((prev) => ({ ...prev, birth: val }));
-    if (isValidBirth(val)) {
-      setErrors((prev) => {
-        const next = { ...prev };
-        delete next.birth;
-        return next;
-      });
-    }
+    handleChange({ target: { name: 'birth', value: val } });
   };
 
-  const handleSearch = () => {
+  const validateForm = () => {
     const newErrors = {};
     if (!validateName(form.name)) newErrors.name = '이름을 입력해주세요.';
     if (!isValidPhone(form.phone)) newErrors.phone = '전화번호 형식이 올바르지 않습니다.';
     if (!isValidBirth(form.birth)) newErrors.birth = '생년월일 형식이 올바르지 않습니다.';
+    return newErrors;
+  };
 
+  const handleSearch = () => {
+    const newErrors = validateForm();
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
-    const dummyUser = {
-      name: '개인',
-      phone: '010-0000-0000',
-      birth: '1111-11-11',
-      email: 'user@qwe.qwe',
-    };
+    const formattedBirth = form.birth.length === 10
+      ? form.birth
+      : form.birth.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
 
-    const birthFormatted =
-      form.birth.length === 10
-        ? form.birth
-        : form.birth.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-
-    if (
+    const isMatch =
       form.name === dummyUser.name &&
       form.phone === dummyUser.phone &&
-      birthFormatted === dummyUser.birth
-    ) {
-      setModal({
-        type: 'success',
-        title: '이메일 찾기 완료',
-        message: `회원님의 이메일은 ${dummyUser.email} 입니다.`,
-        onConfirm: () => {
-          setModal(null);
-          navigate('/login'); // ✅ 로그인 페이지로 이동
-        },
-      });
-    } else {
-      setModal({
-        type: 'error',
-        title: '일치하는 정보 없음',
-        message: '입력하신 정보와\n일치하는 이메일을 찾을 수 없습니다.',
-        onConfirm: () => setModal(null),
-      });
-    }
+      formattedBirth === dummyUser.birth;
+
+    setModal({
+      type: isMatch ? 'success' : 'error',
+      title: isMatch ? '이메일 찾기 완료' : '일치하는 정보 없음',
+      message: isMatch
+        ? `회원님의 이메일은 ${dummyUser.email} 입니다.`
+        : '입력하신 정보와\n일치하는 이메일을 찾을 수 없습니다.',
+      onConfirm: () => {
+        setModal(null);
+        if (isMatch) navigate('/login');
+      },
+    });
   };
 
   return (
@@ -121,7 +104,6 @@ const FindUserEmailPage = ({ onBack }) => {
           placeholder="이름을 입력해 주세요"
           error={errors.name}
         />
-
         <LabeledInput
           label="전화번호"
           name="phone"
@@ -131,7 +113,6 @@ const FindUserEmailPage = ({ onBack }) => {
           error={errors.phone}
           inputMode="numeric"
         />
-
         <LabeledInput
           label="생년월일"
           name="birth"

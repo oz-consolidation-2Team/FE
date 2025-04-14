@@ -3,7 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { FaBuilding } from 'react-icons/fa';
 import LabeledInput from '@/components/common/LabeledInput';
 import Modal from '@/components/common/Modal';
-import { validateName, isValidDate, isValidBizNumber } from '@/utils/validation';
+import {
+  validateName,
+  isValidDate,
+  isValidBizNumber,
+} from '@/utils/validation';
 import './FindCompanyEmailPage.scss';
 
 const FindCompanyEmailPage = ({ onBack }) => {
@@ -31,8 +35,11 @@ const FindCompanyEmailPage = ({ onBack }) => {
 
   const handleStartDateChange = (e) => {
     let val = e.target.value.replace(/[^\d]/g, '').slice(0, 8);
-    if (val.length >= 5) val = val.replace(/(\d{4})(\d{2})(\d{0,2})/, '$1-$2-$3').replace(/-$/, '');
+    if (val.length >= 5) {
+      val = val.replace(/(\d{4})(\d{2})(\d{0,2})/, '$1-$2-$3').replace(/-$/, '');
+    }
     setForm((prev) => ({ ...prev, startDate: val }));
+
     if (isValidDate(val)) {
       setErrors((prev) => {
         const next = { ...prev };
@@ -45,6 +52,7 @@ const FindCompanyEmailPage = ({ onBack }) => {
   const handleBizNumberChange = (e) => {
     const val = e.target.value.replace(/[^\d]/g, '').slice(0, 10);
     setForm((prev) => ({ ...prev, businessNumber: val }));
+
     if (isValidBizNumber(val)) {
       setErrors((prev) => {
         const next = { ...prev };
@@ -59,7 +67,6 @@ const FindCompanyEmailPage = ({ onBack }) => {
     if (!validateName(form.ceoName)) newErrors.ceoName = '대표자명을 입력해주세요.';
     if (!isValidDate(form.startDate)) newErrors.startDate = '개업년월일 형식이 올바르지 않습니다.';
     if (!isValidBizNumber(form.businessNumber)) newErrors.businessNumber = '사업자등록번호 형식이 올바르지 않습니다.';
-
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
@@ -70,20 +77,23 @@ const FindCompanyEmailPage = ({ onBack }) => {
       email: 'company@qwe.qwe',
     };
 
-    const formattedStartDate = form.startDate.length === 10
+    const formattedDate = form.startDate.length === 10
       ? form.startDate
       : form.startDate.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
 
     if (
       form.ceoName === dummyCompany.ceoName &&
-      form.businessNumber === dummyCompany.businessNumber &&
-      formattedStartDate === dummyCompany.startDate
+      formattedDate === dummyCompany.startDate &&
+      form.businessNumber === dummyCompany.businessNumber
     ) {
       setModal({
         type: 'success',
         title: '이메일 찾기 완료',
         message: `기업 이메일은 ${dummyCompany.email} 입니다.`,
-        onConfirm: () => navigate('/login'),
+        onConfirm: () => {
+          setModal(null);
+          navigate('/login');
+        },
       });
     } else {
       setModal({
