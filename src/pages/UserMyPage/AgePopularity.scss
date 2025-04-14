@@ -1,15 +1,15 @@
 @use '@/utils/variables' as *;
 
 .age_popularity {
-  margin-top: -10px;
-  margin-bottom: 40px;
+  margin-top: 50px;
+  margin-bottom: 50px;
   width: 100%;
-  height: 350px;
+  height: 200px;
 
   .age_popularity_title {
     font-size: 20px;
     color: $deep-green;
-    margin-bottom: -15px;
+    margin-bottom: -20px;
   }
 
   .age_popularity_btn_group {

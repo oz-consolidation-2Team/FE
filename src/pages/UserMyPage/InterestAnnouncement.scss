@@ -1,19 +1,18 @@
 @use '@/utils/variables' as *;
 
-.job_recommend {
-  margin-top: 40px;
-  margin-bottom: 30px;
+.interest_announcement {
+  margin-top: 50px;
+  margin-bottom: 10px;
   width: 100%;
-  height: 250px;
+  height: 200px;
 
-  .job_recommend_title {
-    margin-top: 70px;
-    margin-bottom: -20px;
+  .interest_announcement_title {
     font-size: 20px;
     color: $deep-green;
+    margin-bottom: -20px;
   }
 
-  .job_recommend_btn_group {
+  .interest_announcement_btn_group {
     width: 101%;
     display: flex;
     justify-content: space-between;
@@ -21,20 +20,20 @@
     position: relative;
     top: 93px;
     right: 15px;
-    .reco_left_btn,
-    .reco_right_btn {
+    .interest_left_btn,
+    .interest_right_btn {
       font-size: 35px;
       cursor: pointer;
       color: $green;
     }
   }
   /* 슬라이더 구조*/
-  .reco_slider-container {
+  .interest_slider-container {
     width: 98%;
     overflow: hidden;
     display: flex;
 
-    .reco_slider-wrapper {
+    .interest_slider-wrapper {
       width: fit-content;
       display: flex;
       justify-content: center;

@@ -1,10 +1,10 @@
 import BookMarkJobCard from '@/pages/UserMyPage/BookmarkJobCard';
-import './AgePopularity.scss';
+import './InterestAnnouncement.scss';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import { useState } from 'react';
 import { Bookmark } from './BookmarkDummy';
 
-function AgePopularity({ userInfo }) {
+function InterestAnnouncement({ userInfo }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlerPrev = () => {
@@ -21,15 +21,15 @@ function AgePopularity({ userInfo }) {
   const job = Bookmark;
 
   return (
-    <section className="age_popularity">
-      <h3 className="age_popularity_title">{userInfo.name}님 연령대에서 인기 있는 공고</h3>
-      <div className="age_popularity_btn_group">
-        <HiArrowCircleLeft className="age_left_btn" onClick={handlerPrev} />
-        <HiArrowCircleRight className="age_right_btn" onClick={handlerNext} />
+    <section className="interest_announcement">
+      <h3 className="interest_announcement_title">{userInfo.name}님 관심있을 만한 공고</h3>
+      <div className="interest_announcement_btn_group">
+        <HiArrowCircleLeft className="interest_left_btn" onClick={handlerPrev} />
+        <HiArrowCircleRight className="interest_right_btn" onClick={handlerNext} />
       </div>
-      <div className="age_slider-container">
+      <div className="interest_slider-container">
         <div
-          className="age_slider-wrapper"
+          className="interest_slider-wrapper"
           style={{ transform: `translateX(-${currentIndex * 317}px)` }}
         >
           {job.map((job) => (
@@ -41,4 +41,4 @@ function AgePopularity({ userInfo }) {
   );
 }
 
-export default AgePopularity;
+export default InterestAnnouncement;
