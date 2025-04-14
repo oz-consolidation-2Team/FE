@@ -1,10 +1,10 @@
 import BookmarkJobCard from './BookMarkJobCard.jsx';
-import './JobRecommend.scss';
+import './InterestAnnouncement.scss';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import { useState } from 'react';
 import { Bookmark } from './BookmarkDummy';
 
-function JobRecommend({ userInfo }) {
+function InterestAnnouncement({ userInfo }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlerPrev = () => {
@@ -21,15 +21,15 @@ function JobRecommend({ userInfo }) {
   const job = Bookmark;
 
   return (
-    <section className="job_recommend">
-      <h3 className="job_recommend_title">{userInfo.name}님이 즐겨찾기한 공고</h3>
-      <div className="job_recommend_btn_group">
-        <HiArrowCircleLeft className="reco_left_btn" onClick={handlerPrev} />
-        <HiArrowCircleRight className="reco_right_btn" onClick={handlerNext} />
+    <section className="interest_announcement">
+      <h3 className="interest_announcement_title">{userInfo.name}님 관심있을 만한 공고</h3>
+      <div className="interest_announcement_btn_group">
+        <HiArrowCircleLeft className="interest_left_btn" onClick={handlerPrev} />
+        <HiArrowCircleRight className="interest_right_btn" onClick={handlerNext} />
       </div>
-      <div className="reco_slider-container">
+      <div className="interest_slider-container">
         <div
-          className="reco_slider-wrapper"
+          className="interest_slider-wrapper"
           style={{ transform: `translateX(-${currentIndex * 317}px)` }}
         >
           {job.map((job) => (
@@ -41,4 +41,4 @@ function JobRecommend({ userInfo }) {
   );
 }
 
-export default JobRecommend;
+export default InterestAnnouncement;

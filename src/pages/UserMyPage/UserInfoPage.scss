@@ -1,8 +1,4 @@
-$main-color: #0f8c3b;
-$green-light: #0f8c3b;
-$gray-dark: #333;
-$gray-text: #666;
-$orange-light: #ffa82f;
+@use '@/utils/variables' as *;
 
 .user_mypage_container {
   max-width: 1000px;
@@ -13,19 +9,19 @@ $orange-light: #ffa82f;
 
   /* UserInfo 페이지 */
   .user_name {
-    margin-top: 70px;
+    margin-top: 50px;
     display: flex;
     align-items: end;
 
     h2 {
-      font-size: 40px;
-      color: $orange-light;
+      font-size: 35px;
+      color: $orange;
     }
 
     span {
       padding-left: 7px;
       margin-bottom: 5px;
-      font-size: 21px;
+      font-size: 19px;
     }
   }
 
@@ -39,7 +35,7 @@ $orange-light: #ffa82f;
     .user_info {
       padding: 18px;
       width: 83%;
-      background-color: #f6f6f6;
+      background-color: $gray-background;
       border-radius: 8px;
 
       .info_modify {
@@ -47,7 +43,7 @@ $orange-light: #ffa82f;
         height: 0px;
         text-align: right;
         font-size: 13px;
-        color: #666;
+        color: $gray-text;
 
         &:hover {
           cursor: pointer;
@@ -57,17 +53,6 @@ $orange-light: #ffa82f;
       .user_detail {
         display: flex;
         align-items: center;
-
-        .user_profile_img {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 14px;
-          width: 17%;
-          height: 160px;
-          background-color: #fff;
-          text-align: center;
-        }
 
         .user_profile_text {
           padding: 20px;
@@ -87,25 +72,14 @@ $orange-light: #ffa82f;
       font-size: 15px;
       font-weight: 600;
       color: #f6f6f6;
-      background-color: $main-color;
+      background-color: $green;
       border: none;
       border-radius: 8px;
 
       &:hover {
         cursor: pointer;
-        background-color: #52ba77;
+        background-color: $deep-green;
       }
     }
-  }
-}
-
-/* Job Posting - 내가 지원한 채용 공고*/
-.job_positing {
-  margin-top: 50px;
-  border-top: 1px solid #dbdbdb;
-  h3 {
-    margin-top: 50px;
-    font-size: 23px;
-    color: $main-color;
   }
 }

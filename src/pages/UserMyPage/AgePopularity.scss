@@ -1,0 +1,110 @@
+@use '@/utils/variables' as *;
+
+.age_popularity {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 100%;
+  height: 200px;
+
+  .age_popularity_title {
+    font-size: 20px;
+    color: $deep-green;
+    margin-bottom: -20px;
+  }
+
+  .age_popularity_btn_group {
+    width: 101%;
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+    position: relative;
+    top: 93px;
+    right: 15px;
+    .age_left_btn,
+    .age_right_btn {
+      font-size: 35px;
+      cursor: pointer;
+      color: $green;
+    }
+  }
+  /* 슬라이더 구조*/
+  .age_slider-container {
+    width: 98%;
+    overflow: hidden;
+    display: flex;
+
+    .age_slider-wrapper {
+      width: fit-content;
+      display: flex;
+      justify-content: center;
+      gap: 17px;
+      transition: transform 0.3s ease;
+
+      .job_card {
+        min-width: 300px;
+        width: calc(35% - 17px);
+        background: white;
+
+        border: 1px solid #eee;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: box-shadow 0.2s;
+
+        &:hover {
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .job_top {
+          .company {
+            font-size: 14px;
+            color: $gray-text;
+            margin-bottom: 15px;
+          }
+
+          .title {
+            font-size: 16px;
+            font-weight: 600;
+            color: $gray-dark;
+            margin-bottom: 10px;
+          }
+
+          .date {
+            font-size: 13px;
+            color: #999;
+          }
+        }
+
+        .job_bottom {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 20px;
+
+          .star_icon {
+            font-size: 22px;
+            cursor: pointer;
+            color: $orange;
+            transition: transform 0.2s;
+
+            &.filled {
+              color: $orange;
+            }
+
+            &:hover {
+              transform: scale(1.1);
+            }
+          }
+
+          .location {
+            font-size: 14px;
+            color: $gray-text;
+          }
+        }
+      }
+    }
+  }
+}

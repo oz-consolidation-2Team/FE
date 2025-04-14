@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaStar, FaRegStar } from 'react-icons/fa';
-import './MyJobList.scss';
+import './JobPosting.scss';
 
 const MyJobCard = ({ job, isBookmarked, toggleBookmark }) => {
   const navigate = useNavigate();
