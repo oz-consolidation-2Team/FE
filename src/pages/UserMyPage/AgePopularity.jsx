@@ -1,4 +1,4 @@
-import BookMarkJobCard from '@/pages/UserMyPage/BookmarkJobCard';
+import BookMarkJobCard from './BookmarkJobCard';
 import './AgePopularity.scss';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import { useState } from 'react';
