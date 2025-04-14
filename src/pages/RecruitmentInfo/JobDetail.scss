@@ -67,10 +67,11 @@
 
   .job-action {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-top: 20px;
 
     .apply-button {
+      flex-grow: 1;
       padding: 10px 24px;
       background-color: #419D53;
       color: white;
@@ -82,6 +83,19 @@
       &:hover {
         background-color: #368146;
       }
+    }
+
+    .bookmark-button {
+      padding: 10px;
+      background-color: white;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-left: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 

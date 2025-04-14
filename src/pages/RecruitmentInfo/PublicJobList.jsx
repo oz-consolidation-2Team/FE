@@ -1,9 +1,52 @@
-// PublicJobList.jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import PublicJobCard from './PublicJobCard'; 
+import { fetchPublicRecruitments } from '@/apis/RecruitmentApi';
+import './PublicJobList.scss';
 
 const PublicJobList = () => {
-  // 공공 일자리 정보를 표시하는 로직
-  return <div>공공 일자리 목록</div>;
+  const [jobs, setJobs] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const jobsPerPage = 6;
+
+  useEffect(() => {
+    const loadJobs = async () => {
+      const data = await fetchPublicRecruitments();
+      setJobs(data?.result || []);
+    };
+
+    loadJobs();
+  }, []);
+
+  const startIndex = (currentPage - 1) * jobsPerPage;
+  const endIndex = startIndex + jobsPerPage;
+  const currentJobs = jobs.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil(jobs.length / jobsPerPage);
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  return (
+    <div className="public-job-section">
+      <div className="section-header">
+        <h2 className="section-title">공공 일자리 정보</h2>
+        <div className="page-buttons">
+          <button onClick={handlePrevPage} disabled={currentPage === 1}>이전</button>
+          <button onClick={handleNextPage} disabled={currentPage === totalPages}>다음</button>
+        </div>
+      </div>
+      <div className="public-job-grid">
+        {currentJobs.map((job) => (
+          <PublicJobCard key={job.recrutPblntSn} job={job} />
+        ))}
+      </div>
+    </div>
+  );
 };
 
-export default PublicJobList;  // 기본 내보내기
+export default PublicJobList;
