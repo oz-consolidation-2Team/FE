@@ -11,9 +11,9 @@ const SignUpPage = () => {
   const handleBack = () => setType(null);
 
   return (
+    <>
+    <BackHeader showBack={type !== null} onBack={handleBack} />
     <div className="signup_container">
-      <BackHeader showBack={type !== null} onBack={handleBack} />
-
       {!type && (
         <div className="type_select_box">
           <h2 className="title">회원가입</h2>
@@ -38,6 +38,7 @@ const SignUpPage = () => {
       {type === 'user' && <UserSignUpPage onBack={handleBack} />}
       {type === 'company' && <CompanySignUpPage onBack={handleBack} />}
     </div>
+    </>
   );
 };
 
