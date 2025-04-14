@@ -1,4 +1,4 @@
-import BookMarkJobCard from './BookmarkJobCard';
+import BookmarkJobCard from './BookmarkJobCard';
 import './InterestAnnouncement.scss';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import { useState } from 'react';
@@ -33,7 +33,7 @@ function InterestAnnouncement({ userInfo }) {
           style={{ transform: `translateX(-${currentIndex * 317}px)` }}
         >
           {job.map((job) => (
-            <BookMarkJobCard key={job.id} job={job} />
+            <BookmarkJobCard key={job.id} job={job} />
           ))}
         </div>
       </div>

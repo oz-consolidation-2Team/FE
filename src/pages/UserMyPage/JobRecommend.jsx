@@ -1,4 +1,4 @@
-import BookMarkJobCard from './BookmarkJobCard';
+import BookmarkJobCard from './BookmarkJobCard';
 
 import './JobRecommend.scss';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
@@ -34,7 +34,7 @@ function JobRecommend({ userInfo }) {
           style={{ transform: `translateX(-${currentIndex * 317}px)` }}
         >
           {job.map((job) => (
-            <BookMarkJobCard key={job.id} job={job} />
+            <BookmarkJobCard key={job.id} job={job} />
           ))}
         </div>
       </div>
