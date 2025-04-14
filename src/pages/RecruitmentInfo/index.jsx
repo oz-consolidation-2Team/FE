@@ -51,7 +51,6 @@ function RecruitmentInfo() {
 
       {/* 공공일자리 정보 컴포넌트 */}
       <PublicJobList />
-      <div className='recruitment-title'>일반 채용</div>
       {/* 일반 채용 정보 컴포넌트 */}
       <JobList searchQuery={searchQuery} />
     </div>
