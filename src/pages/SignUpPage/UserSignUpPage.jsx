@@ -4,6 +4,7 @@ import { FaUser } from 'react-icons/fa';
 import { LiaEyeSolid, LiaEyeSlashSolid } from 'react-icons/lia';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import Modal from '@/components/common/Modal';
+import LabeledInput from '@/components/common/LabeledInput';
 import {
   validateEmail,
   validatePassword,
@@ -168,16 +169,19 @@ const UserSignUpPage = () => {
 
         {step === 0 && (
           <>
-            <div className="form_group">
-              <label>이름</label>
-              <input name="name" value={form.name} onChange={handleChange} />
-              {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
-            </div>
+            <LabeledInput
+              label="이름"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="이름을 입력해 주세요"
+              error={errors.name}
+            />
 
             <div className="form_group">
               <label>이메일</label>
               <div className="input_row">
-                <input name="email" value={form.email} onChange={handleChange} />
+                <input name="email" value={form.email} onChange={handleChange} className={errors.email ? 'error' : ''} />
                 <button type="button" onClick={handleEmailCheck}>중복확인</button>
               </div>
               {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
@@ -191,6 +195,7 @@ const UserSignUpPage = () => {
                 value={form.password}
                 onChange={handleChange}
                 placeholder="영문+숫자+특수문자 8자 이상"
+                className={errors.password ? 'error' : ''}
               />
               <span className="eye_icon" onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
@@ -205,6 +210,7 @@ const UserSignUpPage = () => {
                 name="passwordCheck"
                 value={form.passwordCheck}
                 onChange={handleChange}
+                className={errors.passwordCheck ? 'error' : ''}
               />
               <span className="eye_icon" onClick={() => setShowPasswordCheck(!showPasswordCheck)}>
                 {showPasswordCheck ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
@@ -212,17 +218,25 @@ const UserSignUpPage = () => {
               {errors.passwordCheck && <ErrorMessage>{errors.passwordCheck}</ErrorMessage>}
             </div>
 
-            <div className="form_group">
-              <label>전화번호</label>
-              <input name="phone" value={form.phone} onChange={handlePhoneChange} placeholder="숫자만 입력해주세요"/>
-              {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
-            </div>
+            <LabeledInput
+              label="전화번호"
+              name="phone"
+              value={form.phone}
+              onChange={handlePhoneChange}
+              placeholder="숫자만 입력해 주세요"
+              error={errors.phone}
+              inputMode="numeric"
+            />
 
-            <div className="form_group">
-              <label>생년월일</label>
-              <input name="birth" value={form.birth} onChange={handleBirthChange} placeholder="숫자만 입력해주세요"/>
-              {errors.birth && <ErrorMessage>{errors.birth}</ErrorMessage>}
-            </div>
+            <LabeledInput
+              label="생년월일"
+              name="birth"
+              value={form.birth}
+              onChange={handleBirthChange}
+              placeholder="숫자만 입력해 주세요"
+              error={errors.birth}
+              inputMode="numeric"
+            />
 
             <div className="form_group">
               <label>성별</label>
