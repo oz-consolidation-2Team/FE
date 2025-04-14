@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaUser } from 'react-icons/fa';
 import { LiaEyeSolid, LiaEyeSlashSolid } from 'react-icons/lia';
 import ErrorMessage from '@/components/common/ErrorMessage';
@@ -25,6 +26,7 @@ const MAX_PHONE_LENGTH = 11;
 const MAX_BIRTH_LENGTH = 8;
 
 const UserSignUpPage = () => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [form, setForm] = useState({
     name: '', email: '', password: '', passwordCheck: '',
@@ -88,11 +90,6 @@ const UserSignUpPage = () => {
     });
   };
 
-  const handleGenderSelect = (value) => {
-    setForm((prev) => ({ ...prev, gender: value }));
-    setErrors((prev) => { const next = { ...prev }; delete next.gender; return next; });
-  };
-
   const validateStep1 = () => {
     const newErrors = {};
     if (!validateName(form.name)) newErrors.name = '이름을 입력해주세요.';
@@ -144,19 +141,26 @@ const UserSignUpPage = () => {
     const newErrors = validateStep2();
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
-      alert('회원가입 완료!');
-      console.log('📦 폼:', form);
+      setModal({
+        type: 'success',
+        title: '회원가입 완료',
+        message: '정상적으로 회원가입이 완료되었습니다.',
+        onConfirm: () => {
+          setModal(null);
+          navigate('/login');
+        }
+      });
     }
   };
 
   return (
     <div className="user_signup_page">
       <div className="signup_card">
-      <div className="step_indicator">
-        <div className={`step ${step === 0 ? 'active' : ''}`}>1단계: 기본 정보</div>
-        <div className="step_line" />
-        <div className={`step ${step === 1 ? 'active' : ''}`}>2단계: 관심 분야</div>
-      </div>
+        <div className="step_indicator">
+          <div className={`step ${step === 0 ? 'active' : ''}`}>1단계: 기본 정보</div>
+          <div className="step_line" />
+          <div className={`step ${step === 1 ? 'active' : ''}`}>2단계: 관심 분야</div>
+        </div>
         <div className="signup_title">
           <FaUser className="icon" />
           <h2>개인 회원가입</h2>
@@ -164,14 +168,12 @@ const UserSignUpPage = () => {
 
         {step === 0 && (
           <>
-            {/* 이름 */}
             <div className="form_group">
               <label>이름</label>
               <input name="name" value={form.name} onChange={handleChange} />
               {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
             </div>
 
-            {/* 이메일 */}
             <div className="form_group">
               <label>이메일</label>
               <div className="input_row">
@@ -181,7 +183,6 @@ const UserSignUpPage = () => {
               {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
             </div>
 
-            {/* 비밀번호 */}
             <div className="form_group password_row">
               <label>비밀번호</label>
               <input
@@ -197,7 +198,6 @@ const UserSignUpPage = () => {
               {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
             </div>
 
-            {/* 비밀번호 확인 */}
             <div className="form_group password_row">
               <label>비밀번호 확인</label>
               <input
@@ -212,21 +212,18 @@ const UserSignUpPage = () => {
               {errors.passwordCheck && <ErrorMessage>{errors.passwordCheck}</ErrorMessage>}
             </div>
 
-            {/* 전화번호 */}
             <div className="form_group">
               <label>전화번호</label>
               <input name="phone" value={form.phone} onChange={handlePhoneChange} placeholder="숫자만 입력해주세요"/>
               {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
             </div>
 
-            {/* 생년월일 */}
             <div className="form_group">
               <label>생년월일</label>
               <input name="birth" value={form.birth} onChange={handleBirthChange} placeholder="숫자만 입력해주세요"/>
               {errors.birth && <ErrorMessage>{errors.birth}</ErrorMessage>}
             </div>
 
-            {/* 성별 */}
             <div className="form_group">
               <label>성별</label>
               <div className="gender_group">
@@ -262,7 +259,6 @@ const UserSignUpPage = () => {
               {errors.gender && <ErrorMessage>{errors.gender}</ErrorMessage>}
             </div>
 
-            {/* 약관 */}
             <div className="form_group">
               <div className="checkbox_group">
                 <label>
@@ -281,17 +277,16 @@ const UserSignUpPage = () => {
             <div className="button_group">
               <button className="next_btn" onClick={handleNext}>다음</button>
             </div>
-
           </>
         )}
 
-{step === 1 && (
+        {step === 1 && (
           <>
             <section className="section_box">
               <p className="section_title">관심 분야 <span>(최대 3개)</span></p>
               <div className="checkbox_grid">
                 {INTEREST_OPTIONS.map((item) => (
-                  <button key={item} className={`check_btn ${form.interests.includes(item) ? 'selected' : ''}`} onClick={() => toggleItem('interests', item, 3)}>{item}</button>
+                  <button key={item} className={`check_btn ${form.interests.includes(item) ? 'selected' : ''}`} onClick={() => toggleMultiSelect('interests', item, 3)}>{item}</button>
                 ))}
               </div>
               {errors.interests && <ErrorMessage>{errors.interests}</ErrorMessage>}
@@ -301,7 +296,7 @@ const UserSignUpPage = () => {
               <p className="section_title">가입 목적</p>
               <div className="checkbox_grid">
                 {PURPOSE_OPTIONS.map((item) => (
-                  <button key={item} className={`check_btn ${form.purposes.includes(item) ? 'selected' : ''}`} onClick={() => toggleItem('purposes', item)}>{item}</button>
+                  <button key={item} className={`check_btn ${form.purposes.includes(item) ? 'selected' : ''}`} onClick={() => toggleMultiSelect('purposes', item)}>{item}</button>
                 ))}
               </div>
               {errors.purposes && <ErrorMessage>{errors.purposes}</ErrorMessage>}
@@ -311,7 +306,7 @@ const UserSignUpPage = () => {
               <p className="section_title">유입 경로</p>
               <div className="checkbox_grid">
                 {CHANNEL_OPTIONS.map((item) => (
-                  <button key={item} className={`check_btn ${form.channels.includes(item) ? 'selected' : ''}`} onClick={() => toggleItem('channels', item)}>{item}</button>
+                  <button key={item} className={`check_btn ${form.channels.includes(item) ? 'selected' : ''}`} onClick={() => toggleMultiSelect('channels', item)}>{item}</button>
                 ))}
               </div>
               {errors.channels && <ErrorMessage>{errors.channels}</ErrorMessage>}
@@ -319,12 +314,11 @@ const UserSignUpPage = () => {
 
             <div className="button_group">
               <button className="prev_btn" onClick={() => setStep(0)}>이전</button>
-              <button className="next_btn" onClick={handleSubmit}>등록하기</button>
+              <button className="next_btn" onClick={handleSubmit}>가입하기</button>
             </div>
           </>
         )}
       </div>
-      
       {modal && <Modal {...modal} />}
     </div>
   );

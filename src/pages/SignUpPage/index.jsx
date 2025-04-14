@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import UserSignUpPage from './UserSignUpPage';
-import CompanySignPage from './CompanySignPage';
+import CompanySignUpPage from './CompanySignUpPage';
 import { FaUser, FaBuilding } from 'react-icons/fa';
 import BackHeader from '@/components/BackHeader';
 import './SignUpPage.scss';
@@ -20,24 +20,23 @@ const SignUpPage = () => {
           <p className="subtitle">가입하실 회원 유형을 선택해주세요.</p>
 
           <div className="card_select_area">
-          <div className="type_card orange" onClick={() => setType('user')}>
-  <FaUser className="card_icon" />
-  <strong>개인 회원</strong>
-  <p>일자리를 찾는<br />사람들을 위한 가입</p>
-</div>
+            <div className="type_card orange" onClick={() => setType('user')}>
+              <FaUser className="card_icon" />
+              <strong>개인 회원</strong>
+              <p>일자리를 찾는<br />사람들을 위한 가입</p>
+            </div>
 
-<div className="type_card green" onClick={() => setType('company')}>
-  <FaBuilding className="card_icon" />
-  <strong>기업 회원</strong>
-  <p>일 할 사람을 찾는<br />회사의 가입</p>
-</div>
-
+            <div className="type_card green" onClick={() => setType('company')}>
+              <FaBuilding className="card_icon" />
+              <strong>기업 회원</strong>
+              <p>일 할 사람을 찾는<br />회사의 가입</p>
+            </div>
           </div>
         </div>
       )}
 
       {type === 'user' && <UserSignUpPage onBack={handleBack} />}
-      {type === 'company' && <CompanySignPage onBack={handleBack} />}
+      {type === 'company' && <CompanySignUpPage onBack={handleBack} />}
     </div>
   );
 };
