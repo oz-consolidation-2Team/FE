@@ -1,7 +1,7 @@
-$main-color: #0F8C3B;
+$main-color: #0f8c3b;
 $gray-dark: #333;
 $gray-text: #666;
-$orange-light: #FFA82F;
+$orange-light: #ffa82f;
 
 .main_page {
   .hero_section {
@@ -10,7 +10,7 @@ $orange-light: #FFA82F;
       margin: 0 auto;
       padding: 100px 80px;
       border-radius: 12px;
-      background: 
+      background:
         linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
         url('/main.png') no-repeat center 30% / cover;
       color: white;
@@ -108,6 +108,7 @@ $orange-light: #FFA82F;
       margin-bottom: 24px;
     }
 
+    /* MainJobCard */
     .job_grid {
       display: flex;
       flex-wrap: wrap;

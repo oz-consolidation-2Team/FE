@@ -1,3 +1,17 @@
+@use '@/utils/variables' as *;
+
+/* Job Posting - 내가 지원한 채용 공고*/
+
+.job_positing {
+  margin-top: 80px;
+  border-top: 1px solid #dbdbdb;
+  h3 {
+    margin-top: 80px;
+    font-size: 20px;
+    color: $green;
+  }
+}
+
 .job-list {
   display: flex;
   flex-direction: column;
@@ -83,7 +97,7 @@
       }
 
       .star_icon {
-        font-size: 26px;
+        font-size: 24px;
         cursor: pointer;
         color: #f6a100;
         transition: transform 0.2s;
@@ -101,16 +115,16 @@
 
   .job_footer {
     position: relative;
-
-    bottom: 30px;
+    width: 100%;
+    bottom: 38px;
     padding: 10px 20px;
     font-size: 0.8rem;
     font-weight: 500;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    color: #fff;
+    color: $deep-green;
     display: flex;
     justify-content: space-between;
-    background-color: #3c8942;
+    background-color: $light-green;
   }
 }

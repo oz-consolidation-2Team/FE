@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './MyJobList.scss';
+import './JobPosting.scss';
+
 import MyJobCard from './MyJobCard';
 
 // 더미 데이터

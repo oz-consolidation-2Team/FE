@@ -1,0 +1,99 @@
+@use '@/utils/variables' as *;
+
+.job_recommend {
+  margin-top: 80px;
+  border-top: 1px solid #dbdbdb;
+  width: 100%;
+  height: 140px;
+
+  .job_recommend_title {
+    margin-top: 70px;
+    font-size: 20px;
+    color: $green;
+    margin-bottom: 30px;
+  }
+
+  /* 슬라이더 구조*/
+  .slider-container {
+    width: 100%;
+    overflow: hidden; // 💡 핵심! 넘치는 건 잘라버려!
+
+    .left_btn,
+    .right_btn {
+      font-size: 26px;
+      cursor: pointer;
+      color: $light-green;
+    }
+
+    .slider-wrapper {
+      width: 100%;
+      display: flex;
+      gap: 15px;
+
+      .job_card {
+        min-width: 300px;
+        width: calc(35% - 15px);
+        background: white;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: box-shadow 0.2s;
+
+        &:hover {
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .job_top {
+          .company {
+            font-size: 14px;
+            color: $gray-text;
+            margin-bottom: 15px;
+          }
+
+          .title {
+            font-size: 16px;
+            font-weight: 600;
+            color: $gray-dark;
+            margin-bottom: 10px;
+          }
+
+          .date {
+            font-size: 13px;
+            color: #999;
+          }
+        }
+
+        .job_bottom {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 20px;
+
+          .star_icon {
+            font-size: 22px;
+            cursor: pointer;
+            color: $orange;
+            transition: transform 0.2s;
+
+            &.filled {
+              color: $orange;
+            }
+
+            &:hover {
+              transform: scale(1.1);
+            }
+          }
+
+          .location {
+            font-size: 14px;
+            color: $gray-text;
+          }
+        }
+      }
+    }
+  }
+}
