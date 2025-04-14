@@ -1,3 +1,5 @@
+@use "../../utils/variables" as v;
+
 .section-title {
   font-size: 20px;
   font-weight: bold;
@@ -63,17 +65,17 @@
   font-size: 1.2rem;
   font-weight: 700;
   margin: 2rem 0 1rem 0;
-  color: #3c8942;
+  color: v.$green;
 }
 
 .star_icon {
   font-size: 26px;
   cursor: pointer;
-  color: #f6a100;
+  color: v.$orange;
   transition: transform 0.2s;
 
   &.filled {
-    color:#f6a100;
+    color: v.$orange;
 
   }
 
