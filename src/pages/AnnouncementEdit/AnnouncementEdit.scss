@@ -5,6 +5,7 @@ $MAIN_COLOR: #0F8C3B;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 35%;
 
     h1 {
         margin-bottom: 50px;
@@ -40,5 +41,6 @@ $MAIN_COLOR: #0F8C3B;
         border: none;
         background-color: white;
         padding: 5px 0;
+        margin-bottom: 30px;
     }
 }

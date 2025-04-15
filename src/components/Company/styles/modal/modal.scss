@@ -7,15 +7,17 @@ $LINE_COLOR: #e0e0e0;
     justify-content: center;
     align-items: center;
     background-color: rgba(0,0,0,0.2);
-    height: 110%;
-    z-index: 1;
+    height: 100%;
+    z-index: 1001;
 }
 
 .modal_container {
     position: fixed;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 20px;
     background-color: white;
     width: 40%;
     height: auto;
@@ -97,6 +99,8 @@ $LINE_COLOR: #e0e0e0;
     }
 
     .Button_container {
+        display: flex;
+        justify-content: center;
         width: 100%;
         .button_box {
             display: flex;
