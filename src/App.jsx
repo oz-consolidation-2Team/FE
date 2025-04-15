@@ -15,6 +15,7 @@ import Layout from './components/Layout';
 import JobDetail from './pages/RecruitmentInfo/JobDetail';
 import LoginPage from './pages/LoginPage';
 import AboutCompany from './pages/AboutCompany/About';
+import TrainingSearch from './pages/JobTraining/trainingSearch';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/company_announcement_add_page" element={<AnnouncementAdd />} />
         <Route path="/company_announcement_edit_page/:id" element={<AnnouncementEdit />} />
         <Route path="/company_resumes_page/:id" element={<CompanyResumes />} />
+        <Route path="/TrainingSearch" element={<TrainingSearch />} />
       </Route>
 
       <Route path="/signup" element={<SignUpPage />} />
