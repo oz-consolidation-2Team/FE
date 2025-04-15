@@ -50,14 +50,16 @@ export default function CompanyCard () {
     }
     const 상시모집 = data_announcement.other_conditions.includes("상시 모집") ? "상시 모집" : data_announcement.recruit_period_end + " 까지"
     return (
-        <div>
+        <div className="CompanyCard_container">
             <p>{data_company.company_info.company_name}</p>
             <h3>{data_announcement.title}</h3>
             <p>공고 근무 요약</p>
-            <hr />
-            <p>{data_announcement.work_address}</p>
-            <p>{상시모집}</p>
-            <button>공고 보러 가기</button>
+            <div className="bottom">
+              <hr />
+              <p>{data_announcement.work_address}</p>
+              <p>{상시모집}</p>
+              <button>공고 보러 가기</button>
+            </div>
         </div>
     )
 }
