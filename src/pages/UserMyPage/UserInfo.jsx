@@ -26,7 +26,7 @@ function UserInfo({ userInfo }) {
       </div>
       <button
         onClick={() => {
-          navigate('/mypage/user/resume');
+          navigate('/mypage/user/resumes');
         }}
       >
         간단 이력서 <br />
