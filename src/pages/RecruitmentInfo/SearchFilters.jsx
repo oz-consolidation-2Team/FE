@@ -61,6 +61,11 @@ function SearchFilters({
         placeholder="검색어를 입력하세요"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            onSearch();
+          }
+        }}
       />
 
       <button onClick={onSearch}>검색</button>
