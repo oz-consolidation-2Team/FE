@@ -15,7 +15,7 @@ import Layout from './components/Layout';
 import JobDetail from './pages/RecruitmentInfo/JobDetail';
 import LoginPage from './pages/LoginPage';
 import AboutCompany from './pages/AboutCompany/About';
-import TrainingSearch from './pages/JobTraining/trainingSearch';
+import TrainingSearch from './pages/JobTraining/TrainingSearch';
 import FindEmailPage from './pages/FindEmailPage';
 
 function App() {
