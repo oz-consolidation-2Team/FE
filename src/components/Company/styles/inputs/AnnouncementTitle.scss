@@ -1,0 +1,14 @@
+.AnnouncementTitle_container {
+    background-color: #e6e6e62f;
+    padding: 30px;
+    .box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+
+        :nth-child(2) {
+            padding-left: 40px;
+        }
+    }
+}

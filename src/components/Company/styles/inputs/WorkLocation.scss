@@ -1,0 +1,29 @@
+$LINE_COLOR: #B3B3B3;
+
+.WorkLocation_container {
+    background-color: #e6e6e62f;
+    padding: 30px;
+    .box {
+        display: flex;
+        }
+    > :nth-child(2) {
+        > :nth-child(1) {
+            flex-basis: 122px;
+        }
+        .search {
+            flex-grow: 1;
+            border: 1px solid $LINE_COLOR;
+            border-radius: 10px;
+            background-color: white;
+            height: 35px;
+        }
+    }
+    > :nth-child(3) {
+        > :nth-child(1) {
+            flex-basis: 150px;
+        }
+    }
+    > :last-child {
+        margin-top: 20px;
+    }
+}

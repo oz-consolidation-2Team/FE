@@ -1,0 +1,13 @@
+.AnnouncementContent_container {
+    background-color: #e6e6e62f;
+    padding: 30px;
+    margin-bottom: 50px;
+    > .box {
+        display: flex;
+        margin-bottom: 20px;
+
+        > :nth-child(1) {
+            flex-basis: 122px;
+        }
+    }
+}

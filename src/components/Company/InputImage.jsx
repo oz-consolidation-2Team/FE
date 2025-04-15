@@ -1,11 +1,13 @@
+import "./styles/InputImage.scss"
+
 /**props = {
  * @data 상태관리
  * @setData 상태관리
 } */
 export default function InputImage (props) {
     return (
-        <div>
-            <div>
+        <div className="InputImage_container">
+            <div className="box">
                 <div>{props.data.이미지등록 || "선택된 파일이 없습니다"}</div>
                 <button>파일 선택</button>
             </div>

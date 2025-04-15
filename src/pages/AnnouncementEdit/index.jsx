@@ -6,6 +6,8 @@ import WorkLocation from "../../components/Company/inputs/WorkLocation"
 import WorkRequirement from "../../components/Company/inputs/WorkRequirement"
 import AnnouncementContent from "../../components/Company/inputs/AnnouncementContent"
 import Modal from "../../components/Company/Modal/Modal"
+import "./AnnouncementEdit.scss"
+import { GoArrowLeft } from "react-icons/go";
 
 export default function AnnouncementEdit () {
     // params ID값을 토대로 API 호출
@@ -41,10 +43,15 @@ export default function AnnouncementEdit () {
     })
 
     return (
-    <div>
-        <button onClick={() => navigate(-1)}>{`<-`}</button>
+    <div className="AnnouncementEdit_container">
+        {modal && <Modal setModal={setModal} data={data} modalType={modalType} setModalType={setModalType} />}
+        <GoArrowLeft 
+        className="button_back"
+        onClick={() => navigate(-1)}/>
         <h1>채용 공고 수정</h1>
-        <button onClick={()=>{
+        <button 
+            className="button_delete"
+            onClick={()=>{
             setModalType('delete')
             setModal(true)
             }}>삭제하기</button>
@@ -55,9 +62,10 @@ export default function AnnouncementEdit () {
             <WorkRequirement data={data} setData={setData} />
             <AnnouncementContent data={data} setData={setData} />
         </div>
-        <button onClick={() => setModal(true)}>수정하기</button>
-        <button>공고 미리보기</button>
-        {modal && <Modal setModal={setModal} data={data} modalType={modalType} setModalType={setModalType} />}
+        <button 
+            className="button_edit"
+            onClick={() => setModal(true)}>수정하기</button>
+        <button className="button_preview">공고 미리보기</button>
     </div>
     )
 }
