@@ -6,7 +6,14 @@ const Modal = ({ title, message, type = 'success', onConfirm }) => {
     <div className="modal_overlay">
       <div className={`modal_box ${type}`}>
         <h3>{title}</h3>
-        <p>{message}</p>
+        <p>
+          {message.split('\n').map((line, i) => (
+            <span key={i}>
+              {line}
+              <br />
+            </span>
+          ))}
+        </p>
         <button onClick={onConfirm}>확인</button>
       </div>
     </div>

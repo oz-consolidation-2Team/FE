@@ -1,211 +1,221 @@
-/* ✅ LoginPage.scss - 전체 통일 스타일 리팩토링 */
+@use '@/utils/variables' as *;
 
 .login_page {
-    flex: 1;
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .login_card {
+    width: 100%;
+    max-width: 480px;
+    padding: 48px;
+    background-color: #f9f9f9;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .login_title {
+    font-size: 26px;
+    text-align: center;
+    font-weight: 700;
+    color: $gray-dark;
+    margin-bottom: 24px;
+  }
+
+  .user_type_toggle {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+
+    button {
+      flex: 1;
+      height: 48px;
+      border-radius: 8px;
+      background-color: #e0e0e0;
+      color: $gray-text;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+
+      &.active.user {
+        background-color: $orange;
+        color: #fff;
+      }
+
+      &.active.company {
+        background-color: $green;
+        color: #fff;
+      }
+    }
+  }
+
+  .input_group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      color: $gray-dark;
+    }
+
+    input {
+      height: 48px;
+      padding: 0 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border 0.2s ease;
+
+      &:focus {
+        border-color: $orange;
+        outline: none;
+      }
+
+      &.error {
+        border-color: #e53935;
+      }
+    }
+  }
+
+  // ✅ 비밀번호 input만 위 여백 추가
+  .input_group + .input_group {
+    margin-top: 12px;
+  }
+
+  .password_wrapper {
+    position: relative;
+
+    input {
+      width: 100%;
+    }
+
+    span {
+      position: absolute;
+      top: 50%;
+      right: 14px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 20px;
+      color: #aaa;
+    }
+  }
+
+  .login_btn {
+    margin-top: 20px;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &.user {
+      background-color: $orange;
+      color: #fff;
+
+      &:hover {
+        background-color: $deep-orange;
+      }
+    }
+
+    &.company {
+      background-color: $green;
+      color: #fff;
+
+      &:hover {
+        background-color: $deep-green;
+      }
+    }
+  }
+
+  .bottom_links {
     display: flex;
     justify-content: center;
-    align-items: center;
-    background-color: #f9f9f9;
-    padding: 60px 16px;
-  
-    .login_card {
-      width: 100%;
-      max-width: 480px;
-      padding: 48px;
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
+    gap: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: $gray-text;
+    margin-top: 20px;
+
+    span {
+      cursor: pointer;
+      transition: color 0.2s ease;
     }
-  
-    .login_title {
-      font-size: 26px;
-      text-align: center;
-      font-weight: 700;
-      color: #333;
+
+    span:nth-child(2) {
+      color: #ccc;
+      pointer-events: none;
     }
-  
-    .user_type_toggle {
-      display: flex;
-      gap: 12px;
-  
-      button {
-        flex: 1;
-        height: 48px;
-        border-radius: 8px;
-        background-color: #e0e0e0;
-        color: #555;
-        font-weight: 600;
-        border: none;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-  
-        &.active.user {
-          background-color: #FFA82F;
-          color: #fff;
-        }
-  
-        &.active.company {
-          background-color: #0F8C3B;
-          color: #fff;
-        }
-      }
+
+    &.user span:hover {
+      color: $orange;
     }
-  
-    .input_group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-  
-      label {
-        font-size: 14px;
-        font-weight: 600;
-        color: #444;
-      }
-  
-      input {
-        height: 48px;
-        padding: 0 12px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 14px;
-        transition: border 0.2s ease;
-  
-        &:focus {
-          border-color: #FFA82F;
-          outline: none;
-        }
-      }
+
+    &.company span:hover {
+      color: $green;
     }
-  
-    .password_wrapper {
-      position: relative;
-  
-      input {
-        width: 100%;
-      }
-  
-      span {
-        position: absolute;
-        top: 50%;
-        right: 14px;
-        transform: translateY(-50%);
-        cursor: pointer;
-        font-size: 20px;
-        color: #aaa;
-      }
-    }
-  
-    .login_btn {
+  }
+
+  .sns_login {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+
+    button {
       height: 48px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: bold;
       font-size: 16px;
-      font-weight: 700;
+      padding: 0 16px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.2s ease;
-  
-      &.user {
-        background-color: #FFA82F;
-        color: #fff;
-  
-        &:hover {
-          background-color: #e07000;
-        }
-      }
-  
-      &.company {
-        background-color: #0F8C3B;
-        color: #fff;
-  
-        &:hover {
-          background-color: #0d6f2f;
-        }
+
+      img {
+        object-fit: contain;
       }
     }
-  
-    .bottom_links {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      font-size: 14px;
-      font-weight: 500;
-      color: #777;
-  
-      span {
-        cursor: pointer;
-        transition: color 0.2s ease;
-      }
-  
-      span:nth-child(2) {
-        color: #ccc;
-        pointer-events: none;
-      }
-  
-      &.user span:hover {
-        color: #FFA82F;
-      }
-  
-      &.company span:hover {
-        color: #0F8C3B;
+
+    .kakao {
+      background-color: #fee500;
+      color: #000;
+
+      .icon_kakao {
+        width: 20px;
+        height: 20px;
       }
     }
-  
-    .sns_login {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-  
-      button {
-        height: 48px;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        font-weight: bold;
-        font-size: 16px;
-        padding: 0 16px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-  
-        img {
-          object-fit: contain;
-        }
+
+    .naver {
+      background-color: #03c75a;
+      color: #fff;
+
+      .icon_naver {
+        width: 18px;
+        height: 18px;
       }
-  
-      .kakao {
-        background-color: #fee500;
-        color: #000;
-  
-        .icon_kakao {
-          width: 20px;
-          height: 20px;
-        }
-      }
-  
-      .naver {
-        background-color: #03c75a;
-        color: #fff;
-  
-        .icon_naver {
-          width: 18px;
-          height: 18px;
-        }
-      }
-    }
-  
-    .error_msg {
-      font-size: 12px;
-      color: red;
-      margin-top: 4px;
     }
   }
+
+  .error_msg {
+    font-size: 12px;
+    color: red;
+    margin-top: 4px;
+  }
+}

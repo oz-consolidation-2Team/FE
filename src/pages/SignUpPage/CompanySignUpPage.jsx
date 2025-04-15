@@ -4,6 +4,7 @@ import { FaBuilding } from 'react-icons/fa';
 import { LiaEyeSolid, LiaEyeSlashSolid } from 'react-icons/lia';
 import Modal from '@/components/common/Modal';
 import ErrorMessage from '@/components/common/ErrorMessage';
+import LabeledInput from '@/components/common/LabeledInput';
 import {
   validateEmail,
   isValidPhone,
@@ -58,6 +59,8 @@ const CompanySignUpPage = () => {
     setErrors((prev) => {
       const next = { ...prev };
       if (name === 'email' && validateEmail(value)) delete next.email;
+      if (name === 'password' && value && validateCompanyStep0({ ...form, password: value }, true).password === undefined) delete next.password;
+      if (name === 'passwordCheck' && value === form.password) delete next.passwordCheck;
       if (name === 'companyName' && value) delete next.companyName;
       if (name === 'ceoName' && value) delete next.ceoName;
       if (name === 'companyDesc' && value.length >= 50) delete next.companyDesc;
@@ -124,23 +127,21 @@ const CompanySignUpPage = () => {
 
   const handleBizCheck = async () => {
     const { businessNumber, startDate, ceoName } = form;
-  
+
     try {
       const result = await verifyBusinessNumber(
         businessNumber,
         startDate.replace(/-/g, ''),
         ceoName
       );
-  
-      console.log('📦 API 응답:', result);
-  
+
       const status = result.data?.[0];
-  
+
       if (!status || status.valid !== "01") {
         showModal('error', '인증 실패', '유효하지 않은 사업자등록번호입니다.');
         return;
       }
-  
+
       showModal('success', '인증 성공', '유효한 사업자등록번호입니다.', () => {
         setBizVerified(true);
       });
@@ -163,11 +164,18 @@ const CompanySignUpPage = () => {
 
     if (step === 1) {
       newErrors = validateCompanyStep1(form, bizVerified);
-      if (newErrors.businessNumber === '사업자등록번호 인증이 필요합니다.') {
+    
+      const keys = Object.keys(newErrors);
+      if (
+        keys.length === 1 &&
+        keys[0] === 'businessNumber' &&
+        newErrors.businessNumber === '사업자등록번호 인증이 필요합니다.'
+      ) {
         showModal('error', '인증 필요', newErrors.businessNumber);
         return;
       }
     }
+    
 
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
@@ -207,7 +215,7 @@ const CompanySignUpPage = () => {
             <div className="form_group">
               <label>이메일</label>
               <div className="input_row">
-                <input name="email" value={form.email} onChange={handleChange} />
+                <input name="email" value={form.email} onChange={handleChange} className={errors.email ? 'error' : ''} />
                 <button type="button" onClick={handleEmailCheck}>중복확인</button>
               </div>
               {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
@@ -221,13 +229,13 @@ const CompanySignUpPage = () => {
                 value={form.password}
                 onChange={handleChange}
                 placeholder="영문+숫자+특수문자 8자 이상"
+                className={errors.password ? 'error' : ''}
               />
               <span className="eye_icon" onClick={() => setShowPw(!showPw)}>
                 {showPw ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
               </span>
               {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
             </div>
-
 
             <div className="form_group password_row">
               <label>비밀번호 확인</label>
@@ -236,6 +244,7 @@ const CompanySignUpPage = () => {
                 name="passwordCheck"
                 value={form.passwordCheck}
                 onChange={handleChange}
+                className={errors.passwordCheck ? 'error' : ''}
               />
               <span className="eye_icon" onClick={() => setShowPwCheck(!showPwCheck)}>
                 {showPwCheck ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
@@ -251,50 +260,19 @@ const CompanySignUpPage = () => {
 
         {step === 1 && (
           <>
-            <div className="form_group">
-              <label>기업명</label>
-              <input name="companyName" value={form.companyName} onChange={handleChange} />
-              {errors.companyName && <ErrorMessage>{errors.companyName}</ErrorMessage>}
-            </div>
-
-            <div className="form_group">
-              <label>대표자명</label>
-              <input name="ceoName" value={form.ceoName} onChange={handleChange} />
-              {errors.ceoName && <ErrorMessage>{errors.ceoName}</ErrorMessage>}
-            </div>
-
-            <div className="form_group">
-              <label>개업년월일</label>
-              <input
-                name="startDate"
-                value={form.startDate}
-                onChange={handleStartDateChange} // ✅ 변경됨
-                placeholder="YYYYMMDD"
-              />
-              {errors.startDate && <ErrorMessage>{errors.startDate}</ErrorMessage>}
-            </div>
+            <LabeledInput label="기업명" name="companyName" value={form.companyName} onChange={handleChange} placeholder="기업명을 입력해주세요" error={errors.companyName} />
+            <LabeledInput label="대표자명" name="ceoName" value={form.ceoName} onChange={handleChange} placeholder="대표자 성함을 입력해주세요" error={errors.ceoName} />
+            <LabeledInput label="개업년월일" name="startDate" value={form.startDate} onChange={handleStartDateChange} placeholder="YYYYMMDD" error={errors.startDate} inputMode="numeric" />
 
             <div className="form_group">
               <label>사업자등록번호</label>
               <div className="input_row">
-              <input name="businessNumber" value={form.businessNumber} onChange={handleBizNumberChange} disabled={bizVerified} />
-                <button
-                  type="button"
-                  onClick={handleBizCheck}
-                  disabled={bizVerified}
-                  style={{
-                    backgroundColor: bizVerified ? '#ccc' : undefined,
-                    cursor: bizVerified ? 'not-allowed' : 'pointer',
-                  }}
-                >
+                <input name="businessNumber" value={form.businessNumber} onChange={handleBizNumberChange} disabled={bizVerified} className={errors.businessNumber ? 'error' : ''} />
+                <button type="button" onClick={handleBizCheck} disabled={bizVerified} style={{ backgroundColor: bizVerified ? '#ccc' : undefined, cursor: bizVerified ? 'not-allowed' : 'pointer' }}>
                   {bizVerified ? '인증됨' : '인증하기'}
                 </button>
               </div>
-              {bizVerified && (
-                <p style={{ fontSize: '13px', color: '#0f8c3b', marginTop: '4px' }}>
-                  사업자등록번호가 인증되었습니다.
-                </p>
-              )}
+              {bizVerified && <p style={{ fontSize: '13px', color: '#0f8c3b', marginTop: '4px' }}>사업자등록번호가 인증되었습니다.</p>}
               {errors.businessNumber && <ErrorMessage>{errors.businessNumber}</ErrorMessage>}
             </div>
 
@@ -306,6 +284,7 @@ const CompanySignUpPage = () => {
                 onChange={handleChange}
                 rows="8"
                 placeholder="50자 이상 입력해주세요"
+                className={errors.companyDesc ? 'error' : ''}
               />
               <div style={{ fontSize: '13px', textAlign: 'right', marginTop: '4px', color: form.companyDesc.length < 50 ? '#e53935' : '#888' }}>
                 {form.companyDesc.length}/50자
@@ -322,23 +301,9 @@ const CompanySignUpPage = () => {
 
         {step === 2 && (
           <>
-            <div className="form_group">
-              <label>담당자 이름</label>
-              <input name="managerName" value={form.managerName} onChange={handleChange} />
-              {errors.managerName && <ErrorMessage>{errors.managerName}</ErrorMessage>}
-            </div>
-
-            <div className="form_group">
-              <label>담당자 전화번호</label>
-              <input name="managerPhone" value={form.managerPhone} onChange={handleManagerPhoneChange} />
-              {errors.managerPhone && <ErrorMessage>{errors.managerPhone}</ErrorMessage>}
-            </div>
-
-            <div className="form_group">
-              <label>담당자 이메일</label>
-              <input name="managerEmail" value={form.managerEmail} onChange={handleChange} />
-              {errors.managerEmail && <ErrorMessage>{errors.managerEmail}</ErrorMessage>}
-            </div>
+            <LabeledInput label="담당자 이름" name="managerName" value={form.managerName} onChange={handleChange} placeholder="담당자 이름을 입력해주세요" error={errors.managerName} />
+            <LabeledInput label="담당자 전화번호" name="managerPhone" value={form.managerPhone} onChange={handleManagerPhoneChange} placeholder="숫자만 입력해 주세요" error={errors.managerPhone} inputMode="numeric" />
+            <LabeledInput label="담당자 이메일" name="managerEmail" value={form.managerEmail} onChange={handleChange} placeholder="이메일을 입력해주세요" error={errors.managerEmail} />
 
             <div className="button_group">
               <button className="prev_btn" onClick={() => setStep(1)}>이전</button>

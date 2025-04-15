@@ -16,6 +16,7 @@ import JobDetail from './pages/RecruitmentInfo/JobDetail';
 import LoginPage from './pages/LoginPage';
 import AboutCompany from './pages/AboutCompany/About';
 import MyResumes from './pages/MyResumes';
+import FindEmailPage from './pages/FindEmailPage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/find-email" element={<FindEmailPage />} />
         <Route path="/about" element={<AboutCompany />} />
         <Route path="/recruitment_info" element={<RecruitmentInfo />} />
         <Route path="/mypage/user" element={<UserMyPage />} />
