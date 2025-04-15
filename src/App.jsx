@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import SignUpPage from './pages/SignUpPage';
@@ -13,20 +13,20 @@ import CompanyInfoEdit from './pages/CompanyInfoEdit';
 import UserMyPage from './pages/UserMyPage';
 import Layout from './components/Layout';
 import JobDetail from './pages/RecruitmentInfo/JobDetail';
+import LoginPage from './pages/LoginPage';
+import AboutCompany from './pages/AboutCompany/About';
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />} />
-      <Route path='/signup' element={<SignUpPage />} />
-
       <Route element={<Layout />}>
         <Route path="/" element={<MainPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/about" element={<AboutCompany />} />
         <Route path="/recruitment_info" element={<RecruitmentInfo />} />
         <Route path="/mypage/user" element={<UserMyPage />} />
         <Route path="/search-results" element={<SearchResults />} />
         <Route path="/job-detail/:id" element={<JobDetail />} />
-
         <Route path="/company_my_page" element={<CompanyMyPage />} />
         <Route path="/company_info_page/:id" element={<CompanyInfo />} />
         <Route path="/company_info_edit_page" element={<CompanyInfoEdit />} />
@@ -34,6 +34,7 @@ function App() {
         <Route path="/company_announcement_edit_page/:id" element={<AnnouncementEdit />} />
         <Route path="/company_resumes_page/:id" element={<CompanyResumes />} />
       </Route>
+
       <Route path="/signup" element={<SignUpPage />} />
     </Routes>
   );

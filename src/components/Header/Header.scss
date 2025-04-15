@@ -1,15 +1,16 @@
-$main-color: #0F8C3B;
-$orange-light: #FFA82F;
+$main-color: #0f8c3b;
+$orange-light: #ffa82f;
 
 .gnb {
-    width: 100%;
-    background-color: white;
-    border-bottom: 1px solid #eee;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+  width: 100%;
+  background-color: white;
+  //border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  margin-bottom: 10px;
 
-.gnb_inner {
+  .gnb_inner {
     max-width: 1200px;
     margin: 0 auto;
     padding: 16px 20px;
@@ -18,19 +19,19 @@ $orange-light: #FFA82F;
     align-items: center;
 
     .left_nav {
-        display: flex;
-        align-items: center;
-        gap: 32px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
 
-        .logo {
+      .logo {
         cursor: pointer;
 
         img {
-            height: 60px;
+          height: 60px;
         }
-        }
+      }
 
-        .nav_links {
+      .nav_links {
         display: flex;
         gap: 24px;
         list-style: none;
@@ -38,22 +39,22 @@ $orange-light: #FFA82F;
         padding: 0;
 
         li {
-            cursor: pointer;
-            font-size: 16px;
-            color: #444;
+          cursor: pointer;
+          font-size: 16px;
+          color: #444;
 
-            &:hover {
+          &:hover {
             color: $main-color;
-            }
+          }
         }
-        }
+      }
     }
 
     .menu {
-        display: flex;
-        gap: 12px;
+      display: flex;
+      gap: 12px;
 
-        button {
+      button {
         font-size: 15px;
         padding: 8px 14px;
         border-radius: 6px;
@@ -64,26 +65,26 @@ $orange-light: #FFA82F;
         &.signup_btn,
         &.mypage_btn,
         &.companypage_btn {
-            border: 1px solid $orange-light;
-            color: $orange-light;
+          border: 1px solid $orange-light;
+          color: $orange-light;
 
-            &:hover {
+          &:hover {
             background-color: $orange-light;
             color: white;
-            }
+          }
         }
 
         &.login_btn,
         &.logout_btn {
-            border: 1px solid $main-color;
-            color: $main-color;
+          border: 1px solid $main-color;
+          color: $main-color;
 
-            &:hover {
+          &:hover {
             background-color: $main-color;
             color: white;
-            }
+          }
         }
-        }
+      }
     }
-    }
+  }
 }

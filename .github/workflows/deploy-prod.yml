@@ -19,14 +19,15 @@ jobs:
       - name: 의존성 설치
         run: npm install
 
-      #      - name: .env 파일 생성
-      #        run: |
-      #          echo "VITE_KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" >> .env
-      #          echo "VITE_KAKAO_REDIRECT_URI=${{ secrets.DEV_KAKAO_REDIRECT_URI }}" >> .env
-      #          echo "VITE_KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" >> .env
-      #          echo "VITE_NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}" >> .env
-      #          echo "VITE_NAVER_REDIRECT_URI=${{ secrets.DEV_NAVER_REDIRECT_URI }}" >> .env
-      #          echo "VITE_NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}" >> .env
+      - name: .env 파일 생성
+        run: |
+          echo "VITE_SERVICE_KEY=${{secrets.VITE_SERVICE_KEY}}" >> .env
+        #  echo "VITE_KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" >> .env
+        #  echo "VITE_KAKAO_REDIRECT_URI=${{ secrets.DEV_KAKAO_REDIRECT_URI }}" >> .env
+        #  echo "VITE_KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" >> .env
+        #  echo "VITE_NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}" >> .env
+        #  echo "VITE_NAVER_REDIRECT_URI=${{ secrets.DEV_NAVER_REDIRECT_URI }}" >> .env
+        #  echo "VITE_NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}" >> .env
 
       - name: 빌드
         run: npm run build
