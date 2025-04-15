@@ -58,7 +58,7 @@ export default function AnnouncementAdd () {
         className="button_add"
         onClick={() => setModal(true)}>등록하기</button>
         <button className="button_preview">공고 미리보기</button>
-        {modal && <Modal setModal={setModal} data={data} type='add' />}
+        {modal && <Modal setModal={setModal} data={data} modalType='add' />}
     </div>
     )
 }
