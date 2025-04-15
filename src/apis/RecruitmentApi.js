@@ -1,13 +1,13 @@
 import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_BASE_URL;
-const OPEN_API_URL = import.meta.env.VITE_OPEN_API_URL;
+const PUBLIC_RECRUITMENT_API_URL = import.meta.env.VITE_PUBLIC_RECRUITMENT_API_URL;
 const SERVICE_KEY = import.meta.env.VITE_SERVICE_KEY;
 
 /** 공공채용 정보를 조회하는 API 호출 함수 */
 export const fetchPublicRecruitments = async (params) => {
   try {
-    const response = await axios.get(OPEN_API_URL, {
+    const response = await axios.get(PUBLIC_RECRUITMENT_API_URL, {
       params: {
         recrutPbancTtl: "시니어",
         ...params,
