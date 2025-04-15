@@ -26,7 +26,7 @@ export default function WorkRequirement (props) {
                 <InputDropDown {...props} text='근무기간' />
                 <InputRadio {...props} type='협의가능' />
             </div>
-            <div className="box move_pos">
+            <div className="box remove">
                 <Category text='근무요일' />
                 <InputRadio {...props} type='근무요일' />
                 <InputRadio {...props} type='근무요일협의' />

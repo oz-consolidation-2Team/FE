@@ -13,6 +13,9 @@ $HR_COLOR: #A8A8A8;
     flex-direction: column;
     width: 60%;
 
+    button {
+        cursor: pointer;
+    }
     hr {
         width: 100%;
         margin: 50px 0;

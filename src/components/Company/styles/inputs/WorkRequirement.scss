@@ -18,4 +18,9 @@
             flex-basis: 150px;
         }
     }
+    .remove {
+        > :nth-child(1) {
+            flex-basis: 180px;
+        }
+    }
 }

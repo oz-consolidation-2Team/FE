@@ -5,10 +5,17 @@ $MAIN_COLOR: #0F8C3B;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 35%;
+    width: 60%;
+    padding: 0 10%;
+    padding-top: 60px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);  
 
     h1 {
         margin-bottom: 50px;
+    }
+
+    button {
+        cursor: pointer;
     }
 
     .button_back {
@@ -17,10 +24,11 @@ $MAIN_COLOR: #0F8C3B;
         border: none;
         width: 50px;
         height: 50px;
+        cursor: pointer;
     }
     .button_delete {
         position: absolute;
-        top: 15px;
+        top: 30px;
         right: 30px;
         border: none;
         border-radius: 5px;

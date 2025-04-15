@@ -16,13 +16,13 @@
     }
     .recruite_peple {
         > :last-child {
-            flex-basis: 100px;
+            width: 100px;
+            padding-left: 25px;
         }
     }
-    > :nth
-    > :nth-child(7) {
+    .remove {
         > :nth-child(1) {
-            margin-right: 40px;
+            width: 200px;
         }
     }
 }

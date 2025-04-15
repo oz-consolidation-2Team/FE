@@ -12,8 +12,7 @@ $LINE_COLOR: #A8A8A8;
         background-color: white;
         color: $LINE_COLOR;
         text-align: left;
-        width: 100%;
-        max-width: 250px;
+        min-width: 250px;
         padding: 8px;
 
         > * {

@@ -18,8 +18,8 @@ export default function JobRequirement (props) {
             <InputDropDown {...props} text='모집기간' />
         </div>
         <div className="box recruite_peple">
-            <Category text="모집인원" className='remove' />
-            <InputText {...props} text='모집인원' type='number' placeholder={props.data.모집인원} className='remove1' />
+            <Category text="모집인원" />
+            <InputText {...props} text='모집인원' type='number' placeholder={props.data.모집인원} />
         </div>
         <div className="box">
             <Category text="학력" />
@@ -30,10 +30,14 @@ export default function JobRequirement (props) {
             <InputDropDown {...props} text='직종' />
         </div>
         <div className="box">
+            <Category text="경력" />
+            <InputDropDown {...props} text='경력' />
+        </div>
+        <div className="box">
             <Category text="복리후생" essential={false} />
             <InputRadio {...props} type='복리후생'/>
         </div>
-        <div className="box">
+        <div className="box remove">
             <Category text="우대조건" essential={false} />
             <InputRadio {...props} type='우대조건' />
         </div>

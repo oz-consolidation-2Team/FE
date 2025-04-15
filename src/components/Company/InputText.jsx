@@ -12,7 +12,7 @@ export default function InputText (props) {
         <input 
         className='' 
         type={props.type} 
-        placeholder={props.placeholder || `${props.text}을(를) 입력해주세요`}/>
+        placeholder={props.placeholder || `${props.text} 입력`}/>
         {props.text === '모집인원' && <p>명</p>}
     </div>
     )

@@ -9,6 +9,9 @@ $HR_COLOR: #A8A8A8;
     .div_content {
         display: flex;
 
+        button {
+            cursor: pointer;
+        }
         > hr {
             height: 60vh;
             margin: 0 30px;
