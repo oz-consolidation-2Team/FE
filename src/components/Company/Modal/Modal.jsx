@@ -2,7 +2,7 @@ import Title from "./Title"
 import Content from "./Content"
 import Button from "./Button"
 import SimpleModal from "./SimpleModal"
-import "../styles/modal/Modal.scss"
+import "../styles/modal/modal.scss"
 
 /**props = {
  * @setModal 상태관리(boolean) (모달관리 닫기 위함)
