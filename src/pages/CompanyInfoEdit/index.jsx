@@ -11,8 +11,8 @@ import { GoArrowLeft } from "react-icons/go";
 export default function CompanyInfoEdit () {
     const [showModal, setShowModal] = useState(false)
     const navigate = useNavigate()
-    //api 기업 정보 조회 (기업 ID로 해당 기업 상세 정보 조회) /company/{company_id}
-    
+    //api 기업 정보 조회 (기업 ID로 해당 기업 상세 정보 조회) /company/me ( body에 company_user_id 입력 / company_user_id는 전역상태에서 호출)
+
     // 더미데이터
     const data = {
         "company_user": {

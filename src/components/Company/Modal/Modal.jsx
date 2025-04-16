@@ -11,6 +11,9 @@ import "../styles/modal/modal.scss"
  * @setModalType 상태관리
 } */
 export default function Modal (props) {
+    //api 기업 정보 수정 (기업 ID로 해당 기업 정보 수정) /company/{company_user_id}
+
+
     return (
         <div className="modal_overlay">
             <div className="modal_container">
