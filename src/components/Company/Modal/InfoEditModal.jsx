@@ -4,7 +4,7 @@ import "@/components/Company/styles/modal/InfoEditModal.scss"
 
 /**props = {
  * @data 수정된 데이터
- * @setModal 모달찯을 닫기 위함
+ * @setShowModal 모달찯을 닫기 위함
 } */
 export default function InfoEditModal (props) {
     const navigate = useNavigate()
@@ -27,7 +27,7 @@ export default function InfoEditModal (props) {
                 </div>
                 <div className="Button_container">
                     <button onClick={() => {
-                        props.setModal(false)
+                        props.setShowModal(false)
                         navigate(-1)
                         }}>완료</button>
                 </div>
