@@ -1,9 +1,9 @@
 @use "../../utils/variables" as v;
-
 .public-job-section {
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto;
     padding: 0px;
-    max-width: 1080px; 
-    margin: 0 auto; 
 
     .section-header {
       display: flex;
@@ -19,11 +19,13 @@
     }
   
     .public-job-grid {
+      width: 100%;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(2, auto);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
-      max-width: 100%;
+      grid-auto-flow: row dense;
+      grid-auto-rows: 1fr;
+      justify-items: stretch;
     }
   
     .page-buttons {
