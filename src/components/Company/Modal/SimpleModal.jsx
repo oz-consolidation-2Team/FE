@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import "../styles/modal/SimpleModal.scss"
 
 /**props = {
  * @setModal 상태관리 (모달창 닫기 위함)
@@ -10,13 +11,13 @@ export default function SimpleModal (props) {
     const navigate = useNavigate()
     console.log(123)
     return (
-        <div>
+        <div className="SimpleModal_container">
             <h1>{props.title}</h1>
             <p>{props.content}</p>
             <button onClick={()=>{
                 props.setModal(false)
                 {props.setNavigate ? window.location.reload() : navigate(-1)}
-            }}>완료</button>
+            }}>닫기</button>
         </div>
     )
 }

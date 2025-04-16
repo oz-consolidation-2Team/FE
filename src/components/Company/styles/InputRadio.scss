@@ -1,0 +1,16 @@
+$MAIN_COLOR: #0F8C3B;
+
+.InputRadio_container {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+
+    .div_checkBoxs {
+        margin-right: 30px;
+
+        input {
+            accent-color: $MAIN_COLOR;
+            margin-right: 5px;
+        }
+    }
+}

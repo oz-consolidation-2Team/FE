@@ -8,9 +8,9 @@ import Modal from "./Modal"
 } */
 export default function Button (props) {
     const navigate = useNavigate()
-    return <div>
+    return <div className="Button_container">
         {props.modalType === 'delete' ? 
-            <div>
+            <div className="button_box">
                 <button onClick={()=>props.setModalType('delete-Success')}>삭제하기</button>
                 <button onClick={()=>{props.setModal(false)}}>취소</button>
             </div>

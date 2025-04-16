@@ -1,0 +1,43 @@
+$MAIN_COLOR: #0F8C3B;
+$LINE_COLOR: #A8A8A8;
+
+.InputDropDown_container {
+    .button_dropDown {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        border: 1px solid $LINE_COLOR;
+        border-radius: 10px;
+        background-color: white;
+        color: $LINE_COLOR;
+        text-align: left;
+        min-width: 250px;
+        padding: 8px;
+
+        > * {
+            margin-left: auto;
+        }
+    }
+
+    .ul_listBox {
+        border: 1px solid $LINE_COLOR;
+        border-radius: 10px;
+        background-color: #f8f8f8;
+        margin-top: 5px;
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: 250px;
+
+        > li {
+            border-bottom: 1px solid $LINE_COLOR;
+            list-style: none;
+            padding: 3px;
+            margin: 3px 10px;
+
+            &:last-child {
+                border: none;
+            }
+        }
+    }
+}
