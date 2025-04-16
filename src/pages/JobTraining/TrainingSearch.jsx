@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Pagination from "react-js-pagination";
+import "./TrainingSearch.scss";
 
 const WORK24_URL = import.meta.env.VITE_WORK24_URL;
 
@@ -55,28 +57,43 @@ const TrainingSearch = () => {
   const [selectedArea, setSelectedArea] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
 
-  const fetchTrainings = async () => {
+  const fetchTrainings = async (pageNum = 1) => {
     setLoading(true);
     try {
-      const response = await axios.get(WORK24_URL, {
-        params: {
-          authKey: import.meta.env.VITE_WORK24_API_KEY, //인증키
-          returnType: "JSON", //리턴타입
-          outType: 1, //출력타입
-          pageNum: 1, //시작페이지
-          pageSize: 100, //페이지당 출력건수
-          sort: "ASC",  //정렬방식(오름차순)  , "DESC"(내림차순)
-          sortCol: "TOT_FXNUM", //정렬기준(모집인원) , "TRNG_BGDE"(훈련시작일) , "TRNG_CRSN"(훈련과정명)
-          ...(selectedJob && { srchNcs1: selectedJob }),
-          ...(selectedArea && { srchTraArea1: selectedArea }),
-        },
-      });
-      
-      console.log("응답 데이터 확인:", response.data);
+      /**
+       * @typedef {Object} Params
+       * @property {string} authKey - 인증 키 (환경변수에서 가져옴)
+       * @property {string} returnType - 응답 형식: JSON
+       * @property {number} outType - 출력 형태 (1: 목록 출력)
+       * @property {number} pageNum - 현재 페이지 번호
+       * @property {number} pageSize - 한 페이지에 보여줄 항목 수
+       * @property {string} sort - 정렬 방식 (ASC: 오름차순) ,(DESC: 내림차순)
+       * @property {string} sortCol - 정렬 기준 컬럼: (TRNG_BGDE: 훈련 시작일), (TRNG_CRSN: 훈련 과정명), (TOT_FXNUM: 모집인원순)
+       * @property {string} [srchNcs1] - 선택된 직종 필터 (NCS 대분류 코드)
+       * @property {string} [srchTraArea1] - 선택된 지역 필터 (훈련지역 대분류 코드)
+       */
+      /** @type {Params} */
+      const params = {
+        authKey: import.meta.env.VITE_WORK24_API_KEY,
+        returnType: "JSON",
+        outType: 1,
+        pageNum: String(pageNum),
+        pageSize: 5,
+        sort: "ASC",
+        sortCol: "TRNG_BGDE",
+        ...(selectedJob && { srchNcs1: selectedJob }),
+        ...(selectedArea && { srchTraArea1: selectedArea }),
+      };
+
+      const response = await axios.get(WORK24_URL, { params });
 
       const items = response.data?.srchList || [];
       setResults(items);
+      setTotalCount(response.data?.scn_cnt || 0);
+      setCurrentPage(pageNum);
     } catch (err) {
       console.error("훈련 정보 조회 실패:", err);
       setResults([]);
@@ -86,45 +103,67 @@ const TrainingSearch = () => {
   };
 
   useEffect(() => {
-    fetchTrainings();
+    fetchTrainings(1);
   }, []);
 
   return (
-    <div>
-      <h2>직업 훈련 검색</h2>
-      <div>
-        <select value={selectedJob} onChange={(e) => setSelectedJob(e.target.value)}>
+    <div className="TrainingSearch_container">
+      <h1 className="title">직업 훈련 검색</h1>
+      <div className="filters">
+        <select className="select" value={selectedArea} onChange={(e) => setSelectedArea(e.target.value)}>
+          <option value="">전체 지역</option>
+           {areaOptions.map((area) => (
+          <option key={area.code} value={area.code}>{area.name}</option>
+          ))}
+        </select>
+        <select className="select" value={selectedJob} onChange={(e) => setSelectedJob(e.target.value)}>
           <option value="">전체 직종</option>
            {jobCategories.map((job) => (
           <option key={job.code} value={job.code}>{job.name}</option>
           ))}
         </select>
 
-        <select value={selectedArea} onChange={(e) => setSelectedArea(e.target.value)}>
-          <option value="">전체 지역</option>
-           {areaOptions.map((area) => (
-          <option key={area.code} value={area.code}>{area.name}</option>
-          ))}
-        </select>
-        <button onClick={fetchTrainings}>검색</button>
+        <button className="button" onClick={() => fetchTrainings(1)}>검색</button>
       </div>
 
       {loading ? (
-        <p>로딩 중...</p>
+        <p className="loading">로딩 중...</p>
       ) : results.length === 0 ? (
-        <p>검색 결과가 없습니다.</p>
+        <p className="empty">검색 결과가 없습니다.</p>
       ) : (
-        <ul className="space-y-4">
+        <ul className="list">
           {results.map((item, idx) => (
-            <li key={idx}>
-              <h3>{item.title}</h3>
+            <li
+              key={idx}
+              className="card"
+              onClick={() => window.open(item.titleLink, "_blank")}
+              role="button"
+              tabIndex={0}
+              style={{ cursor: "pointer" }}
+            >
+              <h3 className="name">{item.title}</h3>
               <p>훈련기관: {item.subTitle}</p>
+              <p>훈련장소: {item.address}</p>
               <p>훈련기간: {item.traStartDate} ~ {item.traEndDate}</p>
-              {item.titleLink && (<a href={item.titleLink}target="_blank">자세히 보기</a>)}
             </li>
           ))}
         </ul>
-        )}
+      )}
+       
+      {results.length > 0 && (
+  
+        <Pagination
+          activePage={currentPage}
+          totalItemsCount={totalCount}
+          pageRangeDisplayed={10}
+          onChange={(page) => fetchTrainings(page)}
+          innerClass="pagination"
+          itemClass=""
+          linkClass=""
+          activeClass="active"
+          disabledClass="disabled"
+        />
+      )}
     </div>
   );
 };
