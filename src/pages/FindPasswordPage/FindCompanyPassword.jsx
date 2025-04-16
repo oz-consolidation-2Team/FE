@@ -80,25 +80,18 @@ const FindCompanyPassword = ({ onBack }) => {
       formattedDate === dummyCompany.startDate &&
       form.businessNumber === dummyCompany.businessNumber;
 
-    if (isMatch) {
-      setModal({
-        type: 'success',
-        title: '비밀번호 찾기 완료',
-        message: '비밀번호 재설정 링크가 이메일로 전송되었습니다.',
+    setModal({
+        type: isMatch ? 'success' : 'error',
+        title: isMatch ? '비밀번호 찾기 인증 완료' : '일치하는 정보 없음',
+        message: isMatch
+          ? '비밀번호 재설정으로 이동합니다.'
+          : '입력하신 정보와\n일치하는 계정을 찾을 수 없습니다.',
         onConfirm: () => {
           setModal(null);
-          navigate('/login');
+          if (isMatch) navigate('/reset-password/user');
         },
       });
-    } else {
-      setModal({
-        type: 'error',
-        title: '일치하는 정보 없음',
-        message: '입력하신 정보와\n일치하는 계정을 찾을 수 없습니다.',
-        onConfirm: () => setModal(null),
-      });
-    }
-  };
+    };
 
   return (
     <div className="find_company_password_page">
