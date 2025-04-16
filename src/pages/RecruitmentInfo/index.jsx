@@ -10,7 +10,7 @@ import SearchFilters from './SearchFilters';
 function RecruitmentInfo() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
-  const [selectedJobCategory, setSelectedJobCategory] = useState(''); // Changed selectedCategory to selectedJobCategory
+  const [selectedJobCategory, setSelectedJobCategory] = useState('');
   const [selectedDistrict, setSelectedDistrict] = useState(''); // 1. selectedDistrict 상태 추가
   const navigate = useNavigate();
 
@@ -25,8 +25,13 @@ function RecruitmentInfo() {
     const filteredResults = dummyData.filter(job => {
       return (
         (fullLocation ? job.work_address.includes(fullLocation) : true) &&
-        (selectedJobCategory ? job.job_category === selectedJobCategory : true) && // Updated filter condition
-        (searchQuery ? job.title.includes(searchQuery) : true)
+        (selectedJobCategory ? job.job_category === selectedJobCategory : true) && 
+        (searchQuery
+          ? job.title.includes(searchQuery) ||             // 제목으로 검색
+            job.description.includes(searchQuery) ||       // 상세 내용 으로 검색
+            job.other_conditions.includes(searchQuery) ||  // 기타 조건으로 검색
+            job.work_place_name.includes(searchQuery)      // 회사명으로 검색
+          : true)
       );
     });
 

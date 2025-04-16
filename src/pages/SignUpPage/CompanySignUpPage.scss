@@ -84,7 +84,6 @@
       width: 100%;
       height: 48px;
       padding: 0 12px;
-      padding-right: 44px;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 15px;
@@ -101,7 +100,7 @@
 
     textarea {
       width: 100%;
-      min-height: 160px; // ✅ 넉넉한 높이
+      min-height: 160px;
       padding: 12px;
       font-size: 15px;
       line-height: 1.6;
@@ -131,7 +130,7 @@
       .eye_icon {
         position: absolute;
         right: 12px;
-        top: 36px; // input 높이 48px일 때 중앙
+        top: 36px;
         font-size: 20px;
         color: #999;
         cursor: pointer;

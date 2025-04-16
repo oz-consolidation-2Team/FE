@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import './JobDetail.scss';
+import JobApplyModal from '@/components/Company/Modal/JobApplyModal';
 
 const JobDetail = () => {
   const location = useLocation();
@@ -10,6 +11,8 @@ const JobDetail = () => {
   if (!job) return <div>로딩 중...</div>;
 
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleBookmarkClick = () => {
     setIsBookmarked(prev => !prev);
@@ -93,7 +96,7 @@ const JobDetail = () => {
       </section>
 
       <div className="job-action">
-        <button className="apply-button">지원하기</button>
+        <button className="apply-button" onClick={() => setIsModalOpen(true)}>지원하기</button>
         <div className="bookmark-button">
           {isBookmarked ? (
             <FaStar className="star_icon filled" onClick={handleBookmarkClick} />
@@ -102,6 +105,16 @@ const JobDetail = () => {
           )}
         </div>
       </div>
+      {isModalOpen && (
+        <JobApplyModal
+          onClose={() => setIsModalOpen(false)}
+          onApply={() => {
+            setIsModalOpen(false);
+            alert('지원이 완료되었습니다!'); // 나중에 API 연동 예정
+          }}
+          onEditResume={() => navigate('/mypage/user/resumes')}
+        />
+      )}
     </div>
   );
 };
