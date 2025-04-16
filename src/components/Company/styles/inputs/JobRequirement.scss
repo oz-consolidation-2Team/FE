@@ -1,0 +1,28 @@
+.JobRequirement_container {
+    padding: 30px;
+    .box {
+        display: flex;
+        margin: 25px 0;
+
+        > :nth-child(2) {
+            padding-left: 25px;
+        }
+        > :nth-child(3) {
+            margin: 0;
+        }
+        .InputText_container {
+            padding-left: 40px;
+        }
+    }
+    .recruite_peple {
+        > :last-child {
+            width: 100px;
+            padding-left: 25px;
+        }
+    }
+    .remove {
+        > :nth-child(1) {
+            width: 200px;
+        }
+    }
+}

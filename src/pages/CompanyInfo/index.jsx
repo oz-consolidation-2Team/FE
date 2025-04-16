@@ -1,4 +1,7 @@
 import { useParams } from "react-router-dom"
+import "./CompanyInfo.scss"
+import { AiOutlineUser } from "react-icons/ai";
+import { BsBuilding } from "react-icons/bs";
 
 export default function CompanyInfo (props) {
     const params = useParams('id')
@@ -17,27 +20,36 @@ export default function CompanyInfo (props) {
       }
 
     return (
-        <div>
+        <div className="CompanyInfo_container">
             <h1>{data.company_name}</h1>
             <hr />
-            <div>
-                <p>{data.company_intro}</p>
-                <div>
-                    <div>
-                        <p>대표자명</p>
-                        <p>{data.ceo_name}</p>
+            <p className="intro">{data.company_intro}</p>
+            <div className="box">
+                <div className="info">
+                    <div className="icon">
+                        <AiOutlineUser />
                     </div>
                     <div>
-                        <p>개업</p>
-                        <p>{data.opening_date}</p>
+                        <p className="category">대표자명</p>
+                        <p className="data">{data.ceo_name}</p>
                     </div>
                 </div>
-                <div>
-                    <p>담당자 누락</p>
-                    <div>
-                        <p>담당자 이메일 누락</p>
-                        <p>담당자 전화번호 누락</p>
+
+                <div className="info">
+                    <div className="icon">
+                        <BsBuilding />
                     </div>
+                    <div>
+                        <p className="category">개업</p>
+                        <p className="data">{data.opening_date}</p>
+                    </div>
+                </div>
+            </div>
+            <div className="manager">
+                <p>담당자: 누락</p>
+                <div>
+                    <p>담당자 이메일: 누락</p>
+                    <p>담당자 전화번호: 누락</p>
                 </div>
             </div>
         </div>

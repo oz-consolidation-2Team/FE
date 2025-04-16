@@ -5,9 +5,11 @@ import InputImage from '../../components/Company/InputImage'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import InfoEditModal from '../../components/Company/Modal/InfoEditModal'
+import "./CompanyInfoEdit.scss"
+import { GoArrowLeft } from "react-icons/go";
 
 export default function CompanyInfoEdit () {
-    const [modal, setModal] = useState(false)
+    const [showModal, setShowModal] = useState(false)
     const navigate = useNavigate()
     //api 기업 정보 조회 (기업 ID로 해당 기업 상세 정보 조회) /company/{company_id}
     
@@ -31,50 +33,56 @@ export default function CompanyInfoEdit () {
       }
 
     return (
-        <div>
-            <div>
-                <div>
-                    <button onClick={()=>navigate(-1)}>{`<-`}</button>
-                    <h1>기업 정보 수정</h1>
-                </div>
+        <div className='CompanyInfoEdit_container'>
+            <GoArrowLeft 
+                className="button_back"
+                onClick={() => navigate(-1)}/>
+            <h1>기업 정보 수정</h1>
+
+            <div className='div_company-info'>
                 <CategoryTitle title="기업 정보" />
-                <div>
+                <div className='box deactivation'>
                     <Category text='기업명' essential={false} />
                     <InputText type='text' placeholder={data.company_name} />
                 </div>
-                <div>
+                <div className='box'>
                     <Category text='기업소개' />
                     <InputText type='text' placeholder={data.company_intro} />
                 </div>
-                <div>
+                <div className='box deactivation'>
                     <Category text='사업자등록번호' essential={false} />
                     <InputText type='text' placeholder={data.business_reg_number} />
                 </div>
-                <div>
+                <div className='box deactivation'>
                     <Category text='개업년월일' essential={false} />
                     <InputText type='text' placeholder={data.opening_date} />
                 </div>
-                <InputImage data={data} />
+                <div className='box'>
+                    <Category text='이미지 등록' />
+                    <InputImage data={data} />
+                </div>
             </div>
 
-            <div>
+            <div className='div_manager-info'>
                 <CategoryTitle title="담당자 정보" />
-                <div>
+                <div className='box'>
                     <Category text='이름' />
                     <InputText type='text' placeholder={data.manager_name} />
                 </div>
-                <div>
+                <div className='box'>
                     <Category text='전화번호' />
                     <InputText type='text' placeholder={data.manager_phone} />
                 </div>
-                <div>
+                <div className='box'>
                     <Category text='이메일' />
                     <InputText type='text' placeholder={data.manager_email} />
                 </div>
             </div>
 
-            <button onClick={() => setModal(true)}>수정하기</button>
-            {modal && <InfoEditModal data={data} setModal={setModal} />}
+            <button 
+                className='button_edit'
+                onClick={() => setShowModal(true)}>수정하기</button>
+            {showModal && <InfoEditModal data={data} setShowModal={setShowModal} />}
         </div>
     )
 }

@@ -1,6 +1,8 @@
 import InfoBox from "../../components/Company/InfoBox"
 import AnnouncementCard from "../../components/Company/AnnouncementCard"
 import { useNavigate } from 'react-router-dom';
+import "./CompanyMyPage.scss"
+
 
 export default function CompanyMyPage() {
   const navigate = useNavigate();
@@ -34,11 +36,13 @@ export default function CompanyMyPage() {
   }]
 
   return (
-    <div>
-      <h1>기업 이름</h1>
-      <div>
+    <div className="companyMyPage_cantainer">
+      <h1 className="h1_title">기업 이름</h1>
+      <div className="div_info">
         <InfoBox type='company' />
-        <button onClick={handleAnnouncementAddClick}>공고 작성하기</button>
+        <button 
+        className="button_add"
+        onClick={handleAnnouncementAddClick}>공고 작성하기</button>
       </div>
       
       <hr />

@@ -1,3 +1,5 @@
+import "./styles/Category.scss"
+
 /**
  * props = {
  * @text string; (항목 이름)
@@ -5,5 +7,8 @@
  * }
  */
 export default function Category (props) {
-    return <p>{props.text}<span>{props.essential === undefined && "*"}</span></p>
+    return <div className="Category_condainer">
+            <p>{props.text}</p>
+            <p className="essential">{props.essential === undefined && "*"}</p>
+        </div>
 }

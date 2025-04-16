@@ -1,0 +1,10 @@
+.Category_condainer {
+    display: flex;
+    font-weight: bold;
+    width: 100px;
+
+    .essential {
+        color: red;
+        padding: 0 !important;
+    }
+}
