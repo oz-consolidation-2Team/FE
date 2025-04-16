@@ -1,5 +1,4 @@
-$MAIN_COLOR: #0F8C3B;
-$LINE_COLOR: #e0e0e0;
+@use '@/utils/variables' as *;
 
 .modal_overlay {
     position: fixed;
@@ -29,9 +28,9 @@ $LINE_COLOR: #e0e0e0;
         align-items: start;
         width: 100%;
 
-        .announcement-card {
+        .announcement_card {
             display: flex;
-            border: 2px solid $LINE_COLOR;
+            border: 2px solid $deep-green;
             border-radius: 10px;
             width: 100%;
             height: 100px;
@@ -39,8 +38,8 @@ $LINE_COLOR: #e0e0e0;
             margin: 30px 0;
             margin-top: 50px;
             
-            > hr {
-                border: 1px solid #f0f0f0;
+            > .hr {
+                border-color: #f0f0f0 !important;
                 margin: 0 15px;
             }
 
@@ -78,8 +77,8 @@ $LINE_COLOR: #e0e0e0;
                 font-size: 0.9rem;
             }
         }
-        > hr {
-            border: 1px solid $LINE_COLOR;
+        > .hr {
+            border-color: $deep-green !important;
             width: 100%;
             margin-top: 20px;
         }
@@ -110,7 +109,7 @@ $LINE_COLOR: #e0e0e0;
             button {
                 border: none;
                 border-radius: 10px;
-                background-color: $MAIN_COLOR;
+                background-color: $green;
                 color: white;
                 font-size: 1.2rem;
                 width: 100%;
@@ -128,7 +127,7 @@ $LINE_COLOR: #e0e0e0;
         > button {
             border: none;
             border-radius: 10px;
-            background-color: $MAIN_COLOR;
+            background-color: $green;
             font-size: 1.2rem;
             color: white;
             width: 70%;

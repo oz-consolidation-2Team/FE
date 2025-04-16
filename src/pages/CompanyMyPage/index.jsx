@@ -2,6 +2,7 @@ import InfoBox from "../../components/Company/InfoBox"
 import AnnouncementCard from "../../components/Company/AnnouncementCard"
 import { useNavigate } from 'react-router-dom';
 import "./CompanyMyPage.scss"
+import Hr from "@/utils/Hr";
 
 
 export default function CompanyMyPage() {
@@ -45,7 +46,7 @@ export default function CompanyMyPage() {
         onClick={handleAnnouncementAddClick}>공고 작성하기</button>
       </div>
       
-      <hr />
+      <Hr />
 
       <h2>나의 공고</h2>
       {data.map(item => 

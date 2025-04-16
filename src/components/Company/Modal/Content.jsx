@@ -1,3 +1,4 @@
+import Hr from "@/utils/Hr";
 import BasicsText from "./BasicsText";
 
 /**props = {
@@ -8,12 +9,12 @@ export default function Content (props) {
     // 기업 호출 API
     return (
         <div className="Content_container">
-            <div className="announcement-card">
+            <div className="announcement_card">
                 <div className="company">
                     <p>기업명</p>
                     <p>{props.data.근무지명}</p>
                 </div>
-                <hr />
+                <Hr />
                 <div className="announcement">
                     <p className="title">{props.data.공고제목}</p>
                     <p>{props.data.근무요약}</p>
@@ -21,7 +22,7 @@ export default function Content (props) {
                 <p className="time">{props.data.모집기간상시 ? "상시모집" : props.data.모집기간}</p>
             </div>
             <p>근무지주소: {props.data.근무지주소}</p>
-            <hr />
+            <Hr />
 
             <div className="box">
                 <p>모집기간: {props.data.모집기간상시 ? "상시모집" : props.data.모집기간}</p>
@@ -31,7 +32,7 @@ export default function Content (props) {
             <div>복리후생: {props.data.복리후생 && props.data.복리후생.join(', ')}</div>
             <div>우대사항: {props.data.우대사항 && props.data.우대사항.join(', ')}</div>
             <div>기타조건: {props.data.기타조건 && props.data.기타조건.join(', ')}</div>
-            <hr />
+            <Hr />
 
             <div className="box">
                 <p>급여: {props.data.급여}</p>

@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import "./CompanyInfo.scss"
 import { AiOutlineUser } from "react-icons/ai";
 import { BsBuilding } from "react-icons/bs";
+import Hr from "@/utils/Hr";
 
 export default function CompanyInfo (props) {
     const params = useParams('id')
@@ -22,7 +23,7 @@ export default function CompanyInfo (props) {
     return (
         <div className="CompanyInfo_container">
             <h1>{data.company_name}</h1>
-            <hr />
+            <Hr />
             <p className="intro">{data.company_intro}</p>
             <div className="box">
                 <div className="info">
