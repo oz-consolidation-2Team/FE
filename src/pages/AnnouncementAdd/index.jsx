@@ -34,7 +34,7 @@ export default function AnnouncementAdd () {
   "deadline_at": "2025-12-31",   //마감일 <- 이건 뭐지
   "work_days": "월-금",    //근무 요일/스케줄
   "description": "채용 공고 상세 내용"    //공고 상세 내용
-
+ 
   근무기간협의여부, 근무요일협의여부, 근무요일변동여부, 
   근무시간대, 근무시간대협의여부, 이미지
 } */
