@@ -9,7 +9,7 @@ import "./CompanyInfoEdit.scss"
 import { GoArrowLeft } from "react-icons/go";
 
 export default function CompanyInfoEdit () {
-    const [modal, setModal] = useState(false)
+    const [showModal, setShowModal] = useState(false)
     const navigate = useNavigate()
     //api 기업 정보 조회 (기업 ID로 해당 기업 상세 정보 조회) /company/{company_id}
     
@@ -81,8 +81,8 @@ export default function CompanyInfoEdit () {
 
             <button 
                 className='button_edit'
-                onClick={() => setModal(true)}>수정하기</button>
-            {modal && <InfoEditModal data={data} setModal={setModal} />}
+                onClick={() => setShowModal(true)}>수정하기</button>
+            {showModal && <InfoEditModal data={data} setShowModal={setShowModal} />}
         </div>
     )
 }
