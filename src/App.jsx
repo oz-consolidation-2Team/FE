@@ -16,6 +16,7 @@ import JobDetail from './pages/RecruitmentInfo/JobDetail';
 import LoginPage from './pages/LoginPage';
 import AboutCompany from './pages/AboutCompany/About';
 import TrainingSearch from './pages/JobTraining/TrainingSearch';
+import MyResumes from './pages/MyResumes';
 import FindEmailPage from './pages/FindEmailPage';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/about" element={<AboutCompany />} />
         <Route path="/recruitment_info" element={<RecruitmentInfo />} />
         <Route path="/mypage/user" element={<UserMyPage />} />
+        <Route path="/mypage/user/resumes" element={<MyResumes />} />
         <Route path="/search-results" element={<SearchResults />} />
         <Route path="/job-detail/:id" element={<JobDetail />} />
         <Route path="/company_my_page" element={<CompanyMyPage />} />
