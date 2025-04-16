@@ -21,6 +21,7 @@ import FindEmailPage from './pages/FindEmailPage';
 import FindPasswordPage from './pages/FindPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 
+
 function App() {
   return (
     <Routes>
@@ -42,7 +43,7 @@ function App() {
         <Route path="/company_announcement_add_page" element={<AnnouncementAdd />} />
         <Route path="/company_announcement_edit_page/:id" element={<AnnouncementEdit />} />
         <Route path="/company_resumes_page/:id" element={<CompanyResumes />} />
-        <Route path="/TrainingSearch" element={<TrainingSearch />} />
+        <Route path="/trainingSearch" element={<TrainingSearch />} />
       </Route>
 
       <Route path="/signup" element={<SignUpPage />} />
