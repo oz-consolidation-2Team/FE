@@ -1,3 +1,5 @@
+import "./styles/InputRadio.scss"
+
 /** props = {
  * type: 복리후생 | 우대조건 | 기타조건 | 상시모집 | 협의가능 | 근무요일협의; (항목 간 타입 지정)
 */
@@ -12,14 +14,13 @@ export default function InputRadio (props) {
         협의가능: ['협의 가능']
     }
     return (
-        <div>
+        <div className="InputRadio_container">
             {data[props.type].map((item, index)=>{
-                const random_id = Math.random()
                 return (
-                    <div key={index}>
-                        <input id={random_id} type='checkbox' />
-                        <label htmlFor={random_id}>{item}</label>
-                    </div>
+                    <label className="div_checkBoxs" key={index}>
+                        <input type='checkbox' />
+                        {item}
+                    </label>
                 )
                 })}
         </div>

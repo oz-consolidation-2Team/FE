@@ -1,0 +1,18 @@
+.InfoBox_cantainer {
+    border-radius: 20px;
+    background-color: #EBEBEB;
+    width: 100%;
+    padding: 20px;
+    padding-left: 20px;
+    padding-bottom: 30px;
+
+    .button_info_edit {
+        background-color: #EBEBEB;
+        border: none;
+        float: right;
+    }
+
+    > * {
+        padding: 7px 5px;
+    }
+}

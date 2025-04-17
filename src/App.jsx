@@ -15,8 +15,12 @@ import Layout from './components/Layout';
 import JobDetail from './pages/RecruitmentInfo/JobDetail';
 import LoginPage from './pages/LoginPage';
 import AboutCompany from './pages/AboutCompany/About';
+import TrainingSearch from './pages/JobTraining/TrainingSearch';
 import MyResumes from './pages/MyResumes';
 import FindEmailPage from './pages/FindEmailPage';
+import FindPasswordPage from './pages/FindPasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
+
 
 function App() {
   return (
@@ -25,6 +29,8 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/find-email" element={<FindEmailPage />} />
+        <Route path='/forgot-password' element={<FindPasswordPage />} />
+        <Route path='/reset-password/:type' element={<ResetPasswordPage />} />
         <Route path="/about" element={<AboutCompany />} />
         <Route path="/recruitment_info" element={<RecruitmentInfo />} />
         <Route path="/mypage/user" element={<UserMyPage />} />
@@ -37,6 +43,7 @@ function App() {
         <Route path="/company_announcement_add_page" element={<AnnouncementAdd />} />
         <Route path="/company_announcement_edit_page/:id" element={<AnnouncementEdit />} />
         <Route path="/company_resumes_page/:id" element={<CompanyResumes />} />
+        <Route path="/trainingSearch" element={<TrainingSearch />} />
       </Route>
 
       <Route path="/signup" element={<SignUpPage />} />
