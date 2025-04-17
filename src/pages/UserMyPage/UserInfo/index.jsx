@@ -1,5 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import './UserInfoPage.scss';
+import { userInfoPropTypes } from '@/utils/UserMyPagePropTypes';
+
+UserInfo.propTypes = {
+  userInfo: userInfoPropTypes.isRequired,
+};
 
 function UserInfo({ userInfo }) {
   const navigate = useNavigate();
