@@ -365,24 +365,35 @@ const UserSignUpPage = () => {
           <hr />
 
           {[1, 2, 3].map((n) => (
-            <div className="checkbox_row" key={`terms${n}`}>
-              <input
-                type="checkbox"
-                checked={form[`terms${n}`]}
-                onChange={() => toggleCheck(`terms${n}`)}
-              />
-              <label>[필수] {
-                n === 1 ? '개인정보처리방침' :
-                n === 2 ? '개인회원 이용약관' :
-                '위치기반 서비스 이용약관'
-              } 동의</label>
-              <button
-                type="button"
-                className="view_detail"
-                onClick={() => setModal({ type: 'term', key: `terms${n}.html` })}
-              >자세히 보기</button>
-            </div>
-          ))}
+  <div className="checkbox_row" key={`terms${n}`}>
+    <input
+      type="checkbox"
+      checked={form[`terms${n}`]}
+      onChange={() => toggleCheck(`terms${n}`)}
+    />
+    <label>[필수] {
+      n === 1 ? '개인정보처리방침' :
+      n === 2 ? '개인회원 이용약관' :
+      '위치기반 서비스 이용약관'
+    } 동의</label>
+    <button
+      type="button"
+      className="view_detail"
+      onClick={() =>
+        setModal({
+          type: 'term',
+          key:
+            n === 1 ? 'privacy_policy.html' :
+            n === 2 ? 'user_terms.html' :
+            'location_terms.html'
+        })
+      }
+    >
+      자세히 보기
+    </button>
+  </div>
+))}
+
 
           {[4, 5, 6].map((n) => (
             <div className="checkbox_row" key={`terms${n}`}>
@@ -410,18 +421,17 @@ const UserSignUpPage = () => {
       </div>
     {modal?.type === 'term' && (
       <Modal
-        type="green"
-        message={
-          <iframe
-            src={`/terms/${modal.key}`}
-            title="약관 보기"
-            width="100%"
-            height="300px"
-            style={{ border: 'none' }}
-          />
-        }
-        onConfirm={() => setModal(null)}
-      />
+      className="term_modal"
+      type="green"
+      title="약관 보기"
+      message={
+        <iframe
+          src={`/terms/${modal.key}`}
+          title="약관 보기"
+        />
+      }
+      onConfirm={() => setModal(null)}
+    />
     )}
 
     {/* 일반 모달 */}
