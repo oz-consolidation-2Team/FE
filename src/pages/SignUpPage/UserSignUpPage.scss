@@ -192,25 +192,39 @@
   .terms_step {
     margin-top: 20px;
 
+    .terms_header {
+      font-size: 14px;
+      color: #444;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .terms_group {
+      margin-bottom: 20px;
+    }
+
+    .divider {
+      height: 1px;
+      background-color: #ddd;
+      margin: 24px 0;
+    }
+
     .checkbox_row {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 12px;
       margin-bottom: 16px;
-      position: relative;
 
       input[type='checkbox'] {
         width: 18px;
         height: 18px;
-        margin-top: 2px;
-        flex-shrink: 0;
       }
 
       label {
         font-size: 14px;
         color: #333;
         flex: 1;
-        line-height: 1.6;
+        line-height: 1.5;
         word-break: keep-all;
       }
 
@@ -222,21 +236,25 @@
         cursor: pointer;
         text-decoration: underline;
         padding: 0;
-        white-space: nowrap;
-        flex-shrink: 0;
-
-        &:hover {
-          text-decoration: none;
-          color: $deep-orange;
-        }
       }
-    }
 
-    hr {
-      border: none;
-      height: 1px;
-      background-color: #e0e0e0;
-      margin: 20px 0;
+      .required,
+      .optional {
+        font-weight: bold;
+        margin-right: 6px;
+      }
+
+      .required {
+        color: $orange;
+      }
+
+      .optional {
+        color: #888;
+      }
+
+      &.all_agree {
+        margin-top: 30px;
+      }
     }
 
     .error_msg {
@@ -284,6 +302,62 @@
         background-color: #ddd;
         cursor: not-allowed;
       }
+    }
+  }
+}
+
+.terms_section {
+  margin-top: 24px;
+
+  .terms_label {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #333;
+  }
+
+  .checkbox_row {
+    margin-bottom: 12px;
+  }
+}
+.terms_step, .terms_section {
+  input[type='checkbox'] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:checked {
+      background-color: $orange;
+      border-color: $orange;
+
+      &::after {
+        content: '';
+        width: 4px;
+        height: 8px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba($orange, 0.3);
     }
   }
 }
