@@ -37,6 +37,38 @@
     }
   }
 
+  .step_indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 60px;
+
+    .step {
+      padding: 0 16px;
+      height: 36px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 36px;
+      text-align: center;
+      background-color: #eee;
+      color: #888;
+      white-space: nowrap;
+
+      &.active {
+        background-color: $orange;
+        color: white;
+      }
+    }
+
+    .step_line {
+      width: 24px;
+      height: 2px;
+      background-color: #ccc;
+    }
+  }
+
   .password_row {
     position: relative;
 
@@ -106,32 +138,6 @@
     }
   }
 
-  .checkbox_group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: #333;
-
-    label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-
-      input[type='checkbox'] {
-        width: 16px;
-        height: 16px;
-        margin: 0;
-      }
-    }
-
-    .error_msg {
-      margin-top: 6px;
-      font-size: 13px;
-      color: #e53935;
-    }
-  }
-
   .section_box {
     margin-bottom: 32px;
 
@@ -183,6 +189,67 @@
     }
   }
 
+  .terms_step {
+    margin-top: 20px;
+
+    .checkbox_row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+      position: relative;
+
+      input[type='checkbox'] {
+        width: 18px;
+        height: 18px;
+        margin-top: 2px;
+        flex-shrink: 0;
+      }
+
+      label {
+        font-size: 14px;
+        color: #333;
+        flex: 1;
+        line-height: 1.6;
+        word-break: keep-all;
+      }
+
+      .view_detail {
+        font-size: 12px;
+        color: $orange;
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+        padding: 0;
+        white-space: nowrap;
+        flex-shrink: 0;
+
+        &:hover {
+          text-decoration: none;
+          color: $deep-orange;
+        }
+      }
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background-color: #e0e0e0;
+      margin: 20px 0;
+    }
+
+    .error_msg {
+      font-size: 13px;
+      color: #e53935;
+      margin: 12px 0 0 0;
+    }
+
+    .button_group {
+      margin-top: 32px;
+    }
+  }
+
   .button_group {
     margin-top: 28px;
     display: flex;
@@ -217,38 +284,6 @@
         background-color: #ddd;
         cursor: not-allowed;
       }
-    }
-  }
-
-  .step_indicator {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 60px;
-
-    .step {
-      padding: 0 16px;
-      height: 36px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 36px;
-      text-align: center;
-      background-color: #eee;
-      color: #888;
-      white-space: nowrap;
-
-      &.active {
-        background-color: $orange;
-        color: white;
-      }
-    }
-
-    .step_line {
-      width: 24px;
-      height: 2px;
-      background-color: #ccc;
     }
   }
 }
