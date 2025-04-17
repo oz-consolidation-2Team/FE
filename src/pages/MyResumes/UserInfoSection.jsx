@@ -26,7 +26,7 @@ function UserInfoSection({ data }) {
           value={data.resume_image}
           onClick={openModal}
           placeholder="이미지를 등록해주세요"
-          disabled
+          readOnly
         />
       </label>
       <label name="user_name">
@@ -36,7 +36,7 @@ function UserInfoSection({ data }) {
           name="user_name"
           value={data.user_id.data.name}
           onClick={openModal}
-          disabled
+          readOnly
         />
       </label>
       <label name="user_gender">
@@ -46,7 +46,7 @@ function UserInfoSection({ data }) {
           name="user_gender"
           value={data.user_id.data.gender}
           onClick={openModal}
-          disabled
+          readOnly
         />
       </label>
       <label name="user_phone_number">
@@ -56,7 +56,7 @@ function UserInfoSection({ data }) {
           name="user_phone_number"
           value={data.user_id.data.phone_number}
           onClick={openModal}
-          disabled
+          readOnly
         />
       </label>
       <label name="user_email">
@@ -66,17 +66,19 @@ function UserInfoSection({ data }) {
           name="user_email"
           value={data.user_id.data.email}
           onClick={openModal}
-          disabled
+          readOnly
         />
       </label>
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <h3>회원정보 수정</h3>
-        <p>이 항목은 회원정보 수정 페이지에서만 변경할 수 있어요.</p>
-        <div className="modal_buttons">
-          <button onClick={goToEditPage}>회원정보 수정하기</button>
-          <button onClick={closeModal}>닫기</button>
-        </div>
-      </Modal>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        title="회원정보 수정"
+        description="이 항목은 회원정보 수정 페이지에서만 변경할 수 있어요."
+        buttons={[
+          { label: '회원정보 수정하기', onClick: goToEditPage, className: 'modal_btn_orange' },
+          { label: '닫기', onClick: closeModal, className: 'modal_btn_green' },
+        ]}
+      ></Modal>
     </div>
   );
 }
