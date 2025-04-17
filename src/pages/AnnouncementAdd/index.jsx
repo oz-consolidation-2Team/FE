@@ -11,61 +11,66 @@ import { GoArrowLeft } from "react-icons/go";
 
 export default function AnnouncementAdd () {
     const navigate = useNavigate()
-    // input 상태관리를 여기서
-
-    /** {
-  "title": "개발자 채용",           // 채용공고 제목
-  "recruit_period_start": "2025-01-01",  //모집 시작일
-  "recruit_period_end": "2025-06-30",   //모집 종료일
-  "is_always_recruiting": false,   //상시 모집 여부
-  "education": "대졸",   //학력 요구사항
-  "recruit_number": 3,   //모집 인원
-  "benefits": "병가, 유급 휴가, 가족상 휴가",   //복리 후생
-  "preferred_conditions": "동종업계 경력자, 운전면허 소지자",    //우대 조건
-  "other_conditions": "상시 모집, 초보 가능",   //기타 조건
-  "work_address": "서울시 강남구 역삼동 123-45",    //근무지 주소 
-  "work_place_name": "ABC Tech Center",    //근무지명
-  "payment_method": "월급",   //급여 지급 방법
-  "job_category": "IT·인터넷",   //모집 직종
-  "work_duration": "1년 이상",    //근무 기간
-  "career": "경력",   //경력 사항 (신입/경력 등)
-  "employment_type": "정규직",   //고용 형태 (정규직/계약직 등)
-  "salary": 5000,   //급여
-  "deadline_at": "2025-12-31",   //마감일 <- 이건 뭐지
-  "work_days": "월-금",    //근무 요일/스케줄
-  "description": "채용 공고 상세 내용"    //공고 상세 내용
-} */
-
-    // 더미데이터
-    const [data, setData1] = useState({
-        title: null,
-        근무요약: null,
-        recruit_period_start: null,
-        recruit_period_end: null,
-        is_always_recruiting: false,
-        recruit_number: null,
-        education: null,
-        benefits: null,
-        preferred_conditions: null,
-        other_conditions: null,
-        work_address: null,
-        work_place_name: null,
-        salary: null,
-        payment_method: null,
-        job_category: null,
-        career: null,
-        work_duration: null,
-        근무기간협의: false,
-        work_days: null,
-        근무요일협의: false,
-        근무요일변동: false,
-        employment_type: null,
-        근무시간: null,
-        근무시간협의: false,
-        description: null,
-        이미지등록: null
+    
+    const [formData, setFormData] = useState({
+        title: '', // 공고제목
+        근무요약: '',  // 근무요약
+        recruit_period_start: '', // 모집시작일
+        recruit_period_end: '', // 모집 마감일
+        is_always_recruiting: false, // 상시모집여부
+        recruit_number: '', // 모집인원
+        education: '', // 학력
+        benefits: [], // 복리후생
+        preferred_conditions: [], // 우대조건
+        other_conditions: [], // 기타조건
+        work_address: '', // 근무지주소
+        work_place_name: '', // 근무지명
+        salary: '', // 급여
+        payment_method: '', // 급여지급방법
+        job_category: '', // 직종
+        career: '', // 경력
+        work_duration: '', // 근무기간
+        근무기간협의: false, // 근무기간협의
+        work_days: [], // 근무요일
+        근무요일협의: false, // 근무요일협의
+        근무요일변동: false, // 근무요일변동
+        employment_type: '', // 고용형태
+        근무시간: '', // 근무시간
+        근무시간협의: false, // 근무시간협의
+        description: '', // 공고상세내용
+        이미지등록: '' // 이미지등록
     })
-    const [modal, setModal] = useState(false)
+    const [errors, setErrors] = useState({
+        title: false, // 공고제목
+        근무요약: false,  // 근무요약
+        recruit_period_start: false, // 모집시작일
+        // recruit_period_end: false, // 모집 마감일
+        recruit_number: false, // 모집인원
+        education: false, // 학력
+        // work_address: false, // 근무지주소
+        work_place_name: false, // 근무지명
+        salary: false, // 급여
+        payment_method: false, // 급여지급방법
+        job_category: false, // 직종
+        career: false, // 경력
+        work_duration: false, // 근무기간
+        work_days: false, // 근무요일
+        employment_type: false, // 고용형태
+        근무시간: false, // 근무시간
+        // 이미지등록: false // 이미지등록
+    })
+    
+    const validate = () => {
+        console.log('validate 실행됨')
+        const newErrors = {...errors}
+        Object.entries(errors).forEach((item) => {
+            if (!formData[item[0]]) newErrors[item[0]] = true
+        })
+        setErrors(newErrors)
+        console.log(newErrors)
+        return Object.values(newErrors).includes(true)
+    }
+    const [showModal, setShowModal] = useState(false)
 
     return (
     <div className="AnnouncementAdd_container">
@@ -74,17 +79,21 @@ export default function AnnouncementAdd () {
         onClick={() => navigate(-1)} />
         <h1>채용 공고 등록</h1>
         <div className="input_group">
-            <AnnouncementTitle data={data} setData={setData1} />
-            <JobRequirement data={data} setData={setData1}/>
-            <WorkLocation data={data} setData={setData1} />
-            <WorkRequirement data={data} setData={setData1} />
-            <AnnouncementContent data={data} setData={setData1} />
+            <AnnouncementTitle formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} />
+            <JobRequirement formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} />
+            <WorkLocation formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} />
+            <WorkRequirement formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} />
+            <AnnouncementContent formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} />
         </div>
         <button 
         className="button_add color-change"
-        onClick={() => setModal(true)}>등록하기</button>
+        onClick={() => {
+            validate() ?
+            alert('폼을 다시 확인해주세요')
+            : setShowModal(true)
+            }}>등록하기</button>
         <button className="button_preview">공고 미리보기</button>
-        {modal && <Modal setModal={setModal} data={data} modalType='add' />}
+        {showModal && <Modal setShowModal={setShowModal} formData={formData} modalType='add' />}
     </div>
     )
 }
