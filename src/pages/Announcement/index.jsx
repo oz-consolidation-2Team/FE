@@ -108,15 +108,6 @@ export default function Announcement (props) {
         return Object.values(newerror).includes(true)
     }
 
-    useEffect(()=>{
-        console.log('formData 변경됨 ▽')
-        console.log(formData)
-    },[formData])
-    useEffect(()=>{
-        console.log('error 변경됨 ▽')
-        console.log(error)
-    },[error])
-
     return (
         <div className="AnnouncementAdd_container">
             <GoArrowLeft 
