@@ -23,7 +23,8 @@ function SearchFilters({
   onSearch,             //검색 버튼 클릭시 호출되는 함수
 }) {
   return (
-    <div className="search-filters">
+    <div className="Search_container">
+      <div className="search_filters">
       <select value={selectedCity} onChange={(e) => setSelectedCity(e.target.value)}>
         <option value="">지역 선택</option>
         {Object.keys(districtsByCity).map((city) => (
@@ -69,6 +70,7 @@ function SearchFilters({
       />
 
       <button onClick={onSearch}>검색</button>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaStar, FaRegStar } from 'react-icons/fa';
+import './JobCard.scss';
 
 const JobCard = ({ job, isBookmarked, toggleBookmark }) => {
   const navigate = useNavigate();
@@ -15,12 +16,12 @@ const JobCard = ({ job, isBookmarked, toggleBookmark }) => {
   };
 
   return (
-    <div className="job-card" onClick={handleCardClick}>
-      <div className="job-header">
-        <div className="company-info">
-          <div className="company-name">{job.work_place_name}</div>
-          <div className="job-title">{job.title}</div>
-          <div className="job-description">{job.other_conditions}</div>
+    <div className="job_card" onClick={handleCardClick}>
+      <div className="header">
+        <div className="company">
+          <div className="name">{job.work_place_name}</div>
+          <div className="title">{job.title}</div>
+          <div className="description">{job.other_conditions}</div>
         </div>
         {isBookmarked ? (
           <FaStar className="star_icon filled" onClick={handleBookmarkClick} />
