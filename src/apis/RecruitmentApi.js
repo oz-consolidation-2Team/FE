@@ -22,8 +22,14 @@ export const fetchPublicRecruitments = async (params) => {
   }
 };
 
-// 채용공고 목록 조회 API 
-export const fetchJobPostings = async (token) => {
+/**
+ * 채용공고 목록을 조회하는 API 호출 함수
+ * 
+ * @param {string} token - 인증을 위한 JWT 토큰
+ * @returns {Promise<Object>} - 채용공고 목록 데이터를 포함한 응답 객체
+ * @throws {Error} - API 호출 실패 시 에러를 던짐
+ */
+export const getJobList = async (token) => {
   try {
     const response = await axios.get(
       `${API_BASE_URL}/posting`,
@@ -58,42 +64,5 @@ export const fetchJobDetail = async (postingId, token) => {
   }
 };
 
-// 구직자 채용공고 지원 API 호출 함수 
-export const sendJobApplication = async (jobPostingId, resumeId, token) => {
-  try {
-    const response = await axios.post(
-      `${API_BASE_URL}/applications`,
-      {
-        job_posting_id: jobPostingId,
-        resume_id: resumeId,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("지원 이력 생성 실패:", error);
-    throw error;
-  }
-};
 
-// 기업 회원 정보 조회 
-export const fetchCompanyInfo = async (companyUserId, token) => {
-  try {
-    const response = await axios.get(
-      `${API_BASE_URL}/company/${companyUserId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("기업 정보 조회 실패:", error);
-    throw error;
-  }
-};
+

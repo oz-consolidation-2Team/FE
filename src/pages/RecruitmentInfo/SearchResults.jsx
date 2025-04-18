@@ -3,7 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import SearchFilters from './SearchFilters';
 import { dummyData } from '../RecruitmentInfo/JobList';
 import JobCard from './JobCard';
-import './RecruitmentInfo.scss';
+import './SearchResults.scss';
+
 const SearchResults = () => {
   const navigate = useNavigate();
   const { state } = useLocation();  // navigate로 전달된 state를 받음
@@ -44,7 +45,7 @@ const SearchResults = () => {
   };
 
   return (
-    <div className="recruitment-container">
+    <div className="searchresults_container">
       <SearchFilters
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -56,7 +57,7 @@ const SearchResults = () => {
         setSelectedJobCategory={setSelectedJobCategory}
         onSearch={handleSearch}
       />
-      <div className="search-results">
+      <div className="results">
         <h2>검색 결과</h2>
         {results.length > 0 ? (
           results.map((job) => (
