@@ -4,10 +4,10 @@ import InputImage from "../InputImage";
 import InputText from "../InputText";
 import "../styles/inputs/AnnouncementContent.scss"
 
-/**props = {
- * @formData 상태관리
- * @setFormData 상태관리
-} */
+/**
+ * @param {상태관리} formData input값 저장
+ * @param {상태관리} error 유효성검사
+ */
 export default function AnnouncementContent (props) {
     return (
     <div className="AnnouncementContent_container">

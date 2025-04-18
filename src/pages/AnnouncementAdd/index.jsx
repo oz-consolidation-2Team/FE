@@ -40,7 +40,7 @@ export default function AnnouncementAdd () {
         description: '', // 공고상세내용
         이미지등록: '' // 이미지등록
     })
-    const [errors, setErrors] = useState({
+    const [error, setError] = useState({
         title: false, // 공고제목
         근무요약: false,  // 근무요약
         recruit_period_start: false, // 모집시작일
@@ -62,13 +62,13 @@ export default function AnnouncementAdd () {
     
     const validate = () => {
         console.log('validate 실행됨')
-        const newErrors = {...errors}
-        Object.entries(errors).forEach((item) => {
-            if (!formData[item[0]]) newErrors[item[0]] = true
+        const newerror = {...error}
+        Object.entries(error).forEach((item) => {
+            if (!formData[item[0]]) newerror[item[0]] = true
         })
-        setErrors(newErrors)
-        console.log(newErrors)
-        return Object.values(newErrors).includes(true)
+        setError(newerror)
+        console.log(newerror)
+        return Object.values(newerror).includes(true)
     }
     const [showModal, setShowModal] = useState(false)
 
@@ -79,11 +79,11 @@ export default function AnnouncementAdd () {
         onClick={() => navigate(-1)} />
         <h1>채용 공고 등록</h1>
         <div className="input_group">
-            <AnnouncementTitle formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} />
-            <JobRequirement formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} />
-            <WorkLocation formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} />
-            <WorkRequirement formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} />
-            <AnnouncementContent formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} />
+            <AnnouncementTitle formData={formData} setFormData={setFormData} error={error} setError={setError} />
+            <JobRequirement formData={formData} setFormData={setFormData} error={error} setError={setError} />
+            <WorkLocation formData={formData} setFormData={setFormData} error={error} setError={setError} />
+            <WorkRequirement formData={formData} setFormData={setFormData} error={error} setError={setError} />
+            <AnnouncementContent formData={formData} setFormData={setFormData} error={error} setError={setError} />
         </div>
         <button 
         className="button_add color-change"

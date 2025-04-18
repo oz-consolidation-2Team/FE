@@ -2,13 +2,12 @@ import { useState } from "react"
 import "./styles/InputDropDown.scss"
 import { GoChevronRight, GoChevronDown  } from "react-icons/go";
 
-/**props = {
- * @formData 상태관리{} (선택된 값 출력하기 위함)
- * @setformData 상태관리 (해당 값을 data에 입력하기 위함)
- * @errors 상태관리
- * @setErrors 상태관리
- * @text string; (항목 구분을 위함)
-} */
+/**
+ * @param {상태관리} formData input값 저장
+ * @param {상태관리} error 유효성검사
+ * @param {string} name input 변수 전달
+ * @param {string} text 플레이스홀더 입력값 (선택되지 않았을 때)
+ */
 export default function InputDropDown (props) {
     const [viewDropDown, setViewDropDown] = useState(false)
 
@@ -28,17 +27,17 @@ export default function InputDropDown (props) {
             <button 
             className="button_dropDown"
             onClick={() => setViewDropDown(!viewDropDown)}>
-                {props.formData[props.text] ? props.formData[props.text] : `${props.name} 선택`}
+                {props.formData[props.name] ? props.formData[props.name] : `${props.text} 선택`}
                 {viewDropDown ? <GoChevronDown /> : <GoChevronRight />}
             </button>
             {viewDropDown && <ul className="ul_listBox">
-                {data_dropDown[props.text].map((item, index) =>
+                {data_dropDown[props.name].map((item, index) =>
                     <li key={index} onClick={() => {
-                        props.setFormData({...props.formData, [props.text]: item})
+                        props.setFormData({...props.formData, [props.name]: item})
                         setViewDropDown(false)
-                        props.setErrors(el => ({
+                        props.setError(el => ({
                             ...el,
-                            [props.text]: false
+                            [props.name]: false
                         }))
                     }}>{item}</li>
                 )}

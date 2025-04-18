@@ -1,8 +1,8 @@
 import "./styles/InputRadio.scss"
 
-/** props = {
- * type: 복리후생 | 우대조건 | 기타조건 | 상시모집 | 협의가능 | 근무요일협의; (항목 간 타입 지정)
- * @name 
+/**
+ * @param {복리후생 | 우대조건 | 기타조건 | 상시모집 | 협의가능 | 근무요일 | 근무요일협의 | 근무요일변동} type 표시할 그룹체크박스 
+/* @param {string} name input 변수 전달
 */
 export default function InputRadio (props) {
     const handleClick = e => {

@@ -1,23 +1,22 @@
-import { useRef } from "react"
 import "./styles/InputText.scss"
 
-/**props = {
- * @fomrData 상태관리
- * @setFormData 상태관리
- * @error 상태관리
- * @setError 상태관리
- * @text string; (빈 값일 경우 placeholder 표시용)
- * @name string; (input 고유값 지정)
- * @type string; (input type을 지정하기 위함)
- * @placeholder string | null; (플레이스홀더를 입력하기 위함)
-} */
+/**
+ * @param {상태관리} formData input값 저장
+ * @param {상태관리} error 유효성검사
+ * @param {string} name input 변수 전달
+ * @param {string} type input type 지정
+ * @param {string} text 플레이스홀더 입력값 (공고등록용)
+ * @param {string | null} placeholder 플레이스홀더 입력값 (공고수정용)
+ * @returns 
+ */
 export default function InputText (props) {
     const handleChange = e => {
-        props.setFormData({
-            ...props.formData,
+        props.setFormData(el => ({
+            ...el,
             [e.target.name]: e.target.value,
-        })
-        props.setErrors(el => ({
+        }))
+
+        props.setError(el => ({
             ...el,
             [props.name]: false
         }))

@@ -7,11 +7,7 @@ import Hr from "@/utils/Hr";
 
 export default function CompanyMyPage() {
   const navigate = useNavigate();
-
-  const handleAnnouncementAddClick = () => {
-    navigate('/company_announcement_add_page');
-  };
-
+  
   // 더미데이터
   const data = [{
     id: 1,
@@ -43,7 +39,7 @@ export default function CompanyMyPage() {
         <InfoBox type='company' />
         <button 
         className="button_add"
-        onClick={handleAnnouncementAddClick}>공고 작성하기</button>
+        onClick={() => navigate("/company_announcement_add_page")}>공고 작성하기</button>
       </div>
       
       <Hr />
