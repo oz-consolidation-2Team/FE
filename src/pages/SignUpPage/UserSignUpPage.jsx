@@ -445,7 +445,6 @@ const UserSignUpPage = () => {
     />
     )}
 
-    {/* 일반 모달 */}
     {modal?.type !== 'term' && modal && <Modal {...modal} />}
   </div>
 );
