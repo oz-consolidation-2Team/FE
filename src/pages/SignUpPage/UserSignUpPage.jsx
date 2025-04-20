@@ -13,6 +13,7 @@ import {
   isValidBirth,
 } from '@/utils/validation';
 import './UserSignUpPage.scss';
+import { signUpUser } from '@/apis/authApi';
 
 const INTEREST_OPTIONS = [
   '외식·음료', '유통·판매', '문화·여가·생활', '서비스', '사무·회계',
@@ -174,20 +175,34 @@ const UserSignUpPage = () => {
     return {};
   };
 
-  const handleFinalSubmit = () => {
+  const handleFinalSubmit = async () => {
+    console.log('[회원가입] handleFinalSubmit 실행됨 ✅');
+    
     const error = validateStep3();
     setErrors(error);
     if (Object.keys(error).length > 0) return;
-    setModal({
-      type: 'success',
-      title: '회원가입 완료',
-      message: '정상적으로 회원가입이 완료되었습니다.',
-      onConfirm: () => {
-        setModal(null);
-        navigate('/login');
-      },
-    });
+  
+    try {
+      await signUpUser(form); // ✅ 실제 API 요청
+      setModal({
+        type: 'success',
+        title: '회원가입 완료',
+        message: '정상적으로 회원가입이 완료되었습니다.',
+        onConfirm: () => {
+          setModal(null);
+          navigate('/login');
+        },
+      });
+    } catch (err) {
+      setModal({
+        type: 'error',
+        title: '회원가입 실패',
+        message: err.response?.data?.message || '회원가입 중 오류가 발생했습니다.',
+        onConfirm: () => setModal(null),
+      });
+    }
   };
+  
 
   return (
     <div className="user_signup_page">
@@ -282,9 +297,9 @@ const UserSignUpPage = () => {
               <div className="gender_group">
                 <button
                   type="button"
-                  className={form.gender === 'male' ? 'selected' : ''}
+                  className={form.gender === '남성' ? 'selected' : ''}
                   onClick={() => {
-                    setForm((prev) => ({ ...prev, gender: 'male' }));
+                    setForm((prev) => ({ ...prev, gender: '남성' }));
                     setErrors((prev) => {
                       const next = { ...prev };
                       delete next.gender;
@@ -296,9 +311,9 @@ const UserSignUpPage = () => {
                 </button>
                 <button
                   type="button"
-                  className={form.gender === 'female' ? 'selected' : ''}
+                  className={form.gender === '여성' ? 'selected' : ''}
                   onClick={() => {
-                    setForm((prev) => ({ ...prev, gender: 'female' }));
+                    setForm((prev) => ({ ...prev, gender: '여성' }));
                     setErrors((prev) => {
                       const next = { ...prev };
                       delete next.gender;
