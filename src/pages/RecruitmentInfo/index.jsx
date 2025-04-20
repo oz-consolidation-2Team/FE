@@ -39,8 +39,8 @@ function RecruitmentInfo() {
   };
 
   return (
-    <div className='recruitment-container'>
-      <h1 className='recruitment-title'>채용 정보</h1>
+    <div className='recruitment_container'>
+      <h1 className='title'>채용 정보</h1>
 
       <SearchFilters
         searchQuery={searchQuery}

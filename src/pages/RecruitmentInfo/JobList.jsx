@@ -24,7 +24,7 @@ export const dummyData = [
       benefits: '병가, 유급 휴가, 가족상 휴가',
       career: '경력',
       work_duration: '1년 이상',
-      work_days: '월-금',
+      work_days: '월,화,수',
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: false,
@@ -55,8 +55,8 @@ export const dummyData = [
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: true,
-      company_users_id: 1,
-      company_id: 1
+      company_users_id: 2,
+      company_id: 2
     },
     {
       id: 3,
@@ -82,8 +82,8 @@ export const dummyData = [
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
+      company_users_id: 3,
+      company_id: 3
     },
     {
       id: 4,
@@ -109,8 +109,8 @@ export const dummyData = [
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
+      company_users_id: 4,
+      company_id: 4
     },
     {
       id: 5,
@@ -136,8 +136,8 @@ export const dummyData = [
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
+      company_users_id: 5,
+      company_id: 5
     },
     {
       id: 6,
@@ -163,8 +163,8 @@ export const dummyData = [
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
+      company_users_id: 6,
+      company_id: 6
     },
     {
       id: 7,
@@ -190,8 +190,8 @@ export const dummyData = [
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
+      company_users_id: 7,
+      company_id: 7
     },
     {
       id: 8,
@@ -217,8 +217,8 @@ export const dummyData = [
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
+      company_users_id: 8,
+      company_id: 8
     },
     {
       id: 9,
@@ -244,8 +244,8 @@ export const dummyData = [
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
+      company_users_id: 9,
+      company_id: 9
     },
     {
       id: 10,
@@ -261,7 +261,7 @@ export const dummyData = [
       recruit_period_start: '2025-01-01',
       recruit_period_end: '2025-12-31',
       education: '학력무관',
-      recruit_number: 1,
+      recruit_number: 7,
       preferred_conditions: '경력자 우대',
       employment_type: '정규직',
       benefits: '병가, 유급 휴가, 가족상 휴가',
@@ -271,8 +271,8 @@ export const dummyData = [
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
+      company_users_id: 10,
+      company_id: 10
     },
     {
       id: 11,
@@ -298,8 +298,8 @@ export const dummyData = [
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
+      company_users_id: 11,
+      company_id: 11
     },
     {
       id: 12,
@@ -325,8 +325,8 @@ export const dummyData = [
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
+      company_users_id: 12,
+      company_id: 12
     },
     {
       id: 13,
@@ -352,8 +352,8 @@ export const dummyData = [
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: true,
-      company_users_id: 1,
-      company_id: 1
+      company_users_id: 13,
+      company_id: 13
     },
     {
       id: 14,
@@ -379,8 +379,8 @@ export const dummyData = [
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
+      company_users_id: 14,
+      company_id: 14
     },
     {
       id: 15,
@@ -406,8 +406,8 @@ export const dummyData = [
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
+      company_users_id: 15,
+      company_id: 15
     },
     {
       id: 16,
@@ -433,8 +433,8 @@ export const dummyData = [
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
+      company_users_id: 16,
+      company_id: 16
     },
     {
       id: 17,
@@ -460,10 +460,9 @@ export const dummyData = [
       created_at: '2025-04-05T10:00:00Z',
       updated_at: '2025-04-05T10:00:00Z',
       is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
+      company_users_id: 17,
+      company_id: 17
     },
-    // 더미 데이터 추가...
   ];
 
 const JobList = ({ jobs = [] }) => {
@@ -481,7 +480,7 @@ const toggleBookmark = (id) => {
 
   return (
         <div className="job-list">
-          <h2 className="section-title">일반 채용 정보</h2>
+          <h2 className="section_title">일반 채용 정보</h2>
         {data.map((job) => (
           <JobCard
             key={job.id}
