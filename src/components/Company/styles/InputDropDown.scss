@@ -23,12 +23,18 @@ $LINE_COLOR: #A8A8A8;
         border: 1px solid $LINE_COLOR;
         border-radius: 10px;
         background-color: #f8f8f8;
+        overflow: scroll;
         margin-top: 5px;
         margin-bottom: 20px;
         width: 100%;
         max-width: 250px;
+        max-height: 200px;
 
-        > li {
+        .reawer {
+            z-index: 10;
+        }
+
+        li {
             border-bottom: 1px solid $LINE_COLOR;
             list-style: none;
             padding: 3px;

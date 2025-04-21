@@ -15,7 +15,7 @@ export default function JobRequirement (props) {
         <CategoryTitle title="모집 조건" />
         <div className="box">
             <Category text="모집기간" />
-            <InputDropDown {...props} name='recruit_period_start' text='모집기간' />
+            <InputDropDown {...props} name='recruit_period_start' text='모집기간' type='day' />
         </div>
         {props.error['recruit_period_start'] && <span className="error_message">모집기간을 선택해주세요</span>}
 

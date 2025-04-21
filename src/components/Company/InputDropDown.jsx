@@ -1,12 +1,15 @@
 import { useState } from "react"
 import "./styles/InputDropDown.scss"
 import { GoChevronRight, GoChevronDown  } from "react-icons/go";
+import TimeDropDown from "./TimeDropDown";
+import DayDropDown from "./DayDropDown";
 
 /**
  * @param {상태관리} formData input값 저장
  * @param {상태관리} error 유효성검사
  * @param {string} name input 변수 전달
  * @param {string} text 플레이스홀더 입력값 (선택되지 않았을 때)
+ * @param {'normal' | 'day' | 'time'} type 드롭다운 타입 지정 (탭 부분)
  */
 export default function InputDropDown (props) {
     const [viewDropDown, setViewDropDown] = useState(false)
@@ -20,8 +23,24 @@ export default function InputDropDown (props) {
         "payment_method": ['급여방법1','급여방법2','급여방법3','급여방법4'],
         "job_category": ['IT', '교육', '서비스', '생산', '기타', '디자인', '제조', '의료', '기획', '물류', '운송', '농업'],
         "career": ['경력1', '경력2', '경력3', '경력4']
-        
     }
+    
+    let content;
+    if (props.type === 'day') content = <DayDropDown {...props} />
+    else if (props.type === 'time') content =  <TimeDropDown {...props} />
+    else content = <ul className="ul_listBox">
+        {data_dropDown[props.name].map((item, index) =>
+            <li key={index} onClick={() => {
+                props.setFormData({...props.formData, [props.name]: item})
+                setViewDropDown(false)
+                props.setError(el => ({
+                    ...el,
+                    [props.name]: false
+                }))
+            }}>{item}</li>
+        )}
+        </ul>
+
     return (
         <div className="InputDropDown_container">
             <button 
@@ -30,19 +49,7 @@ export default function InputDropDown (props) {
                 {props.formData[props.name] ? props.formData[props.name] : `${props.text} 선택`}
                 {viewDropDown ? <GoChevronDown /> : <GoChevronRight />}
             </button>
-            {viewDropDown && <ul className="ul_listBox">
-                {data_dropDown[props.name].map((item, index) =>
-                    <li key={index} onClick={() => {
-                        props.setFormData({...props.formData, [props.name]: item})
-                        setViewDropDown(false)
-                        props.setError(el => ({
-                            ...el,
-                            [props.name]: false
-                        }))
-                    }}>{item}</li>
-                )}
-                </ul>
-            }
+            {viewDropDown && content}
         </div>
     )
 }
