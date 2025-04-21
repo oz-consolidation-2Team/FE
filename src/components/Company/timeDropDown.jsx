@@ -9,12 +9,14 @@ export default function TimeDropDown (props) {
 
     return (
         <>
-            <div>
+            <div className="div_button_tap">
                 <button
+                className={basics === 'hour' ? "disabled" : ""}
                 onClick={()=>{
                     setBasics('hour')
                 }}>시</button>
                 <button
+                className={basics === 'minute' ? "disabled" : ""}
                 onClick={()=>{
                     setBasics('minute')
                 }}>분</button>
