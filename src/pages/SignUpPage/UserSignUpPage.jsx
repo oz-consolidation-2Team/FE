@@ -357,74 +357,94 @@ const UserSignUpPage = () => {
         )}
 
 {step === 2 && (
-        <div className="terms_step">
-          <div className="checkbox_row">
-            <input type="checkbox" checked={form.termsAll} onChange={handleAllTermsToggle} />
-            <label>전체 약관 동의</label>
-          </div>
-          <hr />
+  <div className="terms_step">
+  {/* 전체 동의 맨 위로 */}
+  <div className="checkbox_row all_agree">
+    <input
+      type="checkbox"
+      checked={form.termsAll}
+      onChange={handleAllTermsToggle}
+    />
+    <label><strong>전체 약관 동의</strong></label>
+  </div>
 
-          {[1, 2, 3].map((n) => (
-            <div className="checkbox_row" key={`terms${n}`}>
-              <input
-                type="checkbox"
-                checked={form[`terms${n}`]}
-                onChange={() => toggleCheck(`terms${n}`)}
-              />
-              <label>[필수] {
-                n === 1 ? '개인정보처리방침' :
-                n === 2 ? '개인회원 이용약관' :
-                '위치기반 서비스 이용약관'
-              } 동의</label>
-              <button
-                type="button"
-                className="view_detail"
-                onClick={() => setModal({ type: 'term', key: `terms${n}.html` })}
-              >자세히 보기</button>
-            </div>
-          ))}
+  <hr />
 
-          {[4, 5, 6].map((n) => (
-            <div className="checkbox_row" key={`terms${n}`}>
-              <input
-                type="checkbox"
-                checked={form[`terms${n}`]}
-                onChange={() => toggleCheck(`terms${n}`)}
-              />
-              <label>[선택] {
-                n === 4 ? '마케팅 이메일 수신' :
-                n === 5 ? '마케팅 SMS 수신' :
-                '마케팅 Push 수신'
-              } 동의</label>
-            </div>
-          ))}
+  <div className="terms_section">
+    <div className="terms_label">[필수] 약관 동의</div>
+    {[1, 2, 3].map((n) => (
+      <div className="checkbox_row" key={`terms${n}`}>
+        <input
+          type="checkbox"
+          checked={form[`terms${n}`]}
+          onChange={() => toggleCheck(`terms${n}`)}
+        />
+        <label>
+          {n === 1 ? '개인정보처리방침' :
+           n === 2 ? '개인회원 이용약관' :
+           '위치기반 서비스 이용약관'}
+        </label>
+        <button
+          className="view_detail"
+          onClick={() => setModal({
+            type: 'term',
+            key: n === 1 ? 'privacy_policy.html' :
+                 n === 2 ? 'user_terms.html' :
+                 'location_terms.html'
+          })}
+        >
+          자세히 보기
+        </button>
+      </div>
+    ))}
+  </div>
 
-          {errors.agree && <ErrorMessage>{errors.agree}</ErrorMessage>}
+  <hr />
 
-          <div className="button_group">
-            <button className="prev_btn" onClick={() => setStep(1)}>이전</button>
-            <button className="next_btn" onClick={handleFinalSubmit}>회원가입 완료</button>
-          </div>
-        </div>
-      )}
+  <div className="terms_section">
+    <div className="terms_label">[선택] 약관 동의</div>
+    {[4, 5, 6].map((n) => (
+      <div className="checkbox_row" key={`terms${n}`}>
+        <input
+          type="checkbox"
+          checked={form[`terms${n}`]}
+          onChange={() => toggleCheck(`terms${n}`)}
+        />
+        <label>
+          {n === 4 ? '마케팅 이메일 수신 동의' :
+           n === 5 ? '마케팅 SMS 수신 동의' :
+           '마케팅 Push 수신 동의'}
+        </label>
+      </div>
+    ))}
+  </div>
+
+  {errors.agree && <ErrorMessage>{errors.agree}</ErrorMessage>}
+
+  <div className="button_group">
+    <button className="prev_btn" onClick={() => setStep(1)}>이전</button>
+    <button className="next_btn" onClick={handleFinalSubmit}>회원가입 완료</button>
+  </div>
+</div>
+
+)}
+
       </div>
     {modal?.type === 'term' && (
       <Modal
-        type="green"
-        message={
-          <iframe
-            src={`/terms/${modal.key}`}
-            title="약관 보기"
-            width="100%"
-            height="300px"
-            style={{ border: 'none' }}
-          />
-        }
-        onConfirm={() => setModal(null)}
-      />
+      className="term_modal"
+      type="green"
+      title="약관 보기"
+      message={
+        <iframe
+          src={`/terms/${modal.key}`}
+          title="약관 보기"
+        />
+      }
+      onConfirm={() => setModal(null)}
+    />
     )}
 
-    {/* 일반 모달 */}
     {modal?.type !== 'term' && modal && <Modal {...modal} />}
   </div>
 );

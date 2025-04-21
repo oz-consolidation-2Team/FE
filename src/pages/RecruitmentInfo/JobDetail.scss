@@ -1,13 +1,13 @@
 @use "../../utils/variables" as v;
 
-.job-detail {
+.jobdetail_container {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
   font-family: 'Pretendard', sans-serif;
 
-  .job-section {
+  .section {
     border: 1px solid #ddd;
     padding: 20px;
     border-radius: 8px;
@@ -24,25 +24,25 @@
     }
   }
 
-  .job-header {
+  .header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
 
-    .job-address,
-    .job-company {
+    .address,
+    .company {
       font-size: 0.95rem;
       font-weight: 500;
     }
   }
 
-  .job-title {
+  .title {
     font-size: 1.4rem;
     font-weight: bold;
     margin-bottom: 12px;
   }
 
-  .job-tags {
+  .tags {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
@@ -55,25 +55,25 @@
     }
   }
 
-  .job-image {
+  .image {
     width: 100%;
     max-width: 250px;
     margin-bottom: 10px;
     border-radius: 4px;
   }
 
-  .job-description {
+  .description {
     white-space: pre-wrap;
     font-size: 0.95rem;
     line-height: 1.5;
   }
 
-  .job-action {
+  .action {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
 
-    .apply-button {
+    .button {
       flex-grow: 1;
       padding: 10px 24px;
       background-color: v.$green;
@@ -88,7 +88,7 @@
       }
     }
 
-    .bookmark-button {
+    .bookmark {
       padding: 10px;
       background-color: white;
       border: 2px solid #ddd;
@@ -102,26 +102,41 @@
     }
   }
 
-  .job-conditions {
+  .conditions {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px 32px;
 
-    .condition-row {
+    .condition_row {
       display: grid;
       grid-template-columns: 80px 1fr;
       font-size: 0.95rem;
       align-items: center;
 
-      .condition-label {
+      .condition_label {
         color: #999;
         font-weight: 600;
       }
 
-      .condition-value {
+      .condition_value {
         color: #333;
         font-weight: 500;
       }
+    }
+  }
+
+  .address-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    button {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
     }
   }
 }
