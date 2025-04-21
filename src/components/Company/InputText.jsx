@@ -26,12 +26,14 @@ export default function InputText (props) {
     return (
         <div className="InputText_container">
             <input 
+            className={`${props.text === '모집인원' ? "resize" : ""}`}
             name={props.name}
             type={props.type}
             value={props.formData[props.name]}
             onChange={handleChange}
             disabled={props.disabled && true}
-            placeholder={props.placeholder || `${props.text} 입력`}/>
+            placeholder={props.placeholder || `${props.text} 입력`}
+            />
             {props.text === '모집인원' && <p>명</p>}
         </div>
     )

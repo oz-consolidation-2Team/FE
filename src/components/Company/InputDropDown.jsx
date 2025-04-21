@@ -44,7 +44,7 @@ export default function InputDropDown (props) {
     return (
         <div className="InputDropDown_container">
             <button 
-            className="button_dropDown"
+            className={`button_dropDown ${props.text === '근무시간' ? "resize" : ""}`}
             onClick={() => setViewDropDown(!viewDropDown)}>
                 {props.formData[props.name] ? props.formData[props.name] : `${props.text} 선택`}
                 {viewDropDown ? <GoChevronDown /> : <GoChevronRight />}

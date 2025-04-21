@@ -48,7 +48,9 @@ export default function WorkRequirement (props) {
 
             <div className="box">
                 <Category text='근무시간' />
-                <InputDropDown {...props} name='근무시간' text='근무시간' type='time' />
+                <InputDropDown {...props} name='근무시간' text='근무시작시간' type='time' />
+                <p className="p_swung_dash">~</p>
+                <InputDropDown {...props} name='근무시간' text='근무종료시간' type='time' />
                 <InputRadio {...props} type='협의가능' name='근무시간협의' />
             </div>
             {props.error['근무시간'] && <span className="error_message">근무시간을 선택해주세요</span>}

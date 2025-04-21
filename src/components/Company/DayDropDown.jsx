@@ -41,11 +41,11 @@ export default function DayDropDown (props) {
                 {Array(arrayFill).fill("").map((_, index) => {
                     return <li key={index} onClick={() => {
                         basics === 'year' ? setYear(date.getFullYear() + index)
-                            : basics === 'month' ? setMonth(index + 1) : setDay(index)
+                            : basics === 'month' ? setMonth(index + 1) : setDay(index + 1)
                         props.setFormData(el => ({...el, [props.name]: `${year}-${month}-${day}`}))
                         props.setError(el => ({...el, [props.name]: false}))
                     }}>{basics === 'year' ? date.getFullYear() + index
-                        : basics === 'month' ? index + 1 : index}</li>
+                        :  index +1}</li>
                 })}
             </ul>
         </>

@@ -10,18 +10,22 @@ import "../styles/inputs/JobRequirement.scss"
  * @param {상태관리} error 유효성검사
  */
 export default function JobRequirement (props) {
+    const date = new Date()
+
     return (
     <div className="JobRequirement_container">
         <CategoryTitle title="모집 조건" />
         <div className="box">
             <Category text="모집기간" />
+            <div className="div_start_time">{date.getFullYear()}-{date.getMonth() + 1}-{date.getDate()}</div>
+            <p className="p_swung_dash">~</p>
             <InputDropDown {...props} name='recruit_period_start' text='모집기간' type='day' />
         </div>
         {props.error['recruit_period_start'] && <span className="error_message">모집기간을 선택해주세요</span>}
 
         <div className="box recruite_peple">
             <Category text="모집인원" />
-            <InputText {...props} text='모집인원' type='number' name='recruit_number' placeholder={props.formData.recruit_number} />
+            <InputText {...props} text='모집인원' type='number' name='recruit_number' placeholder={props.formData.recruit_number || "0"} />
             <InputRadio {...props} type='상시모집' name='is_always_recruiting' />
         </div>
         {props.error['recruit_number'] && <span className="error_message">모집인원을 입력해주세요</span>}
