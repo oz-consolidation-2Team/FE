@@ -1,0 +1,73 @@
+@use '@/utils/variables' as *;
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal_content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  min-width: 350px;
+  max-width: 90%;
+  height: 280px;
+  box-shadow: 0 5px 5px rgba(71, 71, 71, 0.2);
+
+  h3 {
+    padding-top: 20px;
+    font-size: 27px;
+  }
+
+  p {
+    padding-top: 20px;
+    font-size: 18px;
+  }
+}
+
+.modal_buttons {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.modal_btn_green {
+  padding: 0.8rem 1rem;
+  background-color: $green;
+  color: white;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 500;
+  &:hover {
+    background-color: $deep-green;
+  }
+}
+
+.modal_btn_orange {
+  padding: 0.8rem 1rem;
+  background-color: $orange;
+  color: white;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 500;
+  &:hover {
+    background-color: $deep-orange;
+  }
+}

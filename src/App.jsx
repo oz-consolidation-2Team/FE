@@ -1,7 +1,7 @@
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
-import MainPage from './pages/MainPage';
-import SignUpPage from './pages/SignUpPage';
+import MainPage from '@/pages/MainPage';
+import SignUpPage from '@/pages/SignUpPage';
 import CompanyMyPage from './pages/CompanyMyPage';
 import RecruitmentInfo from './pages/RecruitmentInfo';
 import AnnouncementAdd from './pages/AnnouncementAdd';

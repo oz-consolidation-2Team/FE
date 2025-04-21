@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
-import './JobRecommend.scss';
+import '../UserMyPage/JobRecommend/JobRecommend.scss';
+import { bookmarkJobPropsType } from '@/utils/UserMyPagePropTypes';
 
 const BookmarkJobCard = ({ job }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -30,4 +31,7 @@ const BookmarkJobCard = ({ job }) => {
   );
 };
 
+BookmarkJobCard.propTypes = {
+  job: bookmarkJobPropsType.isRequired,
+};
 export default BookmarkJobCard;

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import './JobPosting.scss';
-
+import '../UserMyPage/JobRecommend/JobRecommend.scss';
 import MyJobCard from './MyJobCard';
+import { jobPropsType } from '@/utils/UserMyPagePropTypes';
+import PropTypes from 'prop-types';
 
 // 더미 데이터
 export const dummyData = [
@@ -89,4 +90,7 @@ const JobList = ({ jobs = [] }) => {
   );
 };
 
+JobList.propTypes = {
+  jobs: PropTypes.arrayOf(jobPropsType),
+};
 export default JobList;
