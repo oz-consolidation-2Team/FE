@@ -17,7 +17,7 @@ export const initialFormData = {
     },
   },
   resume_image: '',
-  desired_area: '서울', '서울특별시 마포구', '서울특별시 노원구',
+  desired_area: '',
   introduction: '',
   educations: [],
   experiences: [],
