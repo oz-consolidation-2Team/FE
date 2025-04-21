@@ -5,6 +5,7 @@ import IntroSection from './IntroSection';
 import RegionSection from './RegionSection';
 import UserInfoSection from './UserInfoSection';
 import { initialFormData } from './resumeDummy';
+import { getSendableDistricts } from '@/utils/formatRegion';
 
 function MyResumes() {
   //initialFormData 유저 정보 및 이력서 정보
@@ -13,14 +14,12 @@ function MyResumes() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log('전송할 데이터 확인:', formData);
-
     const formDataToSend = new FormData();
 
     const resumeData = {
       user_id: formData.user_id.id,
       resume_image: '',
-      desired_area: formData.preferredRegions[0]?.city || '', // 가장 첫 도시
+      desired_area: getSendableDistricts(formData.preferredRegions),
       introduction: formData.introduction,
       educations: formData.educations,
       experiences: formData.experiences,
