@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FaStar, FaRegStar } from 'react-icons/fa';
+import { FaStar, FaRegStar, FaRegCopy } from 'react-icons/fa';
 import './JobDetail.scss';
 import JobApplyModal from '@/components/Company/Modal/JobApplyModal';
 
@@ -13,6 +13,10 @@ const JobDetail = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleBookmarkClick = () => {
     setIsBookmarked(prev => !prev);
@@ -84,14 +88,31 @@ const JobDetail = () => {
       <section className="section">
         <h3>근무지 정보</h3>
         <p>근무지명: {job.work_place_name}</p>
-        <p>근무지 주소: {job.work_address}</p>
+          <div className="address-row" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span>근무지 주소:</span>
+            <span style={{ userSelect: 'text' }}>{job.work_address}</span>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(job.work_address);
+                alert('근무지 주소가 복사되었습니다!');
+              }}
+            >
+              <FaRegCopy />
+            </button>
+          </div>
       </section>
 
       <section className="section">
         <h3>상세 내용</h3>
-        {/* <img src="https://via.placeholder.com/250x180?text=상세+이미지" alt="상세 이미지" className="image" />
-        추후Api 연결후 수정 */}
         <pre className="description">{job.description}</pre>
+        {job.postings_image && (
+            <img
+              src={job.postings_image}
+              alt="채용 공고 이미지"
+              className="job-image"
+              style={{ width: '100%', maxHeight: '600px', objectFit: 'cover', marginTop: '20px' }}
+            />
+          )}
       </section>
 
       <section className="section">

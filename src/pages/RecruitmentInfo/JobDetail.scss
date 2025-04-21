@@ -124,4 +124,19 @@
       }
     }
   }
+
+  .address-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    button {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+  }
 }

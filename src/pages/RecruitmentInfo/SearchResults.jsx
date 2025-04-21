@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SearchFilters from './SearchFilters';
-import { dummyData } from '../RecruitmentInfo/JobList';
 import JobCard from './JobCard';
 import './SearchResults.scss';
 
@@ -28,18 +27,7 @@ const SearchResults = () => {
       ? `${selectedCity} ${selectedDistrict}`
       : selectedCity;
 
-    const filteredResults = dummyData.filter((job) => {
-      return (
-        (!fullLocation || job.work_address.includes(fullLocation)) &&
-        (!selectedJobCategory || job.job_category === selectedJobCategory) &&
-        (!searchQuery || 
-          job.title.includes(searchQuery) ||            //제목으로 검색
-          job.description.includes(searchQuery) ||      //상세 내용 으로 검색
-          job.other_conditions.includes(searchQuery) || //기타 조건으로 검색
-          job.work_place_name.includes(searchQuery)     //회사명으로 검색
-        )
-      );
-    });
+    const filteredResults = []; // TODO: 검색 API 연동 시 필터 로직 대체 예정
 
     navigate('/search-results', { state: { results: filteredResults } });
   };
