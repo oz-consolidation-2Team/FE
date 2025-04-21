@@ -1,4 +1,4 @@
-@use "../../utils/variables" as v;
+@use '@/utils/variables' as *;
 
 .section_title {
   font-size: 20px;
@@ -10,15 +10,56 @@
 .star_icon {
   font-size: 26px;
   cursor: pointer;
-  color: v.$orange;
+  color: $orange;
   transition: transform 0.2s;
 
   &.filled {
-    color: v.$orange;
+    color: $orange;
 
   }
 
   &:hover {
     transform: scale(1.1);
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 4px;
+  list-style: none;
+  padding: 0;
+
+  li {
+    display: inline-block;
+
+    a {
+      display: inline-block;
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      background-color: #fff;
+      transition: background-color 0.2s ease;
+    }
+
+    a:hover {
+      background-color: #f0f0f0;
+    }
+
+    &.active a {
+      background-color: $green;
+      color: white;
+      border-color: $green;
+    }
+
+    &.disabled a {
+      color: #aaa;
+      background-color: #f9f9f9;
+      cursor: default;
+    }
   }
 }
