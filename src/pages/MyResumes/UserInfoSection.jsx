@@ -9,7 +9,7 @@ UserInfoSection.propTypes = {
   setData: PropTypes.func.isRequired,
 };
 
-function UserInfoSection({ data }) {
+function UserInfoSection({ data, setData }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -17,17 +17,33 @@ function UserInfoSection({ data }) {
   const closeModal = () => setIsModalOpen(false);
   const goToEditPage = () => navigate('/mypage/edit');
 
+  const handleUserAddImage = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setData((prev) => ({
+        ...prev,
+        resume_image: file,
+      }));
+    }
+  };
+
   return (
     <div className="resumes_user_info">
       <label name="user_img">
         <input
-          type="text"
+          type="file"
+          accept="image/*"
           name="user_img"
-          value={data.resume_image}
-          onClick={openModal}
+          onChange={handleUserAddImage}
           placeholder="이미지를 등록해주세요"
-          readOnly
         />
+        {data.resume_image && (
+          <img
+            src={URL.createObjectURL(data.resume_image)}
+            alt="미리보기"
+            style={{ width: '150px', marginTop: '1rem' }}
+          />
+        )}
       </label>
       <label name="user_name">
         이름

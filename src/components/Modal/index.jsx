@@ -9,7 +9,6 @@ Modal.propTypes = {
 
 function Modal({ isOpen, onClose, title, description, buttons }) {
   //isOpen : boolean ( isOpen이 false면 렌더링 하지 않음  )
-  console.log('모달 isOpen:', isOpen);
   if (!isOpen) return null;
 
   return (
