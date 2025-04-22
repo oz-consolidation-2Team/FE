@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CareerSection from './CareerSection';
 import EducationSection from './EducationSection';
 import IntroSection from './IntroSection';
@@ -11,6 +11,9 @@ import './MyResumes.scss';
 import axios from 'axios';
 import Modal from '../../components/Modal';
 
+const TOKEN =
+  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZXhwIjoxNzQ1MzQ3NTg0fQ.h9fBbpCek-FlMh9NRcPX_6E6TyA9zmz0sTX0T4wxrFA';
+
 function MyResumes() {
   //initialFormData 유저 정보 및 이력서 정보
   const [formData, setFormData] = useState(initialFormData);
@@ -18,6 +21,30 @@ function MyResumes() {
   const navigate = useNavigate();
 
   const goToEditPage = () => navigate('/mypage/user');
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
+          headers: { Authorization: TOKEN },
+        });
+
+        const wrappedUser = {
+          status: 'success',
+          data: response.data,
+        };
+        console.log(response.data);
+        setFormData((prev) => ({
+          ...prev,
+          user_id: wrappedUser,
+        }));
+      } catch (err) {
+        console.error('유저 정보 가져오기 실패:', err);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,18 +67,12 @@ function MyResumes() {
       formDataToSend.append('file', formData.resume_image);
     }
 
-    console.log('이미지 타입 확인:', formData.resume_image);
-    console.log('타입:', typeof formData.resume_image);
-    console.log('instanceof File:', formData.resume_image instanceof File);
-
     console.log('📦 전송할 FormData:', resumeData);
-
-    const token = localStorage.getItem('access_token');
 
     axios
       .post(`${import.meta.env.VITE_API_BASE_URL}/resumes`, formDataToSend, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${TOKEN}`,
         },
       })
       .then((res) => {

@@ -4,21 +4,35 @@ import UserInfo from './UserInfo';
 import JobRecommend from './JobRecommend';
 import AgePopularity from './AgePopularity';
 import InterestAnnouncement from './InterestAnnouncement';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function UserMyPage() {
-  //더미데이터
-  const userInfo = {
-    name: '홍길동',
-    email: 'user@example.com',
-    gender: '남성',
-    birthday: '1990-01-01',
-    phone_number: '010-1111-2222',
-    interests: ['교육', 'IT'],
-    signup_purpose: '일자리 정보',
-    referral_source: '구글검색',
-    user_image: 'https://example.com/image.jpg',
-    created_at: '2025-04-08T12:00:00Z',
-  };
+  const [userInfo, setUserInfo] = useState(null); // ← 초기값 null로!
+
+  const axiosTest = axios.create({
+    baseURL: 'https://seonhm.kr',
+    headers: {
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZXhwIjoxNzQ1MzQ3NTg0fQ.h9fBbpCek-FlMh9NRcPX_6E6TyA9zmz0sTX0T4wxrFA`,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await axiosTest.get('/user/me');
+        console.log('[유저 정보]', response.data);
+        setUserInfo(response.data);
+      } catch (err) {
+        console.error('유저 정보 불러오기 실패:', err);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
+
+  if (!userInfo) return <div>로딩 중...</div>;
 
   return (
     <div className="user_mypage_container">
