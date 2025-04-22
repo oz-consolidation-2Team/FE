@@ -12,7 +12,7 @@ const MainJobCard = ({ job }) => {
   };
 
   return (
-    <div className="job_card" onClick={() => navigate(`/job-detail/${job.id}`, { state: { job } })} style={{ cursor: 'pointer' }}>
+    <div className="job_card" onClick={() => navigate(`/job-detail/${job.id}`, { state: { job } })}>
       <div className="job_top">
         <span className="company">{job?.work_place_name}</span>
         <h3 className="title">{job?.title}</h3>
