@@ -2,19 +2,38 @@ import React from 'react';
 import './Header.scss';
 import { useNavigate } from 'react-router-dom';
 import useUserStore from '@/utils/userStore';
+import { logoutUser } from '@/apis/authApi';
+import Modal from '@/components/common/Modal';
 
 const Header = () => {
   const navigate = useNavigate();
   const { user, logout } = useUserStore();
+  const [modal, setModal] = React.useState(null);
 
   const goTo = (path) => () => navigate(path);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+    } catch (err) {
+      console.warn('서버 로그아웃 실패:', err);
+    }
+  
     logout();
-    navigate('/');
+  
+    setModal({
+      type: 'success',
+      title: '로그아웃 완료',
+      message: '정상적으로 로그아웃되었습니다.',
+      onConfirm: () => {
+        setModal(null);
+        navigate('/');
+      },
+    });
   };
 
   return (
+    <>
     <header className="gnb">
       <div className="gnb_inner">
         <div className="left_nav">
@@ -58,6 +77,8 @@ const Header = () => {
         </nav>
       </div>
     </header>
+    {modal && <Modal {...modal} />}
+    </>
   );
 };
 

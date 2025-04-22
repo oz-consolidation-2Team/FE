@@ -30,3 +30,10 @@ export const loginUser = async (email, password) => {
 
   return response.data;
 };
+
+// 로그아웃
+export const logoutUser = async () => {
+  console.log('[로그아웃 요청]', '/user/logout');
+
+  await axiosInstance.post('/user/logout');
+};
