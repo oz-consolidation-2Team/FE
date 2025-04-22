@@ -10,6 +10,7 @@ const axiosProd = axios.create({
 });
 
 axiosProd.interceptors.request.use((config) => {
+  console.log('잘 나오나 ', config);
   const token = localStorage.getItem('accessToken');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
