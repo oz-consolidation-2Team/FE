@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import "@/components/Company/styles/modal/modal.scss"
 import "@/components/Company/styles/modal/InfoEditModal.scss"
 import Hr from "@/utils/Hr"
+import PropTypes from 'prop-types';
 
 /**
  * @param {*} formData input값 저장
@@ -35,4 +36,9 @@ export default function InfoEditModal (props) {
             </div>
         </div>
     )
+}
+
+InfoEditModal.propTypes = {
+    formData: PropTypes.node.isRequired,
+    setShowModal: PropTypes.node.isRequired
 }

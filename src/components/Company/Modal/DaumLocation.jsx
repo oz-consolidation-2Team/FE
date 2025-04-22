@@ -1,6 +1,12 @@
 import DaumPostcode from 'react-daum-postcode';
 import "@/components/Company/styles/modal/DaumLocation.scss"
+import PropTypes from 'prop-types';
 
+/**
+ * @param {*} setFormData input값 저장
+ * @param {*} setError 유효성검사
+ * @param {*} setShowModal 모달찯 닫기 위함
+ */
 export default function DaumLocation (props) {
     const completeHandler = (data) => {
         // console.log(data)
@@ -28,4 +34,10 @@ export default function DaumLocation (props) {
             </div>
         </div>
     )
+}
+
+DaumLocation.propTypes = {
+    setFormData: PropTypes.string.isRequired,
+    setError: PropTypes.node.isRequired,
+    setShowModal: PropTypes.node.isRequired
 }

@@ -1,4 +1,5 @@
 import "./styles/InputText.scss"
+import PropTypes from 'prop-types';
 
 /**
  * @param {상태관리} formData input값 저장
@@ -22,7 +23,7 @@ export default function InputText (props) {
             [props.name]: false
         }))
     }
-    console.log(props.formData)
+
     return (
         <div className="InputText_container">
             <input 
@@ -38,3 +39,15 @@ export default function InputText (props) {
         </div>
     )
 }
+
+InputText.propTypes = {
+    formData: PropTypes.object,
+    setFormData: PropTypes.node.isRequired,
+    error: PropTypes.object,
+    setError: PropTypes.node.isRequired,
+    name: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    type: PropTypes.oneOf(['normal', 'day', 'time']),
+    disabled: PropTypes.bool
+} 

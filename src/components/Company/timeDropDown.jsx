@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState } from "react";
+import PropTypes from 'prop-types';
 
 export default function TimeDropDown (props) {
     const [basics, setBasics] = useState('hour')
@@ -37,3 +38,11 @@ export default function TimeDropDown (props) {
         </>
     )
 }
+
+TimeDropDown.propTypes = {
+    formData: PropTypes.object,
+    setFormData: PropTypes.node.isRequired,
+    error: PropTypes.object,
+    setError: PropTypes.node.isRequired,
+    name: PropTypes.string.isRequired
+} 

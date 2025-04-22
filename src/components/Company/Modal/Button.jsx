@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom"
+import PropTypes from 'prop-types';
 
 /**props = {
  * @setShowModal 상태관리
- * @modalType 'add' | 'edit' | 'delete' | 'delete-Success' (모달 타입)
+ * @modalType 'add', 'edit', 'delete', 'delete-Success' (모달 타입)
  * @setModalType 상태관리
 } */
 export default function Button (props) {
@@ -20,4 +21,10 @@ export default function Button (props) {
                 }}>완료</button>
             }
     </div>
+}
+
+Button.propTypes = {
+    setShowModal: PropTypes.node.isRequired,
+    setModalType: PropTypes.node.isRequired,
+    modalType: PropTypes.oneOf(['add', 'edit', 'delete', 'delete-Success']).isRequired,
 }

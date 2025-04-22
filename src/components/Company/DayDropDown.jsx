@@ -1,4 +1,5 @@
 import { useRef, useState } from "react"
+import PropTypes from 'prop-types';
 
 export default function DayDropDown (props) {
     const date = new Date()
@@ -51,3 +52,11 @@ export default function DayDropDown (props) {
         </>
     )
 }
+
+DayDropDown.propTypes = {
+    formData: PropTypes.object,
+    setFormData: PropTypes.node.isRequired,
+    error: PropTypes.object,
+    setError: PropTypes.node.isRequired,
+    name: PropTypes.string.isRequired
+} 

@@ -1,7 +1,8 @@
 import "./styles/InputRadio.scss"
+import PropTypes from 'prop-types';
 
 /**
- * @param {복리후생 | 우대조건 | 기타조건 | 상시모집 | 협의가능 | 근무요일 | 근무요일협의 | 근무요일변동} type 표시할 그룹체크박스 
+ * @param {복리후생, 우대조건, 기타조건, 상시모집, 협의가능, 근무요일, 근무요일협의, 근무요일변동} type 표시할 그룹체크박스 
 /* @param {string} name input 변수 전달
 */
 export default function InputRadio (props) {
@@ -44,4 +45,14 @@ export default function InputRadio (props) {
                 })}
         </div>
     )
+}
+
+InputRadio.propTypes = {
+    formData: PropTypes.object,
+    setFormData: PropTypes.node.isRequired,
+    error: PropTypes.object,
+    setError: PropTypes.node.isRequired,
+    name: PropTypes.string.isRequired,
+    
+    type: PropTypes.oneOf(['복리후생', '우대조건', '기타조건', '상시모집', '협의가능', '근무요일', '근무요일협의', '근무요일변동'])
 }

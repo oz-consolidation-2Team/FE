@@ -3,6 +3,7 @@ import CategoryTitle from "../CategoryTitle";
 import InputImage from "../InputImage";
 import InputText from "../InputText";
 import "../styles/inputs/AnnouncementContent.scss"
+import PropTypes from 'prop-types';
 
 /**
  * @param {상태관리} formData input값 저장
@@ -23,3 +24,10 @@ export default function AnnouncementContent (props) {
     </div>
     )
 }
+
+AnnouncementContent.propTypes = {
+    formData: PropTypes.object,
+    setFormData: PropTypes.node.isRequired,
+    error: PropTypes.object,
+    setError: PropTypes.node.isRequired
+} 

@@ -4,6 +4,7 @@ import CategoryTitle from "../CategoryTitle";
 import InputText from "../InputText";
 import "../styles/inputs/WorkLocation.scss"
 import DaumLocation from "../Modal/DaumLocation";
+import PropTypes from 'prop-types';
 
 /**
  * @param {상태관리} formData input값 저장
@@ -34,3 +35,10 @@ export default function WorkLocation (props) {
         </div>
     )
 }
+
+WorkLocation.propTypes = {
+    formData: PropTypes.object,
+    setFormData: PropTypes.node.isRequired,
+    error: PropTypes.object,
+    setError: PropTypes.node.isRequired
+} 

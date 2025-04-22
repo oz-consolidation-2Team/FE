@@ -1,5 +1,5 @@
 import Hr from "@/utils/Hr";
-import BasicsText from "./BasicsText";
+import PropTypes from 'prop-types';
 
 /**props = {
  * @formData 상태관리
@@ -46,5 +46,10 @@ export default function Content (props) {
             <div>근무요일: {props.formData.work_days && props.formData.work_days.join(', ')}<span>{props.formData.근무요일협의 && "(협의 가능)"}</span><span>{props.formData.근무요일변동}</span></div>
         </div>
     )
+}
+
+Content.propTypes = {
+    formData: PropTypes.object.isRequired,
+    modalType: PropTypes.oneOf(['add' | 'edit' | 'delete' | 'delete-Success'])
 }
 

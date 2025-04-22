@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import "./styles/InfoBox.scss"
+import PropTypes from 'prop-types';
 
-/**props = {
- * type: 'user' | 'company' ('user' or 'company' 어디서 호출했는지 구분하기 위함)
- * company_id: number (해당 ID값으로 API 호출용도)
-*/
+/**
+ * @param {'user' | 'company'} type 'user' or 'company' 어디서 호출했는지 구분하기 위함
+ * @param {number} company_id해당 ID값으로 API 호출용도
+ */
 export default function InfoBox (props) {
     const navigate = useNavigate();
 
@@ -28,3 +29,8 @@ export default function InfoBox (props) {
         <p>기업 소개: {data.company_intro}</p>
     </div>
 }
+
+InfoBox.propTypes = {
+    type: PropTypes.oneOf(['user', 'company']).isRequired,
+    company_id: PropTypes.number.isRequired,
+} 
