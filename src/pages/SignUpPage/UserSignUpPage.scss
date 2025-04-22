@@ -37,6 +37,38 @@
     }
   }
 
+  .step_indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 60px;
+
+    .step {
+      padding: 0 16px;
+      height: 36px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 36px;
+      text-align: center;
+      background-color: #eee;
+      color: #888;
+      white-space: nowrap;
+
+      &.active {
+        background-color: $orange;
+        color: white;
+      }
+    }
+
+    .step_line {
+      width: 24px;
+      height: 2px;
+      background-color: #ccc;
+    }
+  }
+
   .password_row {
     position: relative;
 
@@ -106,32 +138,6 @@
     }
   }
 
-  .checkbox_group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: #333;
-
-    label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-
-      input[type='checkbox'] {
-        width: 16px;
-        height: 16px;
-        margin: 0;
-      }
-    }
-
-    .error_msg {
-      margin-top: 6px;
-      font-size: 13px;
-      color: #e53935;
-    }
-  }
-
   .section_box {
     margin-bottom: 32px;
 
@@ -183,6 +189,85 @@
     }
   }
 
+  .terms_step {
+    margin-top: 20px;
+
+    .terms_header {
+      font-size: 14px;
+      color: #444;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .terms_group {
+      margin-bottom: 20px;
+    }
+
+    .divider {
+      height: 1px;
+      background-color: #ddd;
+      margin: 24px 0;
+    }
+
+    .checkbox_row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+
+      input[type='checkbox'] {
+        width: 18px;
+        height: 18px;
+      }
+
+      label {
+        font-size: 14px;
+        color: #333;
+        flex: 1;
+        line-height: 1.5;
+        word-break: keep-all;
+      }
+
+      .view_detail {
+        font-size: 12px;
+        color: $orange;
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+        padding: 0;
+      }
+
+      .required,
+      .optional {
+        font-weight: bold;
+        margin-right: 6px;
+      }
+
+      .required {
+        color: $orange;
+      }
+
+      .optional {
+        color: #888;
+      }
+
+      &.all_agree {
+        margin-top: 30px;
+      }
+    }
+
+    .error_msg {
+      font-size: 13px;
+      color: #e53935;
+      margin: 12px 0 0 0;
+    }
+
+    .button_group {
+      margin-top: 32px;
+    }
+  }
+
   .button_group {
     margin-top: 28px;
     display: flex;
@@ -219,36 +304,19 @@
       }
     }
   }
+}
 
-  .step_indicator {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 60px;
+.terms_section {
+  margin-top: 24px;
 
-    .step {
-      padding: 0 16px;
-      height: 36px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 36px;
-      text-align: center;
-      background-color: #eee;
-      color: #888;
-      white-space: nowrap;
+  .terms_label {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #333;
+  }
 
-      &.active {
-        background-color: $orange;
-        color: white;
-      }
-    }
-
-    .step_line {
-      width: 24px;
-      height: 2px;
-      background-color: #ccc;
-    }
+  .checkbox_row {
+    margin-bottom: 12px;
   }
 }

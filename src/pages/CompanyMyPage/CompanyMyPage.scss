@@ -1,4 +1,4 @@
-@use '@/utils/variables' as *;
+@use '@/utils/variables' as v;
 
 // .main_container {
 //     display: flex;
@@ -33,7 +33,7 @@
         flex-basis: 200px;
         border: none;
         border-radius: 20px;
-        background-color: $green;
+        background-color: v.$green;
         font-size: 2.3rex;
         color: white;
         padding: 0 20px;

@@ -1,65 +1,54 @@
 @use "../../utils/variables" as v;
-
-.public-job-section {
+.job_section {
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto;
     padding: 0px;
-    max-width: 1080px; 
-    margin: 0 auto; 
 
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
+    .PublicJobList_container {
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
 
-    .section-title {
-      font-size: 20px;
-      font-weight: bold;
-      color: v.$green;
-    }
-  
-    .public-job-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(2, auto);
-      gap: 20px;
-      max-width: 100%;
-    }
-  
-    .page-buttons {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 16px;
-  
-      button {
-        background-color: v.$green;
-        color: white;
-        border: none;
-        padding: 5px 10px;;
-        font-size: 18px;
-        border-radius: 8px;
-        cursor: pointer;
-  
-        &:disabled {
-          background-color: #ddd;
-          cursor: not-allowed;
+            .title {
+                font-size: 20px;
+                font-weight: bold;
+                color: v.$green;
+            }
+
+            .buttons {
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 16px;
+
+                button {
+                    background-color: v.$green;
+                    color: white;
+                    border: none;
+                    padding: 5px 10px;
+                    font-size: 18px;
+                    border-radius: 8px;
+                    cursor: pointer;
+
+                    &:disabled {
+                        background-color: #ddd;
+                        cursor: not-allowed;
+                    }
+                }
+            }
         }
-      }
     }
 
-    .job-title {
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .public-job-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        grid-auto-flow: row dense;
+        grid-auto-rows: 1fr;
+        justify-items: stretch;
     }
 
-    .region {
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
 }

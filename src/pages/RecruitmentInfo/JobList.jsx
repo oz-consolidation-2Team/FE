@@ -1,474 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './JobList.scss';
 import JobCard from './JobCard'; 
+import { getJobList } from '@/apis/RecruitmentApi';
+import Pagination from "react-js-pagination";
 
-// 더미 데이터
-export const dummyData = [
-    {
-      id: 1,
-      work_place_name: '넥스트러너스',
-      title: '저같은 교육자 뽑아요',
-      work_address: '서울특별시 강북구',
-      other_conditions: '60대 이상 가능, 상주 인력 환영',
-      deadline_at: '2025-06-25',
-      job_category: '교육',
-      salary: 10000,
-      payment_method: '월급',
-      description: '상세 내용이 여기에 들어갑니다.',
-      recruit_period_start: '2025-01-01',
-      recruit_period_end: '2025-12-31',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '운전면허 소지자,경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
-    },
-    {
-      id: 2,
-      work_place_name: 'ABC Tech',
-      title: '프론트엔드 개발자 채용',
-      work_address: '서울특별시 강남구',
-      other_conditions: '경력 3년 이상',
-      deadline_at: '2025-05-01',
-      job_category: 'IT',
-      salary: 10000,
-      payment_method: '월급',
-      description: '상세 내용이 여기에 들어갑니다.',
-      recruit_period_start: '',
-      recruit_period_end: '',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: true,
-      company_users_id: 1,
-      company_id: 1
-    },
-    {
-      id: 3,
-      work_place_name: '부산 IT',
-      title: '백엔드 개발자 채용',
-      work_address: '부산광역시 해운대구',
-      other_conditions: 'Node.js 가능자 우대',
-      deadline_at: '2025-06-30',
-      job_category: 'IT',
-      salary: 10000,
-      payment_method: '월급',
-      description: '상세 내용이 여기에 들어갑니다.',
-      recruit_period_start: '2025-01-01',
-      recruit_period_end: '2025-06-31',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
-    },
-    {
-      id: 4,
-      work_place_name: '인천 스타트업',
-      title: '디자이너 채용',
-      work_address: '인천광역시 부평구',
-      other_conditions: '포토샵 가능자',
-      deadline_at: '2025-07-15',
-      job_category: '디자인',
-      salary: 10000,
-      payment_method: '월급',
-      description: '상세 내용이 여기에 들어갑니다.',
-      recruit_period_start: '2025-01-01',
-      recruit_period_end: '2025-12-31',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
-    },
-    {
-      id: 5,
-      work_place_name: '광주 스마트공장',
-      title: '기계 설계',
-      work_address: '광주광역시 광산구',
-      other_conditions: '기계 CAD 가능자',
-      deadline_at: '2025-08-01',
-      job_category: '제조',
-      salary: 10000,
-      payment_method: '월급',
-      description: '상세 내용이 여기에 들어갑니다.',
-      recruit_period_start: '2025-01-01',
-      recruit_period_end: '2025-12-31',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
-    },
-    {
-      id: 6,
-      work_place_name: '제주리조트',
-      title: '프론트 직원 채용',
-      work_address: '제주특별자치도 서귀포시',
-      other_conditions: '호텔 경험자 우대',
-      deadline_at: '2025-09-10',
-      job_category: '서비스',
-      salary: 10000,
-      payment_method: '월급',
-      description: '상세 내용이 여기에 들어갑니다.',
-      recruit_period_start: '2025-01-01',
-      recruit_period_end: '2025-12-31',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
-    },
-    {
-      id: 7,
-      work_place_name: '서울 헬스케어',
-      title: '간호사 모집',
-      work_address: '서울특별시 송파구',
-      other_conditions: '자격증 소지자',
-      deadline_at: '2025-09-30',
-      job_category: '의료',
-      salary: 10000,
-      payment_method: '월급',
-      description: '상세 내용이 여기에 들어갑니다.',
-      recruit_period_start: '2025-01-01',
-      recruit_period_end: '2025-12-31',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
-    },
-    {
-      id: 8,
-      work_place_name: '서울문화센터',
-      title: '문화 기획자',
-      work_address: '서울특별시 종로구',
-      other_conditions: '문화 행사 기획 경험',
-      deadline_at: '2025-10-05',
-      job_category: '기획',
-      salary: 10000,
-      payment_method: '월급',
-      description: '상세 내용이 여기에 들어갑니다.',
-      recruit_period_start: '2025-01-01',
-      recruit_period_end: '2025-12-31',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
-    },
-    {
-      id: 9,
-      work_place_name: '부산 물류센터',
-      title: '물류 관리자',
-      work_address: '부산광역시 사하구',
-      other_conditions: '지게차 가능자 우대',
-      deadline_at: '2025-08-20',
-      job_category: '물류',
-      salary: 10000,
-      payment_method: '월급',
-      description: '상세 내용이 여기에 들어갑니다.',
-      recruit_period_start: '2025-01-01',
-      recruit_period_end: '2025-12-31',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
-    },
-    {
-      id: 10,
-      work_place_name: '부산 스타트업',
-      title: '프론트엔드 개발자',
-      work_address: '부산광역시 금정구',
-      other_conditions: 'React 가능자',
-      deadline_at: '2025-07-25',
-      job_category: 'IT',
-      salary: 10000,
-      payment_method: '월급',
-      description: '상세 내용이 여기에 들어갑니다.',
-      recruit_period_start: '2025-01-01',
-      recruit_period_end: '2025-12-31',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
-    },
-    {
-      id: 11,
-      work_place_name: '인천 물류회사',
-      title: '배송 기사',
-      work_address: '인천광역시 연수구',
-      other_conditions: '운전면허 필수',
-      deadline_at: '2025-09-01',
-      job_category: '운송',
-      salary: 10000,
-      payment_method: '월급',
-      description: '상세 내용이 여기에 들어갑니다.',
-      recruit_period_start: '2025-01-01',
-      recruit_period_end: '2025-12-31',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
-    },
-    {
-      id: 12,
-      work_place_name: '인천 문화센터',
-      title: '이벤트 운영',
-      work_address: '인천광역시 중구',
-      other_conditions: '행사 진행 경험자',
-      deadline_at: '2025-10-01',
-      job_category: '기획',
-      salary: 10000,
-      payment_method: '월급',
-      description: '상세 내용이 여기에 들어갑니다.',
-      recruit_period_start: '2025-01-01',
-      recruit_period_end: '2025-12-31',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
-    },
-    {
-      id: 13,
-      work_place_name: '광주 테크',
-      title: '제품 디자이너',
-      work_address: '광주광역시 서구',
-      other_conditions: 'UX/UI 디자인 경험자',
-      deadline_at: '2025-08-15',
-      job_category: '디자인',
-      salary: 10000,
-      payment_method: '월급',
-      description: '상세 내용이 여기에 들어갑니다.',
-      recruit_period_start: '2025-01-01',
-      recruit_period_end: '',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: true,
-      company_users_id: 1,
-      company_id: 1
-    },
-    {
-      id: 14,
-      work_place_name: '광주 교육기관',
-      title: '보조 강사',
-      work_address: '광주광역시 남구',
-      other_conditions: '교육 경력자 우대',
-      deadline_at: '2025-09-05',
-      job_category: '교육',
-      salary: 10000,
-      payment_method: '월급',
-      description: '상세 내용이 여기에 들어갑니다.',
-      recruit_period_start: '2025-01-01',
-      recruit_period_end: '2025-12-31',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
-    },
-    {
-      id: 15,
-      work_place_name: '제주 자연농장',
-      title: '농장 관리직',
-      work_address: '제주특별자치도 제주시',
-      other_conditions: '농업 경험자 우대',
-      deadline_at: '2025-07-20',
-      job_category: '농업',
-      salary: 10000,
-      payment_method: '월급',
-      description: '상세 내용이 여기에 들어갑니다.',
-      recruit_period_start: '2025-01-01',
-      recruit_period_end: '2025-12-31',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
-    },
-    {
-      id: 16,
-      work_place_name: '제주 스타트업',
-      title: '웹디자이너',
-      work_address: '제주특별자치도 제주시',
-      other_conditions: 'Photoshop, Figma 사용 가능자',
-      deadline_at: '2025-08-28',
-      job_category: '디자인',
-      salary: 10000,
-      payment_method: '월급',
-      description: '상세 내용이 여기에 들어갑니다.',
-      recruit_period_start: '2025-01-01',
-      recruit_period_end: '2025-12-31',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
-    },
-    {
-      id: 17,
-      work_place_name: '대구 스타트업',
-      title: '웹디자이너',
-      work_address: '대구광역시 중구',
-      other_conditions: '아무나',
-      deadline_at: '2025-07-28',
-      job_category: '디자인',
-      salary: 10000,
-      payment_method: '월급',
-      description: '아무나뽑음.',
-      recruit_period_start: '2025-01-01',
-      recruit_period_end: '2025-12-31',
-      education: '학력무관',
-      recruit_number: 1,
-      preferred_conditions: '경력자 우대',
-      employment_type: '정규직',
-      benefits: '병가, 유급 휴가, 가족상 휴가',
-      career: '경력',
-      work_duration: '1년 이상',
-      work_days: '월-금',
-      created_at: '2025-04-05T10:00:00Z',
-      updated_at: '2025-04-05T10:00:00Z',
-      is_always_recruiting: false,
-      company_users_id: 1,
-      company_id: 1
-    },
-    // 더미 데이터 추가...
-  ];
-
-const JobList = ({ jobs = [] }) => {
+const JobList = () => {
+// 상태 변수: 북마크 상태를 저장하는 객체
 const [isBookmarked, setIsBookmarked] = useState({});
+// 상태 변수: 채용 공고 목록 상태
+const [jobList, setJobList] = useState([]);
+// 상태 변수: 현재 페이지 번호
+const [currentPage, setCurrentPage] = useState(1);
+// 상태 변수: 전체 채용공고 수
+const [totalCount, setTotalCount] = useState(0);
+// 상수: 페이지당 항목 수
+const itemsPerPage = 10;
 
+useEffect(() => {
+  fetchJobs(currentPage);
+}, [currentPage]);
+
+/**
+ * 비동기 채용공고 호출 함수
+ * @param {number} pageNum - 호출할 페이지 번호 (기본값: 1)
+ */
+const fetchJobs = async (pageNum = 1) => {
+  try {
+    const res = await getJobList({ skip: (pageNum - 1) * itemsPerPage, limit: itemsPerPage });
+    console.log("받아온 채용공고 데이터:", res);
+    setJobList(res.items || []);
+    setTotalCount(res.total || 0);
+  } catch (error) {
+    console.error('채용공고 불러오기 실패:', error);
+  }
+};
+
+/**
+ * 북마크 상태 토글 함수
+ * @param {number|string} id - 채용공고의 고유 ID
+ */
 const toggleBookmark = (id) => {
   setIsBookmarked((prev) => ({
     ...prev,
@@ -476,13 +46,10 @@ const toggleBookmark = (id) => {
   }));
 };
 
-  // API가 준비될 때까지 더미 데이터 사용
-  const data = jobs.length ? jobs : dummyData;
-
   return (
         <div className="job-list">
-          <h2 className="section-title">일반 채용 정보</h2>
-        {data.map((job) => (
+          <h2 className="section_title">일반 채용 정보</h2>
+        {jobList.map((job) => (
           <JobCard
             key={job.id}
             job={job}
@@ -490,6 +57,16 @@ const toggleBookmark = (id) => {
             toggleBookmark={toggleBookmark}
           />
         ))}
+        <Pagination
+          activePage={currentPage}
+          totalItemsCount={totalCount}
+          itemsCountPerPage={itemsPerPage}
+          pageRangeDisplayed={5}
+          onChange={(page) => setCurrentPage(page)}
+          innerClass="pagination"
+          activeClass="active"
+          disabledClass="disabled"
+        />
         </div>
   );
 };

@@ -1,81 +1,20 @@
-@use "../../utils/variables" as v;
+@use '@/utils/variables' as *;
 
-.section-title {
+.section_title {
   font-size: 20px;
   font-weight: bold;
   color: #2e7d32;
 }
-.job-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
 
-.job-card {
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s;
-
-  &:hover {
-    transform: translateY(-4px);
-  }
-}
-
-.job-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-
-  .company {
-    font-weight: 600;
-    font-size: 0.95rem;
-  }
-
-  .bookmark-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.2rem;
-  }
-}
-
-.job-title {
-  font-weight: bold;
-  font-size: 1rem;
-  margin-bottom: 4px;
-}
-
-.job-description {
-  color: #555;
-  font-size: 0.9rem;
-  margin-bottom: 8px;
-}
-
-.job-footer {
-  text-align: right;
-  font-size: 0.8rem;
-  color: #888;
-}
-
-.main-title {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin: 2rem 0 1rem 0;
-  color: v.$green;
-}
 
 .star_icon {
   font-size: 26px;
   cursor: pointer;
-  color: v.$orange;
+  color: $orange;
   transition: transform 0.2s;
 
   &.filled {
-    color: v.$orange;
+    color: $orange;
 
   }
 
@@ -84,18 +23,43 @@
   }
 }
 
-.search-results-wrapper {
-  max-width: 768px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: 'Pretendard', sans-serif;
-  background-color: #fff;
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 4px;
+  list-style: none;
+  padding: 0;
 
-  .search-results {
-    h2 {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
+  li {
+    display: inline-block;
+
+    a {
+      display: inline-block;
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      background-color: #fff;
+      transition: background-color 0.2s ease;
+    }
+
+    a:hover {
+      background-color: #f0f0f0;
+    }
+
+    &.active a {
+      background-color: $green;
+      color: white;
+      border-color: $green;
+    }
+
+    &.disabled a {
+      color: #aaa;
+      background-color: #f9f9f9;
+      cursor: default;
     }
   }
 }

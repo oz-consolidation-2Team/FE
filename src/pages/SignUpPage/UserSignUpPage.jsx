@@ -31,8 +31,11 @@ const UserSignUpPage = () => {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState({
     name: '', email: '', password: '', passwordCheck: '',
-    phone: '', birth: '', gender: '', agree: false,
+    phone: '', birth: '', gender: '',
     interests: [], purposes: [], channels: [],
+    termsAll: false,
+    terms1: false, terms2: false, terms3: false,
+    terms4: false, terms5: false, terms6: false,
   });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -52,7 +55,6 @@ const UserSignUpPage = () => {
       if (name === 'password' && validatePassword(val)) delete next.password;
       if (name === 'passwordCheck' && val === form.password) delete next.passwordCheck;
       if (name === 'gender' && val) delete next.gender;
-      if (name === 'agree' && checked) delete next.agree;
       return next;
     });
   };
@@ -79,7 +81,7 @@ const UserSignUpPage = () => {
     }
     setErrors((prev) => { const next = { ...prev }; delete next.email; return next; });
 
-    const duplicated = form.email === 'test@naver.com'; // TODO: 실제 API 연동 필요
+    const duplicated = form.email === 'test@naver.com';
     setModal({
       type: duplicated ? 'error' : 'success',
       title: duplicated ? '중복된 이메일' : '사용 가능',
@@ -109,7 +111,6 @@ const UserSignUpPage = () => {
     if (!isValidPhone(form.phone)) newErrors.phone = '전화번호 형식이 올바르지 않습니다.';
     if (!isValidBirth(form.birth)) newErrors.birth = '생년월일 형식이 올바르지 않습니다.';
     if (!form.gender) newErrors.gender = '성별을 선택해주세요.';
-    if (!form.agree) newErrors.agree = '약관에 동의해주세요.';
     return newErrors;
   };
 
@@ -128,6 +129,14 @@ const UserSignUpPage = () => {
     return newErrors;
   };
 
+  const handleSubmit = () => {
+    const newErrors = validateStep2();
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length === 0) {
+      setStep(2);
+    }
+  };
+
   const toggleMultiSelect = (field, item, limit = null) => {
     setForm((prev) => {
       const isSelected = prev[field].includes(item);
@@ -138,20 +147,46 @@ const UserSignUpPage = () => {
     setErrors((prev) => { const next = { ...prev }; delete next[field]; return next; });
   };
 
-  const handleSubmit = () => {
-    const newErrors = validateStep2();
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length === 0) {
-      setModal({
-        type: 'success',
-        title: '회원가입 완료',
-        message: '정상적으로 회원가입이 완료되었습니다.',
-        onConfirm: () => {
-          setModal(null);
-          navigate('/login');
-        }
-      });
+  const toggleCheck = (key) => {
+    const next = { ...form, [key]: !form[key] };
+    next.termsAll = next.terms1 && next.terms2 && next.terms3 && next.terms4 && next.terms5 && next.terms6;
+    setForm(next);
+  };
+
+  const handleAllTermsToggle = () => {
+    const all = !form.termsAll;
+    setForm((prev) => ({
+      ...prev,
+      termsAll: all,
+      terms1: all,
+      terms2: all,
+      terms3: all,
+      terms4: all,
+      terms5: all,
+      terms6: all,
+    }));
+  };
+
+  const validateStep3 = () => {
+    if (!form.terms1 || !form.terms2 || !form.terms3) {
+      return { agree: '필수 약관에 모두 동의해주세요.' };
     }
+    return {};
+  };
+
+  const handleFinalSubmit = () => {
+    const error = validateStep3();
+    setErrors(error);
+    if (Object.keys(error).length > 0) return;
+    setModal({
+      type: 'success',
+      title: '회원가입 완료',
+      message: '정상적으로 회원가입이 완료되었습니다.',
+      onConfirm: () => {
+        setModal(null);
+        navigate('/login');
+      },
+    });
   };
 
   return (
@@ -161,7 +196,10 @@ const UserSignUpPage = () => {
           <div className={`step ${step === 0 ? 'active' : ''}`}>1단계: 기본 정보</div>
           <div className="step_line" />
           <div className={`step ${step === 1 ? 'active' : ''}`}>2단계: 관심 분야</div>
+          <div className="step_line" />
+          <div className={`step ${step === 2 ? 'active' : ''}`}>3단계: 약관 동의</div>
         </div>
+
         <div className="signup_title">
           <FaUser className="icon" />
           <h2>개인 회원가입</h2>
@@ -237,6 +275,7 @@ const UserSignUpPage = () => {
               error={errors.birth}
               inputMode="numeric"
             />
+            
 
             <div className="form_group">
               <label>성별</label>
@@ -272,26 +311,10 @@ const UserSignUpPage = () => {
               </div>
               {errors.gender && <ErrorMessage>{errors.gender}</ErrorMessage>}
             </div>
-
-            <div className="form_group">
-              <div className="checkbox_group">
-                <label>
-                  <input
-                    type="checkbox"
-                    name="agree"
-                    checked={form.agree}
-                    onChange={handleChange}
-                  />
-                  이용약관 및 개인정보처리방침에 동의합니다.
-                </label>
-              </div>
-              {errors.agree && <ErrorMessage>{errors.agree}</ErrorMessage>}
-            </div>
-
             <div className="button_group">
-              <button className="next_btn" onClick={handleNext}>다음</button>
-            </div>
-          </>
+      <button className="next_btn" onClick={handleNext}>다음</button>
+    </div>
+            </>
         )}
 
         {step === 1 && (
@@ -328,14 +351,103 @@ const UserSignUpPage = () => {
 
             <div className="button_group">
               <button className="prev_btn" onClick={() => setStep(0)}>이전</button>
-              <button className="next_btn" onClick={handleSubmit}>가입하기</button>
+              <button className="next_btn" onClick={handleSubmit}>다음</button>
             </div>
           </>
         )}
+
+{step === 2 && (
+  <div className="terms_step">
+  {/* 전체 동의 맨 위로 */}
+  <div className="checkbox_row all_agree">
+    <input
+      type="checkbox"
+      checked={form.termsAll}
+      onChange={handleAllTermsToggle}
+    />
+    <label><strong>전체 약관 동의</strong></label>
+  </div>
+
+  <hr />
+
+  <div className="terms_section">
+    <div className="terms_label">[필수] 약관 동의</div>
+    {[1, 2, 3].map((n) => (
+      <div className="checkbox_row" key={`terms${n}`}>
+        <input
+          type="checkbox"
+          checked={form[`terms${n}`]}
+          onChange={() => toggleCheck(`terms${n}`)}
+        />
+        <label>
+          {n === 1 ? '개인정보처리방침' :
+           n === 2 ? '개인회원 이용약관' :
+           '위치기반 서비스 이용약관'}
+        </label>
+        <button
+          className="view_detail"
+          onClick={() => setModal({
+            type: 'term',
+            key: n === 1 ? 'privacy_policy.html' :
+                 n === 2 ? 'user_terms.html' :
+                 'location_terms.html'
+          })}
+        >
+          자세히 보기
+        </button>
       </div>
-      {modal && <Modal {...modal} />}
-    </div>
-  );
+    ))}
+  </div>
+
+  <hr />
+
+  <div className="terms_section">
+    <div className="terms_label">[선택] 약관 동의</div>
+    {[4, 5, 6].map((n) => (
+      <div className="checkbox_row" key={`terms${n}`}>
+        <input
+          type="checkbox"
+          checked={form[`terms${n}`]}
+          onChange={() => toggleCheck(`terms${n}`)}
+        />
+        <label>
+          {n === 4 ? '마케팅 이메일 수신 동의' :
+           n === 5 ? '마케팅 SMS 수신 동의' :
+           '마케팅 Push 수신 동의'}
+        </label>
+      </div>
+    ))}
+  </div>
+
+  {errors.agree && <ErrorMessage>{errors.agree}</ErrorMessage>}
+
+  <div className="button_group">
+    <button className="prev_btn" onClick={() => setStep(1)}>이전</button>
+    <button className="next_btn" onClick={handleFinalSubmit}>회원가입 완료</button>
+  </div>
+</div>
+
+)}
+
+      </div>
+    {modal?.type === 'term' && (
+      <Modal
+      className="term_modal"
+      type="green"
+      title="약관 보기"
+      message={
+        <iframe
+          src={`/terms/${modal.key}`}
+          title="약관 보기"
+        />
+      }
+      onConfirm={() => setModal(null)}
+    />
+    )}
+
+    {modal?.type !== 'term' && modal && <Modal {...modal} />}
+  </div>
+);
 };
 
 export default UserSignUpPage;

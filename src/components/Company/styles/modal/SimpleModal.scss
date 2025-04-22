@@ -1,4 +1,4 @@
-@use '@/utils/variables' as *;
+@use '@/utils/variables' as v;
 
 .SimpleModal_container {
     display: flex;
@@ -7,7 +7,7 @@
     button {
         border: none;
         border-radius: 10px;
-        background-color: $green;
+        background-color: v.$green;
         color: white;
         font-size: 1rem;
         width: 100%;

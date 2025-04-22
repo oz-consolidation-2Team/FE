@@ -1,8 +1,13 @@
-import BookmarkJobCard from './BookMarkJobCard.jsx';
+import BookmarkJobCard from '../BookMarkJobCard';
 import './AgePopularity.scss';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import { useState } from 'react';
-import { Bookmark } from './BookmarkDummy';
+import { Bookmark } from '../BookmarkDummy';
+import { userInfoPropTypes } from '@/utils/UserMyPagePropTypes';
+
+AgePopularity.propTypes = {
+  userInfo: userInfoPropTypes.isRequired,
+};
 
 function AgePopularity({ userInfo }) {
   const [currentIndex, setCurrentIndex] = useState(0);

@@ -1,5 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import './UserInfoPage.scss';
+import { userInfoPropTypes } from '@/utils/UserMyPagePropTypes';
+
+UserInfo.propTypes = {
+  userInfo: userInfoPropTypes.isRequired,
+};
 
 function UserInfo({ userInfo }) {
   const navigate = useNavigate();
@@ -26,7 +31,7 @@ function UserInfo({ userInfo }) {
       </div>
       <button
         onClick={() => {
-          navigate('/mypage/user/resume');
+          navigate('/mypage/user/resumes');
         }}
       >
         간단 이력서 <br />

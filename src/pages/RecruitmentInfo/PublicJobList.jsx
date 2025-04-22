@@ -32,18 +32,20 @@ const PublicJobList = () => {
   };
 
   return (
-    <div className="public-job-section">
-      <div className="section-header">
-        <h2 className="section-title">공공 일자리 정보</h2>
-        <div className="page-buttons">
-          <button onClick={handlePrevPage} disabled={currentPage === 1}>이전</button>
-          <button onClick={handleNextPage} disabled={currentPage === totalPages}>다음</button>
+    <div className="job_section">
+      <div className="PublicJobList_container">
+        <div className="header">
+          <h2 className="title">공공 일자리 정보</h2>
+          <div className="buttons">
+            <button onClick={handlePrevPage} disabled={currentPage === 1}>이전</button>
+            <button onClick={handleNextPage} disabled={currentPage === totalPages}>다음</button>
+          </div>
         </div>
-      </div>
-      <div className="public-job-grid">
-        {currentJobs.map((job) => (
-          <PublicJobCard key={job.recrutPblntSn} job={job} />
-        ))}
+        <div className="public-job-grid">
+          {currentJobs.map((job) => (
+            <PublicJobCard key={job.recrutPblntSn} job={job} />
+          ))}
+        </div>
       </div>
     </div>
   );

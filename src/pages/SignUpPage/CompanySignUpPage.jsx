@@ -32,6 +32,9 @@ const CompanySignUpPage = () => {
     managerName: '',
     managerPhone: '',
     managerEmail: '',
+    termsAll: false,
+    terms1: false, terms2: false, terms3: false,
+    terms4: false, terms5: false, terms6: false,
   });
   const [errors, setErrors] = useState({});
   const [showPw, setShowPw] = useState(false);
@@ -188,23 +191,76 @@ const CompanySignUpPage = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      showModal('success', '회원가입 완료', '정상적으로 회원가입이 완료되었습니다.', () => {
-        navigate('/login');
-      });
+      setStep(3);
     }
+  };
+
+  const validateTerms = () => {
+    if (!form.terms1 || !form.terms2 || !form.terms3) {
+      return { agree: '필수 약관에 모두 동의해주세요.' };
+    }
+    return {};
+  };
+
+  const handleFinalSubmit = () => {
+    const error = validateTerms();
+    setErrors(error);
+  
+    if (Object.keys(error).length > 0) return;
+  
+    showModal('success', '회원가입 완료', '정상적으로 회원가입이 완료되었습니다.', () => {
+      navigate('/login');
+    });
+  };
+
+  const toggleCheck = (key) => {
+    const next = { ...form, [key]: !form[key] };
+    next.termsAll =
+      next.terms1 &&
+      next.terms2 &&
+      next.terms3 &&
+      next.terms4 &&
+      next.terms5 &&
+      next.terms6;
+    setForm(next);
+  };
+  
+  const handleAllTermsToggle = () => {
+    const all = !form.termsAll;
+    setForm((prev) => ({
+      ...prev,
+      termsAll: all,
+      terms1: all,
+      terms2: all,
+      terms3: all,
+      terms4: all,
+      terms5: all,
+      terms6: all,
+    }));
   };
 
   return (
     <div className="company_signup_page">
-      <div className="signup_card">
-        <div className="step_indicator">
-          <div className={`step ${step === 0 ? 'active' : ''}`}>1단계: 기본정보</div>
-          <div className="step_line" />
-          <div className={`step ${step === 1 ? 'active' : ''}`}>2단계: 기업정보</div>
-          <div className="step_line" />
-          <div className={`step ${step === 2 ? 'active' : ''}`}>3단계: 담당자정보</div>
+      <div className="step_indicator">
+  {[
+    { step: 0, main: '1단계', sub: '기본정보' },
+    { step: 1, main: '2단계', sub: '기업정보' },
+    { step: 2, main: '3단계', sub: '담당자정보' },
+    { step: 3, main: '4단계', sub: '약관 동의' }
+  ].map((item, idx) => (
+    <React.Fragment key={item.step}>
+      <div className="step_wrapper">
+        <div className={`step ${step === item.step ? 'active' : ''}`}>
+          <div className="step_main">{item.main}</div>
+          <div className="step_sub">{item.sub}</div>
         </div>
+      </div>
+      {idx < 3 && <div className="step_line" />}
+    </React.Fragment>
+  ))}
+</div>
 
+      <div className="signup_card">
         <div className="signup_title">
           <FaBuilding className="icon" />
           <h2>기업 회원가입</h2>
@@ -307,15 +363,101 @@ const CompanySignUpPage = () => {
 
             <div className="button_group">
               <button className="prev_btn" onClick={() => setStep(1)}>이전</button>
-              <button className="next_btn" onClick={handleSubmit}>가입하기</button>
+              <button className="next_btn" onClick={handleSubmit}>다음</button>
             </div>
           </>
         )}
-      </div>
 
-      {modal && <Modal {...modal} />}
+{step === 3 && (
+  <div className="terms_step">
+    <div className="checkbox_row all_agree">
+      <input
+        type="checkbox"
+        checked={form.termsAll}
+        onChange={handleAllTermsToggle}
+      />
+      <label><strong>전체 약관 동의</strong></label>
     </div>
-  );
+
+    <hr />
+
+    <div className="terms_section">
+      <div className="terms_label">[필수] 약관 동의</div>
+      {[1, 2, 3].map((n) => (
+        <div className="checkbox_row" key={`terms${n}`}>
+          <input
+            type="checkbox"
+            checked={form[`terms${n}`]}
+            onChange={() => toggleCheck(`terms${n}`)}
+          />
+          <label>
+            {n === 1 ? '개인정보처리방침' :
+            n === 2 ? '기업회원 이용약관' :
+            '위치기반 서비스 이용약관'}
+          </label>
+          <button
+            className="view_detail"
+            onClick={() => setModal({
+              type: 'term',
+              key: n === 1 ? 'privacy_policy.html' :
+                  n === 2 ? 'company_terms.html' :
+                  'location_terms.html',
+            })}
+          >
+            자세히 보기
+          </button>
+        </div>
+      ))}
+    </div>
+
+    <hr />
+
+    <div className="terms_section">
+      <div className="terms_label">[선택] 약관 동의</div>
+      {[4, 5, 6].map((n) => (
+        <div className="checkbox_row" key={`terms${n}`}>
+          <input
+            type="checkbox"
+            checked={form[`terms${n}`]}
+            onChange={() => toggleCheck(`terms${n}`)}
+          />
+          <label>
+            {n === 4 ? '마케팅 이메일 수신 동의' :
+            n === 5 ? '마케팅 SMS 수신 동의' :
+            '마케팅 Push 수신 동의'}
+          </label>
+        </div>
+      ))}
+    </div>
+
+    {errors.agree && <ErrorMessage>{errors.agree}</ErrorMessage>}
+
+    <div className="button_group">
+      <button className="prev_btn" onClick={() => setStep(2)}>이전</button>
+      <button className="next_btn" onClick={handleFinalSubmit}>회원가입 완료</button>
+    </div>
+  </div>
+)}
+</div>
+
+{modal?.type === 'term' && (
+  <Modal
+    className="term_modal"
+    type="green"
+    title="약관 보기"
+    message={
+      <iframe
+        src={`/terms/${modal.key}`}
+        title="약관 보기"
+      />
+    }
+    onConfirm={() => setModal(null)}
+  />
+)}
+
+{modal?.type !== 'term' && modal && <Modal {...modal} />}
+</div>
+);
 };
 
 export default CompanySignUpPage;

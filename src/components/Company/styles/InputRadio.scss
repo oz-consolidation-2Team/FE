@@ -1,4 +1,4 @@
-@use '@/utils/variables' as *;
+@use '@/utils/variables' as v;
 
 .InputRadio_container {
     display: flex;
@@ -9,7 +9,7 @@
         margin-right: 30px;
 
         input {
-            accent-color: $green;
+            accent-color: v.$green;
             margin-right: 5px;
         }
     }

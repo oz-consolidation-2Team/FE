@@ -24,6 +24,7 @@ const Header = () => {
           <ul className="nav_links">
             <li onClick={goTo('/about')}>회사소개</li>
             <li onClick={goTo('/recruitment_info')}>채용정보</li>
+            <li onClick={goTo('/TrainingSearch')}>직업훈련정보</li>
           </ul>
         </div>
 

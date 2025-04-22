@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PublicJobList from './PublicJobList';
 import JobList from './JobList';
-import { dummyData } from './JobList'; // 더미 데이터 import
 import SearchFilters from './SearchFilters';
 
 
@@ -22,25 +21,15 @@ function RecruitmentInfo() {
       ? `${selectedCity} ${selectedDistrict}`
       : selectedCity || '';
 
-    const filteredResults = dummyData.filter(job => {
-      return (
-        (fullLocation ? job.work_address.includes(fullLocation) : true) &&
-        (selectedJobCategory ? job.job_category === selectedJobCategory : true) && 
-        (searchQuery
-          ? job.title.includes(searchQuery) ||             // 제목으로 검색
-            job.description.includes(searchQuery) ||       // 상세 내용 으로 검색
-            job.other_conditions.includes(searchQuery) ||  // 기타 조건으로 검색
-            job.work_place_name.includes(searchQuery)      // 회사명으로 검색
-          : true)
-      );
-    });
+    // TODO: 실제 API 연동 시 이 부분을 대체할 예정
+    const filteredResults = []; 
 
     navigate('/search-results', { state: { results: filteredResults } });
   };
 
   return (
-    <div className='recruitment-container'>
-      <h1 className='recruitment-title'>채용 정보</h1>
+    <div className='recruitment_container'>
+      <h1 className='title'>채용 정보</h1>
 
       <SearchFilters
         searchQuery={searchQuery}

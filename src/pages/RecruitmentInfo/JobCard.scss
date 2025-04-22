@@ -1,0 +1,64 @@
+@use "../../utils/variables" as v;
+
+.job_card {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    
+      .company {
+        font-weight: 600;
+        font-size: 0.8rem;
+        margin-bottom: 8px;
+        .title {
+          font-weight: bold;
+          font-size: 1rem;
+          margin-bottom: 8px;
+        }
+        .description {
+          color: #555;
+          font-size: 0.9rem;
+          margin-bottom: 8px;
+        }
+      }
+    }
+    &:hover {
+      transform: translateY(-4px);
+    }
+
+    .payment-hourly {
+      color: #009688; // 청록색 (시급)
+      font-weight: bold;
+    }
+
+    .payment-monthly {
+      color: #3f51b5; // 진한 파랑 (월급)
+      font-weight: bold;
+    }
+
+    .payment-daily {
+      color: #ff9800; // 주황색 (일급)
+      font-weight: bold;
+    }
+
+    .payment-default {
+      color: #666; // 기본 회색
+    }
+} 
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recruitStatus{
+  font-size: 0.8rem;
+  color: #888;
+}

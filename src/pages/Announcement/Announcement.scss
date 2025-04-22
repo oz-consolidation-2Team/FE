@@ -1,4 +1,4 @@
-@use '@/utils/variables' as *;
+@use '@/utils/variables' as v;
 $HR_COLOR: #A8A8A8;
 
 .AnnouncementAdd_container {
@@ -36,7 +36,7 @@ $HR_COLOR: #A8A8A8;
     .button_add {
         border: none;
         border-radius: 5px;
-        background-color: $green;
+        background-color: v.$green;
         color: white;
         font-size: 1.2rem;
         width: 50%;
