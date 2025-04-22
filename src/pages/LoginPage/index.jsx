@@ -8,6 +8,7 @@ import LabeledInput from '@/components/common/LabeledInput';
 import { validateEmail, validatePassword } from '@/utils/validation';
 import useUserStore from '@/utils/userStore';
 import './LoginPage.scss';
+import { loginUser } from '@/apis/authApi';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -19,32 +20,36 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [modal, setModal] = useState(null);
 
-  const testAccounts = {
-    user: { email: 'user@qwe.qwe', password: 'qwe123!@#' },
-    company: { email: 'company@qwe.qwe', password: 'qwe123!@#' },
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
     setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
-  const handleLogin = () => {
+  const handleEnterKey = (e) => {
+    if (e.key === 'Enter') {
+      handleLogin();
+    }
+  };
+
+  const handleLogin = async () => {
     const newErrors = {};
     if (!validateEmail(form.email)) newErrors.email = '올바른 이메일 형식이 아닙니다.';
     if (!validatePassword(form.password)) newErrors.password = '비밀번호 형식이 올바르지 않습니다.';
-
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-
-    const current = testAccounts[userType];
-    const isMatch = form.email === current.email && form.password === current.password;
-
-    if (isMatch) {
-      setUser({ email: form.email, type: userType });
+  
+    try {
+      // ✅ 로그인 API 요청 보내기
+      const token = await loginUser(form.email, form.password);
+      console.log('[로그인 성공] 토큰:', token);
+  
+      // ✅ Zustand에 저장 (이메일 + 토큰)
+      setUser({ email: form.email, type: userType }, token);
+  
+      // ✅ 성공 모달 띄우기
       setModal({
         type: 'success',
         message: '로그인 완료!',
@@ -53,18 +58,16 @@ const LoginPage = () => {
           navigate('/');
         },
       });
-    } else {
+    } catch (err) {
+      console.error('[로그인 실패]', err);
       setModal({
         type: 'error',
-        message: '계정 정보가 일치하지 않습니다.',
+        message: '로그인에 실패했습니다. 이메일 또는 비밀번호를 확인해주세요.',
         onConfirm: () => setModal(null),
       });
     }
   };
-
-  const handleEnterKey = (e) => {
-    if (e.key === 'Enter') handleLogin();
-  };
+  
 
   return (
     <div className="login_page">

@@ -1,11 +1,10 @@
-import axios from 'axios';
+import axiosInstance from "./axiosInstance";
 
-const API_BASE_URL = 'https://seonhm.kr';
-
+// 회원가입
 export const signUpUser = async (form) => {
-  console.log('[회원가입 요청]', `${API_BASE_URL}/user/register`);
+  console.log('[회원가입 요청]', '/user/register');
 
-  const response = await axios.post(`${API_BASE_URL}/user/register`, {
+  const response = await axiosInstance.post('/user/register', {
     name: form.name,
     email: form.email,
     password: form.password,
@@ -15,6 +14,18 @@ export const signUpUser = async (form) => {
     interests: form.interests,
     signup_purpose: form.purposes[0] || '',
     referral_source: form.channels[0] || '',
+  });
+
+  return response.data;
+};
+
+// 로그인
+export const loginUser = async (email, password) => {
+  console.log('[로그인 요청]', '/user/login');
+  
+  const response = await axiosInstance.post('/user/login', {
+    email,
+    password,
   });
 
   return response.data;
