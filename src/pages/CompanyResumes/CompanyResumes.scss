@@ -3,7 +3,7 @@ $HR_COLOR: #A8A8A8;
 .CompanyResumes_container {
     width: 70%;
 
-    > hr {
+    > .hr {
         margin: 15px 0;
     }
     .div_content {
@@ -12,7 +12,7 @@ $HR_COLOR: #A8A8A8;
         button {
             cursor: pointer;
         }
-        > hr {
+        > .hr {
             height: 60vh;
             margin: 0 30px;
             margin-right: 40px;
@@ -33,8 +33,8 @@ $HR_COLOR: #A8A8A8;
             .bottom {
                 margin-top: auto;
                 
-                > hr {
-                    border: 1px solid #e6e6e6;
+                > .hr {
+                    border-color: #e6e6e6;
                     margin: 10px 0;
                 }
                 > button {
@@ -74,8 +74,8 @@ $HR_COLOR: #A8A8A8;
                 h2 {
                     margin-bottom: 5px;
                 }
-                hr {
-                    border: 1px solid #e7e7e7;
+                .hr {
+                    border-color: #e7e7e7 !important;
                     height: 100%;
                     margin: 0 20px;
                 }

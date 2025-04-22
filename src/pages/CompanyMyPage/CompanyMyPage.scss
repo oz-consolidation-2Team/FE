@@ -1,12 +1,11 @@
-$MAIN_COLOR: #0f8c3b;
-$HR_COLOR: #a8a8a8;
+@use '@/utils/variables' as v;
 
-.main_container {
-  //display: flex;
-  justify-content: center;
-  width: 100%;
-  //padding-top: 40px;
-}
+// .main_container {
+//     display: flex;
+//     justify-content: center;
+//     width: 100%;
+//     padding-top: 40px;
+// }
 
 .companyMyPage_cantainer {
   display: flex;
@@ -16,11 +15,11 @@ $HR_COLOR: #a8a8a8;
   button {
     cursor: pointer;
   }
-  hr {
+
+  .hr {
     width: 100%;
     margin: 50px 0;
   }
-
   .h1_title {
     margin-bottom: 30px;
   }
@@ -34,7 +33,7 @@ $HR_COLOR: #a8a8a8;
     flex-basis: 200px;
     border: none;
     border-radius: 20px;
-    background-color: $MAIN_COLOR;
+    background-color: v.$green;
     font-size: 2.3rex;
     color: white;
     padding: 0 20px;

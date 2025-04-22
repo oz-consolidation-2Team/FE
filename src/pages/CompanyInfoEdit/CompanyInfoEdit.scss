@@ -1,4 +1,4 @@
-$MAIN_COLOR: #0F8C3B;
+@use '@/utils/variables' as v;
 
 .CompanyInfoEdit_container {
     position: relative;
@@ -41,7 +41,7 @@ $MAIN_COLOR: #0F8C3B;
     .button_edit {
         border: none;
         border-radius: 10px;
-        background-color: $MAIN_COLOR;
+        background-color: v.$green;
         color: white;
         font-size: 1.2rem;
         width: 50%;

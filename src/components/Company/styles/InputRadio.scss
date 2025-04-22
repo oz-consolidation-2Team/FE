@@ -1,4 +1,4 @@
-$MAIN_COLOR: #0F8C3B;
+@use '@/utils/variables' as v;
 
 .InputRadio_container {
     display: flex;
@@ -9,7 +9,7 @@ $MAIN_COLOR: #0F8C3B;
         margin-right: 30px;
 
         input {
-            accent-color: $MAIN_COLOR;
+            accent-color: v.$green;
             margin-right: 5px;
         }
     }

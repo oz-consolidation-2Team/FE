@@ -1,10 +1,9 @@
 import "./styles/Category.scss"
+import PropTypes from 'prop-types';
 
 /**
- * props = {
- * @text string; (항목 이름)
- * @essential false | undefind; (필수 유무)
- * }
+ * @param {string} text 항목 이름 
+ * @param {false | undefind} essential 필수 유무
  */
 export default function Category (props) {
     return <div className="Category_condainer">
@@ -12,3 +11,8 @@ export default function Category (props) {
             <p className="essential">{props.essential === undefined && "*"}</p>
         </div>
 }
+
+Category.propTypes = {
+    text: PropTypes.string.isRequired,
+    essential: PropTypes.bool
+} 
