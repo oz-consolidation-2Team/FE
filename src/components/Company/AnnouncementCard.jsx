@@ -1,6 +1,7 @@
 
 import { useNavigate } from 'react-router-dom';
 import "./styles/AnnouncementCard.scss"
+import PropTypes from 'prop-types';
 
 /**props = {
  * data: 공고호출api값{} (공고 카드를 그리기위함)
@@ -8,9 +9,9 @@ import "./styles/AnnouncementCard.scss"
 */
 export default function AnnouncementCard (props) {
     const navigate = useNavigate();
-  
+
     const handleAnnouncementEditClick = () => {
-      navigate(`/company_announcement_edit_page/${props.id}`);
+        navigate(`/company_announcement_edit_page/${props.id}`);
     };
 
     return (
@@ -31,3 +32,12 @@ export default function AnnouncementCard (props) {
     </div>
     )
 }
+
+AnnouncementCard.propTypes = {
+    companyName: PropTypes.object,
+    companyAdress: PropTypes.node.isRequired,
+    AnnouncementName: PropTypes.string.isRequired,
+    AnnouncementContent: PropTypes.string.isRequired,
+    time: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired
+} 

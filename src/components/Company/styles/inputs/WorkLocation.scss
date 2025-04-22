@@ -14,7 +14,11 @@ $LINE_COLOR: #B3B3B3;
             border: 1px solid $LINE_COLOR;
             border-radius: 10px;
             background-color: white;
+            text-align: start;
+            color: #636363;
+            width: 100px;
             height: 35px;
+            padding-left: 10px;
         }
     }
     > :nth-child(3) {

@@ -1,17 +1,23 @@
 import "./styles/InputImage.scss"
+import PropTypes from 'prop-types';
 
 /**props = {
- * @data 상태관리
- * @setData 상태관리
+ * @formData 상태관리
+ * @setformData 상태관리
 } */
 export default function InputImage (props) {
+    const {formData} = props;
     return (
         <div className="InputImage_container">
             <div className="box">
-                <div>{props.data.이미지등록 || "선택된 파일이 없습니다"}</div>
+                <div>{formData.이미지등록 || "선택된 파일이 없습니다"}</div>
                 <button className="color-change">파일 선택</button>
             </div>
             <p>PNG, JPG ... 어쩌구 저쩌구 확장자의 파일만 등록할 수 있습니다</p>
         </div>
     )
+}
+
+InputImage.propTypes = {
+    formData: PropTypes.object
 }

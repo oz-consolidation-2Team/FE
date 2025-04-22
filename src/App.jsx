@@ -4,9 +4,7 @@ import MainPage from '@/pages/MainPage';
 import SignUpPage from '@/pages/SignUpPage';
 import CompanyMyPage from './pages/CompanyMyPage';
 import RecruitmentInfo from './pages/RecruitmentInfo';
-import AnnouncementAdd from './pages/AnnouncementAdd';
 import SearchResults from './pages/RecruitmentInfo/SearchResults';
-import AnnouncementEdit from './pages/AnnouncementEdit';
 import CompanyInfo from './pages/CompanyInfo';
 import CompanyResumes from './pages/CompanyResumes';
 import CompanyInfoEdit from './pages/CompanyInfoEdit';
@@ -18,6 +16,7 @@ import AboutCompany from './pages/AboutCompany/About';
 import TrainingSearch from './pages/JobTraining/TrainingSearch';
 import MyResumes from './pages/MyResumes';
 import FindEmailPage from './pages/FindEmailPage';
+import Announcement from './pages/Announcement';
 import FindPasswordPage from './pages/FindPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 
@@ -40,8 +39,8 @@ function App() {
         <Route path="/company_my_page" element={<CompanyMyPage />} />
         <Route path="/company_info_page/:id" element={<CompanyInfo />} />
         <Route path="/company_info_edit_page" element={<CompanyInfoEdit />} />
-        <Route path="/company_announcement_add_page" element={<AnnouncementAdd />} />
-        <Route path="/company_announcement_edit_page/:id" element={<AnnouncementEdit />} />
+        <Route path="/company_announcement_add_page" element={<Announcement type='add' />} />
+        <Route path="/company_announcement_edit_page/:id" element={<Announcement type='edit' />} />
         <Route path="/company_resumes_page/:id" element={<CompanyResumes />} />
         <Route path="/trainingSearch" element={<TrainingSearch />} />
       </Route>

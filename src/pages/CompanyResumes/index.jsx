@@ -3,6 +3,7 @@ import CompanyCard from "../../components/Company/CompanyCard"
 import Modal from "../../components/Company/Modal/Modal"
 import { useState } from "react"
 import "./CompanyResumes.scss"
+import Hr from "@/utils/Hr"
 
 export default function CompanyResumes () {
     const [modal, setModal] = useState(false)
@@ -133,10 +134,10 @@ export default function CompanyResumes () {
     return (
         <div className="CompanyResumes_container">
             <h1>지원자 이력서 관리</h1>
-            <hr />
+            <Hr />
             <div className="div_content">
                 <CompanyCard />
-                <hr />
+                <Hr />
                 <div className="resume">
                     {data_resumes.length ? data_resumes.map((item)=>{
                         return (
@@ -145,7 +146,7 @@ export default function CompanyResumes () {
                                     <p>{data_user.name}</p>
                                     <p>유저 거주지</p>
                                 </div>
-                                <hr />
+                                <Hr />
                                 <div>
                                     <h2>이력서 제목</h2>
                                     <p>{item.introduction}</p>
