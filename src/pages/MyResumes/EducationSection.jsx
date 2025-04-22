@@ -154,6 +154,7 @@ function EducationSection({ data, setData }) {
             type="date"
             value={edu.end_date}
             onChange={(e) => handleChange(index, 'end_date', e.target.value)}
+            disabled={edu.education_status === '재학중'}
           />
           <button type="button" onClick={() => handleRemoveEducation(index)}>
             -
