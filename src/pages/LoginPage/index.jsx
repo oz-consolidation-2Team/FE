@@ -42,14 +42,11 @@ const LoginPage = () => {
     }
   
     try {
-      // ✅ 로그인 API 요청 보내기
       const token = await loginUser(form.email, form.password);
       console.log('[로그인 성공] 토큰:', token);
   
-      // ✅ Zustand에 저장 (이메일 + 토큰)
       setUser({ email: form.email, type: userType }, token);
   
-      // ✅ 성공 모달 띄우기
       setModal({
         type: 'success',
         message: '로그인 완료!',
@@ -60,9 +57,25 @@ const LoginPage = () => {
       });
     } catch (err) {
       console.error('[로그인 실패]', err);
+    
+      const statusCode = err?.response?.status;
+      const serverMessage = err?.response?.data?.detail;
+    
+      let message;
+      switch (statusCode) {
+        case 401:
+          message = serverMessage || '이메일 또는 비밀번호가 일치하지 않습니다.';
+          break;
+        case 500:
+          message = serverMessage || '서버 내부 오류가 발생했습니다.';
+          break;
+        default:
+          message = serverMessage || '알 수 없는 오류가 발생했습니다.';
+      }
+    
       setModal({
         type: 'error',
-        message: '로그인에 실패했습니다. 이메일 또는 비밀번호를 확인해주세요.',
+        message,
         onConfirm: () => setModal(null),
       });
     }

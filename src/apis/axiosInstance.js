@@ -1,32 +1,8 @@
-import axios from 'axios';
+import axiosDev from './axios.dev';
+import axiosProd from './axios.prod';
 
-const axiosInstance = axios.create({
-  baseURL: 'https://seonhm.kr/',
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+const isDev = import.meta.env.MODE === 'development';
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
-
-axiosInstance.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      console.warn('401 Unauthorized');
-    }
-    return Promise.reject(error);
-  }
-);
+const axiosInstance = isDev ? axiosDev : axiosProd;
 
 export default axiosInstance;
