@@ -42,7 +42,7 @@ export default function TimeDropDown (props) {
 TimeDropDown.propTypes = {
     formData: PropTypes.object,
     setFormData: PropTypes.node.isRequired,
-    error: PropTypes.object,
+    error: PropTypes.object.isRequired,
     setError: PropTypes.node.isRequired,
     name: PropTypes.string.isRequired
 } 
