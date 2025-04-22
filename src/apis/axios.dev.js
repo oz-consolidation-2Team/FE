@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 const axiosDev = axios.create({
-  baseURL: '/api',
+  baseURL: 'https://seonhm.kr',
   headers: {
     'Content-Type': 'application/json',
   },
