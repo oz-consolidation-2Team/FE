@@ -30,10 +30,15 @@ function UserInfoSection({ data, setData }) {
   return (
     <div className="resumes_user_info">
       <label htmlFor="user_img" className="user_image_box">
-        {data.resume_image && <img src={URL.createObjectURL(data.resume_image)} alt="미리보기" />}
+        {data.resume_image ? (
+          <img src={URL.createObjectURL(data.resume_image)} alt="미리보기" />
+        ) : (
+          '프로필 업로드 (선택)'
+        )}
         <input
           type="file"
           accept="image/*"
+          id="user_img"
           name="user_img"
           onChange={handleUserAddImage}
           placeholder="이미지를 등록해주세요"
