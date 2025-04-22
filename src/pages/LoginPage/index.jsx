@@ -8,6 +8,7 @@ import LabeledInput from '@/components/common/LabeledInput';
 import { validateEmail, validatePassword } from '@/utils/validation';
 import useUserStore from '@/utils/userStore';
 import './LoginPage.scss';
+import { loginUser } from '@/apis/authApi';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -19,32 +20,33 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [modal, setModal] = useState(null);
 
-  const testAccounts = {
-    user: { email: 'user@qwe.qwe', password: 'qwe123!@#' },
-    company: { email: 'company@qwe.qwe', password: 'qwe123!@#' },
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
     setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
-  const handleLogin = () => {
+  const handleEnterKey = (e) => {
+    if (e.key === 'Enter') {
+      handleLogin();
+    }
+  };
+
+  const handleLogin = async () => {
     const newErrors = {};
     if (!validateEmail(form.email)) newErrors.email = '올바른 이메일 형식이 아닙니다.';
     if (!validatePassword(form.password)) newErrors.password = '비밀번호 형식이 올바르지 않습니다.';
-
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-
-    const current = testAccounts[userType];
-    const isMatch = form.email === current.email && form.password === current.password;
-
-    if (isMatch) {
-      setUser({ email: form.email, type: userType });
+  
+    try {
+      const token = await loginUser(form.email, form.password);
+      console.log('[로그인 성공] 토큰:', token);
+  
+      setUser({ email: form.email, type: userType }, token);
+  
       setModal({
         type: 'success',
         message: '로그인 완료!',
@@ -53,18 +55,32 @@ const LoginPage = () => {
           navigate('/');
         },
       });
-    } else {
+    } catch (err) {
+      console.error('[로그인 실패]', err);
+    
+      const statusCode = err?.response?.status;
+      const serverMessage = err?.response?.data?.detail;
+    
+      let message;
+      switch (statusCode) {
+        case 401:
+          message = serverMessage || '이메일 또는 비밀번호가 일치하지 않습니다.';
+          break;
+        case 500:
+          message = serverMessage || '서버 내부 오류가 발생했습니다.';
+          break;
+        default:
+          message = serverMessage || '알 수 없는 오류가 발생했습니다.';
+      }
+    
       setModal({
         type: 'error',
-        message: '계정 정보가 일치하지 않습니다.',
+        message,
         onConfirm: () => setModal(null),
       });
     }
   };
-
-  const handleEnterKey = (e) => {
-    if (e.key === 'Enter') handleLogin();
-  };
+  
 
   return (
     <div className="login_page">
