@@ -45,8 +45,7 @@ function MyResumes() {
         <RegionSection data={formData} setData={setFormData} />
         <IntroSection data={formData} setData={setFormData} />
         <button type="submit" className="resumes_submit" onClick={handleSubmit}>
-          {' '}
-          이력서 등록하기{' '}
+          이력서 등록하기
         </button>
       </div>
     </div>

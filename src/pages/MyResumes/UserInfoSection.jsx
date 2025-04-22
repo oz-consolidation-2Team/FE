@@ -29,7 +29,8 @@ function UserInfoSection({ data, setData }) {
 
   return (
     <div className="resumes_user_info">
-      <label name="user_img">
+      <label htmlFor="user_img" className="user_image_box">
+        {data.resume_image && <img src={URL.createObjectURL(data.resume_image)} alt="미리보기" />}
         <input
           type="file"
           accept="image/*"
@@ -37,54 +38,50 @@ function UserInfoSection({ data, setData }) {
           onChange={handleUserAddImage}
           placeholder="이미지를 등록해주세요"
         />
-        {data.resume_image && (
-          <img
-            src={URL.createObjectURL(data.resume_image)}
-            alt="미리보기"
-            style={{ width: '150px', marginTop: '1rem' }}
+      </label>
+
+      <div className="user_info_inputs">
+        <label name="user_name">
+          이름
+          <input
+            type="text"
+            name="user_name"
+            value={data.user_id.data.name}
+            onClick={openModal}
+            readOnly
           />
-        )}
-      </label>
-      <label name="user_name">
-        이름
-        <input
-          type="text"
-          name="user_name"
-          value={data.user_id.data.name}
-          onClick={openModal}
-          readOnly
-        />
-      </label>
-      <label name="user_gender">
-        성별
-        <input
-          type="text"
-          name="user_gender"
-          value={data.user_id.data.gender}
-          onClick={openModal}
-          readOnly
-        />
-      </label>
-      <label name="user_phone_number">
-        전화번호
-        <input
-          type="text"
-          name="user_phone_number"
-          value={data.user_id.data.phone_number}
-          onClick={openModal}
-          readOnly
-        />
-      </label>
-      <label name="user_email">
-        이메일
-        <input
-          type="text"
-          name="user_email"
-          value={data.user_id.data.email}
-          onClick={openModal}
-          readOnly
-        />
-      </label>
+        </label>
+        <label name="user_gender">
+          성별
+          <input
+            type="text"
+            name="user_gender"
+            value={data.user_id.data.gender}
+            onClick={openModal}
+            readOnly
+          />
+        </label>
+        <label name="user_phone_number">
+          전화번호
+          <input
+            type="text"
+            name="user_phone_number"
+            value={data.user_id.data.phone_number}
+            onClick={openModal}
+            readOnly
+          />
+        </label>
+        <label name="user_email">
+          이메일
+          <input
+            type="text"
+            name="user_email"
+            value={data.user_id.data.email}
+            onClick={openModal}
+            readOnly
+          />
+        </label>
+      </div>
       <Modal
         isOpen={isModalOpen}
         onClose={closeModal}
