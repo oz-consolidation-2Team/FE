@@ -1,7 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaStar, FaRegStar } from 'react-icons/fa';
-import './JobPosting.scss';
+import PropTypes from 'prop-types';
+import './JobPosting/JobPosting.scss';
+import { jobPropsType } from '../../utils/UserMyPagePropTypes';
 
 const MyJobCard = ({ job, isBookmarked, toggleBookmark }) => {
   const navigate = useNavigate();
@@ -45,6 +47,11 @@ const MyJobCard = ({ job, isBookmarked, toggleBookmark }) => {
       </div>
     </div>
   );
+};
+MyJobCard.propTypes = {
+  job: jobPropsType.isRequired,
+  isBookmarked: PropTypes.bool.isRequired,
+  toggleBookmark: PropTypes.func.isRequired,
 };
 
 export default MyJobCard;

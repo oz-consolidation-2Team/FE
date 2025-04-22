@@ -1,0 +1,101 @@
+@use '@/utils/variables' as *;
+
+.resumes_region {
+  width: 600px;
+
+  .region_title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+
+  .region_content {
+    display: flex;
+    gap: 20px;
+
+    .city_list {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+
+      .city_item {
+        width: 50%;
+        padding: 15px 14px;
+        border: none;
+
+        background-color: #fff;
+
+        cursor: pointer;
+        transition: all 0.2s ease-in;
+
+        &:hover {
+          background-color: $hover-orange;
+        }
+
+        &.selected {
+          background-color: $light-orange;
+          color: $deep-orange;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .district_list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+      .district_title {
+        font-size: 16px;
+        margin-bottom: 5px;
+      }
+
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+
+        li {
+          .district_item {
+            border: none;
+            background-color: #fff;
+            padding: 10px;
+            cursor: pointer;
+
+            &:hover {
+              background-color: $hover-orange;
+            }
+
+            &.selected {
+              background-color: $light-orange;
+              color: $deep-orange;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .selected_tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+
+    .tag {
+      background-color: $deep-orange;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      &:hover {
+        background-color: $hover-orange;
+      }
+    }
+  }
+}

@@ -15,12 +15,28 @@ const JobCard = ({ job, isBookmarked, toggleBookmark }) => {
     toggleBookmark(job.id);
   };
 
+  const getPaymentClass = (method) => {
+    switch (method) {
+      case '시급':
+        return 'payment-hourly';
+      case '월급':
+        return 'payment-monthly';
+      case '일급':
+        return 'payment-daily';
+      default:
+        return 'payment-default';
+    }
+  };
+
   return (
     <div className="job_card" onClick={handleCardClick}>
       <div className="header">
         <div className="company">
           <div className="name">{job.work_place_name}</div>
           <div className="title">{job.title}</div>
+          <div className="payment">
+            <span className={getPaymentClass(job.payment_method)}>{job.payment_method}</span> {job.salary.toLocaleString()}원
+          </div>
           <div className="description">{job.other_conditions}</div>
         </div>
         {isBookmarked ? (
@@ -29,9 +45,13 @@ const JobCard = ({ job, isBookmarked, toggleBookmark }) => {
           <FaRegStar className="star_icon" onClick={handleBookmarkClick} />
         )}
       </div>
+      <div className="footer">
         <div className="company-address">{job.work_address}</div>
-      <div className="job-footer">
-        {new Date(job.deadline_at).toLocaleDateString()} 마감
+        <div className="recruitStatus">
+          {job.is_always_recruiting
+            ? '상시 모집'
+            : `${new Date(job.recruit_period_end).toLocaleDateString()} 마감`}
+        </div>
       </div>
     </div>
   );

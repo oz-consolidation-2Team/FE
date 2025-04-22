@@ -1,6 +1,11 @@
-import MyJobList, { dummyData } from './MyJobList';
-
+import MyJobList, { dummyData } from '../MyJobList';
 import './JobPosting.scss';
+
+import { userInfoPropTypes } from '@/utils/UserMyPagePropTypes';
+
+JobPosting.propTypes = {
+  userInfo: userInfoPropTypes.isRequired,
+};
 
 function JobPosting({ userInfo }) {
   return (

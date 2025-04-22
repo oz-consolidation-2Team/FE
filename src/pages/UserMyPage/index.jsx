@@ -1,5 +1,5 @@
-import JobPosting from './JobPosting';
-import './UserInfoPage.scss';
+import JobPosting from './JobPosting/JobPosting';
+import './UserInfo/';
 import UserInfo from './UserInfo';
 import JobRecommend from './JobRecommend';
 import AgePopularity from './AgePopularity';
