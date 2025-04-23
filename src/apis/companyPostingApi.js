@@ -17,7 +17,7 @@ export const createJobPosting = async (formData) => {
     const response = await axios.post(`${BASE_URL}posting/`, formData, {
         headers: {
             'accept': 'application/json',
-            'Authorization': `Bearer ${TOKEN}`  
+            'Authorization': `Bearer ${TOKEN}`
         }
     })
     console.log('공고 생성 API 호출====')

@@ -6,15 +6,23 @@ import Hr from "@/utils/Hr";
 import { CompaniesInfo } from "@/apis/companyApi";
 import { useEffect, useState } from "react";
 import { formatPhoneNumber } from "@/utils/format";
+import axios from "axios";
 
 export default function CompanyInfo () {
-    const [data, setData] = useState()
+    const [data, setData] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
     const params = useParams('id')
 
     useEffect(()=>{
-        CompaniesInfo(params.id).then(res => {
-            setData(res)
-        })
+        try {
+            CompaniesInfo(params.id).then(res => setData(res))
+        } catch (error) {
+            if (axios.isAxiosError(error)) setError(error.response?.data?.message || '요청 실패')
+            else setError('알 수 없는 에러 발생')
+        } finally {
+            setLoading(false)
+        }
     },[])
 
     return (
