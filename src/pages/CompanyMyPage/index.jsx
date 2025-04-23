@@ -25,8 +25,6 @@ export default function CompanyMyPage() {
     }
   },[])
 
-  useEffect(()=>{console.log(data)},[data])
-  
   return (
     <div className="companyMyPage_cantainer">
       <h1 className="h1_title">기업 이름</h1>
