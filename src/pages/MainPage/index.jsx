@@ -91,8 +91,8 @@ const MainPage = () => {
       <section className="section_area popular">
         <h2>인기 공고</h2>
         <div className="job_grid">
-          {popularJobs.slice(0, 4).map((job, i) => (
-            <MainJobCard key={i} job={job} />
+          {popularJobs.slice(0, 4).map((job) => (
+            <MainJobCard key={job.id} job={job} />
           ))}
         </div>
       </section>
