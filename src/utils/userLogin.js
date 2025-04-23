@@ -17,8 +17,8 @@ export const handleUserLogin = async ({ form, userType, setErrors, setModal, nav
     console.log('[로그인 성공] 토큰:', token);
 
     localStorage.setItem('userType', userType);
-    localStorage.setItem('accessToken', token.access_token);
-    localStorage.setItem('refreshToken', token.refresh_token);
+    localStorage.setItem('access_token', token.access_token);
+    localStorage.setItem('refresh_token', token.refresh_token);
 
     setModal({
       type: 'success',
@@ -56,8 +56,8 @@ export const handleUserLogout = async ({ setModal, navigate }) => {
   try {
     await logoutUser();
     localStorage.removeItem('userType');
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
 
     setModal({
       type: 'success',

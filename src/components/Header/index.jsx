@@ -6,9 +6,9 @@ import { handleUserLogout } from '@/utils/userLogin';
 
 const Header = () => {
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken');
+  const access_token = localStorage.getItem('access_token');
   const userType = localStorage.getItem('userType');
-  const isLoggedIn = !!accessToken;
+  const isLoggedIn = !!access_token;
   const [modal, setModal] = React.useState(null);
 
   const handleLogoutClick = () => {
