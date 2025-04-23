@@ -44,5 +44,12 @@ export const loginUser = async (email, password) => {
 export const logoutUser = async () => {
   console.log('[로그아웃 요청]', '/user/logout');
 
-  await axiosInstance.post('/user/logout');
+  const accessToken = localStorage.getItem('accessToken');
+  if (!accessToken) throw new Error('Access token이 존재하지 않습니다.');
+
+  await axiosInstance.post('/user/logout', null, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 };
