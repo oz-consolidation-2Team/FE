@@ -6,13 +6,11 @@ import ErrorMessage from '@/components/common/ErrorMessage';
 import Modal from '@/components/common/Modal';
 import LabeledInput from '@/components/common/LabeledInput';
 import { validateEmail, validatePassword } from '@/utils/validation';
-import useUserStore from '@/utils/userStore';
 import './LoginPage.scss';
 import { loginUser } from '@/apis/authApi';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { setUser } = useUserStore();
 
   const [userType, setUserType] = useState('user');
   const [form, setForm] = useState({ email: '', password: '' });
@@ -45,8 +43,10 @@ const LoginPage = () => {
       const token = await loginUser(form.email, form.password);
       console.log('[로그인 성공] 토큰:', token);
   
-      setUser({ email: form.email, type: userType }, token);
-  
+      localStorage.setItem('userType', userType);
+      localStorage.setItem('accessToken', token.access_token);
+      localStorage.setItem('refreshToken', token.refresh_token);
+
       setModal({
         type: 'success',
         message: '로그인 완료!',

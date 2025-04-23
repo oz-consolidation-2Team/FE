@@ -22,14 +22,23 @@ export const signUpUser = async (form) => {
 // 로그인
 export const loginUser = async (email, password) => {
   console.log('[로그인 요청]', '/user/login');
-  
+
   const response = await axiosInstance.post('/user/login', {
     email,
     password,
   });
 
-  return response.data;
+  console.log('[서버 응답]', response.data);
+
+  const { accesstoken, refreshtoken, user } = response.data.data;
+
+  return {
+    access_token: accesstoken,
+    refresh_token: refreshtoken,
+    user,
+  };
 };
+
 
 // 로그아웃
 export const logoutUser = async () => {

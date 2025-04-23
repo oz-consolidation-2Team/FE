@@ -1,13 +1,14 @@
 import React from 'react';
 import './Header.scss';
 import { useNavigate } from 'react-router-dom';
-import useUserStore from '@/utils/userStore';
 import { logoutUser } from '@/apis/authApi';
 import Modal from '@/components/common/Modal';
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user, logout } = useUserStore();
+  const accessToken = localStorage.getItem('accessToken');
+  const userType = localStorage.getItem('userType');
+  const isLoggedIn = !!accessToken;
   const [modal, setModal] = React.useState(null);
 
   const goTo = (path) => () => navigate(path);
@@ -15,7 +16,9 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       await logoutUser();
-      logout();
+      localStorage.removeItem('userType');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
   
       setModal({
         type: 'success',
@@ -66,22 +69,22 @@ const Header = () => {
         </div>
 
         <nav className="menu">
-          {user ? (
-            <>
-              {user.type === 'user' && (
-                <button className="mypage_btn" onClick={goTo('/mypage/user')}>
-                  마이페이지
-                </button>
-              )}
-              {user.type === 'company' && (
-                <button className="companypage_btn" onClick={goTo('/mypage/company')}>
-                  기업페이지
-                </button>
-              )}
-              <button className="logout_btn" onClick={handleLogout}>
-                로그아웃
+        {isLoggedIn ? (
+          <>
+            {userType === 'user' && (
+              <button className="mypage_btn" onClick={goTo('/mypage/user')}>
+                마이페이지
               </button>
-            </>
+            )}
+            {userType === 'company' && (
+              <button className="companypage_btn" onClick={goTo('/mypage/company')}>
+                기업페이지
+              </button>
+            )}
+            <button className="logout_btn" onClick={handleLogout}>
+              로그아웃
+            </button>
+          </>
           ) : (
             <>
               <button className="signup_btn" onClick={goTo('/signup')}>
