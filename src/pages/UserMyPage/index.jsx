@@ -5,18 +5,11 @@ import JobRecommend from './JobRecommend';
 import AgePopularity from './AgePopularity';
 import InterestAnnouncement from './InterestAnnouncement';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+
+import { axiosTest } from '@/utils/testAxios';
 
 function UserMyPage() {
   const [userInfo, setUserInfo] = useState(null); // ← 초기값 null로!
-
-  const axiosTest = axios.create({
-    baseURL: 'https://seonhm.kr',
-    headers: {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZXhwIjoxNzQ1MzQ3NTg0fQ.h9fBbpCek-FlMh9NRcPX_6E6TyA9zmz0sTX0T4wxrFA`,
-      'Content-Type': 'application/json',
-    },
-  });
 
   useEffect(() => {
     const fetchUserInfo = async () => {

@@ -73,7 +73,7 @@ function EducationSection({ data, setData }) {
         >
           <option value="">학력 선택</option>
           <option value="고등학교">고등학교</option>
-          <option value="대학(2,3년)">대학(2,3년)</option>
+          <option value="대학교(2,3년)">대학교(2,3년)</option>
           <option value="대학교(4년)">대학교(4년)</option>
           <option value="대학원">대학원</option>
         </select>

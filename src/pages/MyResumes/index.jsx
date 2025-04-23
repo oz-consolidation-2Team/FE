@@ -8,14 +8,13 @@ import { initialFormData } from './resumeDummy';
 import { getSendableDistricts } from '@/utils/formatRegion';
 import { useNavigate } from 'react-router-dom';
 import './MyResumes.scss';
-import axios from 'axios';
-import Modal from '../../components/Modal';
 
-const TOKEN =
-  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZXhwIjoxNzQ1MzQ3NTg0fQ.h9fBbpCek-FlMh9NRcPX_6E6TyA9zmz0sTX0T4wxrFA';
+import Modal from '../../components/Modal';
+import { axiosTest, axiosFormTest } from '@/utils/testAxios';
 
 function MyResumes() {
   //initialFormData 유저 정보 및 이력서 정보
+
   const [formData, setFormData] = useState(initialFormData);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -25,8 +24,8 @@ function MyResumes() {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
-          headers: { Authorization: TOKEN },
+        const response = await axiosTest.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
+          withCredentials: true,
         });
 
         const wrappedUser = {
@@ -55,9 +54,12 @@ function MyResumes() {
     const resumeData = {
       user_id: formData.user_id.data.id,
       resume_image: '',
-      desired_area: getSendableDistricts(formData.preferredRegions),
+      desired_area: getSendableDistricts(formData.preferredRegions).join(', '),
       introduction: formData.introduction,
-      educations: formData.educations,
+      educations: formData.educations.map((edu) => ({
+        ...edu,
+        end_date: !edu.end_date || edu.end_date.length === 0 ? null : edu.end_date,
+      })),
       experiences: formData.experiences,
     };
 
@@ -69,11 +71,9 @@ function MyResumes() {
 
     console.log('📦 전송할 FormData:', resumeData);
 
-    axios
+    axiosFormTest
       .post(`${import.meta.env.VITE_API_BASE_URL}/resumes`, formDataToSend, {
-        headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
+        withCredentials: true, // 👈 여기에 위치해야 해!
       })
       .then((res) => {
         console.log(`이력서가 등록 되었습니다!`, res.data);
@@ -105,7 +105,9 @@ function MyResumes() {
         buttons={[
           {
             label: '확인',
-            onClick: () => goToEditPage,
+            onClick: () => {
+              goToEditPage;
+            },
             className: 'modal_btn_green',
           },
         ]}
