@@ -1,8 +1,8 @@
 import React from 'react';
 import './Header.scss';
 import { useNavigate } from 'react-router-dom';
-import { logoutUser } from '@/apis/authApi';
 import Modal from '@/components/common/Modal';
+import { handleUserLogout } from '@/utils/userLogin';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -11,47 +11,11 @@ const Header = () => {
   const isLoggedIn = !!accessToken;
   const [modal, setModal] = React.useState(null);
 
-  const goTo = (path) => () => navigate(path);
-
-  const handleLogout = async () => {
-    try {
-      await logoutUser();
-      localStorage.removeItem('userType');
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-  
-      setModal({
-        type: 'success',
-        title: '로그아웃 완료',
-        message: '정상적으로 로그아웃되었습니다.',
-        onConfirm: () => {
-          setModal(null);
-          navigate('/');
-        },
-      });
-    } catch (err) {
-      console.warn('서버 로그아웃 실패:', err);
-  
-      const code = err.response?.data?.code;
-      const message = err.response?.data?.message;
-  
-      let title = '로그아웃 실패';
-      let displayMessage = message || '알 수 없는 오류가 발생했습니다.';
-  
-      if (code === 401) {
-        displayMessage = '유효하지 않은 토큰값입니다. 다시 로그인해주세요.';
-      } else if (code === 500) {
-        displayMessage = '로그아웃 처리 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.';
-      }
-  
-      setModal({
-        type: 'error',
-        title,
-        message: displayMessage,
-        onConfirm: () => setModal(null),
-      });
-    }
+  const handleLogoutClick = () => {
+    handleUserLogout({ setModal, navigate });
   };
+
+  const goTo = (path) => () => navigate(path);
 
   return (
     <>
@@ -81,7 +45,7 @@ const Header = () => {
                 기업페이지
               </button>
             )}
-            <button className="logout_btn" onClick={handleLogout}>
+            <button className="logout_btn" onClick={handleLogoutClick}>
               로그아웃
             </button>
           </>
