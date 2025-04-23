@@ -6,12 +6,21 @@ import PropTypes from 'prop-types';
  * @setformData 상태관리
 } */
 export default function InputImage (props) {
-    const {formData} = props;
+    const onchangeImageUpload = (e) => {
+        const {files} = e.target;
+        const fileName = files[0];
+        props.setFormData((el) => ({
+            ...el,
+            image_file: fileName
+        }))
+    }
+
     return (
         <div className="InputImage_container">
             <div className="box">
-                <div>{formData.이미지등록 || "선택된 파일이 없습니다"}</div>
-                <button className="color-change">파일 선택</button>
+                <input type='file' accept = "image/*" onChange={onchangeImageUpload} />
+                {/* <div>{formData.이미지등록 || "선택된 파일이 없습니다"}</div>
+                <button className="color-change">파일 선택</button> */}
             </div>
             <p>PNG, JPG ... 어쩌구 저쩌구 확장자의 파일만 등록할 수 있습니다</p>
         </div>
@@ -19,5 +28,6 @@ export default function InputImage (props) {
 }
 
 InputImage.propTypes = {
-    formData: PropTypes.object
+    formData: PropTypes.object,
+    setFormData: PropTypes.node.isRequired
 }
