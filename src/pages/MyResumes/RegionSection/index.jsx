@@ -23,7 +23,7 @@ function RegionSection({ data, setData }) {
   }, [data.preferredRegions]);
 
   const getDistrictList = (city) => {
-    return city ? (KoreaRegions[city]?.목록 ?? []) : [];
+    return city ? (KoreaRegions[city] ?? []) : [];
   };
 
   const handleChangeDistrict = (district, city = selectedCity) => {

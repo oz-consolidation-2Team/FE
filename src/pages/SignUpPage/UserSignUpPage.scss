@@ -191,43 +191,55 @@
 
   .terms_step {
     margin-top: 20px;
-
-    .terms_header {
-      font-size: 14px;
-      color: #444;
-      margin-bottom: 20px;
-      line-height: 1.5;
-    }
-
-    .terms_group {
-      margin-bottom: 20px;
-    }
-
-    .divider {
-      height: 1px;
-      background-color: #ddd;
-      margin: 24px 0;
-    }
-
+  
     .checkbox_row {
       display: flex;
       align-items: center;
       gap: 12px;
       margin-bottom: 16px;
-
+  
       input[type='checkbox'] {
+        appearance: none;
+        -webkit-appearance: none;
         width: 18px;
         height: 18px;
+        border: 2px solid #ccc;
+        border-radius: 50%;
+        background-color: white;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s ease;
+  
+        &:checked {
+          background-color: $orange;
+          border-color: $orange;
+        }
+  
+        &:checked::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 4px;
+          height: 9px;
+          border: solid white;
+          border-width: 0 2px 2px 0;
+          transform: translate(-50%, -50%) rotate(45deg); // ✅ 중심 정렬
+        }
+  
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 0 2px rgba($orange, 0.3);
+        }
       }
-
+  
       label {
         font-size: 14px;
         color: #333;
         flex: 1;
         line-height: 1.5;
-        word-break: keep-all;
       }
-
+  
       .view_detail {
         font-size: 12px;
         color: $orange;
@@ -237,32 +249,29 @@
         text-decoration: underline;
         padding: 0;
       }
-
-      .required,
-      .optional {
-        font-weight: bold;
-        margin-right: 6px;
-      }
-
-      .required {
-        color: $orange;
-      }
-
-      .optional {
-        color: #888;
-      }
-
+  
       &.all_agree {
         margin-top: 30px;
       }
     }
-
+  
+    .terms_section {
+      margin-top: 24px;
+  
+      .terms_label {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #333;
+      }
+    }
+  
     .error_msg {
       font-size: 13px;
       color: #e53935;
       margin: 12px 0 0 0;
     }
-
+  
     .button_group {
       margin-top: 32px;
     }
