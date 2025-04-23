@@ -26,3 +26,13 @@ export const CompaniesInfo = async (companyId) => {
   })
   return response.data.data
 }
+
+export const resumeInquiryPosting = async () => {
+  const response = await axios.get(`${BASE_URL}applications/company`, {
+    headers: {
+      'accept': 'application/json',
+      'Authorization': `Bearer ${TOKEN}`
+    }
+  })
+  return response.data
+}

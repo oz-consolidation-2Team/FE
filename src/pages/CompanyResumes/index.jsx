@@ -1,17 +1,34 @@
 import { useParams } from "react-router-dom"
 import CompanyCard from "../../components/Company/CompanyCard"
 import Modal from "../../components/Company/Modal/Modal"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./CompanyResumes.scss"
 import Hr from "@/utils/Hr"
+import { resumeInquiryPosting } from "@/apis/companyApi"
+import axios from "axios"
 
 export default function CompanyResumes () {
+    const [data, setData] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
     const [modal, setModal] = useState(false)
-    const params = useParams('id')
 
-    //api 이력서 조회 /resumes
+    useEffect(()=>{
+        try {
+            resumeInquiryPosting().then(res => setData(res))
+        } catch (error) {
+            if (axios.isAxiosError(error)) setError(error.response?.data?.message || '요청 실패')
+            else setError('알 수 없는 에러 발생')
+        } finally {
+            setLoading(false)
+        }
+    },[])
     //api 사용자 정보 조회 (사용자 ID로 해당 사용자 상세 정보 조회) /user/{user_id}
     // 유저데이터 중 거주지 누락
+
+    useEffect(()=>{
+        console.log(data)
+    },[data])
 
     // 더미데이터
     const data_resumes = [
@@ -129,7 +146,6 @@ export default function CompanyResumes () {
         "user_image":"https://example.com/image.jpg",
         "created_at":"2025-04-08T12:00:00Z"
     }
-    console.log(data_resumes.length)
 
     return (
         <div className="CompanyResumes_container">
