@@ -7,6 +7,9 @@ import PropTypes from 'prop-types';
  * data: 공고호출api값{} (공고 카드를 그리기위함)
     } 
 */
+/**
+ * @param {object} data 기업 공고 데이터
+ */
 export default function AnnouncementCard (props) {
     const navigate = useNavigate();
 
