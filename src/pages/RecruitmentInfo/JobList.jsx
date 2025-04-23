@@ -30,6 +30,8 @@ const fetchJobs = async (pageNum = 1) => {
     console.log("받아온 채용공고 데이터:", res);
     setJobList(res.items || []);
     setTotalCount(res.total || 0);
+    // 채용공고 데이터를 불러온 후, 화면을 중간 지점으로 스크롤 이동하여 사용자 시야에 리스트가 잘 보이도록 함
+    window.scrollTo({ top: 700});
   } catch (error) {
     console.error('채용공고 불러오기 실패:', error);
   }
