@@ -73,7 +73,7 @@ function EducationSection({ data, setData }) {
         >
           <option value="">학력 선택</option>
           <option value="고등학교">고등학교</option>
-          <option value="대학(2,3년)">대학(2,3년)</option>
+          <option value="대학교(2,3년)">대학교(2,3년)</option>
           <option value="대학교(4년)">대학교(4년)</option>
           <option value="대학원">대학원</option>
         </select>
@@ -154,6 +154,7 @@ function EducationSection({ data, setData }) {
             type="date"
             value={edu.end_date}
             onChange={(e) => handleChange(index, 'end_date', e.target.value)}
+            disabled={edu.education_status === '재학중'}
           />
           <button type="button" onClick={() => handleRemoveEducation(index)}>
             -

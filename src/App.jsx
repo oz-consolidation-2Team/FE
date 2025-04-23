@@ -20,7 +20,6 @@ import Announcement from './pages/Announcement';
 import FindPasswordPage from './pages/FindPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 
-
 function App() {
   return (
     <Routes>
@@ -28,19 +27,20 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/find-email" element={<FindEmailPage />} />
-        <Route path='/forgot-password' element={<FindPasswordPage />} />
-        <Route path='/reset-password/:type' element={<ResetPasswordPage />} />
+        <Route path="/forgot-password" element={<FindPasswordPage />} />
+        <Route path="/reset-password/:type" element={<ResetPasswordPage />} />
         <Route path="/about" element={<AboutCompany />} />
         <Route path="/recruitment_info" element={<RecruitmentInfo />} />
         <Route path="/mypage/user" element={<UserMyPage />} />
         <Route path="/mypage/user/resumes" element={<MyResumes />} />
+        <Route path="/mypage/user/resumes/:id" element={<MyResumes />} />
         <Route path="/search-results" element={<SearchResults />} />
         <Route path="/job-detail/:id" element={<JobDetail />} />
         <Route path="/company_my_page" element={<CompanyMyPage />} />
         <Route path="/company_info_page/:id" element={<CompanyInfo />} />
         <Route path="/company_info_edit_page" element={<CompanyInfoEdit />} />
-        <Route path="/company_announcement_add_page" element={<Announcement type='add' />} />
-        <Route path="/company_announcement_edit_page/:id" element={<Announcement type='edit' />} />
+        <Route path="/company_announcement_add_page" element={<Announcement type="add" />} />
+        <Route path="/company_announcement_edit_page/:id" element={<Announcement type="edit" />} />
         <Route path="/company_resumes_page/:id" element={<CompanyResumes />} />
         <Route path="/trainingSearch" element={<TrainingSearch />} />
       </Route>
