@@ -92,3 +92,25 @@ export const getJobDetail = async (postingId, token) => {
     throw error;
   }
 };
+
+/**
+ * 채용공고 검색 API 호출 함수
+ * @param {Object} params - 검색 조건 (keyword, location, job_category, etc.)
+ * @param {string} [token] - 인증이 필요한 경우 JWT 토큰
+ * @returns {Promise<Object>} - 검색 결과 응답 객체
+ * @throws {Error} - API 호출 실패 시 발생하는 에러
+ */
+export const searchJobPostings = async (params = {}, token) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/posting/search`, {
+      params,
+      headers: token
+        ? { Authorization: `Bearer ${token}` }
+        : undefined,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("채용공고 검색 실패:", error);
+    throw error;
+  }
+};
