@@ -35,7 +35,7 @@ function App() {
         <Route path="/mypage/user" element={<UserMyPage />} />
         <Route path="/mypage/user/resumes" element={<MyResumes />} />
         <Route path="/search-results" element={<SearchResults />} />
-        <Route path="/job-detail/:id" element={<JobDetail />} />
+        <Route path="/job-detail/:postingId" element={<JobDetail />} />
         <Route path="/company_my_page" element={<CompanyMyPage />} />
         <Route path="/company_info_page/:id" element={<CompanyInfo />} />
         <Route path="/company_info_edit_page" element={<CompanyInfoEdit />} />

@@ -13,10 +13,10 @@ const PublicJobList = () => {
       const data = await fetchPublicRecruitments();
       setJobs(data?.result || []);
     };
-
+    
     loadJobs();
   }, []);
-
+  
   const startIndex = (currentPage - 1) * jobsPerPage;
   const endIndex = startIndex + jobsPerPage;
   const currentJobs = jobs.slice(startIndex, endIndex);
