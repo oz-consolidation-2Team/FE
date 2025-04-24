@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 function RegionSection({ data, setData }) {
   const [selectedCity, setSelectedCity] = useState();
   const [selectedDistricts, setSelectedDistricts] = useState([]);
-  const [openCities, setOpenCities] = useState([]);
   const [isRegionOpen, setIsRegionOpen] = useState(false);
 
   // 태그 전체용 (선택된 '전체'만 보여주고 싶을 경우 사용 가능)

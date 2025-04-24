@@ -40,7 +40,6 @@ function MyResumes() {
 
   const makeFormData = (formData) => {
     const formDataToSend = new FormData();
-    console.log('🧩 formData.user_id 확인:', formData.user_id);
 
     const resumeData = {
       user_id: formData.user_id.data.id,

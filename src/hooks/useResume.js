@@ -60,7 +60,6 @@ export const useResume = () => {
     };
     fetchUserAndResume();
   }, []);
-  console.log('📨useResume에서 보내는  :', formData);
 
   return { formData, setFormData, isLoading, isError };
 };
