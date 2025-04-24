@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './MainPage.scss';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
-import { getPopularJobList } from '../../apis/RecruitmentApi';
+import { getPopularJobList} from '../../apis/RecruitmentApi';
+import { useNavigate } from 'react-router-dom';
 import MainJobCard from './MainJobCard';
 
 
@@ -36,6 +37,7 @@ const JobCard = ({ job }) => {
 const MainPage = () => {
   const [keyword, setKeyword] = useState('');
   const [popularJobs, setPopularJobs] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPopularJobs = async () => {
@@ -52,8 +54,11 @@ const MainPage = () => {
 
   const handleSearch = () => {
     if (keyword.trim()) {
-      console.log('검색어:', keyword);
-      // navigate(`/search?query=${keyword}`);
+      const params = new URLSearchParams({
+        keyword: keyword.trim(),
+        page: 1,
+      });
+      navigate(`/search-results?${params.toString()}`);
     }
   };
 

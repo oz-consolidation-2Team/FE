@@ -4,27 +4,34 @@ import { useNavigate } from 'react-router-dom';
 import PublicJobList from './PublicJobList';
 import JobList from './JobList';
 import SearchFilters from './SearchFilters';
+import { searchJobPostings } from '@/apis/RecruitmentApi';
+
 
 
 function RecruitmentInfo() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCity, setSelectedCity] = useState('');
-  const [selectedJobCategory, setSelectedJobCategory] = useState('');
-  const [selectedDistrict, setSelectedDistrict] = useState(''); // 1. selectedDistrict 상태 추가
+  const [cityInput, setCityInput] = useState('');
+  const [districtInput, setDistrictInput] = useState('');
+  const [jobCategoryInput, setJobCategoryInput] = useState('');
   const navigate = useNavigate();
 
-
-
-
   const handleSearch = () => {
-    const fullLocation = selectedCity && selectedDistrict
-      ? `${selectedCity} ${selectedDistrict}`
-      : selectedCity || '';
+    const fullLocation = cityInput && districtInput
+      ? `${cityInput} ${districtInput}`
+      : cityInput || '';
 
-    // TODO: 실제 API 연동 시 이 부분을 대체할 예정
-    const filteredResults = []; 
+    const rawParams = {
+      keyword: searchQuery,
+      location: fullLocation,
+      job_category: jobCategoryInput,
+      page: 1,
+    };
 
-    navigate('/search-results', { state: { results: filteredResults } });
+    const params = new URLSearchParams(
+      Object.entries(rawParams).filter(([_, v]) => !!v || v === 0)
+    );
+
+    navigate(`/search-results?${params.toString()}`);
   };
 
   return (
@@ -34,12 +41,12 @@ function RecruitmentInfo() {
       <SearchFilters
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        selectedCity={selectedCity}
-        setSelectedCity={setSelectedCity}
-        selectedDistrict={selectedDistrict}
-        setSelectedDistrict={setSelectedDistrict}
-        selectedJobCategory={selectedJobCategory} 
-        setSelectedJobCategory={setSelectedJobCategory} 
+        cityInput={cityInput}
+        setCityInput={setCityInput}
+        districtInput={districtInput}
+        setDistrictInput={setDistrictInput}
+        jobCategoryInput={jobCategoryInput}
+        setJobCategoryInput={setJobCategoryInput}
         onSearch={handleSearch}
       />
 

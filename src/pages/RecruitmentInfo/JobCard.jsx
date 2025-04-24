@@ -7,7 +7,7 @@ const JobCard = ({ job, isBookmarked, toggleBookmark }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(`/job-detail/${job.id}`, { state: { job } });
+    navigate(`/job-detail/${job.id}`);
   };
 
   const handleBookmarkClick = (e) => {

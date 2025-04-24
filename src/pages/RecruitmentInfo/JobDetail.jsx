@@ -1,22 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FaStar, FaRegStar, FaRegCopy } from 'react-icons/fa';
 import './JobDetail.scss';
 import JobApplyModal from '@/components/Company/Modal/JobApplyModal';
+import { getJobDetail } from '@/apis/RecruitmentApi';
 
 const JobDetail = () => {
-  const location = useLocation();
-  const job = location.state?.job;
-
-  if (!job) return <div>로딩 중...</div>;
-
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const { postingId } = useParams();
+  const [job, setJob] = useState(null);
   const navigate = useNavigate();
+  const [isBookmarked, setIsBookmarked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    const fetchJob = async () => {
+      try {
+        const data = await getJobDetail(postingId);
+        setJob(data);
+      } catch (error) {
+        console.error('채용공고 불러오기 실패:', error);
+      }
+    };
+
+    fetchJob();
     window.scrollTo(0, 0);
-  }, []);
+  }, [postingId]);
+
+  if (!job) return <div>로딩 중...</div>;
 
   const handleBookmarkClick = () => {
     setIsBookmarked(prev => !prev);
