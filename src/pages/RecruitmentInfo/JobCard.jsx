@@ -37,7 +37,7 @@ const JobCard = ({ job, isBookmarked, toggleBookmark }) => {
           <div className="payment">
             <span className={getPaymentClass(job.payment_method)}>{job.payment_method}</span> {job.salary.toLocaleString()}원
           </div>
-          <div className="description">{job.other_conditions}</div>
+          <div className="description">{job.job_category}</div>
         </div>
         {isBookmarked ? (
           <FaStar className="star_icon filled" onClick={handleBookmarkClick} />

@@ -29,7 +29,12 @@
   margin-top: 2rem;
   gap: 4px;
   list-style: none;
-  padding: 0;
+  padding: 1rem 0;
+  position: sticky;
+  bottom: 0;
+  background-color: #fff;
+  z-index: 10;
+  border-top: 1px solid #ddd;
 
   li {
     display: inline-block;
