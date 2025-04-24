@@ -5,20 +5,27 @@ import { FaUser, FaBuilding } from 'react-icons/fa';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import Modal from '@/components/common/Modal';
 import LabeledInput from '@/components/common/LabeledInput';
-import { validateEmail, validatePassword } from '@/utils/validation';
-import useUserStore from '@/utils/userStore';
 import './LoginPage.scss';
-import { loginUser } from '@/apis/authApi';
+import { handleUserLogin } from '@/utils/userLogin';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { setUser } = useUserStore();
 
   const [userType, setUserType] = useState('user');
   const [form, setForm] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [modal, setModal] = useState(null);
+
+  const handleLoginClick = () => {
+    handleUserLogin({
+      form,
+      userType,
+      setErrors,
+      setModal,
+      navigate,
+    });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,59 +35,9 @@ const LoginPage = () => {
 
   const handleEnterKey = (e) => {
     if (e.key === 'Enter') {
-      handleLogin();
+      handleLoginClick();
     }
   };
-
-  const handleLogin = async () => {
-    const newErrors = {};
-    if (!validateEmail(form.email)) newErrors.email = '올바른 이메일 형식이 아닙니다.';
-    if (!validatePassword(form.password)) newErrors.password = '비밀번호 형식이 올바르지 않습니다.';
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-  
-    try {
-      const token = await loginUser(form.email, form.password);
-      console.log('[로그인 성공] 토큰:', token);
-  
-      setUser({ email: form.email, type: userType }, token);
-  
-      setModal({
-        type: 'success',
-        message: '로그인 완료!',
-        onConfirm: () => {
-          setModal(null);
-          navigate('/');
-        },
-      });
-    } catch (err) {
-      console.error('[로그인 실패]', err);
-    
-      const statusCode = err?.response?.status;
-      const serverMessage = err?.response?.data?.detail;
-    
-      let message;
-      switch (statusCode) {
-        case 401:
-          message = serverMessage || '이메일 또는 비밀번호가 일치하지 않습니다.';
-          break;
-        case 500:
-          message = serverMessage || '서버 내부 오류가 발생했습니다.';
-          break;
-        default:
-          message = serverMessage || '알 수 없는 오류가 발생했습니다.';
-      }
-    
-      setModal({
-        type: 'error',
-        message,
-        onConfirm: () => setModal(null),
-      });
-    }
-  };
-  
 
   return (
     <div className="login_page">
@@ -133,7 +90,7 @@ const LoginPage = () => {
 
         <button
           className={`login_btn ${userType === 'company' ? 'company' : 'user'}`}
-          onClick={handleLogin}
+          onClick={handleLoginClick}
         >
           로그인
         </button>

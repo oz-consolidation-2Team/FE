@@ -9,6 +9,16 @@ UserInfo.propTypes = {
 function UserInfo({ userInfo }) {
   const navigate = useNavigate();
 
+  const handleHasResume = () => {
+    const hasResume = userInfo?.resumes[0].id > 0;
+
+    if (hasResume) {
+      navigate(`/mypage/user/resumes/${userInfo?.resumes[0]?.id}`);
+    } else {
+      navigate(`/mypage/user/resumes`);
+    }
+  };
+
   return (
     <section className="user_info_section">
       <div className="user_info">
@@ -22,20 +32,19 @@ function UserInfo({ userInfo }) {
         </p>
         <div className="user_detail">
           <div className="user_profile_text">
-            <p className="info_text"> 생일 : {userInfo.birthday}</p>
-            <p className="info_text"> 전화번호 : {userInfo.phone_number}</p>
-            <p className="info_text"> 이메일 : {userInfo.email}</p>
-            <p className="info_text"> 관심분야 : {userInfo.interests}</p>
+            <p className="info_text"> 생일 : {userInfo?.birthday}</p>
+            <p className="info_text"> 전화번호 : {userInfo?.phone_number}</p>
+            <p className="info_text"> 이메일 : {userInfo?.email}</p>
+            <p className="info_text"> 관심분야 : {userInfo?.interests}</p>
           </div>
         </div>
       </div>
       <button
         onClick={() => {
-          navigate('/mypage/user/resumes');
+          handleHasResume();
         }}
       >
-        간단 이력서 <br />
-        작성하기
+        {userInfo?.resumes?.id > 0 ? '이력서 수정하기' : '간단 이력서\n 작성하기'}
       </button>
     </section>
   );
