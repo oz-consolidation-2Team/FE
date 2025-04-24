@@ -7,10 +7,11 @@ import { getJobDetail } from '@/apis/RecruitmentApi';
 import useUserStore from '@/utils/userStore';
 import KakaoMap from '@/components/KakaoMap/KakaoMap';
 
+
+
 const JobDetail = () => {
   const { postingId } = useParams();
   const [job, setJob] = useState(null);
-  const { token } = useUserStore();
   const navigate = useNavigate();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,7 +19,7 @@ const JobDetail = () => {
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const data = await getJobDetail(postingId, token);
+        const data = await getJobDetail(postingId);
         setJob(data);
       } catch (error) {
         console.error('채용공고 불러오기 실패:', error);
@@ -35,6 +36,30 @@ const JobDetail = () => {
     setIsBookmarked(prev => !prev);
   };
 
+  const convertToAMPM = (timeStr) => {
+    if (!timeStr) return '';
+    const [hour, minute] = timeStr.split(':').map(Number);
+    const period = hour < 12 ? '오전' : '오후';
+    const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+    return `${period} ${hour12}:${minute.toString().padStart(2, '0')}`;
+  };
+
+  const getWorkDayLabel = (daysStr) => {
+    const days = daysStr.split(',').map(d => d.trim());
+    const weekday = ['월', '화', '수', '목', '금'];
+    const weekend = ['토', '일'];
+    const fullWeek = [...weekday, ...weekend];
+
+    const isWeekday = days.every(d => weekday.includes(d));
+    const isWeekend = days.every(d => weekend.includes(d));
+    const isFullWeek = fullWeek.every(d => days.includes(d)) && days.length === 7;
+
+    if (isFullWeek) return '주7일';
+    if (isWeekday) return '평일';
+    if (isWeekend) return '주말';
+    return daysStr;
+  };
+
   return (
     <div className="jobdetail_container">
       <section className="section">
@@ -47,11 +72,62 @@ const JobDetail = () => {
             >{job.work_place_name}</div>
         </div>
           <h2 className="title">{job.title}</h2>
-        <div className="tags">
           <span className="job-tag">{job.job_category}</span>
-          <span>{job.payment_method} {job.salary.toLocaleString()}</span>
-          <span>근무요일 {job.work_days}</span>
-          <span>근무기간 {job.work_duration}</span>
+        <div className="tags">
+          <span>{job.payment_method}</span>
+          <span>
+            {job.is_work_days_negotiable_str ? '협의 가능' : getWorkDayLabel(job.work_days)}
+          </span>
+          <span>
+            {job.is_work_duration_negotiable_str ? '협의 가능' : job.work_duration}
+          </span>
+          {job.benefits && (
+            <span>
+              {job.benefits}
+            </span>
+          )}
+        </div>
+      </section>
+
+      <section className="section">
+        <h3>근무조건</h3>
+        <div className="conditions">
+          <div className="condition_row">
+            <div className="condition_label">급여</div>
+            <div className="condition_value">
+              <span className="payment_method_badge">{job.payment_method}</span>{job.salary.toLocaleString()}
+            </div>
+          </div>
+          <div className="condition_row">
+            <div className="condition_label">근무 기간</div>
+            <div className="condition_value">{job.work_duration}</div>
+          </div>
+          <div className="condition_row">
+            <div className="condition_label">근무 요일</div>
+            <div className="condition_value">
+              {job.is_work_days_negotiable_str
+                ? '협의 가능'
+                : job.is_schedule_based_str
+                ? '일정에 따름'
+                : getWorkDayLabel(job.work_days)}
+            </div>
+          </div>
+          <div className="condition_row">
+            <div className="condition_label">근무 시간</div>
+            <div className="condition_value">{job.is_work_time_negotiable_str ? '협의 가능' : `${convertToAMPM(job.work_start_time)} ~ ${convertToAMPM(job.work_end_time)}`}</div>
+          </div>
+          <div className="condition_row">
+            <div className="condition_label">업직종</div>
+            <div className="condition_value">{job.job_category}</div>
+          </div>
+          <div className="condition_row">
+            <div className="condition_label">고용 형태</div>
+            <div className="condition_value">{job.employment_type}</div>
+          </div>
+          <div className="condition_row">
+            <div className="condition_label">복리후생</div>
+            <div className="condition_value">{job.benefits}</div>
+          </div>
         </div>
       </section>
 
@@ -65,10 +141,6 @@ const JobDetail = () => {
                 ? '상시 모집'
                 : `${job.recruit_period_start} ~ ${job.recruit_period_end}`}
             </div>
-          </div>
-          <div className="condition_row">
-            <div className="condition_label">고용 형태</div>
-            <div className="condition_value">{job.employment_type}</div>
           </div>
           <div className="condition_row">
             <div className="condition_label">학력</div>
@@ -87,15 +159,10 @@ const JobDetail = () => {
             <div className="condition_value">{job.career}</div>
           </div>
           <div className="condition_row">
-            <div className="condition_label">모집조건</div>
+            <div className="condition_label">기타조건</div>
             <div className="condition_value">{job.other_conditions}</div>
           </div>
-          <div className="condition_row">
-            <div className="condition_label">복리후생</div>
-            <div className="condition_value">{job.benefits}</div>
-          </div>
         </div>
-        
       </section>
 
       <section className="section">

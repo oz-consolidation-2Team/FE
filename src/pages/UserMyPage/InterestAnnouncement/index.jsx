@@ -18,7 +18,6 @@ function InterestAnnouncement({ userInfo }) {
 
   const visibleCount = 3;
   const maxIndex = Bookmark.length - visibleCount;
-  console.log(Bookmark.length);
   const handlerNext = () => {
     if (currentIndex < maxIndex) setCurrentIndex(currentIndex + 1);
   };
