@@ -4,12 +4,10 @@ import { FaStar, FaRegStar, FaRegCopy } from 'react-icons/fa';
 import './JobDetail.scss';
 import JobApplyModal from '@/components/Company/Modal/JobApplyModal';
 import { getJobDetail } from '@/apis/RecruitmentApi';
-import useUserStore from '@/utils/userStore';
 
 const JobDetail = () => {
   const { postingId } = useParams();
   const [job, setJob] = useState(null);
-  const { token } = useUserStore();
   const navigate = useNavigate();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,7 +15,7 @@ const JobDetail = () => {
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const data = await getJobDetail(postingId, token);
+        const data = await getJobDetail(postingId);
         setJob(data);
       } catch (error) {
         console.error('채용공고 불러오기 실패:', error);
