@@ -1,12 +1,12 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
+import axios from "axios";
 import "./CompanyInfo.scss"
 import { AiOutlineUser } from "react-icons/ai";
 import { BsBuilding } from "react-icons/bs";
-import Hr from "@/utils/Hr";
 import { CompaniesInfo } from "@/apis/companyApi";
-import { useEffect, useState } from "react";
 import { formatPhoneNumber } from "@/utils/format";
-import axios from "axios";
+import Hr from "@/utils/Hr";
 
 export default function CompanyInfo () {
     const [data, setData] = useState(null)

@@ -13,16 +13,15 @@
     button {
         cursor: pointer;
     }
-    .div_company-info {
-        width: 100%;
-        margin-top: 50px;
+    .div_password > .hr {
+        margin-bottom: 30px;
     }
-    .div_manager-info {
+    .div_company-info, .div_manager-info, .div_password {
         width: 100%;
         margin-top: 50px;
     }
 
-    .div_company-info > .box, .div_manager-info > .box {
+    .div_company-info > .box, .div_manager-info > .box, .div_password > .box {
         display: flex;
         margin-bottom: 20px;
 
