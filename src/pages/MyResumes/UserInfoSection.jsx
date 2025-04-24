@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from '@/components/Modal';
 import PropTypes from 'prop-types';
@@ -20,18 +20,34 @@ function UserInfoSection({ data, setData }) {
   const handleUserAddImage = (e) => {
     const file = e.target.files[0];
     if (file) {
+      const previewUrl = URL.createObjectURL(file);
+
       setData((prev) => ({
         ...prev,
         resume_image: file,
+        preview_url: previewUrl,
       }));
     }
   };
 
+  useEffect(() => {
+    return () => {
+      if (data.preview_url) {
+        URL.revokeObjectURL(data.preview_url);
+      }
+    };
+  }, [data.preview_url]);
+
   return (
     <div className="resumes_user_info">
       <label htmlFor="user_img" className="user_image_box">
-        {data.resume_image ? (
-          <img src={URL.createObjectURL(data.resume_image)} alt="미리보기" />
+        {data.preview_url || data.resume_image ? (
+          <img
+            src={
+              data.preview_url ? data.preview_url : data.resume_image // 문자열인 경우
+            }
+            alt="프로필 이미지"
+          />
         ) : (
           '프로필 업로드 (선택)'
         )}

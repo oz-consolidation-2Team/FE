@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { KoreaRegions } from '@/utils/KoreaRegions';
-import './RegionSection.scss';
+import './MyResumes.scss';
 import PropTypes from 'prop-types';
 
 function RegionSection({ data, setData }) {
   const [selectedCity, setSelectedCity] = useState();
   const [selectedDistricts, setSelectedDistricts] = useState([]);
+  const [isRegionOpen, setIsRegionOpen] = useState(false);
 
   // 태그 전체용 (선택된 '전체'만 보여주고 싶을 경우 사용 가능)
   const visibleTags = selectedDistricts;
@@ -68,45 +69,59 @@ function RegionSection({ data, setData }) {
   return (
     <div className="resumes_region">
       <h3 className="region_title">희망지역</h3>
-      <div className="region_content">
-        {/* 시/도 선택 */}
-        <div className="city_list">
-          {Object.keys(KoreaRegions).map((city) => (
-            <button
-              key={city}
-              className={`city_item ${selectedCity === city ? 'selected' : ''}`}
-              onClick={() => setSelectedCity(city)}
-            >
-              {city}
-            </button>
-          ))}
-        </div>
+      {isRegionOpen ? (
+        <button className="region-toggle" onClick={() => setIsRegionOpen((prev) => !prev)}>
+          지역 선택 닫기
+        </button>
+      ) : (
+        <button className="region-toggle" onClick={() => setIsRegionOpen((prev) => !prev)}>
+          지역 선택하기
+        </button>
+      )}
 
-        {/* 구/군 선택 */}
-        {selectedCity && (
-          <div className="district_list">
-            <h4 className="district_title">{selectedCity}의 구/군</h4>
-            <ul>
-              {getDistrictList(selectedCity).map((district) => (
-                <li key={district}>
-                  <button
-                    className={`district_item ${
-                      selectedDistricts.some(
-                        (item) => item.city === selectedCity && item.district === district
-                      )
-                        ? 'selected'
-                        : ''
-                    }`}
-                    onClick={() => handleChangeDistrict(district)}
-                  >
-                    {district}
-                  </button>
-                </li>
-              ))}
-            </ul>
+      {isRegionOpen ? (
+        <div className="region_content">
+          {/* 시/도 선택 */}
+          <div className="city_list">
+            {Object.keys(KoreaRegions).map((city) => (
+              <button
+                key={city}
+                className={`city_item ${selectedCity === city ? 'selected' : ''}`}
+                onClick={() => setSelectedCity(city)}
+              >
+                {city}
+              </button>
+            ))}
           </div>
-        )}
-      </div>
+
+          {/* 구/군 선택 */}
+          {selectedCity && (
+            <div className="district_list">
+              <h4 className="district_title">{selectedCity}의 구/군</h4>
+              <ul>
+                {getDistrictList(selectedCity).map((district) => (
+                  <li key={district}>
+                    <button
+                      className={`district_item ${
+                        selectedDistricts.some(
+                          (item) => item.city === selectedCity && item.district === district
+                        )
+                          ? 'selected'
+                          : ''
+                      }`}
+                      onClick={() => handleChangeDistrict(district)}
+                    >
+                      {district}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      ) : (
+        ''
+      )}
 
       {/* 선택 태그 보여주기 */}
       {selectedDistricts.length > 0 && (

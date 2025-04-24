@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMCIsImV4cCI6MTc0NTQwMDc4OX0.a8ZP3kYWhX-ipwnhh6fl5gsL_M2lY2yi27iuwXg1iTE';
-
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZXhwIjoxNzQ1NTE0NTQyfQ.iChFyQ6uy2-PuQLewsx9Gfqc1UKuKKtP9DZOrJDMU5w';
 export const axiosTest = axios.create({
   baseURL: 'https://seonhm.kr',
   headers: {
