@@ -61,8 +61,12 @@ const toggleBookmark = (id) => {
           activePage={currentPage}
           totalItemsCount={totalCount}
           itemsCountPerPage={itemsPerPage}
-          pageRangeDisplayed={5}
-          onChange={(page) => setCurrentPage(page)}
+          pageRangeDisplayed={10}
+          onChange={(page) => {
+            setCurrentPage(page);
+            fetchJobs(page);
+            window.scrollTo({ top: 0});
+          }}
           innerClass="pagination"
           activeClass="active"
           disabledClass="disabled"
