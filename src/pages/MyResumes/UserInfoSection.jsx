@@ -25,7 +25,7 @@ function UserInfoSection({ data, setData }) {
       setData((prev) => ({
         ...prev,
         resume_image: file,
-        preview_url: previewUrl, // 👈 이걸 따로 저장!
+        preview_url: previewUrl,
       }));
     }
   };
@@ -33,7 +33,7 @@ function UserInfoSection({ data, setData }) {
   useEffect(() => {
     return () => {
       if (data.preview_url) {
-        URL.revokeObjectURL(data.preview_url); // 🔥 정리!
+        URL.revokeObjectURL(data.preview_url);
       }
     };
   }, [data.preview_url]);

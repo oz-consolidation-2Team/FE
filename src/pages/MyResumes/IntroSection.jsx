@@ -6,14 +6,14 @@ function IntroSection({ data, setData }) {
   };
   return (
     <div className="resumes_introduce">
-      <h3 className="intro_title">자기소개서</h3>
+      <h3 className="introduce_title">자기소개서</h3>
       <textarea
         type="text"
         name="introduction"
         value={data.introduction || ''}
         onChange={handleChange}
         placeholder="내용을 입력하세요"
-        className="intro_input"
+        className="introduce_input"
       />
     </div>
   );
