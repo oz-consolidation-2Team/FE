@@ -60,6 +60,7 @@ const JobDetail = () => {
     return daysStr;
   };
 
+
   return (
     <div className="jobdetail_container">
       <section className="section">
@@ -95,7 +96,13 @@ const JobDetail = () => {
           <div className="condition_row">
             <div className="condition_label">급여</div>
             <div className="condition_value">
-              <span className="payment_method_badge">{job.payment_method}</span>{job.salary.toLocaleString()}
+              <span className={`payment_method_badge ${
+                job.payment_method === '시급' ? 'payment-hourly' :
+                job.payment_method === '일급' ? 'payment-daily' :
+                job.payment_method === '월급' ? 'payment-monthly' :
+                'payment-default'
+              }`}>{job.payment_method}</span>
+              <span className="salary">{job.salary.toLocaleString()}원</span>
             </div>
           </div>
           <div className="condition_row">
@@ -109,7 +116,12 @@ const JobDetail = () => {
                 ? '협의 가능'
                 : job.is_schedule_based_str
                 ? '일정에 따름'
-                : getWorkDayLabel(job.work_days)}
+                : (
+                  <>
+                    <span className="day_count">주{job.work_days?.split(',').length}일</span>
+                    <span className="day_list">({job.work_days?.split(',').join(', ')})</span>
+                  </>
+                )}
             </div>
           </div>
           <div className="condition_row">
@@ -167,7 +179,7 @@ const JobDetail = () => {
 
       <section className="section">
         <h3>근무지 정보</h3>
-        <div className="address-row" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div className="address_row" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <div>
             <strong>근무지명:</strong> {job.work_place_name}
           </div>
@@ -183,7 +195,7 @@ const JobDetail = () => {
               <FaRegCopy />
             </button>
           </div>
-          <div className="map-container">
+          <div className="map_container">
             <KakaoMap
               latitude={job.latitude}
               longitude={job.longitude}
