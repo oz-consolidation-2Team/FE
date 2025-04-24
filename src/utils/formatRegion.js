@@ -14,3 +14,12 @@ export const getSendableDistricts = (selectedDistricts) => {
 
   return result;
 };
+
+export const parseDesiredArea = (desiredAreaString) => {
+  if (!desiredAreaString) return [];
+
+  return desiredAreaString.split(',').map((item) => {
+    const [city, district] = item.trim().split(' ');
+    return { city, district };
+  });
+};

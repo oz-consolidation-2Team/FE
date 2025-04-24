@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { axiosTest } from '@/utils/testAxios';
+import { parseDesiredArea } from '@/utils/formatRegion';
 
 export const useResume = () => {
   const [formData, setFormData] = useState(null);
@@ -16,14 +17,21 @@ export const useResume = () => {
 
         const wrappedUser = { status: 'success', data: userRes.data };
 
-        const resume = Array.isArray(resumeRes.data) ? resumeRes.data[0] : resumeRes.data;
+        const resumeData = resumeRes?.data?.data;
+        const resume = resumeData && resumeData.id ? resumeData : null;
 
         console.log('이력서있어?', resume);
+        console.log('회원정보있어?', resumeRes);
 
         if (resume?.id) {
           setFormData({
             ...resume,
             user_id: wrappedUser,
+            resume_id: resume.id,
+            educations: resume.educations,
+            experiences: resume.experiences,
+            introduction: resume.introduction,
+            preferredRegions: parseDesiredArea(resume.desired_area || []),
           });
         } else {
           setFormData({
@@ -32,6 +40,7 @@ export const useResume = () => {
             experiences: [],
             introduction: '',
             preferredRegions: [],
+            resume_id: null,
           });
         }
       } catch (e) {
@@ -41,9 +50,9 @@ export const useResume = () => {
         setIsLoading(false);
       }
     };
-
     fetchUserAndResume();
   }, []);
+  console.log('📨useResume에서 보내는  :', formData);
 
   return { formData, setFormData, isLoading, isError };
 };
