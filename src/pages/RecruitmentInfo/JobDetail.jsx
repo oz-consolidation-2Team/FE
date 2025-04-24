@@ -4,7 +4,7 @@ import { FaStar, FaRegStar, FaRegCopy } from 'react-icons/fa';
 import './JobDetail.scss';
 import JobApplyModal from '@/components/Company/Modal/JobApplyModal';
 import { getJobDetail } from '@/apis/RecruitmentApi';
-import useUserStore from 'utils/userStore';
+import useUserStore from '@/utils/userStore';
 
 const JobDetail = () => {
   const { postingId } = useParams();
