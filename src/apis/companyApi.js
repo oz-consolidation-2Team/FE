@@ -26,7 +26,7 @@ export const CompaniesInfo = async (companyId) => {
     }
   })
   console.log('기업 정보 조회 API 호출====')
-  console.log(response)
+  console.log(response.data.data)
   return response.data.data
 }
 

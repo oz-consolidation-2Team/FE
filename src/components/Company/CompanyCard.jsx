@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
-import { listJobPosting } from "@/apis/companyPostingApi"
 import { JobPosting } from "@/apis/companyPostingApi"
 
 /**

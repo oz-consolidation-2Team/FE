@@ -1,7 +1,7 @@
 import axios from "axios";
 import {TOKEN, BASE_URL} from "./token"
 
-export const listJobPosting = async () => {
+export const companyMe = async () => {
     const response = await axios.get(`${BASE_URL}company/me`, {
         headers: {
             'accept': 'application/json',
