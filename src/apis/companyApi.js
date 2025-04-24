@@ -22,8 +22,11 @@ export const CompaniesInfo = async (companyId) => {
   const response = await axios.get(`${BASE_URL}companies/${companyId}`, {
     headers: {
       'Authorization': `Bearer ${TOKEN}`,
-      'accept': 'application/json' }
+      'accept': 'application/json'
+    }
   })
+  console.log('기업 정보 조회 API 호출====')
+  console.log(response)
   return response.data.data
 }
 

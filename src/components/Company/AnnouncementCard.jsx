@@ -4,7 +4,8 @@ import "./styles/AnnouncementCard.scss"
 import PropTypes from 'prop-types';
 
 /**
- * @param {object} data 기업 공고 데이터
+ * @param {object} data 기업 공고 api (분해된)
+ * @param {object} companyInfo 기업 정보 api
  */
 export default function AnnouncementCard (props) {
     console.log(props)

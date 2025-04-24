@@ -8,9 +8,21 @@ export const listJobPosting = async () => {
             'Authorization': `Bearer ${TOKEN}`
         }
     })
-    console.log('공고 조회 API 호출====')
+    console.log('기업 마이 페이지 조회 API 호출====')
     console.log(response.data.data)
     return response.data.data
+}
+
+export const JobPosting = async (id) => {
+    const response = await axios.get(`${BASE_URL}posting/${id}`, {
+        headers: {
+            'accept': 'application/json',
+            'Authorization': `Bearer ${TOKEN}`
+        }
+    })
+    console.log('공고 상세 정보 API 호출====')
+    console.log(response.data)
+    return response.data
 }
 
 export const createJobPosting = async (formData) => {

@@ -23,6 +23,7 @@ $HR_COLOR: #A8A8A8;
             border: 1px solid $HR_COLOR;
             border-radius: 10px;
             font-size: 0.8rem;
+            min-width: 200px;
             height: 230px;
             padding: 10px;
 
@@ -36,6 +37,9 @@ $HR_COLOR: #A8A8A8;
                 > .hr {
                     border-color: #e6e6e6;
                     margin: 10px 0;
+                }
+                :nth-child(3) {
+                    
                 }
                 > button {
                     border: 1px solid $HR_COLOR;
@@ -60,15 +64,21 @@ $HR_COLOR: #A8A8A8;
                 padding: 35px 20px;
                 margin-top: 30px;
 
-                :nth-child(3) {
+                :nth-child(1) {
                     flex-grow: 1;
                 }
-                .user {
-                    :nth-child(1) {
-                        font-weight: bold;
+                .tage {
+                    margin-top: 10px;
+                    span {
+                        background-color: #d6d6d6;
+                        padding: 0px 5px;
+                        margin: 5px;
                     }
-                    :nth-child(2) {
-                        font-size: 0.8rem;
+                    :first-child {
+                        margin-left: 0;
+                    }
+                    :last-child {
+                        background-color: white;
                     }
                 }
                 h2 {
