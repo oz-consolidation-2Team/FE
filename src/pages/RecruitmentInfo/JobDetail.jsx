@@ -4,6 +4,10 @@ import { FaStar, FaRegStar, FaRegCopy } from 'react-icons/fa';
 import './JobDetail.scss';
 import JobApplyModal from '@/components/Company/Modal/JobApplyModal';
 import { getJobDetail } from '@/apis/RecruitmentApi';
+//import useUserStore from '@/utils/userStore';
+import KakaoMap from '@/components/KakaoMap/KakaoMap';
+
+
 
 const JobDetail = () => {
   const { postingId } = useParams();
@@ -163,9 +167,12 @@ const JobDetail = () => {
 
       <section className="section">
         <h3>근무지 정보</h3>
-        <p>근무지명: {job.work_place_name}</p>
-          <div className="address-row" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span>근무지 주소:</span>
+        <div className="address-row" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div>
+            <strong>근무지명:</strong> {job.work_place_name}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <strong>근무지 주소:</strong>
             <span style={{ userSelect: 'text' }}>{job.work_address}</span>
             <button
               onClick={() => {
@@ -176,6 +183,14 @@ const JobDetail = () => {
               <FaRegCopy />
             </button>
           </div>
+          <div className="map-container">
+            <KakaoMap
+              latitude={job.latitude}
+              longitude={job.longitude}
+              workPlaceName={job.work_place_name}
+            />
+          </div>
+        </div>
       </section>
 
       <section className="section">
