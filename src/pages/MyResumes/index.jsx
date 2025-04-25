@@ -52,11 +52,14 @@ function MyResumes() {
       experiences: formData.experiences,
     };
 
-    formDataToSend.append('resume_data', JSON.stringify(resumeData));
-
     if (formData.resume_image instanceof File) {
       formDataToSend.append('file', formData.resume_image);
+    } else if (typeof formData.resume_image === 'string' && formData.resume_image !== '') {
+      // 기존 서버 URL을 resume_data 안에 포함시킴
+      resumeData.resume_image = formData.resume_image;
     }
+
+    formDataToSend.append('resume_data', JSON.stringify(resumeData));
 
     return formDataToSend;
   };
@@ -81,7 +84,11 @@ function MyResumes() {
 
     try {
       await axiosFormInstance.patch(`/resumes/${formData.resume_id}`, formDataToSend);
-
+      setFormData((prev) => ({
+        ...prev,
+        resume_image: prev.resume_image, // 그대로 유지
+        preview_url: prev.preview_url, // 미리보기도 유지
+      }));
       setIsModalOpen(true);
     } catch (err) {
       console.error('이력서 수정 실패:', err);

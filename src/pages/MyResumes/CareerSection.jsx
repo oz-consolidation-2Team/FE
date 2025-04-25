@@ -27,6 +27,13 @@ function CareerSection({ data, setData }) {
 
     const isFilled = company_name && position && start_date && end_date && description;
 
+    if (!start_date || !end_date) {
+      return '경력 시작일과 종료일을 모두 입력해주세요';
+    }
+    if (start_date > end_date) {
+      return '경력 시작일은 종료일보다 빠를 수 없습니다';
+    }
+
     if (!isFilled) {
       alert('모든 항목을 입력해야 새로운 항목을 추가할 수 있어요!');
       return;
@@ -102,6 +109,7 @@ function CareerSection({ data, setData }) {
             onChange={(e) => {
               handleChange(index, 'company_name', e.target.value);
             }}
+            disabled
           />
 
           <input
@@ -109,6 +117,7 @@ function CareerSection({ data, setData }) {
             type="date"
             value={career.start_date}
             onChange={(e) => handleChange(index, 'start_date', e.target.value)}
+            disabled
           />
 
           <input
@@ -117,6 +126,7 @@ function CareerSection({ data, setData }) {
             onChange={(e) => {
               handleChange(index, 'end_date', e.target.value);
             }}
+            disabled
           />
 
           <input
@@ -125,6 +135,7 @@ function CareerSection({ data, setData }) {
             onChange={(e) => {
               handleChange(index, 'position', e.target.value);
             }}
+            disabled
           />
           <input
             type="text"
@@ -132,6 +143,7 @@ function CareerSection({ data, setData }) {
             onChange={(e) => {
               handleChange(index, 'description', e.target.value);
             }}
+            disabled
           />
           <button type="button" onClick={() => handleRemoveExperiences(index)}>
             -
