@@ -45,3 +45,23 @@ export const logoutUserApi = async () => {
   console.log('[로그아웃 요청]', '/user/logout');
   await axiosInstance.post('/user/logout');
 };
+
+// 기업 회원가입 API
+export const signUpCompanyApi = async (form) => {
+  const response = await axiosInstance.post('/company/register',
+    {
+    email: form.email,
+    password: form.password,
+    confirm_password: form.passwordCheck,
+    company_name: form.companyName,
+    ceo_name: form.ceoName,
+    opening_date: form.startDate.replace(/-/g, ''),
+    business_reg_number: form.businessNumber,
+    company_intro: form.companyDesc,
+    manager_name: form.managerName,
+    manager_phone: form.managerPhone.replace(/-/g, ''),
+    manager_email: form.managerEmail,
+  });
+
+  return response.data;
+};
