@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { axiosTest } from '@/utils/testAxios';
 import { parseDesiredArea } from '@/utils/formatRegion';
+import axiosInstance from '@/apis/axiosInstance';
 
 export const useResume = () => {
   const [formData, setFormData] = useState(null);
@@ -10,16 +10,12 @@ export const useResume = () => {
   useEffect(() => {
     const fetchUserAndResume = async () => {
       try {
-        const userRes = await axiosTest.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
-          withCredentials: true,
-        });
+        const userRes = await axiosInstance.get(`/user/me`);
 
         const wrappedUser = { status: 'success', data: userRes.data };
 
         try {
-          const resumeRes = await axiosTest.get(`${import.meta.env.VITE_API_BASE_URL}/resumes`, {
-            withCredentials: true,
-          });
+          const resumeRes = await axiosInstance.get(`/resumes`);
 
           const resumeData = resumeRes?.data?.data;
           const resume = resumeData && resumeData.id ? resumeData : null;
