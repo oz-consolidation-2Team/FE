@@ -69,9 +69,15 @@
   }
 
   .action {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    padding: 12px;
+    border-top: 1px solid #ddd;
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    align-items: center;
+    z-index: 100;
 
     .button {
       flex-grow: 1;
@@ -125,17 +131,54 @@
         .payment_method_badge {
           display: inline-block;
           padding: 2px 8px;
-          border: 1px solid #ff5722;
           color: #ff5722;
           border-radius: 12px;
           font-size: 0.85rem;
           margin-right: 8px;
         }
+        .payment-hourly {
+          color: #009688; // 청록색 (시급)
+          font-weight: bold;
+          border: 1px solid #009688;
+        }
+
+        .payment-daily {
+          color: #ff9800; // 주황색 (일급)
+          font-weight: bold;
+          border: 1px solid #ff9800;
+        }
+
+        .payment-monthly {
+          color: #3f51b5; // 진한 파랑 (월급)
+          font-weight: bold;
+          border: 1px solid #3f51b5;
+        }
+
+        .payment-default {
+          color: #666; // 기본 회색
+          border: 1px solid #666;
+        }
+
+        .day_count {
+          font-weight: 500;
+          margin-right: 4px;
+        }
+
+        .day_list {
+          color: #999;
+          font-size: 0.85rem;
+        }
+
+        .salary {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: #222;
+        }
       }
     }
   }
 
-  .address-row {
+  .address_row {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -151,7 +194,7 @@
     }
   }
 
-  .map-container {
+  .map_container {
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 12px;

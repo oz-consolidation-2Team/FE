@@ -1,4 +1,4 @@
-import { loginUser, logoutUser } from '@/apis/authApi';
+import { loginUserApi, logoutUserApi } from '@/apis/authApi';
 import { validateEmail, validatePassword } from '@/utils/validation';
 
 export const handleUserLogin = async ({ form, userType, setErrors, setModal, navigate }) => {
@@ -13,7 +13,7 @@ export const handleUserLogin = async ({ form, userType, setErrors, setModal, nav
   }
 
   try {
-    const token = await loginUser(form.email, form.password);
+    const token = await loginUserApi(form.email, form.password);
     console.log('[로그인 성공] 토큰:', token);
 
     localStorage.setItem('userType', userType);
@@ -54,7 +54,7 @@ export const handleUserLogin = async ({ form, userType, setErrors, setModal, nav
 
 export const handleUserLogout = async ({ setModal, navigate }) => {
   try {
-    await logoutUser();
+    await logoutUserApi();
     localStorage.removeItem('userType');
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');

@@ -1,7 +1,7 @@
 import axiosInstance from "./axiosInstance";
 
-// 회원가입
-export const signUpUser = async (form) => {
+// 개인 회원가입 API
+export const signUpUserApi = async (form) => {
   console.log('[회원가입 요청]', '/user/register');
 
   const response = await axiosInstance.post('/user/register', {
@@ -19,8 +19,8 @@ export const signUpUser = async (form) => {
   return response.data;
 };
 
-// 로그인
-export const loginUser = async (email, password) => {
+// 개인 로그인 API
+export const loginUserApi = async (email, password) => {
   console.log('[로그인 요청]', '/user/login');
 
   const response = await axiosInstance.post('/user/login', {
@@ -40,9 +40,8 @@ export const loginUser = async (email, password) => {
 };
 
 
-// 로그아웃
-export const logoutUser = async () => {
+// 개인 로그아웃 API
+export const logoutUserApi = async () => {
   console.log('[로그아웃 요청]', '/user/logout');
   await axiosInstance.post('/user/logout');
 };
-
