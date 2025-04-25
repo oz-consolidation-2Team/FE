@@ -3,7 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { FaStar, FaRegStar, FaRegCopy } from 'react-icons/fa';
 import './JobDetail.scss';
 import JobApplyModal from '@/components/Company/Modal/JobApplyModal';
-import { getJobDetail } from '@/apis/RecruitmentApi';
+import LoginPromptModal from '@/components/Company/Modal/LoginPromptModal';
+import { getJobDetail, applyJobPosting } from '@/apis/RecruitmentApi';
 import KakaoMap from '@/components/KakaoMap/KakaoMap';
 import { CompaniesInfo } from '@/apis/companyApi';
 import { formatPhoneNumber } from '@/utils/format';
@@ -17,6 +18,8 @@ const JobDetail = () => {
   const navigate = useNavigate();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoginPromptOpen, setLoginPromptOpen] = useState(false);
+  const accessToken = localStorage.getItem('access_token');
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -236,7 +239,18 @@ const JobDetail = () => {
       </section>
 
       <div className="action">
-        <button className="button" onClick={() => setIsModalOpen(true)}>지원하기</button>
+        <button
+          className="button"
+          onClick={() => {
+            if (!accessToken) {
+              setLoginPromptOpen(true);
+              return;
+            }
+            setIsModalOpen(true);
+          }}
+        >
+          지원하기
+        </button>
         <div className="bookmark">
           {isBookmarked ? (
             <FaStar className="star_icon filled" onClick={handleBookmarkClick} />
@@ -248,11 +262,23 @@ const JobDetail = () => {
       {isModalOpen && (
         <JobApplyModal
           onClose={() => setIsModalOpen(false)}
-          onApply={() => {
-            setIsModalOpen(false);
-            alert('지원이 완료되었습니다!'); // 나중에 API 연동 예정
+          onApply={async () => {
+            try {
+              await applyJobPosting(job.id);
+              setIsModalOpen(false);
+              alert('지원이 완료되었습니다!');
+            } catch (error) {
+              console.error('지원 실패:', error);
+              alert('지원 중 오류가 발생했습니다. 다시 시도해주세요.');
+            }
           }}
           onEditResume={() => navigate('/mypage/user/resumes')}
+        />
+      )}
+      {isLoginPromptOpen && (
+        <LoginPromptModal
+          onClose={() => setLoginPromptOpen(false)}
+          navigate={navigate}
         />
       )}
     </div>
