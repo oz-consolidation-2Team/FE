@@ -1,8 +1,8 @@
-//userLogin.js
-import { loginUserApi, logoutUserApi } from '@/apis/authApi';
+// src/utils/companyLogin.js
+import { loginCompanyApi, logoutUserApi } from '@/apis/authApi';
 import { validateEmail, validatePassword } from '@/utils/validation';
 
-export const handleUserLogin = async ({ form, userType, setErrors, setModal, navigate }) => {
+export const handleCompanyLogin = async ({ form, setErrors, setModal, navigate }) => {
   const newErrors = {};
 
   if (!validateEmail(form.email)) newErrors.email = '올바른 이메일 형식이 아닙니다.';
@@ -14,16 +14,17 @@ export const handleUserLogin = async ({ form, userType, setErrors, setModal, nav
   }
 
   try {
-    const token = await loginUserApi(form.email, form.password);
-    console.log('[로그인 성공] 토큰:', token);
+    const result = await loginCompanyApi({ email: form.email, password: form.password });
 
-    localStorage.setItem('userType', userType);
-    localStorage.setItem('access_token', token.access_token);
-    localStorage.setItem('refresh_token', token.refresh_token);
+    const { access_token, refresh_token } = result;
+
+    localStorage.setItem('userType', 'company');
+    localStorage.setItem('access_token', access_token);
+    localStorage.setItem('refresh_token', refresh_token);
 
     setModal({
       type: 'success',
-      message: '로그인 완료!',
+      message: '기업 로그인 완료!',
       onConfirm: () => {
         setModal(null);
         navigate('/');
@@ -53,9 +54,10 @@ export const handleUserLogin = async ({ form, userType, setErrors, setModal, nav
   }
 };
 
-export const handleUserLogout = async ({ setModal, navigate }) => {
+export const handleCompanyLogout = async ({ setModal, navigate }) => {
   try {
     await logoutUserApi();
+
     localStorage.removeItem('userType');
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');

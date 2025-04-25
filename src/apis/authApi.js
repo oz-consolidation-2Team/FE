@@ -65,3 +65,23 @@ export const signUpCompanyApi = async (form) => {
 
   return response.data;
 };
+
+// 기업 로그인 API
+export const loginCompanyApi = async ({ email, password }) => {
+  console.log('[로그인 요청]', '/company/login');
+
+  const response = await axiosInstance.post('/company/login', {
+    email,
+    password,
+  });
+
+  console.log('[서버 응답]', response.data);
+
+  const { access_token, refresh_token, company } = response.data.data;
+
+  return {
+    access_token,
+    refresh_token,
+    company,
+  };
+};
