@@ -73,20 +73,12 @@ export const getJobList = async ({ skip = 0, limit = 10 } = {}) => {
 /**
  * 채용공고 상세 정보를 조회하는 API 호출 함수
  * @param {string} postingId - 상세 정보를 조회할 채용공고의 ID
- * @param {string} token - 인증을 위한 JWT 토큰
  * @returns {Promise<Object>} - 채용공고 상세 데이터를 포함한 응답 객체
  * @throws {Error} - API 호출 실패 시 발생하는 에러
  */
-export const getJobDetail = async (postingId, token) => {
+export const getJobDetail = async (postingId) => {
   try {
-    const response = await axiosInstance.get(
-      `${API_BASE_URL}/posting/${postingId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axiosInstance.get(`${API_BASE_URL}/posting/${postingId}`);
     return response.data;
   } catch (error) {
     console.error("채용공고 상세 조회 실패:", error);
@@ -97,17 +89,13 @@ export const getJobDetail = async (postingId, token) => {
 /**
  * 채용공고 검색 API 호출 함수
  * @param {Object} params - 검색 조건 (keyword, location, job_category, etc.)
- * @param {string} [token] - 인증이 필요한 경우 JWT 토큰
  * @returns {Promise<Object>} - 검색 결과 응답 객체
  * @throws {Error} - API 호출 실패 시 발생하는 에러
  */
-export const searchJobPostings = async (params = {}, token) => {
+export const searchJobPostings = async (params = {}) => {
   try {
     const response = await axiosInstance.get(`${API_BASE_URL}/posting/search`, {
       params,
-      headers: token
-        ? { Authorization: `Bearer ${token}` }
-        : undefined,
     });
     return response.data;
   } catch (error) {
@@ -117,17 +105,12 @@ export const searchJobPostings = async (params = {}, token) => {
 };
 
 
-export const applyJobPosting = async (postingId, token) => {
+export const applyJobPosting = async (postingId) => {
   try {
     const response = await axiosInstance.post(
       `${API_BASE_URL}/applications`,
       {
         job_posting_id: postingId,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }
     );
     return response.data;
