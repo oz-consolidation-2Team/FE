@@ -27,21 +27,17 @@ export const CompaniesInfo = async (companyId) => {
       'accept': 'application/json'
     }
   })
-  console.log('기업 정보 조회 API 호출====')
-  console.log(response.data.data)
   return response.data.data
 }
 
 export const CompanyEdit = async (formData) => {
-  const response = await axios.patch(`${BASE_URL}company/me`, formData, {
+  const response = await axios.patch(`${API_BASE_URL}company/me`, formData, {
     headers: {
       'accept': 'application/json',
       'Authorization': `Bearer ${TOKEN}`,
       'Content-Type': 'application/json'
     }
   })
-  console.log('기업 정보 수정 API 호출====')
-  console.log(response.data.data)
   return response.data.data
 }
 

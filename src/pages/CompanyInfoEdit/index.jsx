@@ -24,7 +24,9 @@ export default function CompanyInfoEdit () {
         "company_intro": false,
         "manager_name": false,
         "manager_phone": false,
-        "manager_email": false
+        "manager_email": false,
+        'password': false,
+        'confirm_password': false
     })
 
     useEffect(()=>{
@@ -56,8 +58,8 @@ export default function CompanyInfoEdit () {
             else if (item[0] === 'manager_name' && !validateName(data)) newerror['manager_name'] = true;
             else if (item[0] === 'manager_phone' && !isValidPhone(data)) newerror['manager_phone'] = true;
             else if (item[0] === 'manager_email' && !validateEmail(data)) newerror['manager_email'] = true;
-            else if (item[0] === 'password' && !validateEmail(data)) newerror['password'] = true;
-            else if (item[0] === 'confirm_password' && !validateEmail(data)) newerror['confirm_password'] = true;
+            else if (item[0] === 'password' && formData['password'] !== 'qwe123!@#') newerror['password'] = true;
+            else if (item[0] === 'confirm_password' && formData['password'] !== formData['confirm_password']) newerror['confirm_password'] = true;
         })
         setValidateError(newerror)
         return Object.values(newerror).includes(true)
@@ -105,7 +107,7 @@ export default function CompanyInfoEdit () {
 
                 <div className='box'>
                     <Category text='이미지 등록' />
-                    <InputImage formData={formData} />
+                    <InputImage setFormData={setFormData} formData={formData} />
                 </div>
             </div>
 
@@ -136,13 +138,13 @@ export default function CompanyInfoEdit () {
                     <Category text='비밀번호' />
                     <InputText {...state} type='text' name='password' text='비밀번호' />
                 </div>
-                {validateError['password'] && <span className="error_message">비밀번호를 입력해주세요</span>}
+                {validateError['password'] && <span className="error_message">비밀번호를 다시 확인해주세요</span>}
 
                 <div className='box'>
                     <Category text='비밀번호확인' />
                     <InputText {...state} type='text' name='confirm_password' text='비밀번호확인' />
                 </div>
-                {validateError['confirm_password'] && <span className="error_message">비밀번호확인을 입력해주세요</span>}
+                {validateError['confirm_password'] && <span className="error_message">비밀번호를 다시 확인해주세요</span>}
             </div>
 
             <button 
