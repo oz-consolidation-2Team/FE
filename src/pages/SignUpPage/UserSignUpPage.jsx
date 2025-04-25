@@ -13,7 +13,7 @@ import {
   isValidBirth,
 } from '@/utils/validation';
 import './UserSignUpPage.scss';
-import { signUpUserApi } from '@/apis/authApi';
+import { signUpUserApi, checkUserEmailApi } from '@/apis/authApi';
 
 const INTEREST_OPTIONS = [
   '외식·음료', '유통·판매', '문화·여가·생활', '서비스', '사무·회계',
@@ -75,23 +75,46 @@ const UserSignUpPage = () => {
     if (isValidBirth(val)) setErrors((prev) => { const next = { ...prev }; delete next.birth; return next; });
   };
 
-  const handleEmailCheck = () => {
+  const handleEmailCheck = async () => {
     if (!validateEmail(form.email)) {
       setErrors((prev) => ({ ...prev, email: '이메일 형식이 올바르지 않습니다.' }));
       return;
     }
     setErrors((prev) => { const next = { ...prev }; delete next.email; return next; });
-
-    const duplicated = form.email === 'test@naver.com';
-    setModal({
-      type: duplicated ? 'error' : 'success',
-      title: duplicated ? '중복된 이메일' : '사용 가능',
-      message: duplicated ? '이미 가입된 이메일입니다.' : '사용 가능한 이메일입니다.',
-      onConfirm: () => {
-        setModal(null);
-        setEmailChecked(!duplicated);
+  
+    try {
+      const result = await checkUserEmailApi(form.email);
+  
+      if (result.is_duplicate) {
+        setModal({
+          type: 'error',
+          title: '중복된 이메일',
+          message: '이미 가입된 이메일입니다.',
+          onConfirm: () => {
+            setModal(null);
+            setEmailChecked(false);
+          }
+        });
+      } else {
+        setModal({
+          type: 'success',
+          title: '사용 가능',
+          message: '사용 가능한 이메일입니다.',
+          onConfirm: () => {
+            setModal(null);
+            setEmailChecked(true);
+          }
+        });
       }
-    });
+    } catch (err) {
+      console.error('이메일 중복확인 실패', err);
+      setModal({
+        type: 'error',
+        title: '오류 발생',
+        message: err.response?.data?.message || '이메일 중복확인 중 오류가 발생했습니다.',
+        onConfirm: () => setModal(null),
+      });
+    }
   };
 
   const validateStep1 = () => {
@@ -137,6 +160,7 @@ const UserSignUpPage = () => {
       setStep(2);
     }
   };
+  
 
   const toggleMultiSelect = (field, item, limit = null) => {
     setForm((prev) => {
