@@ -5,7 +5,7 @@ import './JobDetail.scss';
 import JobApplyModal from '@/components/Company/Modal/JobApplyModal';
 import { getJobDetail } from '@/apis/RecruitmentApi';
 import KakaoMap from '@/components/KakaoMap/KakaoMap';
-import { CompaniesInfo } from '@/apis/CompanyApi';
+import { CompaniesInfo } from '@/apis/companyApi';
 import { formatPhoneNumber } from '@/utils/format';
 
 
