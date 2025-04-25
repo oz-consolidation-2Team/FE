@@ -16,6 +16,7 @@ import {
 } from '@/utils/validation';
 import { useNavigate } from 'react-router-dom';
 import './CompanySignUpPage.scss';
+import { signUpCompanyApi } from '@/apis/authApi';
 
 const CompanySignUpPage = () => {
   const navigate = useNavigate();
@@ -202,16 +203,27 @@ const CompanySignUpPage = () => {
     return {};
   };
 
-  const handleFinalSubmit = () => {
+  const handleFinalSubmit = async () => {
     const error = validateTerms();
     setErrors(error);
+    if (Object.keys(error).length > 0) {
+      console.log('[약관 유효성 검사 실패]', error); // ✅ 1
+      return;
+    }
   
-    if (Object.keys(error).length > 0) return;
-  
-    showModal('success', '회원가입 완료', '정상적으로 회원가입이 완료되었습니다.', () => {
-      navigate('/login');
-    });
+    try {
+      console.log('[form 최종 확인]', form); // ✅ 2
+      await signUpCompanyApi(form);
+      showModal('success', '회원가입 완료', '정상적으로 회원가입이 완료되었습니다.', () => {
+        navigate('/login');
+      });
+    } catch (err) {
+      console.error('[기업 회원가입 실패]', err); // ✅ 3
+      const message = err.response?.data?.message || '서버 오류가 발생했습니다.';
+      showModal('error', '회원가입 실패', message);
+    }
   };
+  
 
   const toggleCheck = (key) => {
     const next = { ...form, [key]: !form[key] };
