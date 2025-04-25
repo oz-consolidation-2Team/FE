@@ -10,8 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import './MyResumes.scss';
 
 import Modal from '../../components/Modal';
-import { axiosFormTest } from '@/utils/testAxios';
 import { useResume } from '@/hooks/useResume';
+import axiosFormInstance from '@/apis/axiosFormInstance';
 
 function MyResumes() {
   //initialFormData 유저 정보 및 이력서 정보
@@ -21,7 +21,6 @@ function MyResumes() {
   const navigate = useNavigate();
 
   const goToMyPage = () => navigate('/mypage/user');
-  console.log('🧩useResume에서 오는 데이터 :', formData);
 
   if (isLoading) {
     return (
@@ -67,9 +66,7 @@ function MyResumes() {
 
     const formDataToSend = makeFormData(formData);
     try {
-      await axiosFormTest.post(`${import.meta.env.VITE_API_BASE_URL}/resumes`, formDataToSend, {
-        withCredentials: true, // 👈 여기에 위치해야 해!
-      });
+      await axiosFormInstance.post(`/resumes`, formDataToSend);
 
       setIsModalOpen(true);
     } catch (err) {
@@ -83,11 +80,7 @@ function MyResumes() {
     const formDataToSend = makeFormData(formData);
 
     try {
-      await axiosFormTest.patch(
-        `${import.meta.env.VITE_API_BASE_URL}/resumes/${formData.resume_id}`,
-        formDataToSend,
-        { withCredentials: true }
-      );
+      await axiosFormInstance.patch(`/resumes/${formData.resume_id}`, formDataToSend);
 
       setIsModalOpen(true);
     } catch (err) {
