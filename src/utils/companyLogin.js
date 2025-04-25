@@ -1,5 +1,5 @@
 // src/utils/companyLogin.js
-import { loginCompanyApi, logoutUserApi } from '@/apis/authApi';
+import { loginCompanyApi, logoutCompanyApi } from '@/apis/authApi';
 import { validateEmail, validatePassword } from '@/utils/validation';
 
 export const handleCompanyLogin = async ({ form, setErrors, setModal, navigate }) => {
@@ -56,7 +56,7 @@ export const handleCompanyLogin = async ({ form, setErrors, setModal, navigate }
 
 export const handleCompanyLogout = async ({ setModal, navigate }) => {
   try {
-    await logoutUserApi();
+    await logoutCompanyApi();
 
     localStorage.removeItem('userType');
     localStorage.removeItem('access_token');

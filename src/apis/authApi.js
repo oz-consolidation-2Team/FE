@@ -85,3 +85,9 @@ export const loginCompanyApi = async ({ email, password }) => {
     company,
   };
 };
+
+// 기업 로그아웃 API
+export const logoutCompanyApi = async () => {
+  console.log('[기업 로그아웃 요청]', '/company/logout');
+  await axiosInstance.post('/company/logout');
+};
