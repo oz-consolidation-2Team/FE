@@ -17,12 +17,11 @@ const JobDetail = () => {
   const navigate = useNavigate();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const accessToken = localStorage.getItem('access_token');//임시
 
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const data = await getJobDetail(postingId, accessToken);
+        const data = await getJobDetail(postingId);
         setJob(data);
         const companyData = await CompaniesInfo(data.company_id);
         setCompanyInfo(companyData);
@@ -33,7 +32,7 @@ const JobDetail = () => {
 
     fetchJob();
     window.scrollTo(0, 0);
-  }, [postingId, accessToken]);
+  }, [postingId]);
 
   if (!job) return <div>로딩 중...</div>;
 

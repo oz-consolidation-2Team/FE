@@ -1,7 +1,6 @@
 import axios from "axios";
 import axiosInstance from "./axiosInstance";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const PUBLIC_RECRUITMENT_API_URL = import.meta.env.VITE_PUBLIC_RECRUITMENT_API_URL;
 const SERVICE_KEY = import.meta.env.VITE_SERVICE_KEY;
 
@@ -15,10 +14,13 @@ export const fetchPublicRecruitments = async (params) => {
   try {
     const response = await axios.get(PUBLIC_RECRUITMENT_API_URL, {
       params: {
-        recrutPbancTtl: "시니어",
-        ...params,
-        serviceKey: SERVICE_KEY,
-        returnType: "JSON",
+        recrutPbancTtl: "시니어",         // 공시 제목에 "" 포함된 공고
+        numOfRows: 6,                   // 한 페이지에 가져올 공고 수
+        pageNo: 1,                      // 현재 페이지 번호
+        resultType: "json",             // 응답 결과 타입
+        ...params,                      // 외부에서 전달된 추가 파라미터들
+        serviceKey: SERVICE_KEY,        // 공공데이터포털 인증키
+        returnType: "JSON",             // 응답 포맷(JSON)
       },
     });
     return response.data;
@@ -36,7 +38,7 @@ export const fetchPublicRecruitments = async (params) => {
  */
 export const getPopularJobList = async (limit = 10) => {
   try {
-    const response = await axiosInstance.get(`${API_BASE_URL}/posting/popular`, {
+    const response = await axiosInstance.get(`/posting/popular`, {
       params: { limit },
     });
     return response.data;
@@ -57,7 +59,7 @@ export const getPopularJobList = async (limit = 10) => {
  */
 export const getJobList = async ({ skip = 0, limit = 10 } = {}) => {
   try {
-    const response = await axiosInstance.get(`${API_BASE_URL}/posting/`, {
+    const response = await axiosInstance.get(`/posting/`, {
       params: {
         skip,
         limit,
@@ -78,7 +80,7 @@ export const getJobList = async ({ skip = 0, limit = 10 } = {}) => {
  */
 export const getJobDetail = async (postingId) => {
   try {
-    const response = await axiosInstance.get(`${API_BASE_URL}/posting/${postingId}`);
+    const response = await axiosInstance.get(`/posting/${postingId}`);
     return response.data;
   } catch (error) {
     console.error("채용공고 상세 조회 실패:", error);
@@ -94,7 +96,7 @@ export const getJobDetail = async (postingId) => {
  */
 export const searchJobPostings = async (params = {}) => {
   try {
-    const response = await axiosInstance.get(`${API_BASE_URL}/posting/search`, {
+    const response = await axiosInstance.get(`/posting/search`, {
       params,
     });
     return response.data;
@@ -108,7 +110,7 @@ export const searchJobPostings = async (params = {}) => {
 export const applyJobPosting = async (postingId) => {
   try {
     const response = await axiosInstance.post(
-      `${API_BASE_URL}/applications`,
+      `/applications`,
       {
         job_posting_id: postingId,
       }

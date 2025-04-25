@@ -10,18 +10,14 @@ const PublicJobList = () => {
 
   useEffect(() => {
     const loadJobs = async () => {
-      const data = await fetchPublicRecruitments();
+      const data = await fetchPublicRecruitments({ pageNo: currentPage });
       setJobs(data?.result || []);
     };
-    
-    loadJobs();
-  }, []);
-  
-  const startIndex = (currentPage - 1) * jobsPerPage;
-  const endIndex = startIndex + jobsPerPage;
-  const currentJobs = jobs.slice(startIndex, endIndex);
 
-  const totalPages = Math.ceil(jobs.length / jobsPerPage);
+    loadJobs();
+  }, [currentPage]);
+  
+  const totalPages = 10;
 
   const handlePrevPage = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -42,7 +38,7 @@ const PublicJobList = () => {
           </div>
         </div>
         <div className="public-job-grid">
-          {currentJobs.map((job) => (
+          {jobs.map((job) => (
             <PublicJobCard key={job.recrutPblntSn} job={job} />
           ))}
         </div>
