@@ -24,7 +24,18 @@ function EducationSection({ data, setData }) {
 
   const handleAddEducation = () => {
     const { education_type, school_name, education_status, start_date, end_date } = fixedEducation;
-
+    if (!start_date) {
+      alert('입학일자를 입력해주세요!');
+      return;
+    }
+    if (education_status === '졸업' && !end_date) {
+      alert('졸업을 선택했으면 졸업일자도 입력해주세요!');
+      return;
+    }
+    if (start_date && end_date && start_date > end_date) {
+      alert('입학일자가 졸업일자보다 늦을 수 없어요!');
+      return;
+    }
     const isFilled =
       education_type &&
       school_name &&
@@ -120,6 +131,7 @@ function EducationSection({ data, setData }) {
           <select
             value={edu.education_type}
             onChange={(e) => handleChange(index, 'education_type', e.target.value)}
+            disabled
           >
             <option value="">학력 선택</option>
             <option value="고등학교">고등학교</option>
@@ -133,11 +145,13 @@ function EducationSection({ data, setData }) {
             placeholder="학교명을 입력하세요"
             value={edu.school_name}
             onChange={(e) => handleChange(index, 'school_name', e.target.value)}
+            disabled
           />
 
           <select
             value={edu.education_status}
             onChange={(e) => handleChange(index, 'education_status', e.target.value)}
+            disabled
           >
             <option value="">졸업여부 선택</option>
             <option value="졸업">졸업</option>
@@ -148,6 +162,7 @@ function EducationSection({ data, setData }) {
             type="date"
             value={edu.start_date}
             onChange={(e) => handleChange(index, 'start_date', e.target.value)}
+            disabled
           />
 
           <input
@@ -156,7 +171,7 @@ function EducationSection({ data, setData }) {
             onChange={(e) =>
               handleChange(index, 'end_date', e.target.value === '' ? null : e.target.value)
             }
-            disabled={edu.education_status === '재학중'}
+            disabled
           />
           <button type="button" onClick={() => handleRemoveEducation(index)}>
             -
