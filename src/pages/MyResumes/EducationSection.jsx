@@ -29,11 +29,11 @@ function EducationSection({ data, setData }) {
       return;
     }
     if (education_status === '졸업' && !end_date) {
-      alert('졸업을 선택했으면 졸업일자도 입력해주세요!');
+      alert('졸업 선택 시 졸업일자는 필수로 입력해주세요!');
       return;
     }
     if (start_date && end_date && start_date > end_date) {
-      alert('입학일자가 졸업일자보다 늦을 수 없어요!');
+      alert('입학일자를 졸업일자보다 더 이전 날짜로 입력해주세요!');
       return;
     }
     const isFilled =
