@@ -31,6 +31,13 @@ function UserInfoSection({ data, setData }) {
   };
 
   useEffect(() => {
+    if (!data.preview_url && data.resume_image instanceof File) {
+      const newPreview = URL.createObjectURL(data.resume_image);
+      setData((prev) => ({
+        ...prev,
+        preview_url: newPreview,
+      }));
+    }
     return () => {
       if (data.preview_url) {
         URL.revokeObjectURL(data.preview_url);
@@ -44,7 +51,11 @@ function UserInfoSection({ data, setData }) {
         {data.preview_url || data.resume_image ? (
           <img
             src={
-              data.preview_url ? data.preview_url : data.resume_image // 문자열인 경우
+              data.preview_url
+                ? data.preview_url
+                : typeof data.resume_image === 'string'
+                  ? data.resume_image // ← 문자열 URL
+                  : URL.createObjectURL(data.resume_image) // ← File 객체
             }
             alt="프로필 이미지"
           />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { parseDesiredArea } from '@/utils/formatRegion';
-import axiosInstance from '@/apis/axiosInstance';
+import axiosFormInstance from '@/apis/axiosFormInstance';
 
 export const useResume = () => {
   const [formData, setFormData] = useState(null);
@@ -10,12 +10,12 @@ export const useResume = () => {
   useEffect(() => {
     const fetchUserAndResume = async () => {
       try {
-        const userRes = await axiosInstance.get(`/user/me`);
+        const userRes = await axiosFormInstance.get(`/user/me`);
 
         const wrappedUser = { status: 'success', data: userRes.data };
 
         try {
-          const resumeRes = await axiosInstance.get(`/resumes`);
+          const resumeRes = await axiosFormInstance.get(`/resumes`);
 
           const resumeData = resumeRes?.data?.data;
           const resume = resumeData && resumeData.id ? resumeData : null;
@@ -29,6 +29,7 @@ export const useResume = () => {
               experiences: resume.experiences,
               introduction: resume.introduction,
               preferredRegions: parseDesiredArea(resume.desired_area || []),
+              resume_image: resume.resume_image || '',
             });
           }
         } catch (e) {
