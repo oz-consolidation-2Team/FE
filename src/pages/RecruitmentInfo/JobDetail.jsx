@@ -3,24 +3,31 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { FaStar, FaRegStar, FaRegCopy } from 'react-icons/fa';
 import './JobDetail.scss';
 import JobApplyModal from '@/components/Company/Modal/JobApplyModal';
-import { getJobDetail } from '@/apis/RecruitmentApi';
-//import useUserStore from '@/utils/userStore';
+import LoginPromptModal from '@/components/Company/Modal/LoginPromptModal';
+import { getJobDetail, applyJobPosting } from '@/apis/RecruitmentApi';
 import KakaoMap from '@/components/KakaoMap/KakaoMap';
+import { CompaniesInfo } from '@/apis/companyApi';
+import { formatPhoneNumber } from '@/utils/format';
 
 
 
 const JobDetail = () => {
   const { postingId } = useParams();
   const [job, setJob] = useState(null);
+  const [companyInfo, setCompanyInfo] = useState(null);
   const navigate = useNavigate();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoginPromptOpen, setLoginPromptOpen] = useState(false);
+  const accessToken = localStorage.getItem('access_token');
 
   useEffect(() => {
     const fetchJob = async () => {
       try {
         const data = await getJobDetail(postingId);
         setJob(data);
+        const companyData = await CompaniesInfo(data.company_id);
+        setCompanyInfo(companyData);
       } catch (error) {
         console.error('채용공고 불러오기 실패:', error);
       }
@@ -60,6 +67,7 @@ const JobDetail = () => {
     return daysStr;
   };
 
+
   return (
     <div className="jobdetail_container">
       <section className="section">
@@ -95,7 +103,13 @@ const JobDetail = () => {
           <div className="condition_row">
             <div className="condition_label">급여</div>
             <div className="condition_value">
-              <span className="payment_method_badge">{job.payment_method}</span>{job.salary.toLocaleString()}
+              <span className={`payment_method_badge ${
+                job.payment_method === '시급' ? 'payment-hourly' :
+                job.payment_method === '일급' ? 'payment-daily' :
+                job.payment_method === '월급' ? 'payment-monthly' :
+                'payment-default'
+              }`}>{job.payment_method}</span>
+              <span className="salary">{job.salary.toLocaleString()}원</span>
             </div>
           </div>
           <div className="condition_row">
@@ -109,7 +123,12 @@ const JobDetail = () => {
                 ? '협의 가능'
                 : job.is_schedule_based_str
                 ? '일정에 따름'
-                : getWorkDayLabel(job.work_days)}
+                : (
+                  <>
+                    <span className="day_count">주{job.work_days?.split(',').length}일</span>
+                    <span className="day_list">({job.work_days?.split(',').join(', ')})</span>
+                  </>
+                )}
             </div>
           </div>
           <div className="condition_row">
@@ -167,7 +186,7 @@ const JobDetail = () => {
 
       <section className="section">
         <h3>근무지 정보</h3>
-        <div className="address-row" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div className="address_row" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <div>
             <strong>근무지명:</strong> {job.work_place_name}
           </div>
@@ -183,7 +202,7 @@ const JobDetail = () => {
               <FaRegCopy />
             </button>
           </div>
-          <div className="map-container">
+          <div className="map_container">
             <KakaoMap
               latitude={job.latitude}
               longitude={job.longitude}
@@ -207,13 +226,31 @@ const JobDetail = () => {
       </section>
 
       <section className="section">
-        <p><strong>대표 전화번호</strong>: 010-1234-5678</p>
-        <p><strong>이메일</strong>: nextrunners@nextrunners.co.kr</p>
-        <p><strong>기업 소개</strong>: 나도 몰라유</p>
+        <h3>기업 정보</h3>
+        {companyInfo ? (
+          <>
+            <p><strong>담당자 전화번호</strong>: {formatPhoneNumber(companyInfo.manager_phone)}</p>
+            <p><strong>이메일</strong>: {companyInfo.manager_email || '정보 없음'}</p>
+            <p><strong>기업 소개</strong>: {companyInfo.company_intro || '정보 없음'}</p>
+          </>
+        ) : (
+          <p>기업 정보를 불러오는 중...</p>
+        )}
       </section>
 
       <div className="action">
-        <button className="button" onClick={() => setIsModalOpen(true)}>지원하기</button>
+        <button
+          className="button"
+          onClick={() => {
+            if (!accessToken) {
+              setLoginPromptOpen(true);
+              return;
+            }
+            setIsModalOpen(true);
+          }}
+        >
+          지원하기
+        </button>
         <div className="bookmark">
           {isBookmarked ? (
             <FaStar className="star_icon filled" onClick={handleBookmarkClick} />
@@ -225,11 +262,23 @@ const JobDetail = () => {
       {isModalOpen && (
         <JobApplyModal
           onClose={() => setIsModalOpen(false)}
-          onApply={() => {
-            setIsModalOpen(false);
-            alert('지원이 완료되었습니다!'); // 나중에 API 연동 예정
+          onApply={async () => {
+            try {
+              await applyJobPosting(job.id);
+              setIsModalOpen(false);
+              alert('지원이 완료되었습니다!');
+            } catch (error) {
+              console.error('지원 실패:', error);
+              alert('지원 중 오류가 발생했습니다. 다시 시도해주세요.');
+            }
           }}
           onEditResume={() => navigate('/mypage/user/resumes')}
+        />
+      )}
+      {isLoginPromptOpen && (
+        <LoginPromptModal
+          onClose={() => setLoginPromptOpen(false)}
+          navigate={navigate}
         />
       )}
     </div>

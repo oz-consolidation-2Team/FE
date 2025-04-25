@@ -13,7 +13,7 @@ import {
   isValidBirth,
 } from '@/utils/validation';
 import './UserSignUpPage.scss';
-import { signUpUser } from '@/apis/authApi';
+import { signUpUserApi } from '@/apis/authApi';
 
 const INTEREST_OPTIONS = [
   '외식·음료', '유통·판매', '문화·여가·생활', '서비스', '사무·회계',
@@ -183,7 +183,7 @@ const UserSignUpPage = () => {
     if (Object.keys(error).length > 0) return;
   
     try {
-      await signUpUser(form); // ✅ 실제 API 요청
+      await signUpUserApi(form);
       setModal({
         type: 'success',
         title: '회원가입 완료',

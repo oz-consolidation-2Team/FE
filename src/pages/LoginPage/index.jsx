@@ -7,6 +7,7 @@ import Modal from '@/components/common/Modal';
 import LabeledInput from '@/components/common/LabeledInput';
 import './LoginPage.scss';
 import { handleUserLogin } from '@/utils/userLogin';
+import { handleCompanyLogin } from '@/utils/companyLogin';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -18,13 +19,22 @@ const LoginPage = () => {
   const [modal, setModal] = useState(null);
 
   const handleLoginClick = () => {
-    handleUserLogin({
-      form,
-      userType,
-      setErrors,
-      setModal,
-      navigate,
-    });
+    if (userType === 'user') {
+      handleUserLogin({
+        form,
+        userType,
+        setErrors,
+        setModal,
+        navigate,
+      });
+    } else {
+      handleCompanyLogin({
+        form,
+        setErrors,
+        setModal,
+        navigate,
+      });
+    }
   };
 
   const handleChange = (e) => {

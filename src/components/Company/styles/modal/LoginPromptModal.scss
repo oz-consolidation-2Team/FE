@@ -1,6 +1,8 @@
+
+
 @use '@/utils/variables' as *;
 
-.modal-overlay {
+.modal_overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -13,7 +15,7 @@
   justify-content: center;
 }
 
-.modal-box {
+.box {
   background-color: #fff;
   padding: 30px 40px;
   border-radius: 12px;
@@ -21,23 +23,24 @@
   text-align: center;
   max-width: 400px;
   width: 90%;
+  position: relative;
 }
 
-.modal-box p {
+.box p {
   font-size: 1rem;
   margin-bottom: 10px;
   color: #333;
 }
 
-.modal-buttons {
+.buttons {
   margin-top: 20px;
   display: flex;
   gap: 12px;
   justify-content: center;
 }
 
-.modal-buttons .confirm,
-.modal-buttons .cancel {
+.buttons .confirm,
+.buttons .cancel {
   padding: 10px 20px;
   border: none;
   border-radius: 8px;
@@ -46,20 +49,37 @@
   transition: background-color 0.3s ease;
 }
 
-.modal-buttons .confirm {
+.buttons .confirm {
   background-color: $green;
   color: white;
 }
 
-.modal-buttons .confirm:hover {
+.buttons .confirm:hover {
   background-color: $green;
 }
 
-.modal-buttons .cancel {
+.buttons .cancel {
   background-color: #ddd;
   color: #333;
 }
 
-.modal-buttons .cancel:hover {
+.buttons .cancel:hover {
   background-color: #ccc;
+}
+
+.close_button {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #333;
+  }
 }

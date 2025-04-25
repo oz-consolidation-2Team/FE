@@ -1,9 +1,7 @@
-// src/apis/axios.dev.js
-
 import axios from 'axios';
 
 const axiosDev = axios.create({
-  baseURL: 'https://seonhm.kr',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -19,10 +17,47 @@ axiosDev.interceptors.request.use((config) => {
 
 axiosDev.interceptors.response.use(
   (res) => res,
-  (err) => {
-    if (err.response?.status === 401) {
-      console.warn('개발 환경 - 401');
+  async (err) => {
+    const originalRequest = err.config;
+
+    if (err.response?.status === 401 && !originalRequest._retry) {
+      console.warn('개발 환경 - 401: 토큰 재발급 시도');
+      originalRequest._retry = true;
+
+      try {
+        const refreshToken = localStorage.getItem('refresh_token');
+        const userType = localStorage.getItem('userType');
+
+        if (!refreshToken || !userType) {
+          throw new Error('리프레시 토큰 또는 userType 없음');
+        }
+
+        const refreshUrl =
+          userType === 'company'
+            ? '/company/auth/refresh-token'
+            : '/auth/refresh-token';
+
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}${refreshUrl}`,
+          { refresh_token: refreshToken }
+        );
+
+        console.log('[dev 리프레시 잘 되나요오옥!]', response.data);
+
+        const { accesstoken } = response.data.data;
+
+        localStorage.setItem('access_token', accesstoken);
+        originalRequest.headers.Authorization = `Bearer ${accesstoken}`;
+        return axiosDev(originalRequest);
+      } catch (refreshError) {
+        console.error('토큰 재발급 실패', refreshError);
+
+        localStorage.clear();
+        window.location.href = '/login';
+        return Promise.reject(refreshError);
+      }
     }
+
     return Promise.reject(err);
   }
 );

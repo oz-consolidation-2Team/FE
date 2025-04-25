@@ -1,27 +1,32 @@
+// src/apis/axiosFormInstance.js
 import axios from 'axios';
 
-const axiosProd = axios.create({
+const axiosFormInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
+
   headers: {
-    'Content-Type': 'application/json',
+    'Content-Type': 'multipart/form-data',
   },
 });
 
-axiosProd.interceptors.request.use((config) => {
-  const token = localStorage.getItem('access_token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+axiosFormInstance.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem('access_token'); // 또는 zustand, recoil 등에서 가져와도 됨
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
-axiosProd.interceptors.response.use(
+axiosFormInstance.interceptors.response.use(
   (res) => res,
   async (err) => {
     const originalRequest = err.config;
 
     if (err.response?.status === 401 && !originalRequest._retry) {
-      console.warn('배포 환경 - 401, 토큰 재발급 시도');
+      console.warn('개발 환경 - 401, 토큰 재발급 시도');
       originalRequest._retry = true;
 
       try {
@@ -48,7 +53,7 @@ axiosProd.interceptors.response.use(
 
         localStorage.setItem('access_token', accesstoken);
         originalRequest.headers.Authorization = `Bearer ${accesstoken}`;
-        return axiosProd(originalRequest);
+        return axiosFormInstance(originalRequest);
       } catch (refreshError) {
         console.error('토큰 재발급 실패', refreshError);
         localStorage.clear();
@@ -61,4 +66,4 @@ axiosProd.interceptors.response.use(
   }
 );
 
-export default axiosProd;
+export default axiosFormInstance;

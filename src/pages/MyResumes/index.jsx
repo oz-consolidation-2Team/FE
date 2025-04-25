@@ -1,55 +1,44 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import CareerSection from './CareerSection';
 import EducationSection from './EducationSection';
 import IntroSection from './IntroSection';
 import RegionSection from './RegionSection';
 import UserInfoSection from './UserInfoSection';
-import { initialFormData } from './resumeDummy';
+
 import { getSendableDistricts } from '@/utils/formatRegion';
 import { useNavigate } from 'react-router-dom';
 import './MyResumes.scss';
 
 import Modal from '../../components/Modal';
-import { axiosTest, axiosFormTest } from '@/utils/testAxios';
+import { useResume } from '@/hooks/useResume';
+import axiosFormInstance from '@/apis/axiosFormInstance';
 
 function MyResumes() {
   //initialFormData 유저 정보 및 이력서 정보
-
-  const [formData, setFormData] = useState(initialFormData);
+  const { formData, setFormData, isLoading, isError } = useResume();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const isEditMode = Boolean(formData?.resume_id);
   const navigate = useNavigate();
 
-  const goToEditPage = () => navigate('/mypage/user');
+  const goToMyPage = () => navigate('/mypage/user');
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const response = await axiosTest.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
-          withCredentials: true,
-        });
+  if (isLoading) {
+    return (
+      <div className="skeleton_wrapper">
+        <div className="skeleton_title" />
+        <div className="skeleton_input" />
+        <div className="skeleton_input" />
+        <div className="skeleton_input" />
+        <div className="skeleton_button" />
+      </div>
+    );
+  }
+  if (isError) {
+    return <p className="error_text">이력서를 불러오는 데 실패했어요 😢</p>;
+  }
 
-        const wrappedUser = {
-          status: 'success',
-          data: response.data,
-        };
-        console.log(response.data);
-        setFormData((prev) => ({
-          ...prev,
-          user_id: wrappedUser,
-        }));
-      } catch (err) {
-        console.error('유저 정보 가져오기 실패:', err);
-      }
-    };
-
-    fetchUserInfo();
-  }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const makeFormData = (formData) => {
     const formDataToSend = new FormData();
-    console.log('🧩 formData.user_id 확인:', formData.user_id);
 
     const resumeData = {
       user_id: formData.user_id.data.id,
@@ -63,50 +52,79 @@ function MyResumes() {
       experiences: formData.experiences,
     };
 
-    formDataToSend.append('resume_data', JSON.stringify(resumeData));
-
-    if (formData.resume_image) {
+    if (formData.resume_image instanceof File) {
       formDataToSend.append('file', formData.resume_image);
+    } else if (typeof formData.resume_image === 'string' && formData.resume_image !== '') {
+      // 기존 서버 URL을 resume_data 안에 포함시킴
+      resumeData.resume_image = formData.resume_image;
     }
 
-    console.log('📦 전송할 FormData:', resumeData);
+    formDataToSend.append('resume_data', JSON.stringify(resumeData));
 
-    axiosFormTest
-      .post(`${import.meta.env.VITE_API_BASE_URL}/resumes`, formDataToSend, {
-        withCredentials: true, // 👈 여기에 위치해야 해!
-      })
-      .then((res) => {
-        console.log(`이력서가 등록 되었습니다!`, res.data);
-        setIsModalOpen(true);
-      })
-      .catch((err) => {
-        console.error('이력서 등록 실패', err);
-      });
+    return formDataToSend;
+  };
+
+  const handleCreateResumes = async (e) => {
+    e.preventDefault();
+
+    const formDataToSend = makeFormData(formData);
+    try {
+      await axiosFormInstance.post(`/resumes`, formDataToSend);
+
+      setIsModalOpen(true);
+    } catch (err) {
+      console.error('이력서 등록 실패', err);
+    }
+  };
+
+  const handleEditResumes = async (e) => {
+    e.preventDefault();
+
+    const formDataToSend = makeFormData(formData);
+
+    try {
+      await axiosFormInstance.patch(`/resumes/${formData.resume_id}`, formDataToSend);
+      setFormData((prev) => ({
+        ...prev,
+        resume_image: prev.resume_image, // 그대로 유지
+        preview_url: prev.preview_url, // 미리보기도 유지
+      }));
+      setIsModalOpen(true);
+    } catch (err) {
+      console.error('이력서 수정 실패:', err);
+    }
   };
 
   return (
     <div className="resumes_wrapper">
       <div className="resumes_container">
-        <h2 className="resumes_title">이력서 등록</h2>
+        <h2 className="resumes_title">{isEditMode ? '이력서 수정' : '이력서 등록'}</h2>
         <UserInfoSection data={formData} setData={setFormData} />
         <EducationSection data={formData} setData={setFormData} />
         <CareerSection data={formData} setData={setFormData} />
         <RegionSection data={formData} setData={setFormData} />
         <IntroSection data={formData} setData={setFormData} />
-        <button type="submit" className="resumes_submit" onClick={handleSubmit}>
-          이력서 등록하기
-        </button>
+        {isEditMode ? (
+          <button type="submit" className="resumes_submit" onClick={handleEditResumes}>
+            이력서 수정하기
+          </button>
+        ) : (
+          <button type="button" className="resumes_submit" onClick={handleCreateResumes}>
+            이력서 등록하기
+          </button>
+        )}
       </div>
+
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="이력서 등록 완료!"
-        description="이력서가 성공적으로 등록되었습니다 😊"
+        title={`이력서 ${isEditMode ? '수정' : '등록'} 완료!`}
+        description={`이력서가 성공적으로 ${isEditMode ? '수정' : '등록'}되었습니다 😊`}
         buttons={[
           {
             label: '확인',
             onClick: () => {
-              goToEditPage;
+              goToMyPage();
             },
             className: 'modal_btn_green',
           },

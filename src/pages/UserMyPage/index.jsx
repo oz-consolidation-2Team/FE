@@ -6,7 +6,7 @@ import AgePopularity from './AgePopularity';
 import InterestAnnouncement from './InterestAnnouncement';
 import { useEffect, useState } from 'react';
 
-import { axiosTest } from '@/utils/testAxios';
+import axiosInstance from '@/apis/axiosInstance';
 
 function UserMyPage() {
   const [userInfo, setUserInfo] = useState(null); // ← 초기값 null로!
@@ -14,8 +14,8 @@ function UserMyPage() {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await axiosTest.get('/user/me');
-        console.log('[유저 정보]', response.data);
+        const response = await axiosInstance.get('/user/me');
+
         setUserInfo(response.data);
       } catch (err) {
         console.error('유저 정보 불러오기 실패:', err);

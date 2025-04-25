@@ -9,9 +9,9 @@ UserInfo.propTypes = {
 function UserInfo({ userInfo }) {
   const navigate = useNavigate();
 
-  const handleHasResume = () => {
-    const hasResume = userInfo?.resumes[0].id > 0;
+  const hasResume = userInfo?.resumes?.length > 0;
 
+  const handleHasResume = () => {
     if (hasResume) {
       navigate(`/mypage/user/resumes/${userInfo?.resumes[0]?.id}`);
     } else {
@@ -44,7 +44,7 @@ function UserInfo({ userInfo }) {
           handleHasResume();
         }}
       >
-        {userInfo?.resumes?.id > 0 ? '이력서 수정하기' : '간단 이력서\n 작성하기'}
+        {hasResume > 0 ? '이력서\n수정하기' : '이력서\n등록하기'}
       </button>
     </section>
   );
