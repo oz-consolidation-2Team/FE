@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const PUBLIC_RECRUITMENT_API_URL = import.meta.env.VITE_PUBLIC_RECRUITMENT_API_URL;
@@ -35,7 +36,7 @@ export const fetchPublicRecruitments = async (params) => {
  */
 export const getPopularJobList = async (limit = 10) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/posting/popular`, {
+    const response = await axiosInstance.get(`${API_BASE_URL}/posting/popular`, {
       params: { limit },
     });
     return response.data;
@@ -56,7 +57,7 @@ export const getPopularJobList = async (limit = 10) => {
  */
 export const getJobList = async ({ skip = 0, limit = 10 } = {}) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/posting/`, {
+    const response = await axiosInstance.get(`${API_BASE_URL}/posting/`, {
       params: {
         skip,
         limit,
@@ -78,7 +79,7 @@ export const getJobList = async ({ skip = 0, limit = 10 } = {}) => {
  */
 export const getJobDetail = async (postingId, token) => {
   try {
-    const response = await axios.get(
+    const response = await axiosInstance.get(
       `${API_BASE_URL}/posting/${postingId}`,
       {
         headers: {
@@ -102,7 +103,7 @@ export const getJobDetail = async (postingId, token) => {
  */
 export const searchJobPostings = async (params = {}, token) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/posting/search`, {
+    const response = await axiosInstance.get(`${API_BASE_URL}/posting/search`, {
       params,
       headers: token
         ? { Authorization: `Bearer ${token}` }
@@ -111,6 +112,27 @@ export const searchJobPostings = async (params = {}, token) => {
     return response.data;
   } catch (error) {
     console.error("채용공고 검색 실패:", error);
+    throw error;
+  }
+};
+
+
+export const applyJobPosting = async (postingId, token) => {
+  try {
+    const response = await axiosInstance.post(
+      `${API_BASE_URL}/applications`,
+      {
+        job_posting_id: postingId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("채용공고 지원 실패:", error);
     throw error;
   }
 };

@@ -4,23 +4,28 @@ import { FaStar, FaRegStar, FaRegCopy } from 'react-icons/fa';
 import './JobDetail.scss';
 import JobApplyModal from '@/components/Company/Modal/JobApplyModal';
 import { getJobDetail } from '@/apis/RecruitmentApi';
-//import useUserStore from '@/utils/userStore';
 import KakaoMap from '@/components/KakaoMap/KakaoMap';
+import { CompaniesInfo } from '@/apis/CompanyApi';
+import { formatPhoneNumber } from '@/utils/format';
 
 
 
 const JobDetail = () => {
   const { postingId } = useParams();
   const [job, setJob] = useState(null);
+  const [companyInfo, setCompanyInfo] = useState(null);
   const navigate = useNavigate();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const accessToken = localStorage.getItem('access_token');//임시
 
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const data = await getJobDetail(postingId);
+        const data = await getJobDetail(postingId, accessToken);
         setJob(data);
+        const companyData = await CompaniesInfo(data.company_id);
+        setCompanyInfo(companyData);
       } catch (error) {
         console.error('채용공고 불러오기 실패:', error);
       }
@@ -28,7 +33,7 @@ const JobDetail = () => {
 
     fetchJob();
     window.scrollTo(0, 0);
-  }, [postingId]);
+  }, [postingId, accessToken]);
 
   if (!job) return <div>로딩 중...</div>;
 
@@ -219,9 +224,16 @@ const JobDetail = () => {
       </section>
 
       <section className="section">
-        <p><strong>대표 전화번호</strong>: 010-1234-5678</p>
-        <p><strong>이메일</strong>: nextrunners@nextrunners.co.kr</p>
-        <p><strong>기업 소개</strong>: 나도 몰라유</p>
+        <h3>기업 정보</h3>
+        {companyInfo ? (
+          <>
+            <p><strong>담당자 전화번호</strong>: {formatPhoneNumber(companyInfo.manager_phone)}</p>
+            <p><strong>이메일</strong>: {companyInfo.manager_email || '정보 없음'}</p>
+            <p><strong>기업 소개</strong>: {companyInfo.company_intro || '정보 없음'}</p>
+          </>
+        ) : (
+          <p>기업 정보를 불러오는 중...</p>
+        )}
       </section>
 
       <div className="action">
