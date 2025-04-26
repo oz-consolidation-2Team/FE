@@ -19,6 +19,14 @@ export const signUpUserApi = async (form) => {
   return response.data;
 };
 
+// 개인 회원가입 이메일 중복확인 API
+export const checkUserEmailApi = async (email) => {
+  const response = await axiosInstance.get('/check-email', {
+    params: { email },
+  });
+  return response.data;
+};
+
 // 개인 로그인 API
 export const loginUserApi = async (email, password) => {
   console.log('[로그인 요청]', '/user/login');
