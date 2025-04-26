@@ -3,50 +3,76 @@ import Category from '../../components/Company/Category'
 import InputText from '../../components/Company/InputText'
 import InputImage from '../../components/Company/InputImage'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import InfoEditModal from '../../components/Company/Modal/InfoEditModal'
 import "./CompanyInfoEdit.scss"
 import { GoArrowLeft } from "react-icons/go";
+import { companyMe } from '@/apis/companyPostingApi'
+import { CompanyEdit } from '@/apis/companyApi'
+import axios from 'axios'
+import { validateName, validateEmail, isValidPhone } from '@/utils/validation'
+import Hr from '@/utils/Hr'
 
 export default function CompanyInfoEdit () {
+    const navigate = useNavigate()
+    
+    const [formData, setFormData] = useState(null)
+    const [CompanyInfoLoading, setCompanyInfoLoading] = useState(true)
+    const [companyInfoError, setCompanyInfoError] = useState(null)
     const [showModal, setShowModal] = useState(false)
-    //api 기업 정보 조회 (기업 ID로 해당 기업 상세 정보 조회) /company/me ( body에 company_user_id 입력 / company_user_id는 전역상태에서 호출)
-    const [formData, setFormData] = useState({
-        "company_user_id": 1,
-        "email": "company@example.com",
-        "manager_name": "임꺽정",
-        "manager_phone": "010-1234-5678",
-        "manager_email": "manager@example.com",
-        "company_id": 1,
-        "company_name": "넥스트러너스",
-        "business_reg_number": "123-45-67890",
-        "opening_date": "2020-01-01",
-        "ceo_name": "홍길동",
-        "company_intro": "회사 소개 내용"
-    })
-    const [error, setError] = useState({
+    const [validateError, setValidateError] = useState({
         "company_intro": false,
         "manager_name": false,
         "manager_phone": false,
-        "manager_email": false
+        "manager_email": false,
+        'password': false,
+        'confirm_password': false
     })
-    const navigate = useNavigate()
+
+    useEffect(()=>{
+        try {
+            companyMe().then(res => setFormData(res))
+        } catch (error) {
+            if (axios.isAxiosError(error)) setCompanyInfoLoading(error.response?.data?.message || '요청 실패')
+            else setCompanyInfoLoading('알 수 없는 에러 발생')
+        } finally {
+            setCompanyInfoError(false)
+        }
+    },[])
+    
+    // 나중에 loading 구현
+    if (!formData) return null;
+
     const state = {
         formData: formData,
         setFormData: setFormData,
-        error: error,
-        setError: setError    
+        error: validateError,
+        setError: setValidateError    
     }
-    
+
     const validate = () => {
-        console.log('validate 실행됨')
-        const newerror = {...error}
-        Object.entries(error).forEach((item) => {
-            if (!formData[item[0]]) newerror[item[0]] = true
+        const newerror = {...validateError}
+        Object.entries(validateError).forEach((item) => {
+            const data = formData[item[0]]
+            if (item[0] === 'company_intro' && !validateName(data)) newerror['company_intro'] = true;
+            else if (item[0] === 'manager_name' && !validateName(data)) newerror['manager_name'] = true;
+            else if (item[0] === 'manager_phone' && !isValidPhone(data)) newerror['manager_phone'] = true;
+            else if (item[0] === 'manager_email' && !validateEmail(data)) newerror['manager_email'] = true;
+            else if (item[0] === 'password' && formData['password'] !== 'qwe123!@#') newerror['password'] = true;
+            else if (item[0] === 'confirm_password' && formData['password'] !== formData['confirm_password']) newerror['confirm_password'] = true;
         })
-        setError(newerror)
-        console.log(newerror)
+        setValidateError(newerror)
         return Object.values(newerror).includes(true)
+    }
+
+    function editAPI () {
+        try {
+            CompanyEdit(formData).then(res => console.log(res))
+        } catch (error) {
+            console.log('에러에러 삐용삐용')
+        } finally {
+            console.log('로딩 중')
+        }
     }
 
     return (
@@ -67,7 +93,7 @@ export default function CompanyInfoEdit () {
                     <Category text='기업소개' />
                     <InputText {...state} type='text' name='company_intro' text='기업소개' placeholder={formData.company_intro} />
                 </div>
-                {error['company_intro'] && <span className="error_message">기업소개를 입력해주세요</span>}
+                {validateError['company_intro'] && <span className="error_message">기업소개를 입력해주세요</span>}
 
                 <div className='box disabled'>
                     <Category text='사업자등록번호' essential={false} />
@@ -81,9 +107,8 @@ export default function CompanyInfoEdit () {
 
                 <div className='box'>
                     <Category text='이미지 등록' />
-                    <InputImage formData={formData} />
+                    <InputImage setFormData={setFormData} formData={formData} />
                 </div>
-                {/* {error['recruit_period_start'] && <span className="error_message">기업명을 입력해주세요</span>} */}
             </div>
 
             <div className='div_manager-info'>
@@ -92,26 +117,44 @@ export default function CompanyInfoEdit () {
                     <Category text='이름' />
                     <InputText {...state} type='text' name='manager_name' text='매니저 이름' placeholder={formData.manager_name} />
                 </div>
-                {error['manager_name'] && <span className="error_message">이름을 입력해주세요</span>}
+                {validateError['manager_name'] && <span className="error_message">이름을 입력해주세요</span>}
 
                 <div className='box'>
                     <Category text='전화번호' />
                     <InputText {...state} type='text' name='manager_phone' text='매니저 전화번호' placeholder={formData.manager_phone} />
                 </div>
-                {error['manager_phone'] && <span className="error_message">전화번호를 입력해주세요</span>}
+                {validateError['manager_phone'] && <span className="error_message">전화번호를 입력해주세요</span>}
 
                 <div className='box'>
                     <Category text='이메일' />
                     <InputText {...state} type='text' name='manager_email' text='매니저 이메일' placeholder={formData.manager_email} />
                 </div>
-                {error['manager_email'] && <span className="error_message">이메일을 입력해주세요</span>}
+                {validateError['manager_email'] && <span className="error_message">이메일을 입력해주세요</span>}
+            </div>
+
+            <div className='div_password'>
+                <Hr />
+                <div className='box'>
+                    <Category text='비밀번호' />
+                    <InputText {...state} type='text' name='password' text='비밀번호' />
+                </div>
+                {validateError['password'] && <span className="error_message">비밀번호를 다시 확인해주세요</span>}
+
+                <div className='box'>
+                    <Category text='비밀번호확인' />
+                    <InputText {...state} type='text' name='confirm_password' text='비밀번호확인' />
+                </div>
+                {validateError['confirm_password'] && <span className="error_message">비밀번호를 다시 확인해주세요</span>}
             </div>
 
             <button 
                 className='button_edit'
                 onClick={() => {
                     if (validate()) alert('폼을 다시 확인해주세요')
-                    else setShowModal(true)
+                    else {
+                            editAPI()
+                            setShowModal(true)
+                        }
                     }}>수정하기</button>
             {showModal && <InfoEditModal formData={formData} setShowModal={setShowModal} />}
         </div>

@@ -15,7 +15,7 @@ export default function InfoBox ({type, data}) {
         {type === 'company' && 
         <button 
         className='button_info_edit'
-        onClick={() => navigate("/company_info_edit_page")}>기업 정보 수정</button> }
+        onClick={() => navigate("/mypage/company/info-edit")}>기업 정보 수정</button> }
         <p>담당자 전화번호: {formatPhoneNumber(data.manager_phone)}</p>
         <p>담당자 이메일: {data.manager_email}</p>
         <p>기업 소개: {data.company_intro}</p>

@@ -12,7 +12,7 @@ export default function AnnouncementCard (props) {
     const navigate = useNavigate();
 
     const handleAnnouncementEditClick = () => {
-        navigate(`/company_announcement_edit_page/${props.id}`);
+        navigate(`/mypage/company/announcement/edit/${props.id}`);
     };
 
     const dayRander = props.is_always_recruiting ? "상시 모집" : props.recruit_period_end
@@ -27,7 +27,7 @@ export default function AnnouncementCard (props) {
             <p className='time'>{dayRander}</p>
             <div className='button_group'>
                 <button onClick={handleAnnouncementEditClick}>수정하기</button>
-                <button onClick={() => navigate(`/company_resumes_page/${props.id}`)}>이력서 확인하기</button>
+                <button onClick={() => navigate(`/mypage/company/announcement/resumes/${props.id}`)}>이력서 확인하기</button>
             </div>
         </div>
     )

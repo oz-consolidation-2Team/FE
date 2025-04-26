@@ -7,11 +7,11 @@ import PropTypes from 'prop-types';
 } */
 export default function InputImage (props) {
     const onchangeImageUpload = (e) => {
-        const {files} = e.target;
-        const fileName = files[0];
+        const fileName = URL.createObjectURL(e.target.files[0]);
+        if (!fileName) return;
         props.setFormData((el) => ({
             ...el,
-            image_file: fileName
+            company_image: fileName
         }))
     }
 
