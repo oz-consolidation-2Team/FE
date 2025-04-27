@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../UserMyPage/JobRecommend/JobRecommend.scss';
 import MyJobCard from './MyJobCard';
 import { jobPropsType } from '@/utils/UserMyPagePropTypes';
 import PropTypes from 'prop-types';

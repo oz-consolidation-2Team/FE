@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-
 import './JobPosting.scss';
 import MyJobList from '@/pages/UserMyPage/MyJobList';
 
