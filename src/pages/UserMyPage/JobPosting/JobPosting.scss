@@ -11,6 +11,27 @@
     font-size: 20px;
     color: $deep-green;
   }
+
+  .null_applied_jobs {
+    margin-top: 15px;
+    padding: 30px 20px;
+    background-color: #f9f9f9;
+    border: 1px dashed #ccc;
+    border-radius: 10px;
+    color: $light-gray-text;
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    font-weight: 500;
+
+    // 아이콘 같이 쓰고 싶으면
+    &::before {
+      content: '📄';
+      display: block;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+  }
 }
 
 .job-list {

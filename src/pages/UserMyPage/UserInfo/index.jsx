@@ -19,6 +19,8 @@ function UserInfo({ userInfo }) {
     }
   };
 
+  console.log(userInfo);
+
   return (
     <section className="user_info_section">
       <div className="user_info">
@@ -35,7 +37,7 @@ function UserInfo({ userInfo }) {
             <p className="info_text"> 생일 : {userInfo?.birthday}</p>
             <p className="info_text"> 전화번호 : {userInfo?.phone_number}</p>
             <p className="info_text"> 이메일 : {userInfo?.email}</p>
-            <p className="info_text"> 관심분야 : {userInfo?.interests}</p>
+            <p className="info_text"> 관심분야 : {userInfo?.interests?.join(', ')}</p>
           </div>
         </div>
       </div>
