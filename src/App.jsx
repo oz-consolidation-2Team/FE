@@ -19,6 +19,7 @@ import FindEmailPage from './pages/FindEmailPage';
 import Announcement from './pages/Announcement';
 import FindPasswordPage from './pages/FindPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
+import UserInfoEditPage from '@/pages/UserInfoEditPage';
 
 function App() {
   return (
@@ -40,9 +41,13 @@ function App() {
         <Route path="/company-info/:id" element={<CompanyInfo />} />
         <Route path="/mypage/company/info-edit" element={<CompanyInfoEdit />} />
         <Route path="/mypage/company/announcement/add" element={<Announcement type="add" />} />
-        <Route path="/mypage/company/announcement/edit/:id" element={<Announcement type="edit" />} />
+        <Route
+          path="/mypage/company/announcement/edit/:id"
+          element={<Announcement type="edit" />}
+        />
         <Route path="/mypage/company/announcement/resumes/:id" element={<CompanyResumes />} />
         <Route path="/trainingSearch" element={<TrainingSearch />} />
+        <Route path="/mypage/user/edit_info" element={<UserInfoEditPage />} />
       </Route>
 
       <Route path="/signup" element={<SignUpPage />} />

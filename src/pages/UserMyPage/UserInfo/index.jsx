@@ -27,7 +27,7 @@ function UserInfo({ userInfo }) {
         <p
           className="info_modify"
           onClick={() => {
-            navigate('/');
+            navigate('/mypage/company/info-edit');
           }}
         >
           개인정보 수정하기
