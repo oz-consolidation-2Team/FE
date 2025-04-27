@@ -1,5 +1,5 @@
 import React from 'react';
-import './JobApplyModal.scss';
+import "../styles/modal/JobApplyModal.scss"
 
 const JobApplyModal = ({ onClose, onApply, onEditResume }) => {
   return (

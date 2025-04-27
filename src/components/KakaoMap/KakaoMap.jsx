@@ -9,6 +9,10 @@ import React, { useEffect } from 'react';
  */
 const KakaoMap = ({ latitude, longitude, workPlaceName }) => {
   useEffect(() => {
+    if (!latitude || !longitude) {
+      return;
+    }
+
     const loadKakaoMapScript = (callback) => {
       const existingScript = document.getElementById('kakao-map-script');
       if (existingScript) {
@@ -17,7 +21,6 @@ const KakaoMap = ({ latitude, longitude, workPlaceName }) => {
       }
 
       const script = document.createElement('script');
-      console.log("🔑 Kakao API Key:", import.meta.env.VITE_KAKAO_MAP_KEY);
 
       script.id = 'kakao-map-script';
       script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.env.VITE_KAKAO_MAP_KEY}&autoload=false`;
@@ -30,8 +33,8 @@ const KakaoMap = ({ latitude, longitude, workPlaceName }) => {
     };
 
     loadKakaoMapScript(() => {
-      const lat = latitude || 37.56664;
-      const lng = longitude || 126.97897;
+      const lat = latitude;
+      const lng = longitude;
 
       const container = document.getElementById('map');
       if (!container) {

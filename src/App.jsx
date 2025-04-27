@@ -36,12 +36,12 @@ function App() {
         <Route path="/mypage/user/resumes/:id" element={<MyResumes />} />
         <Route path="/search-results" element={<SearchResults />} />
         <Route path="/job-detail/:postingId" element={<JobDetail />} />
-        <Route path="/company_my_page" element={<CompanyMyPage />} />
-        <Route path="/company_info_page/:id" element={<CompanyInfo />} />
-        <Route path="/company_info_edit_page" element={<CompanyInfoEdit />} />
-        <Route path="/company_announcement_add_page" element={<Announcement type="add" />} />
-        <Route path="/company_announcement_edit_page/:id" element={<Announcement type="edit" />} />
-        <Route path="/company_resumes_page/:id" element={<CompanyResumes />} />
+        <Route path="/mypage/company" element={<CompanyMyPage />} />
+        <Route path="/company-info/:id" element={<CompanyInfo />} />
+        <Route path="/mypage/company/info-edit" element={<CompanyInfoEdit />} />
+        <Route path="/mypage/company/announcement/add" element={<Announcement type="add" />} />
+        <Route path="/mypage/company/announcement/edit/:id" element={<Announcement type="edit" />} />
+        <Route path="/mypage/company/announcement/resumes/:id" element={<CompanyResumes />} />
         <Route path="/trainingSearch" element={<TrainingSearch />} />
       </Route>
 

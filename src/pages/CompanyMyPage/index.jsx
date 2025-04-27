@@ -50,7 +50,7 @@ export default function CompanyMyPage() {
         {jobPosting && <InfoBox type='company' data={jobPosting} />}
         <button 
         className="button_add"
-        onClick={() => navigate("/company_announcement_add_page")}>공고 작성하기</button>
+        onClick={() => navigate("/mypage/company/announcement/add")}>공고 작성하기</button>
       </div>
       
       <Hr />

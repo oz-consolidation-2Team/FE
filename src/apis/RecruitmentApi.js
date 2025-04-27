@@ -107,6 +107,13 @@ export const searchJobPostings = async (params = {}) => {
 };
 
 
+
+/**
+ * 채용공고에 지원하는 API 호출 함수
+ * @param {number} postingId - 지원할 채용공고의 ID
+ * @returns {Promise<Object>} - 지원 결과 응답 객체
+ * @throws {Error} - API 호출 실패 시 에러를 던짐
+ */
 export const applyJobPosting = async (postingId) => {
   try {
     const response = await axiosInstance.post(

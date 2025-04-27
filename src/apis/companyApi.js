@@ -1,11 +1,14 @@
 import axios from 'axios';
-import {TOKEN, BASE_URL} from "./token"
+import axiosDev from "./axios.dev";
 
 const SERVICE_KEY = 'XorKwfsWyU1m5NFjoLu7/CG93NR551B8jKWDBiTuK50ONm1KG/YQZwYblKIzlIbi1lYO6Kc2PrWmeTOJmY/sCA==';
-const BASE_URL1 = 'https://api.odcloud.kr/api/nts-businessman/v1/validate';
+const BASE_URL = 'https://api.odcloud.kr/api/nts-businessman/v1/validate';
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const TOKEN = import.meta.env.VITE_TOKEN;
 
 export const verifyBusinessNumber = async (b_no, start_dt, p_nm) => {
-  const response = await axios.post(`${BASE_URL1}?serviceKey=${encodeURIComponent(SERVICE_KEY)}`, {
+  const response = await axios.post(`${BASE_URL}?serviceKey=${encodeURIComponent(SERVICE_KEY)}`, {
     businesses: [
       {
         b_no,
@@ -18,24 +21,20 @@ export const verifyBusinessNumber = async (b_no, start_dt, p_nm) => {
   return response.data;
 };
 
+// 기업 정보 조회 (유저)
 export const CompaniesInfo = async (companyId) => {
-  const response = await axios.get(`${BASE_URL}companies/${companyId}`, {
-    headers: {
-      'Authorization': `Bearer ${TOKEN}`,
-      'accept': 'application/json'
-    }
-  })
-  console.log('기업 정보 조회 API 호출====')
-  console.log(response.data.data)
+  const response = await axiosDev.get(`${API_BASE_URL}companies/${companyId}`)
   return response.data.data
 }
 
+// 기업 정보 수정
+export const CompanyEdit = async (formData) => {
+  const response = await axiosDev.patch(`${API_BASE_URL}company/me`, formData)
+  return response.data.data
+}
+
+// 기업 내 공고 이력서지원관리
 export const resumeInquiryPosting = async () => {
-  const response = await axios.get(`${BASE_URL}applications/company`, {
-    headers: {
-      'accept': 'application/json',
-      'Authorization': `Bearer ${TOKEN}`
-    }
-  })
+  const response = await axiosDev.get(`${API_BASE_URL}applications/company`)
   return response.data
 }
