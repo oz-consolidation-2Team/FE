@@ -7,6 +7,7 @@ import { INTEREST_OPTIONS } from '@/utils/signUpInfoOptions';
 import './UserInfoEditPage.scss';
 import axiosInstance from '@/apis/axiosInstance';
 import Modal from '@/components/Modal';
+import { logoutUserApi } from '@/apis/authApi';
 
 const MAX_PHONE_LENGTH = 11;
 
@@ -26,11 +27,21 @@ const UserInfoEditPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordCheck, setShowPasswordCheck] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState({
+  const [modalInfo, setModalInfo] = useState({
     title: '',
     description: '',
     buttons: [],
   });
+
+  const openModal = (info) => {
+    setModalInfo(info);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const location = useLocation();
   const { userId } = location.state;
 
@@ -53,13 +64,19 @@ const UserInfoEditPage = () => {
           interests: resUserInfoEdit.interests || [],
         }));
       } catch (error) {
-        console.log(error);
+        if (error.response) {
+          const status = error.response.status;
+
+          if (status === 422) {
+            console.error('요청 데이터가 잘못되었습니다. (422)');
+          } else {
+            console.error(`서버 오류 발생 (${status})`);
+          }
+        }
       }
     };
     fetchUserPersonalInfo();
   }, []);
-
-  console.log('📌난 개인정보 잘 들어가있지', form);
 
   const handleChange = (e) => {
     const { name, type, value, checked } = e.target;
@@ -114,36 +131,81 @@ const UserInfoEditPage = () => {
         password_check: form.passwordCheck,
         interests: form.interests,
       });
-
-      setModalContent({
+      openModal({
         title: '수정 완료',
         description: '회원 정보가 정상적으로 수정되었습니다!',
         buttons: [
           {
             label: '확인',
-            className: 'confirm',
+            className: 'modal_btn_green',
             onClick: () => {
-              setIsModalOpen(false);
-              navigate('/mypage/user'); // ← 수정 후 이동할 페이지
+              closeModal();
+              navigate('/mypage/user');
             },
           },
         ],
       });
-      setIsModalOpen(true);
     } catch (err) {
-      setModalContent({
+      openModal({
         title: '수정 실패',
-        description: `문제가 발생했습니다. 다시 시도해주세요! ${err}`,
+        description: `문제가 발생했습니다. 다시 시도해주세요!, ${err}`,
         buttons: [
           {
             label: '닫기',
-            className: 'cancel',
-            onClick: () => setIsModalOpen(false),
+            className: 'modal_btn_green',
+            onClick: closeModal,
           },
         ],
       });
-      setIsModalOpen(true);
     }
+  };
+
+  const handleUserDelete = () => {
+    openModal({
+      title: '회원 탈퇴',
+      description: '정말 탈퇴하시겠습니까? 지금 탈퇴하시면 모든 정보가 사라집니다.',
+      buttons: [
+        {
+          label: '탈퇴하기',
+          className: 'modal_btn_green',
+          onClick: async () => {
+            try {
+              await axiosInstance.delete(`/user/${userId}`);
+              await logoutUserApi();
+              localStorage.removeItem('userType');
+              localStorage.removeItem('access_token');
+              localStorage.removeItem('refresh_token');
+
+              openModal({
+                title: '탈퇴 완료',
+                description: '정상적으로 탈퇴 처리되었습니다.',
+                buttons: [
+                  {
+                    label: '확인',
+                    className: 'modal_btn_green',
+                    onClick: () => {
+                      closeModal();
+                      navigate('/'); // 메인페이지로 이동
+                    },
+                  },
+                ],
+              });
+            } catch (err) {
+              openModal({
+                title: '탈퇴 실패',
+                description: `문제가 발생했습니다. 다시 시도해주세요., ${err}`,
+                buttons: [{ label: '닫기', className: 'modal_btn_green', onClick: closeModal }],
+              });
+            }
+          },
+        },
+        {
+          label: '취소',
+          className: 'modal_btn_orange',
+          onClick: closeModal,
+        },
+      ],
+    });
   };
 
   return (
@@ -267,15 +329,17 @@ const UserInfoEditPage = () => {
           <button className="info_edit_btn" onClick={handleFinalSubmit}>
             회원 정보 수정 하기
           </button>
-          <p className="account_deletion">회원 탈퇴</p>
+          <button className="account_deletion" onClick={handleUserDelete}>
+            회원 탈퇴
+          </button>
         </div>
       </div>
       <Modal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title={modalContent.title}
-        description={modalContent.description}
-        buttons={modalContent.buttons}
+        onClose={closeModal}
+        title={modalInfo.title}
+        description={modalInfo.description}
+        buttons={modalInfo.buttons}
       />
     </div>
   );

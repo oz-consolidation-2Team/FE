@@ -185,7 +185,7 @@
       color: white;
 
       &:hover {
-        background-color: $deep-orange;
+        background-color: $deep-green;
       }
 
       &:disabled {
@@ -195,8 +195,11 @@
     }
 
     .account_deletion {
+      margin-top: 10px;
       font-size: 13px;
-      color: $gray-near-white;
+      color: $light-gray-text;
+      border: none;
+      background-color: #fff;
     }
   }
 }
