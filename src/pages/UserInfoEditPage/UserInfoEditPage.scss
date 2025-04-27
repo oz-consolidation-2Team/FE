@@ -1,21 +1,20 @@
 @use '@/utils/variables' as *;
 
-.user_signup_page {
-  margin-top: 60px;
-  background-color: #f5f5f5;
+.userinfo_edit_page {
+  background-color: $light-green;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding: 60px 16px;
-  border-radius: 20px;
 
-  .signup_card {
+  .userinfo_edit_card {
+    margin-top: 40px;
     max-width: 720px;
     width: 100%;
     background: white;
-    border-radius: 16px;
-    padding: 40px 32px;
+    padding: 40px 40px;
+    border-radius: 15px;
   }
 
   .signup_title {
@@ -27,45 +26,14 @@
 
     .icon {
       font-size: 28px;
-      color: $orange;
+      color: $green;
     }
 
     h2 {
       font-size: 30px;
       font-weight: 750;
-      color: $orange;
-    }
-  }
-
-  .step_indicator {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 60px;
-
-    .step {
-      padding: 0 16px;
-      height: 36px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 36px;
-      text-align: center;
-      background-color: #eee;
-      color: #888;
-      white-space: nowrap;
-
-      &.active {
-        background-color: $orange;
-        color: white;
-      }
-    }
-
-    .step_line {
-      width: 24px;
-      height: 2px;
-      background-color: #ccc;
+      margin-top: 30px;
+      color: $green;
     }
   }
 
@@ -82,7 +50,7 @@
       z-index: 1;
 
       &:hover {
-        color: $orange;
+        color: $green;
       }
     }
   }
@@ -99,14 +67,14 @@
       padding: 0 14px;
       height: 48px;
       font-size: 13px;
-      background-color: $orange;
+      background-color: $green;
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
 
       &:hover {
-        background-color: $deep-orange;
+        background-color: $deep-green;
       }
     }
   }
@@ -126,181 +94,94 @@
       font-size: 14px;
 
       &.selected {
-        background-color: $orange;
-        border-color: $orange;
+        background-color: $green;
         color: white;
+        border-color: $green;
+      }
+
+      // &:hover {
+      //   background-color: $light-green;
+      //   color: $deep-green;
+      // }
+    }
+  }
+  .options_wrapper {
+    margin-top: 60px;
+    padding-top: 60px;
+    padding-bottom: 3px;
+    border-top: 1px solid $border-color;
+    .section_box {
+      margin-bottom: 32px;
+
+      .section_title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: $deep-green;
+
+        span {
+          font-size: 13px;
+          font-weight: normal;
+          color: #888;
+          margin-left: 6px;
+        }
+      }
+
+      .error_msg {
+        font-size: 13px;
+        color: #e53935;
+        margin-top: 6px;
+      }
+    }
+
+    .checkbox_grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .check_btn {
+      padding: 10px 16px;
+      border: 1px solid #ccc;
+      background: #f5f5f5;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s ease;
+
+      &.selected {
+        background-color: $green;
+        color: white;
+        border-color: $green;
       }
 
       &:hover {
-        border-color: $orange;
-        color: $orange;
+        background-color: $light-green;
+        color: $deep-green;
       }
-    }
-  }
-
-  .section_box {
-    margin-bottom: 32px;
-
-    .section_title {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      color: #333;
-
-      span {
-        font-size: 13px;
-        font-weight: normal;
-        color: #888;
-        margin-left: 6px;
-      }
-    }
-
-    .error_msg {
-      font-size: 13px;
-      color: #e53935;
-      margin-top: 6px;
-    }
-  }
-
-  .checkbox_grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 10px;
-  }
-
-  .check_btn {
-    padding: 10px 16px;
-    border: 1px solid #ccc;
-    background: #f5f5f5;
-    border-radius: 20px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: 0.2s ease;
-
-    &.selected {
-      background-color: $orange;
-      color: white;
-      border-color: $orange;
-    }
-
-    &:hover {
-      background-color: #ffe0ba;
-    }
-  }
-
-  .terms_step {
-    margin-top: 20px;
-  
-    .checkbox_row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-  
-      input[type='checkbox'] {
-        appearance: none;
-        -webkit-appearance: none;
-        width: 18px;
-        height: 18px;
-        border: 2px solid #ccc;
-        border-radius: 50%;
-        background-color: white;
-        cursor: pointer;
-        position: relative;
-        transition: all 0.2s ease;
-  
-        &:checked {
-          background-color: $orange;
-          border-color: $orange;
-        }
-  
-        &:checked::after {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 4px;
-          height: 9px;
-          border: solid white;
-          border-width: 0 2px 2px 0;
-          transform: translate(-50%, -50%) rotate(45deg); // ✅ 중심 정렬
-        }
-  
-        &:focus {
-          outline: none;
-          box-shadow: 0 0 0 2px rgba($orange, 0.3);
-        }
-      }
-  
-      label {
-        font-size: 14px;
-        color: #333;
-        flex: 1;
-        line-height: 1.5;
-      }
-  
-      .view_detail {
-        font-size: 12px;
-        color: $orange;
-        background: none;
-        border: none;
-        cursor: pointer;
-        text-decoration: underline;
-        padding: 0;
-      }
-  
-      &.all_agree {
-        margin-top: 30px;
-      }
-    }
-  
-    .terms_section {
-      margin-top: 24px;
-  
-      .terms_label {
-        font-size: 15px;
-        font-weight: 600;
-        margin-bottom: 12px;
-        color: #333;
-      }
-    }
-  
-    .error_msg {
-      font-size: 13px;
-      color: #e53935;
-      margin: 12px 0 0 0;
-    }
-  
-    .button_group {
-      margin-top: 32px;
     }
   }
 
   .button_group {
     margin-top: 28px;
     display: flex;
-    gap: 12px;
+    flex-direction: column;
+    align-items: center;
 
-    .prev_btn,
-    .next_btn {
+    .info_edit_btn {
       flex: 1;
       height: 48px;
+      width: 100%;
+      padding: 16px;
       font-size: 16px;
       font-weight: 600;
       border-radius: 8px;
       border: none;
       cursor: pointer;
       transition: 0.2s ease;
-    }
 
-    .prev_btn {
-      background-color: #ccc;
-      color: #333;
-    }
-
-    .next_btn {
-      background-color: $orange;
+      background-color: $green;
       color: white;
 
       &:hover {
@@ -312,20 +193,10 @@
         cursor: not-allowed;
       }
     }
-  }
-}
 
-.terms_section {
-  margin-top: 24px;
-
-  .terms_label {
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    color: #333;
-  }
-
-  .checkbox_row {
-    margin-bottom: 12px;
+    .account_deletion {
+      font-size: 13px;
+      color: $gray-near-white;
+    }
   }
 }

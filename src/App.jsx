@@ -2,23 +2,23 @@ import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 import MainPage from '@/pages/MainPage';
 import SignUpPage from '@/pages/SignUpPage';
-import CompanyMyPage from './pages/CompanyMyPage';
-import RecruitmentInfo from './pages/RecruitmentInfo';
-import SearchResults from './pages/RecruitmentInfo/SearchResults';
-import CompanyInfo from './pages/CompanyInfo';
-import CompanyResumes from './pages/CompanyResumes';
-import CompanyInfoEdit from './pages/CompanyInfoEdit';
-import UserMyPage from './pages/UserMyPage';
-import Layout from './components/Layout';
-import JobDetail from './pages/RecruitmentInfo/JobDetail';
-import LoginPage from './pages/LoginPage';
-import AboutCompany from './pages/AboutCompany/About';
-import TrainingSearch from './pages/JobTraining/TrainingSearch';
-import MyResumes from './pages/MyResumes';
-import FindEmailPage from './pages/FindEmailPage';
-import Announcement from './pages/Announcement';
-import FindPasswordPage from './pages/FindPasswordPage';
-import ResetPasswordPage from './pages/ResetPasswordPage';
+import CompanyMyPage from '@/pages/CompanyMyPage';
+import RecruitmentInfo from '@/pages/RecruitmentInfo';
+import SearchResults from '@/pages/RecruitmentInfo/SearchResults';
+import CompanyInfo from '@/pages/CompanyInfo';
+import CompanyResumes from '@/pages/CompanyResumes';
+import CompanyInfoEdit from '@/pages/CompanyInfoEdit';
+import UserMyPage from '@/pages/UserMyPage';
+import Layout from '@/components/Layout';
+import JobDetail from '@/pages/RecruitmentInfo/JobDetail';
+import LoginPage from '@/pages/LoginPage';
+import AboutCompany from '@/pages/AboutCompany/About';
+import TrainingSearch from '@/pages/JobTraining/TrainingSearch';
+import MyResumes from '@/pages/MyResumes';
+import FindEmailPage from '@/pages/FindEmailPage';
+import Announcement from '@/pages/Announcement';
+import FindPasswordPage from '@/pages/FindPasswordPage';
+import ResetPasswordPage from '@/pages/ResetPasswordPage';
 import UserInfoEditPage from '@/pages/UserInfoEditPage';
 
 function App() {
@@ -33,6 +33,7 @@ function App() {
         <Route path="/about" element={<AboutCompany />} />
         <Route path="/recruitment_info" element={<RecruitmentInfo />} />
         <Route path="/mypage/user" element={<UserMyPage />} />
+        <Route path="/mypage/user/edit_info" element={<UserInfoEditPage />} />
         <Route path="/mypage/user/resumes" element={<MyResumes />} />
         <Route path="/mypage/user/resumes/:id" element={<MyResumes />} />
         <Route path="/search-results" element={<SearchResults />} />

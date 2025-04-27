@@ -19,15 +19,16 @@ function UserInfo({ userInfo }) {
     }
   };
 
-  console.log(userInfo);
-
+  console.log('UserInfo유저ID', userInfo.id);
+  console.log('UserInfo', userInfo);
   return (
     <section className="user_info_section">
       <div className="user_info">
         <p
           className="info_modify"
           onClick={() => {
-            navigate('/mypage/company/info-edit');
+            if (!userInfo?.id) return;
+            navigate('/mypage/user/edit_info', { state: { userId: userInfo?.id } });
           }}
         >
           개인정보 수정하기
