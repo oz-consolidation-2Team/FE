@@ -46,12 +46,12 @@
       gap: 6px;
 
       &.active.user {
-        background-color: $orange;
+        background-color: $green; // ✅ user -> green
         color: #fff;
       }
 
       &.active.company {
-        background-color: $green;
+        background-color: $orange; // ✅ company -> orange
         color: #fff;
       }
     }
@@ -69,37 +69,40 @@
     }
   
     input,
-    .password_wrapper input { // ✅ 추가
+    .password_wrapper input {
       height: 48px;
       padding: 0 12px;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 14px;
       transition: border 0.2s ease;
-  
+
       &:focus {
-        border-color: $orange;
+        border-color: $green; // ✅ 기본 user green
         outline: none;
       }
-  
+
+      &.company_focus:focus {
+        border-color: $orange; // ✅ company일 때 orange
+      }
+
       &.error {
         border-color: #e53935;
       }
     }
   }
 
-  // ✅ 비밀번호 input만 위 여백 추가
   .input_group + .input_group {
     margin-top: 12px;
   }
 
   .password_wrapper {
     position: relative;
-
+  
     input {
       width: 100%;
     }
-
+  
     span {
       position: absolute;
       top: 50%;
@@ -107,7 +110,16 @@
       transform: translateY(-50%);
       cursor: pointer;
       font-size: 20px;
-      color: #aaa;
+      color: #ccc;
+      transition: color 0.2s ease; // ✅ 부드럽게
+  
+      &.user:hover {
+        color: $green; // ✅ user는 green
+      }
+  
+      &.company:hover {
+        color: $orange; // ✅ company는 orange
+      }
     }
   }
 
@@ -119,25 +131,25 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    width: 100%; // 🔥 혹시 width 문제 있으면 추가
+    width: 100%;
     transition: background-color 0.2s ease;
   }
   
   .login_btn.user {
-    background-color: $orange;
-    color: #fff;
-  
-    &:hover {
-      background-color: $deep-orange;
-    }
-  }
-  
-  .login_btn.company {
-    background-color: $green;
+    background-color: $green; // ✅ user -> green
     color: #fff;
   
     &:hover {
       background-color: $deep-green;
+    }
+  }
+  
+  .login_btn.company {
+    background-color: $orange; // ✅ company -> orange
+    color: #fff;
+  
+    &:hover {
+      background-color: $deep-orange;
     }
   }
 
@@ -161,11 +173,11 @@
     }
 
     &.user span:hover {
-      color: $orange;
+      color: $green; // ✅ user -> green
     }
 
     &.company span:hover {
-      color: $green;
+      color: $orange; // ✅ company -> orange
     }
   }
 

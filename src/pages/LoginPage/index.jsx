@@ -71,7 +71,7 @@ const LoginPage = () => {
             onChange={handleChange}
             placeholder="이메일을 입력하세요"
             error={errors.email}
-            className="no_margin"
+            className={`no_margin ${userType === 'company' ? 'company_focus' : ''}`}
             autoComplete="email"
           />
 
@@ -84,10 +84,10 @@ const LoginPage = () => {
                 value={form.password}
                 onChange={handleChange}
                 placeholder="비밀번호를 입력하세요"
-                className={errors.password ? 'error' : ''}
+                className={`${errors.password ? 'error' : ''} ${userType === 'company' ? 'company_focus' : ''}`}
                 autoComplete="current-password"
               />
-              <span onClick={() => setShowPassword((prev) => !prev)}>
+              <span className={userType} onClick={() => setShowPassword((prev) => !prev)}>
                 {showPassword ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
               </span>
             </div>
