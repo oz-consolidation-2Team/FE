@@ -48,7 +48,7 @@ function InterestAnnouncement({ userInfo }) {
       <div className="interest_slider-container">
         {interestJobs.length > 0 ? (
           <div
-            className="reco_slider-wrapper"
+            className="interest_slider-wrapper"
             style={{ transform: `translateX(-${currentIndex * 317}px)` }}
           >
             {interestJobs.map((job) => (
@@ -56,7 +56,7 @@ function InterestAnnouncement({ userInfo }) {
             ))}
           </div>
         ) : (
-          <div className="reco_slider-wrapper">
+          <div className="interest_slider-wrapper">
             <div className="no_jobs">추천할 공고가 없습니다 🙏</div>
           </div>
         )}
