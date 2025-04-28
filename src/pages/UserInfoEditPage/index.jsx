@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import { validateEmail, validatePassword, isValidPhone } from '@/utils/validation';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { logoutUserApi } from '@/apis/authApi';
+import { INTEREST_OPTIONS } from '@/utils/signUpInfoOptions';
 import { LiaEyeSolid, LiaEyeSlashSolid } from 'react-icons/lia';
 import LabeledInput from '@/components/common/LabeledInput';
-import { validateEmail, validatePassword, isValidPhone } from '@/utils/validation';
-import { INTEREST_OPTIONS } from '@/utils/signUpInfoOptions';
-import './UserInfoEditPage.scss';
 import axiosInstance from '@/apis/axiosInstance';
 import Modal from '@/components/Modal';
-import { logoutUserApi } from '@/apis/authApi';
+import './UserInfoEditPage.scss';
 
 const MAX_PHONE_LENGTH = 11;
 
 const UserInfoEditPage = () => {
+  const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordCheck, setShowPasswordCheck] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: '',
@@ -23,10 +27,6 @@ const UserInfoEditPage = () => {
     gender: '',
     interests: [],
   });
-  const [errors, setErrors] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordCheck, setShowPasswordCheck] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState({
     title: '',
     description: '',
@@ -44,8 +44,6 @@ const UserInfoEditPage = () => {
 
   const location = useLocation();
   const { userId } = location.state;
-
-  console.log('userEdit의 유저ID', userId);
 
   useEffect(() => {
     const fetchUserPersonalInfo = async () => {
@@ -238,7 +236,6 @@ const UserInfoEditPage = () => {
             <span className="eye_icon" onClick={() => setShowPassword(!showPassword)}>
               {showPassword ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
             </span>
-            {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
           </div>
 
           <div className="form_group password_row">
@@ -254,7 +251,6 @@ const UserInfoEditPage = () => {
             <span className="eye_icon" onClick={() => setShowPasswordCheck(!showPasswordCheck)}>
               {showPasswordCheck ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
             </span>
-            {errors.passwordCheck && <ErrorMessage>{errors.passwordCheck}</ErrorMessage>}
           </div>
 
           <LabeledInput
@@ -321,7 +317,6 @@ const UserInfoEditPage = () => {
                 </button>
               ))}
             </div>
-            {errors.interests && <ErrorMessage>{errors.interests}</ErrorMessage>}
           </section>
         </div>
 
