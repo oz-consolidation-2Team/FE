@@ -20,6 +20,7 @@ const JobDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginPromptOpen, setLoginPromptOpen] = useState(false);
   const accessToken = localStorage.getItem('access_token');
+  const userType = localStorage.getItem('userType');
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -238,27 +239,29 @@ const JobDetail = () => {
         )}
       </section>
 
-      <div className="action">
-        <button
-          className="button"
-          onClick={() => {
-            if (!accessToken) {
-              setLoginPromptOpen(true);
-              return;
-            }
-            setIsModalOpen(true);
-          }}
-        >
-          지원하기
-        </button>
-        <div className="bookmark">
-          {isBookmarked ? (
-            <FaStar className="star_icon filled" onClick={handleBookmarkClick} />
-          ) : (
-            <FaRegStar className="star_icon" onClick={handleBookmarkClick} />
-          )}
+      {userType !== 'company' && (
+        <div className="action">
+          <button
+            className="button"
+            onClick={() => {
+              if (!accessToken) {
+                setLoginPromptOpen(true);
+                return;
+              }
+              setIsModalOpen(true);
+            }}
+          >
+            지원하기
+          </button>
+          <div className="bookmark">
+            {isBookmarked ? (
+              <FaStar className="star_icon filled" onClick={handleBookmarkClick} />
+            ) : (
+              <FaRegStar className="star_icon" onClick={handleBookmarkClick} />
+            )}
+          </div>
         </div>
-      </div>
+      )}
       {isModalOpen && (
         <JobApplyModal
           onClose={() => setIsModalOpen(false)}
