@@ -21,7 +21,7 @@ const UserInfoEditPage = () => {
     name: '',
     email: '',
     password: '',
-    passwordCheck: '',
+    current_password: '',
     phone: '',
     birth: '',
     gender: '',
@@ -86,7 +86,7 @@ const UserInfoEditPage = () => {
       if (name === 'name' && val) delete next.name;
       if (name === 'email' && validateEmail(val)) delete next.email;
       if (name === 'password' && validatePassword(val)) delete next.password;
-      if (name === 'passwordCheck' && val === form.password) delete next.passwordCheck;
+      if (name === 'current_password' && val === form.password) delete next.current_password;
       if (name === 'gender' && val) delete next.gender;
       return next;
     });
@@ -123,12 +123,19 @@ const UserInfoEditPage = () => {
     console.log('[회원 정보 수정 됨] handleFinalSubmit 실행됨 ✅');
 
     try {
-      await axiosInstance.patch(`/user/${userId}`, {
+      const payload = {
         phone_number: form.phone,
-        password: form.password,
-        password_check: form.passwordCheck,
         interests: form.interests,
-      });
+      };
+
+      // 비밀번호 입력했을 때만 포함
+      if (form.current_password && form.password) {
+        payload.current_password = form.current_password;
+        payload.password = form.password;
+      }
+
+      await axiosInstance.patch(`/user/${userId}`, payload);
+
       openModal({
         title: '수정 완료',
         description: '회원 정보가 정상적으로 수정되었습니다!',
@@ -208,7 +215,13 @@ const UserInfoEditPage = () => {
 
   return (
     <div className="userinfo_edit_page">
-      <div className="userinfo_edit_card">
+      <form
+        className="userinfo_edit_card"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleFinalSubmit();
+        }}
+      >
         <div className="userinfo_warpper">
           <div className="signup_title">
             <h2>회원 정보 수정</h2>
@@ -224,14 +237,14 @@ const UserInfoEditPage = () => {
           </div>
 
           <div className="form_group password_row">
-            <label>이전 비밀번호</label>
+            <label htmlFor="current_password">이전 비밀번호</label>
             <input
               type={showPassword ? 'text' : 'password'}
-              name="password"
-              value={form.password}
+              name="current_password"
+              value={form.current_password}
               onChange={handleChange}
               placeholder="이전 비밀번호를 입력해주세요"
-              className={errors.password ? 'error' : ''}
+              className={errors.current_password ? 'error' : ''}
             />
             <span className="eye_icon" onClick={() => setShowPassword(!showPassword)}>
               {showPassword ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
@@ -239,14 +252,14 @@ const UserInfoEditPage = () => {
           </div>
 
           <div className="form_group password_row">
-            <label>새로운 비밀번호</label>
+            <label htmlFor="password">새로운 비밀번호</label>
             <input
               type={showPasswordCheck ? 'text' : 'password'}
-              name="passwordCheck"
-              value={form.passwordCheck}
+              name="password"
+              value={form.password}
               onChange={handleChange}
               placeholder="새로운 비밀번호를 입력해주세요"
-              className={errors.passwordCheck ? 'error' : ''}
+              className={errors.password ? 'error' : ''}
             />
             <span className="eye_icon" onClick={() => setShowPasswordCheck(!showPasswordCheck)}>
               {showPasswordCheck ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
@@ -309,6 +322,7 @@ const UserInfoEditPage = () => {
             <div className="checkbox_grid">
               {INTEREST_OPTIONS.map((item) => (
                 <button
+                  type="button"
                   key={item}
                   className={`check_btn ${form.interests.includes(item) ? 'selected' : ''}`}
                   onClick={() => toggleMultiSelect('interests', item, 3)}
@@ -321,14 +335,14 @@ const UserInfoEditPage = () => {
         </div>
 
         <div className="button_group">
-          <button className="info_edit_btn" onClick={handleFinalSubmit}>
+          <button className="info_edit_btn" type="submit">
             회원 정보 수정 하기
           </button>
           <button className="account_deletion" onClick={handleUserDelete}>
             회원 탈퇴
           </button>
         </div>
-      </div>
+      </form>
       <Modal
         isOpen={isModalOpen}
         onClose={closeModal}

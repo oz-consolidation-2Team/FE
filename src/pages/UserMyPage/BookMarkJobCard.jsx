@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaRegStar, FaStar } from 'react-icons/fa';
+import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import '../UserMyPage/JobRecommend/JobRecommend.scss';
 import { bookmarkJobPropsType } from '@/utils/UserMyPagePropTypes';
 
@@ -14,17 +14,17 @@ const BookmarkJobCard = ({ job }) => {
     <>
       <div className="job_card" key={job.id}>
         <div className="job_top">
-          <span className="company">{job.job_posting_id.company_id}</span>
+          <p className="company">{job.job_posting_id.company_id}</p>
           <h3 className="title">{job.job_posting_id.title}</h3>
-          <span className="date">{job.job_posting_id.deadline_at}</span>
+          <p className="date">{job.job_posting_id.deadline_at}</p>
+          <p className="location">{job.job_posting_id.work_address}</p>
         </div>
         <div className="job_bottom">
           {isBookmarked ? (
-            <FaStar className="star_icon filled" onClick={toggleBookmark} />
+            <FaBookmark className="star_icon filled" onClick={toggleBookmark} />
           ) : (
-            <FaRegStar className="star_icon" onClick={toggleBookmark} />
+            <FaRegBookmark className="star_icon" onClick={toggleBookmark} />
           )}
-          <span className="location">{job.job_posting_id.work_address}</span>
         </div>
       </div>
     </>

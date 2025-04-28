@@ -15,17 +15,9 @@ function UserMyPage() {
     const fetchUserInfo = async () => {
       try {
         const response = await axiosInstance.get('/user/me');
+        const userInfo = response.data;
 
-        const userId = response.data.id;
-
-        try {
-          const res = await axiosInstance.get(`/user/${userId}`);
-
-          const userInfoRes = res.data.data;
-          setUserInfo(userInfoRes);
-        } catch (err) {
-          console.error('유저 정보 불러오기 실패:', err);
-        }
+        setUserInfo(userInfo);
       } catch (err) {
         console.error('유저 정보 불러오기 실패:', err);
       }
@@ -34,8 +26,7 @@ function UserMyPage() {
     fetchUserInfo();
   }, []);
 
-  console.log();
-
+  console.log('UserInfo', userInfo);
   if (!userInfo) return <div>로딩 중...</div>;
 
   return (
