@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
-import '../UserMyPage/JobRecommend/JobRecommend.scss';
+import './AgePopularity.scss';
 import { bookmarkJobPropsType } from '@/utils/UserMyPagePropTypes';
 
-const BookmarkJobCard = ({ job }) => {
+const AgePopularityCard = ({ job }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   const toggleBookmark = () => {
@@ -31,7 +31,7 @@ const BookmarkJobCard = ({ job }) => {
   );
 };
 
-BookmarkJobCard.propTypes = {
+AgePopularityCard.propTypes = {
   job: bookmarkJobPropsType.isRequired,
 };
-export default BookmarkJobCard;
+export default AgePopularityCard;

@@ -26,7 +26,6 @@ function UserMyPage() {
     fetchUserInfo();
   }, []);
 
-  console.log('UserInfo', userInfo);
   if (!userInfo) return <div>로딩 중...</div>;
 
   return (

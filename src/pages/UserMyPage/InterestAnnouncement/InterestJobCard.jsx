@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
-import '../UserMyPage/JobRecommend/JobRecommend.scss';
+import './InterestAnnouncement.scss';
 import { bookmarkJobPropsType } from '@/utils/UserMyPagePropTypes';
 
-const BookmarkJobCard = ({ job }) => {
+const InterestJobCard = ({ job }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   const toggleBookmark = () => {
@@ -14,10 +14,10 @@ const BookmarkJobCard = ({ job }) => {
     <>
       <div className="job_card" key={job.id}>
         <div className="job_top">
-          <p className="company">{job.work_place_name}</p>
+          <p className="company">{job.company_name}</p>
           <h3 className="title">{job.title}</h3>
           <p className="date">{job.recruit_period_end}</p>
-          <p className="location">{job.work_address}</p>
+          <p className="location">{job.location}</p>
         </div>
         <div className="job_bottom">
           {isBookmarked ? (
@@ -31,7 +31,7 @@ const BookmarkJobCard = ({ job }) => {
   );
 };
 
-BookmarkJobCard.propTypes = {
+InterestJobCard.propTypes = {
   job: bookmarkJobPropsType.isRequired,
 };
-export default BookmarkJobCard;
+export default InterestJobCard;

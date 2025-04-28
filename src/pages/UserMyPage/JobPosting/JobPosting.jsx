@@ -18,8 +18,6 @@ function JobPosting({ userInfo }) {
       try {
         const response = await axiosInstance.get(`/applications`);
 
-        console.log(response.data);
-
         setAppliedJobs(response.data);
       } catch (err) {
         if (err.response?.status === 422) {

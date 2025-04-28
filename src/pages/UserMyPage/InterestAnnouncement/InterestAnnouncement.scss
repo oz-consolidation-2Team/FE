@@ -28,6 +28,7 @@
     }
   }
   /* 슬라이더 구조*/
+
   .interest_slider-container {
     width: 98%;
     overflow: hidden;
@@ -39,6 +40,17 @@
       justify-content: center;
       gap: 17px;
       transition: transform 0.3s ease;
+      width: 100%;
+      .no_jobs {
+        min-width: 940px; // (300px * 3 카드 + 여유 간격 정도 맞춰서)
+        padding: 60px 0;
+        background-color: $light-orange;
+        border: 1px dashed #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        color: #999;
+        text-align: center;
+      }
 
       .job_card {
         min-width: 300px;
@@ -57,6 +69,10 @@
         }
 
         .job_top {
+          display: flex;
+          flex-direction: column;
+          width: 100%; // ⭐️ 이거 추가!!
+
           .company {
             font-size: 15px;
             color: $gray-text;
@@ -68,12 +84,16 @@
             font-weight: 600;
             color: $gray-dark;
             margin-bottom: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
           }
 
           .date {
             font-size: 13px;
             color: #999;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
           }
 
           .location {
@@ -90,7 +110,7 @@
 
           .star_icon {
             position: relative;
-            left: 5.8rem;
+            left: 6rem;
             bottom: 4rem;
             font-size: 22px;
             cursor: pointer;
