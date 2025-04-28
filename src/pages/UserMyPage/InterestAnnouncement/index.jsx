@@ -42,8 +42,14 @@ function InterestAnnouncement({ userInfo }) {
     <section className="interest_announcement">
       <h3 className="interest_announcement_title">{userInfo.name}님 관심있을 만한 공고</h3>
       <div className="interest_announcement_btn_group">
-        <HiArrowCircleLeft className="interest_left_btn" onClick={handlerPrev} />
-        <HiArrowCircleRight className="interest_right_btn" onClick={handlerNext} />
+        <HiArrowCircleLeft
+          className={`interest_left_btn ${currentIndex === 0 ? 'disabled' : ''}`}
+          onClick={handlerPrev}
+        />
+        <HiArrowCircleRight
+          className={`interest_right_btn ${currentIndex >= maxIndex ? 'disabled' : ''}`}
+          onClick={handlerNext}
+        />
       </div>
       <div className="interest_slider-container">
         {interestJobs.length > 0 ? (

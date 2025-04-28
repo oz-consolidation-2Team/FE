@@ -26,6 +26,12 @@
       cursor: pointer;
       color: $green;
     }
+    .interest_left_btn.disabled,
+    .interest_right_btn.disabled {
+      opacity: 0.4; /* 흐릿하게 */
+      cursor: not-allowed; /* 클릭 불가 느낌 */
+      pointer-events: none; /* 아예 클릭 못 하게 막을 수도 있음 */
+    }
   }
   /* 슬라이더 구조*/
 

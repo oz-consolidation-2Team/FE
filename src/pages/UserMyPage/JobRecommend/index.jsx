@@ -42,8 +42,14 @@ function JobRecommend({ userInfo }) {
     <section className="job_recommend">
       <h3 className="job_recommend_title">{userInfo.name}님이 즐겨찾기한 공고</h3>
       <div className="job_recommend_btn_group">
-        <HiArrowCircleLeft className="reco_left_btn" onClick={handlerPrev} />
-        <HiArrowCircleRight className="reco_right_btn" onClick={handlerNext} />
+        <HiArrowCircleLeft
+          className={`reco_left_btn ${currentIndex === 0 ? 'disabled' : ''}`}
+          onClick={handlerPrev}
+        />
+        <HiArrowCircleRight
+          className={`reco_right_btn ${currentIndex >= maxIndex ? 'disabled' : ''}`}
+          onClick={handlerNext}
+        />
       </div>
       <div className="reco_slider-container">
         {recommendJobs.length > 0 ? (
