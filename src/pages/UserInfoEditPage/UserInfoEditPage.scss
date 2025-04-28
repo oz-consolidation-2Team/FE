@@ -1,0 +1,205 @@
+@use '@/utils/variables' as *;
+
+.userinfo_edit_page {
+  background-color: $light-green;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px 16px;
+
+  .userinfo_edit_card {
+    margin-top: 40px;
+    max-width: 720px;
+    width: 100%;
+    background: white;
+    padding: 40px 40px;
+    border-radius: 15px;
+  }
+
+  .signup_title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 60px;
+
+    .icon {
+      font-size: 28px;
+      color: $green;
+    }
+
+    h2 {
+      font-size: 30px;
+      font-weight: 750;
+      margin-top: 30px;
+      color: $green;
+    }
+  }
+
+  .password_row {
+    position: relative;
+
+    .eye_icon {
+      position: absolute;
+      right: 12px;
+      top: 36px;
+      font-size: 20px;
+      color: #999;
+      cursor: pointer;
+      z-index: 1;
+
+      &:hover {
+        color: $green;
+      }
+    }
+  }
+
+  .input_row {
+    display: flex;
+    gap: 8px;
+
+    input {
+      flex: 1;
+    }
+
+    button {
+      padding: 0 14px;
+      height: 48px;
+      font-size: 13px;
+      background-color: $green;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $deep-green;
+      }
+    }
+  }
+
+  .gender_group {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+
+    button {
+      flex: 1;
+      height: 44px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #fff;
+      cursor: pointer;
+      font-size: 14px;
+
+      &.selected {
+        background-color: $green;
+        color: white;
+        border-color: $green;
+      }
+
+      // &:hover {
+      //   background-color: $light-green;
+      //   color: $deep-green;
+      // }
+    }
+  }
+  .options_wrapper {
+    margin-top: 60px;
+    padding-top: 60px;
+    padding-bottom: 3px;
+    border-top: 1px solid $border-color;
+    .section_box {
+      margin-bottom: 32px;
+
+      .section_title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: $deep-green;
+
+        span {
+          font-size: 13px;
+          font-weight: normal;
+          color: #888;
+          margin-left: 6px;
+        }
+      }
+
+      .error_msg {
+        font-size: 13px;
+        color: #e53935;
+        margin-top: 6px;
+      }
+    }
+
+    .checkbox_grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .check_btn {
+      padding: 10px 16px;
+      border: 1px solid #ccc;
+      background: #f5f5f5;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s ease;
+
+      &.selected {
+        background-color: $green;
+        color: white;
+        border-color: $green;
+      }
+
+      &:hover {
+        background-color: $light-green;
+        color: $deep-green;
+      }
+    }
+  }
+
+  .button_group {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .info_edit_btn {
+      flex: 1;
+      height: 48px;
+      width: 100%;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s ease;
+
+      background-color: $green;
+      color: white;
+
+      &:hover {
+        background-color: $deep-green;
+      }
+
+      &:disabled {
+        background-color: #ddd;
+        cursor: not-allowed;
+      }
+    }
+
+    .account_deletion {
+      margin-top: 10px;
+      font-size: 13px;
+      color: $light-gray-text;
+      border: none;
+      background-color: #fff;
+    }
+  }
+}

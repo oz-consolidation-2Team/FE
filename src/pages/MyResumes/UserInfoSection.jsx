@@ -19,6 +19,16 @@ function UserInfoSection({ data, setData }) {
 
   const handleUserAddImage = (e) => {
     const file = e.target.files[0];
+
+    if (!file) return;
+
+    const maxSize = 1 * 1024 * 1024; // 5MB
+
+    if (file.size > maxSize) {
+      alert('이미지 용량은 1MB 이하로 등록해주세요!');
+      return;
+    }
+
     if (file) {
       const previewUrl = URL.createObjectURL(file);
 

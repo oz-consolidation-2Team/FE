@@ -26,17 +26,14 @@ function CareerSection({ data, setData }) {
     const { company_name, position, start_date, end_date, description } = fixedExperiences;
 
     const isFilled = company_name && position && start_date && end_date && description;
-
     if (!start_date || !end_date) {
-      return '경력 시작일과 종료일을 모두 입력해주세요';
+      return alert('경력 시작일과 종료일을 모두 입력해주세요!');
     }
     if (start_date > end_date) {
-      return '경력 시작일은 종료일보다 빠를 수 없습니다';
+      return alert('경력 시작일은 종료일보다 빠를 수 없습니다!');
     }
-
     if (!isFilled) {
-      alert('모든 항목을 입력해야 새로운 항목을 추가할 수 있어요!');
-      return;
+      return alert('모든 항목을 입력해야 새로운 항목을 추가할 수 있어요!');
     }
 
     setExperiences([...experiences, fixedExperiences]);
