@@ -27,9 +27,8 @@ jobs:
           echo "VITE_WORK24_API_KEY=${{secrets.VITE_WORK24_API_KEY}}" >> .env
           echo "VITE_WORK24_URL=${{secrets.VITE_WORK24_URL}}" >> .env
           echo "VITE_KAKAO_MAP_KEY=${{secrets.VITE_KAKAO_MAP_KEY}}" >> .env
-          echo "VITE_KAKAO_CLIENT_ID=${{secrets.VITE_KAKAO_CLIENT_ID}}" >> .envㄴ
-        #  echo "VITE_KAKAO_REDIRECT_URI=${{ secrets.DEV_KAKAO_REDIRECT_URI }}" >> .env
-        #  echo "VITE_KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" >> .env
+          echo "VITE_KAKAO_CLIENT_ID=${{secrets.VITE_KAKAO_CLIENT_ID}}" >> .env
+          echo "VITE_KAKAO_REDIRECT_URI=${{ secrets.VITE_KAKAO_REDIRECT_URI }}" >> .env
         #  echo "VITE_NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}" >> .env
         #  echo "VITE_NAVER_REDIRECT_URI=${{ secrets.DEV_NAVER_REDIRECT_URI }}" >> .env
         #  echo "VITE_NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}" >> .env
