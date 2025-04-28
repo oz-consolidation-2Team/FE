@@ -27,13 +27,13 @@
 
     .icon {
       font-size: 28px;
-      color: $orange;
+      color: $green;
     }
 
     h2 {
       font-size: 30px;
       font-weight: 750;
-      color: $orange;
+      color: $green;
     }
   }
 
@@ -57,7 +57,7 @@
       white-space: nowrap;
 
       &.active {
-        background-color: $orange;
+        background-color: $green;
         color: white;
       }
     }
@@ -82,7 +82,7 @@
       z-index: 1;
 
       &:hover {
-        color: $orange;
+        color: $green;
       }
     }
   }
@@ -99,14 +99,14 @@
       padding: 0 14px;
       height: 48px;
       font-size: 13px;
-      background-color: $orange;
+      background-color: $green;
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
 
       &:hover {
-        background-color: $deep-orange;
+        background-color: $deep-green;
       }
     }
   }
@@ -126,14 +126,15 @@
       font-size: 14px;
 
       &.selected {
-        background-color: $orange;
-        border-color: $orange;
+        background-color: $green;
+        border-color: $green;
         color: white;
       }
 
       &:hover {
-        border-color: $orange;
-        color: $orange;
+        background-color: $green;
+        border-color: $green;
+        color: white;
       }
     }
   }
@@ -179,9 +180,9 @@
     transition: 0.2s ease;
 
     &.selected {
-      background-color: $orange;
+      background-color: $green;
       color: white;
-      border-color: $orange;
+      border-color: $green;
     }
 
     &:hover {
@@ -211,8 +212,8 @@
         transition: all 0.2s ease;
   
         &:checked {
-          background-color: $orange;
-          border-color: $orange;
+          background-color: $green;
+          border-color: $green;
         }
   
         &:checked::after {
@@ -229,7 +230,7 @@
   
         &:focus {
           outline: none;
-          box-shadow: 0 0 0 2px rgba($orange, 0.3);
+          box-shadow: 0 0 0 2px rgba($green, 0.3);
         }
       }
   
@@ -242,7 +243,7 @@
   
       .view_detail {
         font-size: 12px;
-        color: $orange;
+        color: $green;
         background: none;
         border: none;
         cursor: pointer;
@@ -300,11 +301,11 @@
     }
 
     .next_btn {
-      background-color: $orange;
+      background-color: $green;
       color: white;
 
       &:hover {
-        background-color: $deep-orange;
+        background-color: $deep-green;
       }
 
       &:disabled {

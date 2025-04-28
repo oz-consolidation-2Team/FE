@@ -16,7 +16,10 @@ import {
 } from '@/utils/validation';
 import { useNavigate } from 'react-router-dom';
 import './CompanySignUpPage.scss';
-import { signUpCompanyApi } from '@/apis/authApi';
+import {
+  signUpCompanyApi,
+  checkCompanyEmailApi,
+} from '@/apis/authApi';
 
 const CompanySignUpPage = () => {
   const navigate = useNavigate();
@@ -62,7 +65,10 @@ const CompanySignUpPage = () => {
 
     setErrors((prev) => {
       const next = { ...prev };
-      if (name === 'email' && validateEmail(value)) delete next.email;
+      if (name === 'email') {
+        if (validateEmail(value)) delete next.email;
+        setEmailChecked(false);
+      }
       if (name === 'password' && value && validateCompanyStep0({ ...form, password: value }, true).password === undefined) delete next.password;
       if (name === 'passwordCheck' && value === form.password) delete next.passwordCheck;
       if (name === 'companyName' && value) delete next.companyName;
@@ -113,19 +119,22 @@ const CompanySignUpPage = () => {
     }
   };
 
-  const handleEmailCheck = () => {
+  const handleEmailCheck = async () => {
     if (!validateEmail(form.email)) {
       setErrors((prev) => ({ ...prev, email: '이메일 형식이 올바르지 않습니다.' }));
       return;
     }
-
-    const isDuplicate = form.email === 'test@company.com';
-    if (isDuplicate) {
-      showModal('error', '중복된 이메일', '이미 등록된 이메일입니다.');
-    } else {
+  
+    try {
+      await checkCompanyEmailApi(form.email);
+  
       showModal('success', '사용 가능', '사용 가능한 이메일입니다.', () => {
         setEmailChecked(true);
       });
+    } catch (err) {
+      const message = err.response?.data?.message || '이미 등록된 이메일입니다.';
+      showModal('error', '중복된 이메일', message);
+      setEmailChecked(false);
     }
   };
 
