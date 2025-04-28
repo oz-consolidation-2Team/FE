@@ -1,10 +1,11 @@
 import axiosInstance from "./axiosInstance";
+import axiosPublicInstance from "./axiosPublicInstance";
 
 // 개인 회원가입 API
 export const signUpUserApi = async (form) => {
   console.log('[회원가입 요청]', '/user/register');
 
-  const response = await axiosInstance.post('/user/register', {
+  const response = await axiosPublicInstance.post('/user/register', {
     name: form.name,
     email: form.email,
     password: form.password,
@@ -30,7 +31,7 @@ export const checkUserEmailApi = async (email) => {
 // 개인 로그인 API
 export const loginUserApi = async (email, password) => {
 
-  const response = await axiosInstance.post('/user/login', {
+  const response = await axiosPublicInstance.post('/user/login', {
     email,
     password,
   });
@@ -52,7 +53,7 @@ export const logoutUserApi = async () => {
 
 // 기업 회원가입 API
 export const signUpCompanyApi = async (form) => {
-  const response = await axiosInstance.post('/company/register',
+  const response = await axiosPublicInstance.post('/company/register',
     {
     email: form.email,
     password: form.password,
@@ -81,7 +82,7 @@ export const checkCompanyEmailApi = async (email) => {
 // 기업 로그인 API
 export const loginCompanyApi = async ({ email, password }) => {
 
-  const response = await axiosInstance.post('/company/login', {
+  const response = await axiosPublicInstance.post('/company/login', {
     email,
     password,
   });
