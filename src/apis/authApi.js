@@ -70,6 +70,14 @@ export const signUpCompanyApi = async (form) => {
   return response.data;
 };
 
+// 기업 회원가입 이메일 중복확인 API
+export const checkCompanyEmailApi = async (email) => {
+  const response = await axiosInstance.get(`/company/register/check-email`, {
+    params: { email },
+  });
+  return response.data;
+};
+
 // 기업 로그인 API
 export const loginCompanyApi = async ({ email, password }) => {
 

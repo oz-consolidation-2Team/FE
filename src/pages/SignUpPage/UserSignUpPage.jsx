@@ -52,7 +52,10 @@ const UserSignUpPage = () => {
     setErrors((prev) => {
       const next = { ...prev };
       if (name === 'name' && val) delete next.name;
-      if (name === 'email' && validateEmail(val)) delete next.email;
+      if (name === 'email') {
+        if (validateEmail(val)) delete next.email;
+        setEmailChecked(false);
+      }
       if (name === 'password' && validatePassword(val)) delete next.password;
       if (name === 'passwordCheck' && val === form.password) delete next.passwordCheck;
       if (name === 'gender' && val) delete next.gender;
@@ -86,6 +89,7 @@ const UserSignUpPage = () => {
       const result = await checkUserEmailApi(form.email);
   
       if (result.is_duplicate) {
+        setEmailChecked(false);
         setModal({
           type: 'error',
           title: '중복된 이메일',
@@ -96,6 +100,7 @@ const UserSignUpPage = () => {
           }
         });
       } else {
+        setEmailChecked(true);
         setModal({
           type: 'success',
           title: '사용 가능',
@@ -107,6 +112,7 @@ const UserSignUpPage = () => {
         });
       }
     } catch (err) {
+      setEmailChecked(false);
       console.error('이메일 중복확인 실패', err);
       setModal({
         type: 'error',
@@ -138,13 +144,6 @@ const UserSignUpPage = () => {
     return newErrors;
   };
 
-  const handleNext = () => {
-    const newErrors = validateStep1();
-    if (newErrors === null) return;
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length === 0) setStep(1);
-  };
-
   const validateStep2 = () => {
     const newErrors = {};
     if (form.interests.length === 0) newErrors.interests = '관심 분야를 선택해주세요.';
@@ -153,14 +152,58 @@ const UserSignUpPage = () => {
     return newErrors;
   };
 
+  const validateStep3 = () => {
+    if (!form.terms1 || !form.terms2 || !form.terms3) {
+      return { agree: '필수 약관에 모두 동의해주세요.' };
+    }
+    return {};
+  };
+
+  const handleNext = () => {
+    const newErrors = validateStep1();
+    if (newErrors === null) return;
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length === 0) setStep(1);
+  };
+
   const handleSubmit = () => {
     const newErrors = validateStep2();
     setErrors(newErrors);
-    if (Object.keys(newErrors).length === 0) {
-      setStep(2);
-    }
+    if (Object.keys(newErrors).length === 0) setStep(2);
   };
   
+  const handleFinalSubmit = async () => {
+    const error = validateStep3();
+    setErrors(error);
+    if (Object.keys(error).length > 0) return;
+  
+    try {
+      await signUpUserApi(form);
+      setModal({
+        type: 'success',
+        title: '회원가입 완료',
+        message: '정상적으로 회원가입이 완료되었습니다.',
+        onConfirm: () => {
+          setModal(null);
+          navigate('/login');
+        },
+      });
+    } catch (err) {
+      setModal({
+        type: 'error',
+        title: '회원가입 실패',
+        message: err.response?.data?.message || '회원가입 중 오류가 발생했습니다.',
+        onConfirm: () => setModal(null),
+      });
+    }
+  };
+
+  const handleSubmitByStep = (e) => {
+    e.preventDefault();
+    if (step === 0) handleNext();
+    else if (step === 1) handleSubmit();
+    else if (step === 2) handleFinalSubmit();
+  };
 
   const toggleMultiSelect = (field, item, limit = null) => {
     setForm((prev) => {
@@ -192,301 +235,194 @@ const UserSignUpPage = () => {
     }));
   };
 
-  const validateStep3 = () => {
-    if (!form.terms1 || !form.terms2 || !form.terms3) {
-      return { agree: '필수 약관에 모두 동의해주세요.' };
-    }
-    return {};
-  };
-
-  const handleFinalSubmit = async () => {
-    console.log('[회원가입] handleFinalSubmit 실행됨 ✅');
-    
-    const error = validateStep3();
-    setErrors(error);
-    if (Object.keys(error).length > 0) return;
-  
-    try {
-      await signUpUserApi(form);
-      setModal({
-        type: 'success',
-        title: '회원가입 완료',
-        message: '정상적으로 회원가입이 완료되었습니다.',
-        onConfirm: () => {
-          setModal(null);
-          navigate('/login');
-        },
-      });
-    } catch (err) {
-      setModal({
-        type: 'error',
-        title: '회원가입 실패',
-        message: err.response?.data?.message || '회원가입 중 오류가 발생했습니다.',
-        onConfirm: () => setModal(null),
-      });
-    }
-  };
-  
-
   return (
     <div className="user_signup_page">
       <div className="signup_card">
-        <div className="step_indicator">
-          <div className={`step ${step === 0 ? 'active' : ''}`}>1단계: 기본 정보</div>
-          <div className="step_line" />
-          <div className={`step ${step === 1 ? 'active' : ''}`}>2단계: 관심 분야</div>
-          <div className="step_line" />
-          <div className={`step ${step === 2 ? 'active' : ''}`}>3단계: 약관 동의</div>
-        </div>
+        <form onSubmit={handleSubmitByStep}>
+          <div className="step_indicator">
+            <div className={`step ${step === 0 ? 'active' : ''}`}>1단계: 기본 정보</div>
+            <div className="step_line" />
+            <div className={`step ${step === 1 ? 'active' : ''}`}>2단계: 관심 분야</div>
+            <div className="step_line" />
+            <div className={`step ${step === 2 ? 'active' : ''}`}>3단계: 약관 동의</div>
+          </div>
 
-        <div className="signup_title">
-          <FaUser className="icon" />
-          <h2>개인 회원가입</h2>
-        </div>
+          <div className="signup_title">
+            <FaUser className="icon" />
+            <h2>개인 회원가입</h2>
+          </div>
 
-        {step === 0 && (
-          <>
-            <LabeledInput
-              label="이름"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="이름을 입력해 주세요"
-              error={errors.name}
-            />
-
-            <div className="form_group">
-              <label>이메일</label>
-              <div className="input_row">
-                <input name="email" value={form.email} onChange={handleChange} className={errors.email ? 'error' : ''} />
-                <button type="button" onClick={handleEmailCheck}>중복확인</button>
+          {step === 0 && (
+            <>
+              <LabeledInput label="이름" name="name" value={form.name} onChange={handleChange} placeholder="이름을 입력해 주세요" error={errors.name} />
+              
+              <div className="form_group">
+                <label>이메일</label>
+                <div className="input_row">
+                  <input
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    className={errors.email ? 'error' : ''}
+                    autoComplete="username"
+                  />
+                  <button type="button" onClick={handleEmailCheck}>중복확인</button>
+                </div>
+                {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
               </div>
-              {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
-            </div>
 
-            <div className="form_group password_row">
-              <label>비밀번호</label>
-              <input
-                type={showPassword ? 'text' : 'password'}
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-                placeholder="영문+숫자+특수문자 8자 이상"
-                className={errors.password ? 'error' : ''}
-              />
-              <span className="eye_icon" onClick={() => setShowPassword(!showPassword)}>
-                {showPassword ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
-              </span>
-              {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
-            </div>
-
-            <div className="form_group password_row">
-              <label>비밀번호 확인</label>
-              <input
-                type={showPasswordCheck ? 'text' : 'password'}
-                name="passwordCheck"
-                value={form.passwordCheck}
-                onChange={handleChange}
-                className={errors.passwordCheck ? 'error' : ''}
-              />
-              <span className="eye_icon" onClick={() => setShowPasswordCheck(!showPasswordCheck)}>
-                {showPasswordCheck ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
-              </span>
-              {errors.passwordCheck && <ErrorMessage>{errors.passwordCheck}</ErrorMessage>}
-            </div>
-
-            <LabeledInput
-              label="전화번호"
-              name="phone"
-              value={form.phone}
-              onChange={handlePhoneChange}
-              placeholder="숫자만 입력해 주세요"
-              error={errors.phone}
-              inputMode="numeric"
-            />
-
-            <LabeledInput
-              label="생년월일"
-              name="birth"
-              value={form.birth}
-              onChange={handleBirthChange}
-              placeholder="숫자만 입력해 주세요"
-              error={errors.birth}
-              inputMode="numeric"
-            />
-            
-
-            <div className="form_group">
-              <label>성별</label>
-              <div className="gender_group">
-                <button
-                  type="button"
-                  className={form.gender === '남성' ? 'selected' : ''}
-                  onClick={() => {
-                    setForm((prev) => ({ ...prev, gender: '남성' }));
-                    setErrors((prev) => {
-                      const next = { ...prev };
-                      delete next.gender;
-                      return next;
-                    });
-                  }}
-                >
-                  남성
-                </button>
-                <button
-                  type="button"
-                  className={form.gender === '여성' ? 'selected' : ''}
-                  onClick={() => {
-                    setForm((prev) => ({ ...prev, gender: '여성' }));
-                    setErrors((prev) => {
-                      const next = { ...prev };
-                      delete next.gender;
-                      return next;
-                    });
-                  }}
-                >
-                  여성
-                </button>
+              <div className="form_group password_row">
+                <label>비밀번호</label>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  placeholder="영문+숫자+특수문자 8자 이상"
+                  className={errors.password ? 'error' : ''}
+                  autoComplete="new-password"
+                />
+                <span className="eye_icon" onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
+                </span>
+                {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
               </div>
-              {errors.gender && <ErrorMessage>{errors.gender}</ErrorMessage>}
-            </div>
-            <div className="button_group">
-      <button className="next_btn" onClick={handleNext}>다음</button>
-    </div>
+
+              <div className="form_group password_row">
+                <label>비밀번호 확인</label>
+                <input
+                  type={showPasswordCheck ? 'text' : 'password'}
+                  name="passwordCheck"
+                  value={form.passwordCheck}
+                  onChange={handleChange}
+                  className={errors.passwordCheck ? 'error' : ''}
+                  autoComplete="new-password"
+                />
+                <span className="eye_icon" onClick={() => setShowPasswordCheck(!showPasswordCheck)}>
+                  {showPasswordCheck ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
+                </span>
+                {errors.passwordCheck && <ErrorMessage>{errors.passwordCheck}</ErrorMessage>}
+              </div>
+
+              <LabeledInput label="전화번호" name="phone" value={form.phone} onChange={handlePhoneChange} placeholder="숫자만 입력해 주세요" error={errors.phone} inputMode="numeric" />
+              <LabeledInput label="생년월일" name="birth" value={form.birth} onChange={handleBirthChange} placeholder="숫자만 입력해 주세요" error={errors.birth} inputMode="numeric" />
+
+              <div className="form_group">
+                <label>성별</label>
+                <div className="gender_group">
+                  <button
+                    type="button"
+                    className={form.gender === '남성' ? 'selected' : ''}
+                    onClick={() => { setForm((prev) => ({ ...prev, gender: '남성' })); setErrors((prev) => { const next = { ...prev }; delete next.gender; return next; }); }}
+                  >
+                    남성
+                  </button>
+                  <button
+                    type="button"
+                    className={form.gender === '여성' ? 'selected' : ''}
+                    onClick={() => { setForm((prev) => ({ ...prev, gender: '여성' })); setErrors((prev) => { const next = { ...prev }; delete next.gender; return next; }); }}
+                  >
+                    여성
+                  </button>
+                </div>
+                {errors.gender && <ErrorMessage>{errors.gender}</ErrorMessage>}
+              </div>
             </>
-        )}
+          )}
 
-        {step === 1 && (
-          <>
-            <section className="section_box">
-              <p className="section_title">관심 분야 <span>(최대 3개)</span></p>
-              <div className="checkbox_grid">
-                {INTEREST_OPTIONS.map((item) => (
-                  <button key={item} className={`check_btn ${form.interests.includes(item) ? 'selected' : ''}`} onClick={() => toggleMultiSelect('interests', item, 3)}>{item}</button>
-                ))}
+          {step === 1 && (
+            <>
+              <section className="section_box">
+                <p className="section_title">관심 분야 <span>(최대 3개)</span></p>
+                <div className="checkbox_grid">
+                  {INTEREST_OPTIONS.map((item) => (
+                    <button key={item} type="button" className={`check_btn ${form.interests.includes(item) ? 'selected' : ''}`} onClick={() => toggleMultiSelect('interests', item, 3)}>
+                      {item}
+                    </button>
+                  ))}
+                </div>
+                {errors.interests && <ErrorMessage>{errors.interests}</ErrorMessage>}
+              </section>
+
+              <section className="section_box">
+                <p className="section_title">가입 목적</p>
+                <div className="checkbox_grid">
+                  {PURPOSE_OPTIONS.map((item) => (
+                    <button key={item} type="button" className={`check_btn ${form.purposes.includes(item) ? 'selected' : ''}`} onClick={() => toggleMultiSelect('purposes', item)}>
+                      {item}
+                    </button>
+                  ))}
+                </div>
+                {errors.purposes && <ErrorMessage>{errors.purposes}</ErrorMessage>}
+              </section>
+
+              <section className="section_box">
+                <p className="section_title">유입 경로</p>
+                <div className="checkbox_grid">
+                  {CHANNEL_OPTIONS.map((item) => (
+                    <button key={item} type="button" className={`check_btn ${form.channels.includes(item) ? 'selected' : ''}`} onClick={() => toggleMultiSelect('channels', item)}>
+                      {item}
+                    </button>
+                  ))}
+                </div>
+                {errors.channels && <ErrorMessage>{errors.channels}</ErrorMessage>}
+              </section>
+            </>
+          )}
+
+          {step === 2 && (
+            <>
+              <div className="terms_step">
+                <div className="checkbox_row all_agree">
+                  <input type="checkbox" checked={form.termsAll} onChange={handleAllTermsToggle} />
+                  <label><strong>전체 약관 동의</strong></label>
+                </div>
+                <hr />
+                <div className="terms_section">
+                  <div className="terms_label">[필수] 약관 동의</div>
+                  {[1, 2, 3].map((n) => (
+                    <div className="checkbox_row" key={`terms${n}`}>
+                      <input type="checkbox" checked={form[`terms${n}`]} onChange={() => toggleCheck(`terms${n}`)} />
+                      <label>
+                        {n === 1 ? '개인정보처리방침' :
+                        n === 2 ? '개인회원 이용약관' :
+                        '위치기반 서비스 이용약관'}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+                <hr />
+                <div className="terms_section">
+                  <div className="terms_label">[선택] 약관 동의</div>
+                  {[4, 5, 6].map((n) => (
+                    <div className="checkbox_row" key={`terms${n}`}>
+                      <input type="checkbox" checked={form[`terms${n}`]} onChange={() => toggleCheck(`terms${n}`)} />
+                      <label>
+                        {n === 4 ? '마케팅 이메일 수신 동의' :
+                        n === 5 ? '마케팅 SMS 수신 동의' :
+                        '마케팅 Push 수신 동의'}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+                {errors.agree && <ErrorMessage>{errors.agree}</ErrorMessage>}
               </div>
-              {errors.interests && <ErrorMessage>{errors.interests}</ErrorMessage>}
-            </section>
+            </>
+          )}
 
-            <section className="section_box">
-              <p className="section_title">가입 목적</p>
-              <div className="checkbox_grid">
-                {PURPOSE_OPTIONS.map((item) => (
-                  <button key={item} className={`check_btn ${form.purposes.includes(item) ? 'selected' : ''}`} onClick={() => toggleMultiSelect('purposes', item)}>{item}</button>
-                ))}
-              </div>
-              {errors.purposes && <ErrorMessage>{errors.purposes}</ErrorMessage>}
-            </section>
-
-            <section className="section_box">
-              <p className="section_title">유입 경로</p>
-              <div className="checkbox_grid">
-                {CHANNEL_OPTIONS.map((item) => (
-                  <button key={item} className={`check_btn ${form.channels.includes(item) ? 'selected' : ''}`} onClick={() => toggleMultiSelect('channels', item)}>{item}</button>
-                ))}
-              </div>
-              {errors.channels && <ErrorMessage>{errors.channels}</ErrorMessage>}
-            </section>
-
-            <div className="button_group">
-              <button className="prev_btn" onClick={() => setStep(0)}>이전</button>
-              <button className="next_btn" onClick={handleSubmit}>다음</button>
-            </div>
-          </>
-        )}
-
-{step === 2 && (
-  <div className="terms_step">
-  {/* 전체 동의 맨 위로 */}
-  <div className="checkbox_row all_agree">
-    <input
-      type="checkbox"
-      checked={form.termsAll}
-      onChange={handleAllTermsToggle}
-    />
-    <label><strong>전체 약관 동의</strong></label>
-  </div>
-
-  <hr />
-
-  <div className="terms_section">
-    <div className="terms_label">[필수] 약관 동의</div>
-    {[1, 2, 3].map((n) => (
-      <div className="checkbox_row" key={`terms${n}`}>
-        <input
-          type="checkbox"
-          checked={form[`terms${n}`]}
-          onChange={() => toggleCheck(`terms${n}`)}
-        />
-        <label>
-          {n === 1 ? '개인정보처리방침' :
-           n === 2 ? '개인회원 이용약관' :
-           '위치기반 서비스 이용약관'}
-        </label>
-        <button
-          className="view_detail"
-          onClick={() => setModal({
-            type: 'term',
-            key: n === 1 ? 'privacy_policy.html' :
-                 n === 2 ? 'user_terms.html' :
-                 'location_terms.html'
-          })}
-        >
-          자세히 보기
-        </button>
+          <div className="button_group">
+            {step > 0 && (
+              <button type="button" className="prev_btn" onClick={() => setStep(step - 1)}>이전</button>
+            )}
+            <button type="submit" className="next_btn">
+              {step === 2 ? '회원가입 완료' : '다음'}
+            </button>
+          </div>
+        </form>
       </div>
-    ))}
-  </div>
-
-  <hr />
-
-  <div className="terms_section">
-    <div className="terms_label">[선택] 약관 동의</div>
-    {[4, 5, 6].map((n) => (
-      <div className="checkbox_row" key={`terms${n}`}>
-        <input
-          type="checkbox"
-          checked={form[`terms${n}`]}
-          onChange={() => toggleCheck(`terms${n}`)}
-        />
-        <label>
-          {n === 4 ? '마케팅 이메일 수신 동의' :
-           n === 5 ? '마케팅 SMS 수신 동의' :
-           '마케팅 Push 수신 동의'}
-        </label>
-      </div>
-    ))}
-  </div>
-
-  {errors.agree && <ErrorMessage>{errors.agree}</ErrorMessage>}
-
-  <div className="button_group">
-    <button className="prev_btn" onClick={() => setStep(1)}>이전</button>
-    <button className="next_btn" onClick={handleFinalSubmit}>회원가입 완료</button>
-  </div>
-</div>
-
-)}
-
-      </div>
-    {modal?.type === 'term' && (
-      <Modal
-      className="term_modal"
-      type="green"
-      title="약관 보기"
-      message={
-        <iframe
-          src={`/terms/${modal.key}`}
-          title="약관 보기"
-        />
-      }
-      onConfirm={() => setModal(null)}
-    />
-    )}
-
-    {modal?.type !== 'term' && modal && <Modal {...modal} />}
-  </div>
-);
+      {modal && <Modal {...modal} />}
+    </div>
+  );
 };
 
 export default UserSignUpPage;
