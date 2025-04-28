@@ -30,7 +30,7 @@ function App() {
         <Route path="/forgot-password" element={<FindPasswordPage />} />
         <Route path="/reset-password/:type" element={<ResetPasswordPage />} />
         <Route path="/about" element={<AboutCompany />} />
-        <Route path="/recruitment_info" element={<RecruitmentInfo />} />
+        <Route path="/recruitment-info" element={<RecruitmentInfo />} />
         <Route path="/mypage/user" element={<UserMyPage />} />
         <Route path="/mypage/user/resumes" element={<MyResumes />} />
         <Route path="/mypage/user/resumes/:id" element={<MyResumes />} />

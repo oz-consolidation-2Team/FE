@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import axiosInstance from "./axiosInstance";
 
 /**
  * 즐겨찾기 추가 요청
@@ -8,15 +6,10 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
  * @param {string} token - 사용자 인증 토큰
  * @returns {Promise<Object>} - 즐겨찾기 생성 결과 객체
  */
-export const addFavorite = async (jobPostingId, token) => {
-  const response = await axios.post(
-    `${API_BASE_URL}/favorites`,
-    { job_posting_id: jobPostingId },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+export const addFavorite = async (jobPostingId) => {
+  const response = await axiosInstance.post(
+    `/favorites`,
+    { job_posting_id: jobPostingId }
   );
   return response.data;
 };
@@ -26,12 +19,8 @@ export const addFavorite = async (jobPostingId, token) => {
  * @param {string} token - 사용자 인증 토큰
  * @returns {Promise<Array>} - 즐겨찾기 목록 배열
  */
-export const getFavorites = async (token) => {
-  const response = await axios.get(`${API_BASE_URL}/favorites`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getFavorites = async () => {
+  const response = await axiosInstance.get(`/favorites`);
   return response.data;
 };
 
@@ -41,11 +30,7 @@ export const getFavorites = async (token) => {
  * @param {string} token - 사용자 인증 토큰
  * @returns {Promise<Object>} - 삭제 결과 객체
  */
-export const deleteFavorite = async (jobPostingId, token) => {
-  const response = await axios.delete(`${API_BASE_URL}/favorites/${jobPostingId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const deleteFavorite = async (jobPostingId) => {
+  const response = await axiosInstance.delete(`/favorites/${jobPostingId}`);
   return response.data;
 };
