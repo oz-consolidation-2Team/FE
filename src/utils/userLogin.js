@@ -15,7 +15,6 @@ export const handleUserLogin = async ({ form, userType, setErrors, setModal, nav
 
   try {
     const token = await loginUserApi(form.email, form.password);
-    console.log('[로그인 성공] 토큰:', token);
 
     localStorage.setItem('userType', userType);
     localStorage.setItem('access_token', token.access_token);

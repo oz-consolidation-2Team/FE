@@ -29,14 +29,11 @@ export const checkUserEmailApi = async (email) => {
 
 // 개인 로그인 API
 export const loginUserApi = async (email, password) => {
-  console.log('[로그인 요청]', '/user/login');
 
   const response = await axiosInstance.post('/user/login', {
     email,
     password,
   });
-
-  console.log('[서버 응답]', response.data);
 
   const { accesstoken, refreshtoken, user } = response.data.data;
 
@@ -50,7 +47,6 @@ export const loginUserApi = async (email, password) => {
 
 // 개인 로그아웃 API
 export const logoutUserApi = async () => {
-  console.log('[로그아웃 요청]', '/user/logout');
   await axiosInstance.post('/user/logout');
 };
 
@@ -76,14 +72,11 @@ export const signUpCompanyApi = async (form) => {
 
 // 기업 로그인 API
 export const loginCompanyApi = async ({ email, password }) => {
-  console.log('[로그인 요청]', '/company/login');
 
   const response = await axiosInstance.post('/company/login', {
     email,
     password,
   });
-
-  console.log('[서버 응답]', response.data);
 
   const { access_token, refresh_token, company } = response.data.data;
 
@@ -96,6 +89,5 @@ export const loginCompanyApi = async ({ email, password }) => {
 
 // 기업 로그아웃 API
 export const logoutCompanyApi = async () => {
-  console.log('[기업 로그아웃 요청]', '/company/logout');
   await axiosInstance.post('/company/logout');
 };
