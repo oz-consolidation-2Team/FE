@@ -61,26 +61,27 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-
+  
     label {
       font-size: 14px;
       font-weight: 600;
       color: $gray-dark;
     }
-
-    input {
+  
+    input,
+    .password_wrapper input { // ✅ 추가
       height: 48px;
       padding: 0 12px;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 14px;
       transition: border 0.2s ease;
-
+  
       &:focus {
         border-color: $orange;
         outline: none;
       }
-
+  
       &.error {
         border-color: #e53935;
       }
@@ -118,24 +119,25 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    width: 100%; // 🔥 혹시 width 문제 있으면 추가
     transition: background-color 0.2s ease;
-
-    &.user {
-      background-color: $orange;
-      color: #fff;
-
-      &:hover {
-        background-color: $deep-orange;
-      }
+  }
+  
+  .login_btn.user {
+    background-color: $orange;
+    color: #fff;
+  
+    &:hover {
+      background-color: $deep-orange;
     }
-
-    &.company {
-      background-color: $green;
-      color: #fff;
-
-      &:hover {
-        background-color: $deep-green;
-      }
+  }
+  
+  .login_btn.company {
+    background-color: $green;
+    color: #fff;
+  
+    &:hover {
+      background-color: $deep-green;
     }
   }
 
