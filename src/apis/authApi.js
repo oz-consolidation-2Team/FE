@@ -79,6 +79,16 @@ export const checkCompanyEmailApi = async (email) => {
   return response.data;
 };
 
+// 기업 이메일 찾기 API
+export const findCompanyEmailApi = async ({ ceoName, startDate, businessNumber }) => {
+  const response = await axiosPublicInstance.post('/company/find-email', {
+    ceo_name: ceoName,
+    opening_date: startDate.replace(/-/g, ''),
+    business_reg_number: businessNumber,
+  });
+  return response.data;
+};
+
 // 기업 로그인 API
 export const loginCompanyApi = async ({ email, password }) => {
 
