@@ -131,6 +131,16 @@ export const verifyCompanyPasswordInfoApi = async ({ email, ceo_name, opening_da
   return response.data;
 };
 
+// 기업 비밀번호 재설정 API
+export const resetCompanyPasswordApi = async ({ reset_token, new_password, confirm_password }) => {
+  const response = await axiosPublicInstance.post('/company/reset-password', {
+    reset_token,
+    new_password,
+    confirm_password,
+  });
+  return response.data;
+};
+
 // 기업 로그인 API
 export const loginCompanyApi = async ({ email, password }) => {
 

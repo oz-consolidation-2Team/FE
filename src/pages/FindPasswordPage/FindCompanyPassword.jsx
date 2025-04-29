@@ -12,11 +12,12 @@ import {
   validatePassword,
 } from '@/utils/validation';
 import './FindCompanyPasswordPage.scss';
+import { verifyCompanyPasswordInfoApi, resetCompanyPasswordApi } from '@/apis/authApi';
 
 const FindCompanyPassword = ({ onBack }) => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const [companyId, setCompanyId] = useState(null);
+  const [companyToken, setCompanyToken] = useState('');
   const [form, setForm] = useState({
     email: '',
     ceoName: '',
@@ -48,9 +49,7 @@ const FindCompanyPassword = ({ onBack }) => {
 
   const handleStartDateChange = (e) => {
     let val = e.target.value.replace(/[^\d]/g, '').slice(0, 8);
-    if (val.length >= 5) {
-      val = val.replace(/(\d{4})(\d{2})(\d{0,2})/, '$1-$2-$3').replace(/-$/, '');
-    }
+    if (val.length >= 5) val = val.replace(/(\d{4})(\d{2})(\d{0,2})/, '$1-$2-$3').replace(/-$/, '');
     handleChange({ target: { name: 'startDate', value: val } });
   };
 
@@ -75,59 +74,65 @@ const FindCompanyPassword = ({ onBack }) => {
     return newErrors;
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     const newErrors = validateStep1();
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
-    const dummyCompany = {
-      email: 'company@qwe.qwe',
-      ceoName: '기업',
-      startDate: '1111-11-11',
-      businessNumber: '1234567890',
-    };
+    try {
+      const response = await verifyCompanyPasswordInfoApi({
+        email: form.email,
+        ceo_name: form.ceoName,
+        opening_date: form.startDate.replace(/-/g, ''),
+        business_reg_number: form.businessNumber,
+      });
 
-    const formattedDate = form.startDate.length === 10
-      ? form.startDate
-      : form.startDate.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-
-    const isMatch =
-      form.email === dummyCompany.email &&
-      form.ceoName === dummyCompany.ceoName &&
-      formattedDate === dummyCompany.startDate &&
-      form.businessNumber === dummyCompany.businessNumber;
-
-    setModal({
-      type: isMatch ? 'success' : 'error',
-      title: isMatch ? '비밀번호 찾기 인증 완료' : '일치하는 정보 없음',
-      message: isMatch
-        ? '비밀번호 재설정으로 이동합니다.'
-        : '입력하신 정보와\n일치하는 계정을 찾을 수 없습니다.',
-      onConfirm: () => {
-        setModal(null);
-        if (isMatch) {
-          setStep(2);
-          setCompanyId(123); // 더미 ID (실제로는 응답값 사용 예정)
-        }
-      },
-    });
+      if (response.status === 'success') {
+        setCompanyToken(response.data.reset_token);
+        setStep(2);
+      } else {
+        throw new Error('정보 불일치');
+      }
+    } catch (error) {
+      setModal({
+        type: 'error',
+        title: '인증 실패',
+        message: '입력하신 정보와 일치하는 계정을 찾을 수 없습니다.',
+        onConfirm: () => setModal(null),
+      });
+    }
   };
 
-  const handleResetPassword = (e) => {
+  const handleResetPassword = async (e) => {
     e.preventDefault();
     const newErrors = validateStep2();
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
-    setModal({
-      type: 'success',
-      title: '비밀번호 재설정 완료',
-      message: '새로운 비밀번호로 로그인해 주세요.',
-      onConfirm: () => {
-        setModal(null);
-        navigate('/login');
-      },
-    });
+    try {
+      await resetCompanyPasswordApi({
+        reset_token: companyToken,
+        new_password: form.password,
+        confirm_password: form.passwordConfirm,
+      });
+
+      setModal({
+        type: 'success',
+        title: '비밀번호 재설정 완료',
+        message: '새로운 비밀번호로 로그인해 주세요.',
+        onConfirm: () => {
+          setModal(null);
+          navigate('/login');
+        },
+      });
+    } catch (err) {
+      setModal({
+        type: 'error',
+        title: '재설정 실패',
+        message: '비밀번호 재설정에 실패했습니다. 다시 시도해주세요.',
+        onConfirm: () => setModal(null),
+      });
+    }
   };
 
   return (
@@ -135,7 +140,7 @@ const FindCompanyPassword = ({ onBack }) => {
       <div className="find_company_password_card">
         <div className="title">
           <FaBuilding className="icon" />
-          <h2>비밀번호 찾기</h2>
+          <h2>{step === 1 ? '비밀번호 찾기' : '비밀번호 재설정'}</h2>
         </div>
 
         {step === 1 && (
@@ -155,19 +160,18 @@ const FindCompanyPassword = ({ onBack }) => {
 
         {step === 2 && (
           <form onSubmit={handleResetPassword}>
+            <input
+              type="text"
+              name="username"
+              autoComplete="username"
+              value={form.email}
+              readOnly
+              hidden
+            />
             <div className="input_group">
               <label htmlFor="password">새 비밀번호</label>
               <div className="input_wrapper">
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  value={form.password}
-                  onChange={handleChange}
-                  placeholder="새 비밀번호 입력"
-                  className={errors.password ? 'error' : ''}
-                  autoComplete="new-password"
-                />
+                <input id="password" name="password" type={showPassword ? 'text' : 'password'} value={form.password} onChange={handleChange} placeholder="새 비밀번호 입력" className={errors.password ? 'error' : ''} autoComplete="new-password" />
                 <span className="right_icon" onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
                 </span>
@@ -178,16 +182,7 @@ const FindCompanyPassword = ({ onBack }) => {
             <div className="input_group">
               <label htmlFor="passwordConfirm">새 비밀번호 확인</label>
               <div className="input_wrapper">
-                <input
-                  id="passwordConfirm"
-                  name="passwordConfirm"
-                  type={showConfirm ? 'text' : 'password'}
-                  value={form.passwordConfirm}
-                  onChange={handleChange}
-                  placeholder="새 비밀번호 확인 입력"
-                  className={errors.passwordConfirm ? 'error' : ''}
-                  autoComplete="new-password"
-                />
+                <input id="passwordConfirm" name="passwordConfirm" type={showConfirm ? 'text' : 'password'} value={form.passwordConfirm} onChange={handleChange} placeholder="새 비밀번호 확인 입력" className={errors.passwordConfirm ? 'error' : ''} autoComplete="new-password" />
                 <span className="right_icon" onClick={() => setShowConfirm(!showConfirm)}>
                   {showConfirm ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
                 </span>
