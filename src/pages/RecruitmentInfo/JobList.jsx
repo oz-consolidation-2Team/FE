@@ -27,7 +27,6 @@ useEffect(() => {
 const fetchJobs = async (pageNum = 1) => {
   try {
     const res = await getJobList({ skip: (pageNum - 1) * itemsPerPage, limit: itemsPerPage });
-    console.log("받아온 채용공고 데이터:", res);
     setJobList(res.items || []);
     setTotalCount(res.total || 0);
   } catch (error) {
@@ -53,7 +52,7 @@ const toggleBookmark = (id) => {
           <JobCard
             key={job.id}
             job={job}
-            isBookmarked={isBookmarked[job.id]}
+            isBookmarked={isBookmarked[job.id] !== undefined ? isBookmarked[job.id] : job.is_favorited}
             toggleBookmark={toggleBookmark}
           />
         ))}
