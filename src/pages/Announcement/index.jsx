@@ -3,75 +3,42 @@ import JobRequirement from "../../components/Company/inputs/JobRequirement"
 import WorkLocation from "../../components/Company/inputs/WorkLocation"
 import WorkRequirement from "../../components/Company/inputs/WorkRequirement"
 import AnnouncementContent from "../../components/Company/inputs/AnnouncementContent"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Modal from "../../components/Company/Modal/Modal"
 import "./Announcement.scss"
 import { GoArrowLeft } from "react-icons/go";
+import { JobPosting } from "@/apis/companyPostingApi"
+
+const INPUT_BLOCK = ['title', 'summary', 'recruit_period_start', 'recruit_period_end', 'is_always_recruiting', 'recruit_number', 'education', 'benefits', 'preferred_conditions', 'other_conditions', 'work_address', 'work_place_name', 'salary', 'payment_method', 'work_duration', 'is_work_duration_negotiable_str', 'job_category', 'career', 'work_days', 'is_work_days_negotiable_str', 'is_schedule_based_str', 'employment_type', 'work_start_time', 'work_end_time', 'is_work_time_negotiable_str', 'description', 'image_file', 'latitude', 'longitude']
+const INPUT_BLOCK_BOOLEAN = ['is_always_recruiting_str','is_work_duration_negotiable_str','is_work_days_negotiable_str','is_schedule_based_str','is_work_time_negotiable_str']
+const INPUT_BLOCK_ARRAY = ['benefits', 'preferred_conditions', 'other_conditions']
 
 /**
  * @param {'add' | 'edit'} type 공고 등록인지 수정인지 체크
  */
 export default function Announcement (props) {
     const navigate = useNavigate()
+    const date = new Date()
     
-    // edit엔 api 호출로 추후 변경
-    let data;
-    if (props.type === "edit") data = {
-        title: '유치원교사 모집합니다',
-        근무요약: '아이들을 좋아하는 분 환영',
-        recruit_period_start: '2025.02.01',
-        recruit_period_end: null,
-        is_always_recruiting: false,
-        recruit_number: 1,
-        education: '대학교',
-        benefits: ['복리1','복리2'],
-        preferred_conditions: ['우대1','우대2','우대3'],
-        other_conditions: ['기타1'],
-        work_address: '지구 어딘가 어딘가 어딘가',
-        work_place_name: '근무지명이에요',
-        salary: 5000000,
-        payment_method: '월급',
-        work_duration: '1년 이상',
-        근무기간협의: true,
-        job_category: "IT·인터넷",
-        career: "경력",
-        work_days: ['월','화','수','목','금'],
-        근무요일협의: false,
-        근무요일변동: false,
-        employment_type: '정규직',
-        근무시간: '08:00~18:00',
-        근무시간협의: false,
-        description: '공고 텍스트 공간이에요',
-        이미지등록: '테스트이미지_파일1.png'
-    }
-    else data = {
-        title: '', // 공고제목
-        근무요약: '',  // 근무요약
-        recruit_period_start: '', // 모집시작일
-        recruit_period_end: '', // 모집 마감일
-        is_always_recruiting: false, // 상시모집여부
-        recruit_number: '', // 모집인원
-        education: '', // 학력
-        benefits: [], // 복리후생
-        preferred_conditions: [], // 우대조건
-        other_conditions: [], // 기타조건
-        work_address: '', // 근무지주소
-        work_place_name: '', // 근무지명
-        salary: '', // 급여
-        payment_method: '', // 급여지급방법
-        job_category: '', // 직종
-        career: '', // 경력
-        work_duration: '', // 근무기간
-        근무기간협의: false, // 근무기간협의
-        work_days: [], // 근무요일
-        근무요일협의: false, // 근무요일협의
-        근무요일변동: false, // 근무요일변동
-        employment_type: '', // 고용형태
-        근무시간: '', // 근무시간
-        근무시간협의: false, // 근무시간협의
-        description: '', // 공고상세내용
-        이미지등록: ''
+    let data= {};
+    INPUT_BLOCK.map(item => {
+        if (INPUT_BLOCK_ARRAY.includes(item)) return data[item]= []
+        if (INPUT_BLOCK_BOOLEAN.includes(item)) return data[item]= false
+        if (item === 'recruit_period_start') return data[item]= `${date.getFullYear()}-${date.getMonth() +1}-${date.getDate()}}`
+        data[item]= ''
+    })
+    
+    if (props.type=== 'edit') {
+        useEffect(()=>{
+            try {
+                JobPosting().then(res => data.set(res))
+            } catch (error) {
+                console.log('기업 공고 조회 에러', error)
+            } finally {
+                console.log('로딩 끝')
+            }
+        },[])
     }
 
     const [showModal, setShowModal] = useState(false)
@@ -79,9 +46,8 @@ export default function Announcement (props) {
     const [formData, setFormData] = useState(data)
     const [error, setError] = useState({
         title: false, // 공고제목
-        근무요약: false,  // 근무요약
-        recruit_period_start: false, // 모집시작일
-        // recruit_period_end: false, // 모집 마감일
+        summary: false,  // 근무요약
+        recruit_period_end: false, // 모집 마감일
         recruit_number: false, // 모집인원
         education: false, // 학력
         // work_address: false, // 근무지주소
@@ -93,7 +59,8 @@ export default function Announcement (props) {
         work_duration: false, // 근무기간
         work_days: false, // 근무요일
         employment_type: false, // 고용형태
-        근무시간: false, // 근무시간
+        work_start_time: false, // 근무시간
+        work_end_time: false, // 근무시간
         // 이미지등록: false // 이미지등록
     })
     

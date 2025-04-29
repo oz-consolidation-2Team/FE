@@ -17,7 +17,7 @@ export default function Content (props) {
                 <Hr />
                 <div className="announcement">
                     <p className="title">{props.formData.title}</p>
-                    <p>{props.formData.근무요약}</p>
+                    <p>{props.formData.summary}</p>
                 </div>
                 <p className="time">{props.formData.is_always_recruiting ? "상시모집" : props.formData.recruit_period_start}</p>
             </div>
@@ -40,10 +40,10 @@ export default function Content (props) {
                 <p>고용형태: {props.formData.employment_type}</p>
             </div>
             <div className="box">
-                <p>근무기간: {props.formData.work_duration}<span>{props.formData.근무기간협의 && "(협의 가능)"}</span></p>
-                <p>근무시간: {props.formData.근무시간}<span>{props.formData.근무시간협의 && "(협의 가능)"}</span></p>
+                <p>근무기간: {props.formData.work_duration}<span>{props.formData.is_work_duration_negotiable_str && "(협의 가능)"}</span></p>
+                <p>근무시간: {props.formData.work_start_time}<span>{props.formData.is_work_time_negotiable_str && "(협의 가능)"}</span></p>
             </div>
-            <div>근무요일: {props.formData.work_days && props.formData.work_days.join(', ')}<span>{props.formData.근무요일협의 && "(협의 가능)"}</span><span>{props.formData.근무요일변동}</span></div>
+            <div>근무요일: {props.formData.work_days && props.formData.work_days.join(', ')}<span>{props.formData.is_work_days_negotiable_str && "(협의 가능)"}</span><span>{props.formData.is_schedule_based_str}</span></div>
         </div>
     )
 }

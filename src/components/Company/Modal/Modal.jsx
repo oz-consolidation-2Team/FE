@@ -3,7 +3,9 @@ import Content from "./Content"
 import Button from "./Button"
 import SimpleModal from "./SimpleModal"
 import "../styles/modal/modal.scss"
-import PropTypes from 'prop-types';
+import PropTypes, { object } from 'prop-types';
+import { useEffect, useState } from "react"
+import axios from "axios"
 
 /**
  * @param {상태관리} formData 상태관리
@@ -13,6 +15,11 @@ import PropTypes from 'prop-types';
  */
 export default function Modal (props) {
     //api 기업 정보 수정 (기업 ID로 해당 기업 정보 수정) /company/{company_user_id}
+    const formData = new FormData()
+    Object.entries(props.formData).map(item => {
+        formData.append(item[0], item[1])
+        console.log(item[0],item[1])
+    })
 
     return (
         <div className="modal_overlay">

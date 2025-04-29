@@ -11,10 +11,13 @@ export default function InputRadio (props) {
         const text = label.textContent.trim()
         const NAME_TYPE_ARRAY = ['benefits', 'preferred_conditions', 'other_conditions', 'work_days']
 
+        // 리스트로 받는 것들 중 "근무요일"은 다르게 받기 위함
+        const formDataSpread = typeof props.formData[e.target.name] === 'string' ? props.formData[e.target.name].split(',') : props.formData[e.target.name]
+
         let value;
         if (NAME_TYPE_ARRAY.indexOf(e.target.name) === -1) value = e.target.checked
         else value = new Set([
-            ...props.formData[e.target.name],
+            ...formDataSpread,
             text
         ]);
 

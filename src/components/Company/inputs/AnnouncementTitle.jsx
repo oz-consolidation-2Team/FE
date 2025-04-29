@@ -20,9 +20,9 @@ export default function AnnouncementTitle (props) {
 
             <div className="box">
                 <Category text='근무요약' />
-                <InputText {...props} text='근무 요약' type='text' name='근무요약' placeholder={props.formData.근무요약}/>
+                <InputText {...props} text='근무 요약' type='text' name='summary' placeholder={props.formData.summary}/>
             </div>
-            {props.error['근무요약'] && <span className="error_message">근무 요약을 입력해주세요</span>}
+            {props.error['summary'] && <span className="error_message">근무 요약을 입력해주세요</span>}
         </div>
     )
 }
