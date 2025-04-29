@@ -9,6 +9,7 @@ import {
   isValidBirth,
 } from '@/utils/validation';
 import './FindUserEmailPage.scss';
+import { findUserEmailApi } from '@/apis/authApi';
 
 const FindUserEmailPage = ({ onBack }) => {
   const navigate = useNavigate();
@@ -19,13 +20,6 @@ const FindUserEmailPage = ({ onBack }) => {
   });
   const [errors, setErrors] = useState({});
   const [modal, setModal] = useState(null);
-
-  const dummyUser = {
-    name: '개인',
-    phone: '010-0000-0000',
-    birth: '1111-11-11',
-    email: 'user@qwe.qwe',
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,36 +55,40 @@ const FindUserEmailPage = ({ onBack }) => {
     return newErrors;
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     const newErrors = validateForm();
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
+  
+    try {
+      const response = await findUserEmailApi(form);
 
-    const formattedBirth = form.birth.length === 10
-      ? form.birth
-      : form.birth.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-
-    const isMatch =
-      form.name === dummyUser.name &&
-      form.phone === dummyUser.phone &&
-      formattedBirth === dummyUser.birth;
-
-    setModal({
-      type: isMatch ? 'success' : 'error',
-      title: isMatch ? '이메일 찾기 완료' : '일치하는 정보 없음',
-      message: isMatch
-        ? `회원님의 이메일은 ${dummyUser.email} 입니다.`
-        : '입력하신 정보와\n일치하는 이메일을 찾을 수 없습니다.',
-      onConfirm: () => {
-        setModal(null);
-        if (isMatch) navigate('/login');
-      },
-    });
+      setModal({
+        type: 'success',
+        title: '이메일 찾기 완료',
+        message: (
+          <>
+            회원님의 이메일은 <strong>{response.data.email}</strong> 입니다.
+          </>
+        ),
+        onConfirm: () => {
+          setModal(null);
+          navigate('/login');
+        },
+      });
+    } catch (err) {
+      setModal({
+        type: 'error',
+        title: '일치하는 정보 없음',
+        message: '입력하신 정보와\n일치하는 이메일을 찾을 수 없습니다.',
+        onConfirm: () => setModal(null),
+      });
+    }
   };
 
   return (
-    <div className="find_email_page">
-      <div className="find_email_card">
+    <div className="find_user_email_page">
+      <div className="find_user_email_card">
         <div className="title">
           <FaUser className="icon" />
           <h2>이메일 찾기</h2>
@@ -118,7 +116,7 @@ const FindUserEmailPage = ({ onBack }) => {
           name="birth"
           value={form.birth}
           onChange={handleBirthChange}
-          placeholder="숫자만 입력해 주세요"
+          placeholder="YYYYMMDD"
           error={errors.birth}
           inputMode="numeric"
         />

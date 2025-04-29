@@ -28,6 +28,16 @@ export const checkUserEmailApi = async (email) => {
   return response.data;
 };
 
+// 개인 이메일 찾기 API
+export const findUserEmailApi = async (form) => {
+  const response = await axiosInstance.post('/user/find_email', {
+    name: form.name,
+    phone_number: form.phone,
+    birthday: form.birth,
+  });
+  return response.data;
+};
+
 // 개인 로그인 API
 export const loginUserApi = async (email, password) => {
 
