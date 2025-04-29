@@ -24,7 +24,7 @@ function InterestAnnouncement({ userInfo }) {
   };
 
   useEffect(() => {
-    const fetchRecommendJobs = async () => {
+    const fetchInterestJobs = async () => {
       try {
         const response = await axiosInstance.get('/user/recommend');
 
@@ -36,7 +36,7 @@ function InterestAnnouncement({ userInfo }) {
       }
     };
 
-    fetchRecommendJobs();
+    fetchInterestJobs();
   }, []);
   return (
     <section className="interest_announcement">

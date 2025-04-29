@@ -25,11 +25,12 @@ function JobRecommend({ userInfo }) {
   useEffect(() => {
     const fetchRecommendJobs = async () => {
       try {
-        const response = await axiosInstance.get('/user/recommend');
+        const response = await axiosInstance.get('/posting');
 
-        const recommendRes = response.data.data;
+        const allJobs = response.data.data;
 
-        setRecommendJobs(recommendRes);
+        const favoritedJobs = allJobs.filter((job) => job.is_favorited);
+        setRecommendJobs(favoritedJobs);
       } catch (err) {
         console.log(err);
       }
@@ -63,7 +64,7 @@ function JobRecommend({ userInfo }) {
           </div>
         ) : (
           <div className="reco_slider-wrapper">
-            <div className="no_jobs">추천할 공고가 없습니다 🙏</div>
+            <div className="no_jobs">즐겨 찾기한 공고가 없습니다 🙏</div>
           </div>
         )}
       </div>

@@ -338,11 +338,11 @@ const UserInfoEditPage = () => {
           <button className="info_edit_btn" type="submit">
             회원 정보 수정 하기
           </button>
-          <button className="account_deletion" onClick={handleUserDelete}>
-            회원 탈퇴
-          </button>
         </div>
       </form>
+      <button className="account_deletion" onClick={handleUserDelete}>
+        회원 탈퇴
+      </button>
       <Modal
         isOpen={isModalOpen}
         onClose={closeModal}
