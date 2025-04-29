@@ -132,7 +132,7 @@ const FindUserPassword = ({ onBack }) => {
           name="birth"
           value={form.birth}
           onChange={handleBirthChange}
-          placeholder="숫자만 입력해 주세요"
+          placeholder="YYYYMMDD"
           error={errors.birth}
           inputMode="numeric"
         />
