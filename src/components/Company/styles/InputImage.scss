@@ -2,9 +2,12 @@
 
 .InputImage_container {
     width: 100%;
-    .box {
+    .div_box {
         display: flex;
         height: 35px;
+        #input_for_button {
+            display: none;
+        }
         > div {
             flex-grow: 1;
             border-radius: 10px;
