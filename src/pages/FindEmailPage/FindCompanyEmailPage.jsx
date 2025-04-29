@@ -9,6 +9,7 @@ import {
   isValidBizNumber,
 } from '@/utils/validation';
 import './FindCompanyEmailPage.scss';
+import { findCompanyEmailApi } from '@/apis/authApi';
 
 const FindCompanyEmailPage = ({ onBack }) => {
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ const FindCompanyEmailPage = ({ onBack }) => {
     }
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     const newErrors = {};
     if (!validateName(form.ceoName)) newErrors.ceoName = '대표자명을 입력해주세요.';
     if (!isValidDate(form.startDate)) newErrors.startDate = '개업년월일 형식이 올바르지 않습니다.';
@@ -70,32 +71,24 @@ const FindCompanyEmailPage = ({ onBack }) => {
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
-    const dummyCompany = {
-      ceoName: '기업',
-      startDate: '1111-11-11',
-      businessNumber: '1234567890',
-      email: 'company@qwe.qwe',
-    };
+    try {
+      const response = await findCompanyEmailApi(form);
 
-    const formattedDate = form.startDate.length === 10
-      ? form.startDate
-      : form.startDate.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-
-    if (
-      form.ceoName === dummyCompany.ceoName &&
-      formattedDate === dummyCompany.startDate &&
-      form.businessNumber === dummyCompany.businessNumber
-    ) {
       setModal({
         type: 'success',
         title: '이메일 찾기 완료',
-        message: `기업 이메일은 ${dummyCompany.email} 입니다.`,
+        message: (
+          <>
+            기업 이메일은 <strong>{response.data.email}</strong> 입니다.
+          </>
+        ),
         onConfirm: () => {
           setModal(null);
           navigate('/login');
         },
       });
-    } else {
+    } catch (error) {
+      console.error('기업 이메일 찾기 실패', error);
       setModal({
         type: 'error',
         title: '일치하는 정보 없음',
@@ -127,7 +120,7 @@ const FindCompanyEmailPage = ({ onBack }) => {
           name="startDate"
           value={form.startDate}
           onChange={handleStartDateChange}
-          placeholder="숫자만 입력해 주세요"
+          placeholder="YYYYMMDD"
           error={errors.startDate}
           inputMode="numeric"
         />

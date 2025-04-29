@@ -28,6 +28,37 @@ export const checkUserEmailApi = async (email) => {
   return response.data;
 };
 
+// 개인 이메일 찾기 API
+export const findUserEmailApi = async (form) => {
+  const response = await axiosInstance.post('/user/find_email', {
+    name: form.name,
+    phone_number: form.phone,
+    birthday: form.birth,
+  });
+  return response.data;
+};
+
+// 개인 비밀번호 찾기 API
+export const verifyUserInfoApi = async ({ email, name, phone_number, birthday }) => {
+  const response = await axiosPublicInstance.post('/user/password/verify', {
+    email,
+    name,
+    phone_number,
+    birthday,
+  });
+  return response.data;
+};
+
+// 개인 비밀번호 재설정 API
+export const resetUserPasswordApi = async ({ user_id, new_password, confirm_password }) => {
+  const response = await axiosPublicInstance.post('/user/password/reset', {
+    user_id,
+    new_password,
+    confirm_password,
+  });
+  return response.data;
+};
+
 // 개인 로그인 API
 export const loginUserApi = async (email, password) => {
 
@@ -75,6 +106,16 @@ export const signUpCompanyApi = async (form) => {
 export const checkCompanyEmailApi = async (email) => {
   const response = await axiosInstance.get(`/company/register/check-email`, {
     params: { email },
+  });
+  return response.data;
+};
+
+// 기업 이메일 찾기 API
+export const findCompanyEmailApi = async ({ ceoName, startDate, businessNumber }) => {
+  const response = await axiosPublicInstance.post('/company/find-email', {
+    ceo_name: ceoName,
+    opening_date: startDate.replace(/-/g, ''),
+    business_reg_number: businessNumber,
   });
   return response.data;
 };

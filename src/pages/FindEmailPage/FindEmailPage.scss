@@ -84,24 +84,6 @@
         transition: color 0.3s ease;
       }
 
-      &.orange {
-        border-color: $orange;
-
-        .card_icon {
-          color: $orange;
-        }
-
-        &:hover {
-          background-color: $orange;
-
-          .card_icon,
-          strong,
-          p {
-            color: white;
-          }
-        }
-      }
-
       &.green {
         border-color: $green;
 
@@ -111,6 +93,24 @@
 
         &:hover {
           background-color: $green;
+
+          .card_icon,
+          strong,
+          p {
+            color: white;
+          }
+        }
+      }
+
+      &.orange {
+        border-color: $orange;
+
+        .card_icon {
+          color: $orange;
+        }
+
+        &:hover {
+          background-color: $orange;
 
           .card_icon,
           strong,
