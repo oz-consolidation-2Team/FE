@@ -43,8 +43,6 @@ export default function CompanyCard ({params}) {
     },[])
 
     if (!job) return;
-    // console.log(data)
-    console.log(job)
 
     const 상시모집 = job.is_always_recruiting ? "상시 모집" : job.recruit_period_end + " 까지"
     return (

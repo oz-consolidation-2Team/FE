@@ -17,7 +17,7 @@ export default function InputImage (props) {
 
     return (
         <div className="InputImage_container">
-            <div className="box">
+            <div className="div_box">
                 <input type='file' accept = "image/*" onChange={onchangeImageUpload} />
                 <div>{props.formData.이미지등록 || "선택된 파일이 없습니다"}</div>
                 <button className="color-change">파일 선택</button>

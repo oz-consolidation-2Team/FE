@@ -24,7 +24,7 @@ export default function Content (props) {
             <p>근무지주소: {props.formData.work_address}</p>
             <Hr />
 
-            <div className="box">
+            <div className="div_box">
                 <p>모집기간: {props.formData.is_always_recruiting ? "상시모집" : props.formData.recruit_period_start}</p>
                 <p>모집인원: {props.formData.recruit_number}명</p>
                 <p>학력: {props.formData.education}</p>
@@ -34,12 +34,12 @@ export default function Content (props) {
             <div>기타조건: {props.formData.other_conditions && props.formData.other_conditions.join(', ')}</div>
             <Hr />
 
-            <div className="box">
+            <div className="div_box">
                 <p>급여: {props.formData.salary}</p>
                 <p>급여지급방법: {props.formData.payment_method}</p>
                 <p>고용형태: {props.formData.employment_type}</p>
             </div>
-            <div className="box">
+            <div className="div_box">
                 <p>근무기간: {props.formData.work_duration}<span>{props.formData.is_work_duration_negotiable_str && "(협의 가능)"}</span></p>
                 <p>근무시간: {props.formData.work_start_time}<span>{props.formData.is_work_time_negotiable_str && "(협의 가능)"}</span></p>
             </div>

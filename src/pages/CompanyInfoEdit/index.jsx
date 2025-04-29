@@ -84,28 +84,28 @@ export default function CompanyInfoEdit () {
 
             <div className='div_company-info'>
                 <CategoryTitle title="기업 정보" />
-                <div className='box disabled'>
+                <div className='div_box disabled'>
                     <Category text='기업명' essential={false} />
                     <InputText {...state} type='text' name='company_name' text='기업명' disabled={true} placeholder={formData.company_name} />
                 </div>
 
-                <div className='box'>
+                <div className='div_box'>
                     <Category text='기업소개' />
                     <InputText {...state} type='text' name='company_intro' text='기업소개' placeholder={formData.company_intro} />
                 </div>
                 {validateError['company_intro'] && <span className="error_message">기업소개를 입력해주세요</span>}
 
-                <div className='box disabled'>
+                <div className='div_box disabled'>
                     <Category text='사업자등록번호' essential={false} />
                     <InputText {...state} type='text' name='business_reg_number' text='사업자등록번호' disabled={true} placeholder={formData.business_reg_number} />
                 </div>
 
-                <div className='box disabled'>
+                <div className='div_box disabled'>
                     <Category text='개업년월일' essential={false} />
                     <InputText {...state} type='text' name='opening_date' text='개업년월일' disabled={true} placeholder={formData.opening_date} />
                 </div>
 
-                <div className='box'>
+                <div className='div_box'>
                     <Category text='이미지 등록' />
                     <InputImage setFormData={setFormData} formData={formData} />
                 </div>
@@ -113,19 +113,19 @@ export default function CompanyInfoEdit () {
 
             <div className='div_manager-info'>
                 <CategoryTitle title="담당자 정보" />
-                <div className='box'>
+                <div className='div_box'>
                     <Category text='이름' />
                     <InputText {...state} type='text' name='manager_name' text='매니저 이름' placeholder={formData.manager_name} />
                 </div>
                 {validateError['manager_name'] && <span className="error_message">이름을 입력해주세요</span>}
 
-                <div className='box'>
+                <div className='div_box'>
                     <Category text='전화번호' />
                     <InputText {...state} type='text' name='manager_phone' text='매니저 전화번호' placeholder={formData.manager_phone} />
                 </div>
                 {validateError['manager_phone'] && <span className="error_message">전화번호를 입력해주세요</span>}
 
-                <div className='box'>
+                <div className='div_box'>
                     <Category text='이메일' />
                     <InputText {...state} type='text' name='manager_email' text='매니저 이메일' placeholder={formData.manager_email} />
                 </div>
@@ -134,13 +134,13 @@ export default function CompanyInfoEdit () {
 
             <div className='div_password'>
                 <Hr />
-                <div className='box'>
+                <div className='div_box'>
                     <Category text='비밀번호' />
                     <InputText {...state} type='text' name='password' text='비밀번호' />
                 </div>
                 {validateError['password'] && <span className="error_message">비밀번호를 다시 확인해주세요</span>}
 
-                <div className='box'>
+                <div className='div_box'>
                     <Category text='비밀번호확인' />
                     <InputText {...state} type='text' name='confirm_password' text='비밀번호확인' />
                 </div>

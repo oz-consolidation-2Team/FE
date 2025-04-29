@@ -32,7 +32,7 @@ export default function CompanyInfo () {
                     <h1>{data.company_name}</h1>
                     <Hr />
                     <p className="intro">{data.company_intro}</p>
-                    <div className="box">
+                    <div className="div_box">
                         <div className="info">
                             <div className="icon">
                                 <AiOutlineUser />
