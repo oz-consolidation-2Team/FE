@@ -30,10 +30,10 @@ const JobCard = ({ job }) => {
     try {
       if (isBookmarked) {
         await deleteFavorite(job.id);
-        setIsBookmarked(null); // 삭제 성공 시 false로 설정
+        setIsBookmarked(null); //
       } else {
         await addFavorite(job.id);
-        setIsBookmarked(true); // 추가 성공 시 true로 설정
+        setIsBookmarked(true); //
       }
     } catch (error) {
       console.error('즐겨찾기 처리 실패:', error);
