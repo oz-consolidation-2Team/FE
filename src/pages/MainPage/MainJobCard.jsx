@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { addFavorite, deleteFavorite } from '@/apis/FavoriteApi';
+import { addFavorite, deleteFavorite } from '@/apis/favoriteApi';
 import LoginPromptModal from '@/components/Company/Modal/LoginPromptModal';
 
 import './MainPage.scss';
