@@ -38,6 +38,27 @@ export const findUserEmailApi = async (form) => {
   return response.data;
 };
 
+// 개인 비밀번호 찾기 API
+export const verifyUserInfoApi = async ({ email, name, phone_number, birthday }) => {
+  const response = await axiosPublicInstance.post('/user/password/verify', {
+    email,
+    name,
+    phone_number,
+    birthday,
+  });
+  return response.data;
+};
+
+// 개인 비밀번호 재설정 API
+export const resetUserPasswordApi = async ({ user_id, new_password, confirm_password }) => {
+  const response = await axiosPublicInstance.post('/user/password/reset', {
+    user_id,
+    new_password,
+    confirm_password,
+  });
+  return response.data;
+};
+
 // 개인 로그인 API
 export const loginUserApi = async (email, password) => {
 
