@@ -8,7 +8,7 @@ import { getJobDetail, applyJobPosting } from '@/apis/RecruitmentApi';
 import KakaoMap from '@/components/KakaoMap/KakaoMap';
 import { CompaniesInfo } from '@/apis/companyApi';
 import { formatPhoneNumber } from '@/utils/format';
-import { addFavorite, deleteFavorite } from '@/apis/FavoriteApi';
+import { addFavorite, deleteFavorite } from '@/apis/favoriteApi';
 
 
 
