@@ -40,7 +40,6 @@ export const CalculatorModalContent = ({
 
     setBaseMethod(payment_method || '시급');
 
-    // Use empty string if work_start_time or work_end_time are null/undefined
     if (
       work_start_time &&
       work_end_time &&
@@ -71,7 +70,6 @@ export const CalculatorModalContent = ({
     const W = 4.345; // 평균 월 주수
     const M = 12; // 연간 월수
 
-    // Defensive: if H or D is falsy, zero, NaN, or invalid, return 0
     if (!H || !D || isNaN(H) || isNaN(D)) return 0;
 
     const hourly = {
