@@ -20,12 +20,15 @@ import Announcement from '@/pages/Announcement';
 import FindPasswordPage from '@/pages/FindPasswordPage';
 import ResetPasswordPage from '@/pages/ResetPasswordPage';
 import UserInfoEditPage from '@/pages/UserInfoEditPage';
+import NaverCallbackPage from '@/pages/LoginPage/NaverCallbackPage';
+import UserSignUpPage from '@/pages/SignUpPage/UserSignUpPage';
 
 function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<MainPage />} />
+        <Route path="/auth/naver/login" element={<NaverCallbackPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/find-email" element={<FindEmailPage />} />
         <Route path="/forgot-password" element={<FindPasswordPage />} />
@@ -52,6 +55,7 @@ function App() {
       </Route>
 
       <Route path="/signup" element={<SignUpPage />} />
+      <Route path="/user-signup" element={<UserSignUpPage />} />
     </Routes>
   );
 }

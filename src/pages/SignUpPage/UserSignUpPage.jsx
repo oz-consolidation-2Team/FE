@@ -14,6 +14,7 @@ import {
 } from '@/utils/validation';
 import './UserSignUpPage.scss';
 import { signUpUserApi, checkUserEmailApi } from '@/apis/authApi';
+import { useLocation } from 'react-router-dom';
 
 const INTEREST_OPTIONS = [
   '외식·음료', '유통·판매', '문화·여가·생활', '서비스', '사무·회계',
@@ -29,15 +30,27 @@ const MAX_BIRTH_LENGTH = 8;
 
 const UserSignUpPage = () => {
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const fromSocial = location.state?.fromSocial || false;
+  const socialUser = location.state?.user || {};
+
   const [step, setStep] = useState(0);
   const [form, setForm] = useState({
-    name: '', email: '', password: '', passwordCheck: '',
-    phone: '', birth: '', gender: '',
-    interests: [], purposes: [], channels: [],
-    termsAll: false,
-    terms1: false, terms2: false, terms3: false,
-    terms4: false, terms5: false, terms6: false,
-  });
+  name: '',
+  email: socialUser.email || '',
+  password: '',
+  passwordCheck: '',
+  phone: '',
+  birth: '',
+  gender: '',
+  interests: [],
+  purposes: [],
+  channels: [],
+  termsAll: false,
+  terms1: false, terms2: false, terms3: false,
+  terms4: false, terms5: false, terms6: false,
+});
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordCheck, setShowPasswordCheck] = useState(false);
@@ -126,8 +139,9 @@ const UserSignUpPage = () => {
   const validateStep1 = () => {
     const newErrors = {};
     if (!validateName(form.name)) newErrors.name = '이름을 입력해주세요.';
-    if (!validateEmail(form.email)) newErrors.email = '이메일 형식이 올바르지 않습니다.';
-    else if (!emailChecked) {
+    if (!validateEmail(form.email)) {
+      newErrors.email = '이메일 형식이 올바르지 않습니다.';
+    } else if (!fromSocial && !emailChecked) {
       setModal({
         type: 'error',
         title: '중복확인 필요',
@@ -136,8 +150,14 @@ const UserSignUpPage = () => {
       });
       return null;
     }
-    if (!validatePassword(form.password)) newErrors.password = '비밀번호는 8자 이상, 영문/숫자/특수문자 포함';
-    if (form.password !== form.passwordCheck) newErrors.passwordCheck = '비밀번호가 일치하지 않습니다.';
+    if (!fromSocial) {
+      if (!validatePassword(form.password)) {
+        newErrors.password = '비밀번호는 8자 이상, 영문/숫자/특수문자 포함';
+      }
+      if (form.password !== form.passwordCheck) {
+        newErrors.passwordCheck = '비밀번호가 일치하지 않습니다.';
+      }
+    }
     if (!isValidPhone(form.phone)) newErrors.phone = '전화번호 형식이 올바르지 않습니다.';
     if (!isValidBirth(form.birth)) newErrors.birth = '생년월일 형식이 올바르지 않습니다.';
     if (!form.gender) newErrors.gender = '성별을 선택해주세요.';
@@ -259,53 +279,60 @@ const UserSignUpPage = () => {
               <div className="form_group">
                 <label>이메일</label>
                 <div className="input_row">
-                  <input
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    className={errors.email ? 'error' : ''}
-                    autoComplete="username"
-                  />
+                <input
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  className={`${errors.email ? 'error' : ''} ${fromSocial ? 'readonly_input' : ''}`}
+                  autoComplete="username"
+                  readOnly={fromSocial}
+                />
+                {!fromSocial && (
                   <button type="button" onClick={handleEmailCheck}>중복확인</button>
+                )}
                 </div>
                 {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
               </div>
 
-              <div className="form_group password_row">
-                <label>비밀번호</label>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  name="password"
-                  value={form.password}
-                  onChange={handleChange}
-                  placeholder="영문+숫자+특수문자 8자 이상"
-                  className={errors.password ? 'error' : ''}
-                  autoComplete="new-password"
-                />
-                <span className="eye_icon" onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
-                </span>
-                {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
-              </div>
+              {!fromSocial && (
+                <>
+                  <div className="form_group password_row">
+                    <label>비밀번호</label>
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      name="password"
+                      value={form.password}
+                      onChange={handleChange}
+                      placeholder="영문+숫자+특수문자 8자 이상"
+                      className={errors.password ? 'error' : ''}
+                      autoComplete="new-password"
+                    />
+                    <span className="eye_icon" onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
+                    </span>
+                    {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+                  </div>
 
-              <div className="form_group password_row">
-                <label>비밀번호 확인</label>
-                <input
-                  type={showPasswordCheck ? 'text' : 'password'}
-                  name="passwordCheck"
-                  value={form.passwordCheck}
-                  onChange={handleChange}
-                  className={errors.passwordCheck ? 'error' : ''}
-                  autoComplete="new-password"
-                />
-                <span className="eye_icon" onClick={() => setShowPasswordCheck(!showPasswordCheck)}>
-                  {showPasswordCheck ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
-                </span>
-                {errors.passwordCheck && <ErrorMessage>{errors.passwordCheck}</ErrorMessage>}
-              </div>
+                  <div className="form_group password_row">
+                    <label>비밀번호 확인</label>
+                    <input
+                      type={showPasswordCheck ? 'text' : 'password'}
+                      name="passwordCheck"
+                      value={form.passwordCheck}
+                      onChange={handleChange}
+                      className={errors.passwordCheck ? 'error' : ''}
+                      autoComplete="new-password"
+                    />
+                    <span className="eye_icon" onClick={() => setShowPasswordCheck(!showPasswordCheck)}>
+                      {showPasswordCheck ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
+                    </span>
+                    {errors.passwordCheck && <ErrorMessage>{errors.passwordCheck}</ErrorMessage>}
+                  </div>
+                </>
+              )}
 
               <LabeledInput label="전화번호" name="phone" value={form.phone} onChange={handlePhoneChange} placeholder="숫자만 입력해 주세요" error={errors.phone} inputMode="numeric" />
-              <LabeledInput label="생년월일" name="birth" value={form.birth} onChange={handleBirthChange} placeholder="숫자만 입력해 주세요" error={errors.birth} inputMode="numeric" />
+              <LabeledInput label="생년월일" name="birth" value={form.birth} onChange={handleBirthChange} placeholder="YYYYMMDD" error={errors.birth} inputMode="numeric" />
 
               <div className="form_group">
                 <label>성별</label>

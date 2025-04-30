@@ -35,7 +35,7 @@ const Header = () => {
         <nav className="menu">
         {isLoggedIn ? (
           <>
-            {userType === 'user' && (
+            {isLoggedIn && userType === 'user' && (
               <button className="mypage_btn" onClick={goTo('/mypage/user')}>
                 마이페이지
               </button>

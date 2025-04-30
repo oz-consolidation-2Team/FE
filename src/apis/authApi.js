@@ -162,3 +162,11 @@ export const loginCompanyApi = async ({ email, password }) => {
 export const logoutCompanyApi = async () => {
   await axiosInstance.post('/company/logout');
 };
+
+// 네이버 로그인 API
+export const loginWithNaver = async (code, state) => {
+  const response = await axiosPublicInstance.get('/auth/naver/login', {
+    params: { code, state },
+  });
+  return response.data;
+};
