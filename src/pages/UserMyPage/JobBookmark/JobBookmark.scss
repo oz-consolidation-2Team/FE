@@ -44,7 +44,7 @@
       width: fit-content;
       display: flex;
       justify-content: center;
-      gap: 18px;
+      gap: 17px;
       transition: transform 0.3s ease;
 
       .no_jobs {
@@ -103,16 +103,17 @@
             color: $gray-text;
           }
         }
-
         .job_right {
           font-size: 22px;
           position: absolute;
           top: 20px;
           right: 20px;
-          cursor: pointer;
-          color: $border-color;
-          &.filled {
-            color: $orange;
+          .bookmark_icon {
+            cursor: pointer;
+            color: $border-color;
+            &.filled {
+              color: $orange;
+            }
           }
         }
       }

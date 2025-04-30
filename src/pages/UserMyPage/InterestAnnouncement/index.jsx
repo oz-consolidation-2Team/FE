@@ -38,7 +38,6 @@ function InterestAnnouncement({ userInfo }) {
     fetchInterestJobs();
   }, []);
 
-  console.log(interestJobs);
   return (
     <section className="interest_announcement">
       <h3 className="interest_announcement_title">{userInfo.name}님 관심있을 만한 공고</h3>

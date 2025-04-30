@@ -1,4 +1,3 @@
-import JobPosting from './JobPosting/JobPosting';
 import './UserInfo/';
 import UserInfo from './UserInfo';
 import JobBookmark from './JobBookmark';
@@ -7,6 +6,7 @@ import InterestAnnouncement from './InterestAnnouncement';
 import { useEffect, useState } from 'react';
 
 import axiosInstance from '@/apis/axiosInstance';
+import ApplyJobPosting from './ApplyJobPosting';
 
 function UserMyPage() {
   const [userInfo, setUserInfo] = useState(null); // ← 초기값 null로!
@@ -35,7 +35,7 @@ function UserMyPage() {
         <span>님, 안녕하세요!</span>
       </div>
       <UserInfo userInfo={userInfo} />
-      <JobPosting userInfo={userInfo} />
+      <ApplyJobPosting userInfo={userInfo} />
       <JobBookmark userInfo={userInfo} />
       <InterestAnnouncement userInfo={userInfo} />
       <AgePopularity userInfo={userInfo} />

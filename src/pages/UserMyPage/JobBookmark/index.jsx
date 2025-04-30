@@ -27,8 +27,12 @@ function JobBookmark({ userInfo }) {
         const response = await axiosInstance.get('/posting/');
 
         const allJobs = response.data.items;
-        console.log(allJobs);
-        setRecommendJobs(allJobs);
+
+        const bookmarkJobs = allJobs.filter((job) => {
+          return job.is_favorited === true;
+        });
+
+        setRecommendJobs(bookmarkJobs);
       } catch (err) {
         console.log('🔥 axios 요청 에러 발생:', err);
         console.log(err);

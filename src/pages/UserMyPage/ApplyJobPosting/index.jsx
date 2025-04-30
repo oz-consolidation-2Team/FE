@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
-import './JobPosting.scss';
-import MyJobList from '@/pages/UserMyPage/MyJobList';
+import './ApplyJobPosting.scss';
 
 import { userInfoPropTypes } from '@/utils/UserMyPagePropTypes';
 import axiosInstance from '@/apis/axiosInstance';
 import { useState } from 'react';
+import MyApplyJobList from './MyApplyJobList';
 
-JobPosting.propTypes = {
+ApplyJobPosting.propTypes = {
   userInfo: userInfoPropTypes.isRequired,
 };
 
-function JobPosting({ userInfo }) {
+function ApplyJobPosting({ userInfo }) {
   const [appliedJobs, setAppliedJobs] = useState();
 
   useEffect(() => {
@@ -35,7 +35,7 @@ function JobPosting({ userInfo }) {
     <section className="job_positing">
       <h3>{userInfo.name}님이 지원한 공고</h3>
       {appliedJobs && appliedJobs.length > 0 ? (
-        <MyJobList appliedJobs={appliedJobs || []} />
+        <MyApplyJobList appliedJobs={appliedJobs || []} />
       ) : (
         <p className="null_applied_jobs">지원한 공고가 없습니다!</p>
       )}
@@ -43,4 +43,4 @@ function JobPosting({ userInfo }) {
   );
 }
 
-export default JobPosting;
+export default ApplyJobPosting;

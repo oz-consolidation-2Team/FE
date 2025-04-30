@@ -3,18 +3,34 @@ import { bookmarkJobPropsType } from '@/utils/UserMyPagePropTypes';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '@/apis/axiosInstance';
 
 const InterestJobCard = ({ job }) => {
   const [isBookmarked, setIsBookmarked] = useState(job.is_favorited);
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(`/job-detail/${job.id}`);
+    navigate(`/job-detail/${job.job_id}`);
   };
 
   useEffect(() => {
     setIsBookmarked(job.is_favorited);
   }, [job.is_favorited]);
+
+  const handleBookmarkClick = async (e) => {
+    e.stopPropagation();
+
+    try {
+      if (isBookmarked) {
+        await axiosInstance.delete(`/favorites/${job.job_id}`);
+      } else {
+        await axiosInstance.post(`favorites`, { job_posting_id: job.job_id });
+      }
+      setIsBookmarked(!isBookmarked);
+    } catch (err) {
+      console.error('❌ 북마크 토글 실패', err);
+    }
+  };
 
   return (
     <>
@@ -27,9 +43,9 @@ const InterestJobCard = ({ job }) => {
         </div>
         <div className="job_right">
           {isBookmarked ? (
-            <FaBookmark className="bookmark_icon filled" />
+            <FaBookmark className="bookmark_icon filled" onClick={handleBookmarkClick} />
           ) : (
-            <FaRegBookmark className="bookmark_icon" />
+            <FaRegBookmark className="bookmark_icon" onClick={handleBookmarkClick} />
           )}
         </div>
       </div>

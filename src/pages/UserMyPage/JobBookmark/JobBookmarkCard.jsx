@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-
 import './JobBookmark.scss';
 import { bookmarkJobPropsType } from '@/utils/UserMyPagePropTypes';
 import axiosInstance from '@/apis/axiosInstance';
@@ -23,10 +22,13 @@ const JobBookmarkCard = ({ job }) => {
 
     try {
       if (isBookmarked) {
-        await axiosInstance.post('/favorites');
+        await axiosInstance.delete(`/favorites/${job.id}`);
+      } else {
+        await axiosInstance.post(`favorites`, { job_posting_id: job.id });
       }
+      setIsBookmarked(!isBookmarked);
     } catch (err) {
-      console.log(err);
+      console.error('❌ 북마크 토글 실패', err);
     }
   };
 
@@ -41,9 +43,9 @@ const JobBookmarkCard = ({ job }) => {
         </div>
         <div className="job_right">
           {isBookmarked ? (
-            <FaBookmark className="bookmark_icon filled" />
+            <FaBookmark className="bookmark_icon filled" onClick={handleBookmarkClick} />
           ) : (
-            <FaRegBookmark className="bookmark_icon" />
+            <FaRegBookmark className="bookmark_icon" onClick={handleBookmarkClick} />
           )}
         </div>
       </div>

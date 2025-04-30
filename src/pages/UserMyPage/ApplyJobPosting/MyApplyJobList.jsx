@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import MyJobCard from './MyJobCard';
+
 import { jobPropsType } from '@/utils/UserMyPagePropTypes';
 import PropTypes from 'prop-types';
+import MyApplyJobCard from './MyApplyJobCard';
 
-const JobList = ({ appliedJobs }) => {
+const MyApplyJobList = ({ appliedJobs }) => {
   const [isBookmarked, setIsBookmarked] = useState({});
 
   const toggleBookmark = (id) => {
@@ -12,12 +13,11 @@ const JobList = ({ appliedJobs }) => {
       [id]: !prev[id],
     }));
   };
-  console.log(appliedJobs);
 
   return (
     <div className="job-list">
       {appliedJobs.map((job) => (
-        <MyJobCard
+        <MyApplyJobCard
           key={job.id}
           job={job}
           isBookmarked={isBookmarked[job.id]}
@@ -28,7 +28,7 @@ const JobList = ({ appliedJobs }) => {
   );
 };
 
-JobList.propTypes = {
+MyApplyJobList.propTypes = {
   appliedJobs: PropTypes.arrayOf(jobPropsType),
 };
-export default JobList;
+export default MyApplyJobList;
