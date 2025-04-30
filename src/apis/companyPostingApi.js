@@ -38,8 +38,8 @@ export const updateJobPosting = async (jobId, formData) => {
 }
 
 export const deleteJobPosting = async (jobId) => {
-    const response = await axiosDev.delete(`${BASE_URL}posting/${jobId}`)
-    console.log('공고 삭제 API 호출====')
-    console.log(response.data.data)
-    return response.data.data
-}
+  const response = await axiosDev.delete(`${BASE_URL}/posting/${jobId}`);
+  console.log('공고 삭제 API 호출====');
+  console.log(response.data.data);
+  return response.data.data;
+};

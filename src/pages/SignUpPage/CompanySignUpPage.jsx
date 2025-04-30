@@ -16,7 +16,10 @@ import {
 } from '@/utils/validation';
 import { useNavigate } from 'react-router-dom';
 import './CompanySignUpPage.scss';
-import { signUpCompanyApi } from '@/apis/authApi';
+import {
+  signUpCompanyApi,
+  checkCompanyEmailApi,
+} from '@/apis/authApi';
 
 const CompanySignUpPage = () => {
   const navigate = useNavigate();
@@ -45,32 +48,25 @@ const CompanySignUpPage = () => {
   const [modal, setModal] = useState(null);
 
   const showModal = (type, title, message, callback) => {
-    setModal({
-      type,
-      title,
-      message,
-      onConfirm: () => {
-        if (callback) callback();
-        setModal(null);
-      },
-    });
+    setModal({ type, title, message, onConfirm: () => { if (callback) callback(); setModal(null); }, });
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-
-    setErrors((prev) => {
-      const next = { ...prev };
-      if (name === 'email' && validateEmail(value)) delete next.email;
-      if (name === 'password' && value && validateCompanyStep0({ ...form, password: value }, true).password === undefined) delete next.password;
-      if (name === 'passwordCheck' && value === form.password) delete next.passwordCheck;
-      if (name === 'companyName' && value) delete next.companyName;
-      if (name === 'ceoName' && value) delete next.ceoName;
-      if (name === 'companyDesc' && value.length >= 50) delete next.companyDesc;
-      if (name === 'managerName' && value) delete next.managerName;
-      if (name === 'managerEmail' && validateEmail(value)) delete next.managerEmail;
-      return next;
+    setErrors((prev) => { const next = { ...prev };
+    if (name === 'email') {
+      if (validateEmail(value)) delete next.email;
+      setEmailChecked(false);
+    } 
+    if (name === 'password' && validateCompanyStep0({ ...form, password: value }, true).password === undefined) delete next.password;
+    if (name === 'passwordCheck' && value === form.password) delete next.passwordCheck;
+    if (name === 'companyName' && value) delete next.companyName;
+    if (name === 'ceoName' && value) delete next.ceoName;
+    if (name === 'companyDesc' && value.length >= 50) delete next.companyDesc;
+    if (name === 'managerName' && value) delete next.managerName;
+    if (name === 'managerEmail' && validateEmail(value)) delete next.managerEmail;
+    return next;
     });
   };
 
@@ -113,19 +109,22 @@ const CompanySignUpPage = () => {
     }
   };
 
-  const handleEmailCheck = () => {
+  const handleEmailCheck = async () => {
     if (!validateEmail(form.email)) {
       setErrors((prev) => ({ ...prev, email: '이메일 형식이 올바르지 않습니다.' }));
       return;
     }
-
-    const isDuplicate = form.email === 'test@company.com';
-    if (isDuplicate) {
-      showModal('error', '중복된 이메일', '이미 등록된 이메일입니다.');
-    } else {
+  
+    try {
+      await checkCompanyEmailApi(form.email);
+  
       showModal('success', '사용 가능', '사용 가능한 이메일입니다.', () => {
         setEmailChecked(true);
       });
+    } catch (err) {
+      const message = err.response?.data?.message || '이미 등록된 이메일입니다.';
+      showModal('error', '중복된 이메일', message);
+      setEmailChecked(false);
     }
   };
 
@@ -207,23 +206,27 @@ const CompanySignUpPage = () => {
     const error = validateTerms();
     setErrors(error);
     if (Object.keys(error).length > 0) {
-      console.log('[약관 유효성 검사 실패]', error); // ✅ 1
       return;
     }
   
     try {
-      console.log('[form 최종 확인]', form); // ✅ 2
       await signUpCompanyApi(form);
       showModal('success', '회원가입 완료', '정상적으로 회원가입이 완료되었습니다.', () => {
         navigate('/login');
       });
     } catch (err) {
-      console.error('[기업 회원가입 실패]', err); // ✅ 3
       const message = err.response?.data?.message || '서버 오류가 발생했습니다.';
       showModal('error', '회원가입 실패', message);
     }
   };
-  
+
+  const handleSubmitByStep = (e) => {
+    e.preventDefault();
+    if (step === 0) handleNext();
+    else if (step === 1) handleNext();
+    else if (step === 2) handleSubmit();
+    else if (step === 3) handleFinalSubmit();
+  };
 
   const toggleCheck = (key) => {
     const next = { ...form, [key]: !form[key] };
@@ -273,203 +276,207 @@ const CompanySignUpPage = () => {
 </div>
 
       <div className="signup_card">
-        <div className="signup_title">
-          <FaBuilding className="icon" />
-          <h2>기업 회원가입</h2>
+        <form onSubmit={handleSubmitByStep}>
+          <div className="signup_title">
+            <FaBuilding className="icon" />
+            <h2>기업 회원가입</h2>
+          </div>
+
+          {step === 0 && (
+            <>
+              <div className="form_group">
+                <label>이메일</label>
+                <div className="input_row">
+                  <input name="email" value={form.email} onChange={handleChange} className={errors.email ? 'error' : ''} autoComplete="username" />
+                  <button type="button" onClick={handleEmailCheck}>중복확인</button>
+                </div>
+                {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+              </div>
+
+              <div className="form_group password_row">
+                <label>비밀번호</label>
+                <input
+                  type={showPw ? 'text' : 'password'}
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  placeholder="영문+숫자+특수문자 8자 이상"
+                  className={errors.password ? 'error' : ''}
+                  autoComplete="new-password"
+                />
+                <span className="eye_icon" onClick={() => setShowPw(!showPw)}>
+                  {showPw ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
+                </span>
+                {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+              </div>
+
+              <div className="form_group password_row">
+                <label>비밀번호 확인</label>
+                <input
+                  type={showPwCheck ? 'text' : 'password'}
+                  name="passwordCheck"
+                  value={form.passwordCheck}
+                  onChange={handleChange}
+                  className={errors.passwordCheck ? 'error' : ''}
+                  autoComplete="new-password"
+                />
+                <span className="eye_icon" onClick={() => setShowPwCheck(!showPwCheck)}>
+                  {showPwCheck ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
+                </span>
+                {errors.passwordCheck && <ErrorMessage>{errors.passwordCheck}</ErrorMessage>}
+              </div>
+
+              <div className="button_group">
+              <button type="submit" className="next_btn">다음</button>
+              </div>
+            </>
+          )}
+
+          {step === 1 && (
+            <>
+              <LabeledInput label="기업명" name="companyName" value={form.companyName} onChange={handleChange} placeholder="기업명을 입력해주세요" error={errors.companyName} />
+              <LabeledInput label="대표자명" name="ceoName" value={form.ceoName} onChange={handleChange} placeholder="대표자 성함을 입력해주세요" error={errors.ceoName} />
+              <LabeledInput label="개업년월일" name="startDate" value={form.startDate} onChange={handleStartDateChange} placeholder="YYYYMMDD" error={errors.startDate} inputMode="numeric" />
+
+              <div className="form_group">
+                <label>사업자등록번호</label>
+                <div className="input_row">
+                  <input name="businessNumber" value={form.businessNumber} onChange={handleBizNumberChange} disabled={bizVerified} className={errors.businessNumber ? 'error' : ''} />
+                  <button type="button" onClick={handleBizCheck} disabled={bizVerified} style={{ backgroundColor: bizVerified ? '#ccc' : undefined, cursor: bizVerified ? 'not-allowed' : 'pointer' }}>
+                    {bizVerified ? '인증됨' : '인증하기'}
+                  </button>
+                </div>
+                {bizVerified && <p style={{ fontSize: '13px', color: '#0f8c3b', marginTop: '4px' }}>사업자등록번호가 인증되었습니다.</p>}
+                {errors.businessNumber && <ErrorMessage>{errors.businessNumber}</ErrorMessage>}
+              </div>
+
+              <div className="form_group">
+                <label>기업 소개</label>
+                <textarea
+                  name="companyDesc"
+                  value={form.companyDesc}
+                  onChange={handleChange}
+                  rows="8"
+                  placeholder="50자 이상 입력해주세요"
+                  className={errors.companyDesc ? 'error' : ''}
+                />
+                <div style={{ fontSize: '13px', textAlign: 'right', marginTop: '4px', color: form.companyDesc.length < 50 ? '#e53935' : '#888' }}>
+                  {form.companyDesc.length}/50자
+                </div>
+                {errors.companyDesc && <ErrorMessage>{errors.companyDesc}</ErrorMessage>}
+              </div>
+
+              <div className="button_group">
+                <button type="button" className="prev_btn" onClick={() => setStep(0)}>이전</button>
+                <button type="submit" className="next_btn">다음</button>
+              </div>
+            </>
+          )}
+
+          {step === 2 && (
+            <>
+              <LabeledInput label="담당자 이름" name="managerName" value={form.managerName} onChange={handleChange} placeholder="담당자 이름을 입력해주세요" error={errors.managerName} />
+              <LabeledInput label="담당자 전화번호" name="managerPhone" value={form.managerPhone} onChange={handleManagerPhoneChange} placeholder="숫자만 입력해 주세요" error={errors.managerPhone} inputMode="numeric" />
+              <LabeledInput label="담당자 이메일" name="managerEmail" value={form.managerEmail} onChange={handleChange} placeholder="이메일을 입력해주세요" error={errors.managerEmail} />
+
+              <div className="button_group">
+                <button type="button" className="prev_btn" onClick={() => setStep(1)}>이전</button>
+                <button type="submit" className="next_btn">다음</button>
+              </div>
+            </>
+          )}
+
+          {step === 3 && (
+            <div className="terms_step">
+              <div className="checkbox_row all_agree">
+                <input
+                  type="checkbox"
+                  checked={form.termsAll}
+                  onChange={handleAllTermsToggle}
+                />
+                <label><strong>전체 약관 동의</strong></label>
+              </div>
+
+              <hr />
+
+              <div className="terms_section">
+                <div className="terms_label">[필수] 약관 동의</div>
+                {[1, 2, 3].map((n) => (
+                  <div className="checkbox_row" key={`terms${n}`}>
+                    <input
+                      type="checkbox"
+                      checked={form[`terms${n}`]}
+                      onChange={() => toggleCheck(`terms${n}`)}
+                    />
+                    <label>
+                      {n === 1 ? '개인정보처리방침' :
+                      n === 2 ? '기업회원 이용약관' :
+                      '위치기반 서비스 이용약관'}
+                    </label>
+                    <button
+                      className="view_detail"
+                      onClick={() => setModal({
+                        type: 'term',
+                        key: n === 1 ? 'privacy_policy.html' :
+                            n === 2 ? 'company_terms.html' :
+                            'location_terms.html',
+                      })}
+                    >
+                      자세히 보기
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <hr />
+
+              <div className="terms_section">
+                <div className="terms_label">[선택] 약관 동의</div>
+                {[4, 5, 6].map((n) => (
+                  <div className="checkbox_row" key={`terms${n}`}>
+                    <input
+                      type="checkbox"
+                      checked={form[`terms${n}`]}
+                      onChange={() => toggleCheck(`terms${n}`)}
+                    />
+                    <label>
+                      {n === 4 ? '마케팅 이메일 수신 동의' :
+                      n === 5 ? '마케팅 SMS 수신 동의' :
+                      '마케팅 Push 수신 동의'}
+                    </label>
+                  </div>
+                ))}
+              </div>
+
+              {errors.agree && <ErrorMessage>{errors.agree}</ErrorMessage>}
+
+              <div className="button_group">
+                <button type="button" className="prev_btn" onClick={() => setStep(2)}>이전</button>
+                <button type="submit" className="next_btn">회원가입 완료</button>
+              </div>
+            </div>
+          )}
+          </form>
         </div>
 
-        {step === 0 && (
-          <>
-            <div className="form_group">
-              <label>이메일</label>
-              <div className="input_row">
-                <input name="email" value={form.email} onChange={handleChange} className={errors.email ? 'error' : ''} />
-                <button type="button" onClick={handleEmailCheck}>중복확인</button>
-              </div>
-              {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
-            </div>
-
-            <div className="form_group password_row">
-              <label>비밀번호</label>
-              <input
-                type={showPw ? 'text' : 'password'}
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-                placeholder="영문+숫자+특수문자 8자 이상"
-                className={errors.password ? 'error' : ''}
+        {modal?.type === 'term' && (
+          <Modal
+            className="term_modal"
+            type="green"
+            title="약관 보기"
+            message={
+              <iframe
+                src={`/terms/${modal.key}`}
+                title="약관 보기"
               />
-              <span className="eye_icon" onClick={() => setShowPw(!showPw)}>
-                {showPw ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
-              </span>
-              {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
-            </div>
-
-            <div className="form_group password_row">
-              <label>비밀번호 확인</label>
-              <input
-                type={showPwCheck ? 'text' : 'password'}
-                name="passwordCheck"
-                value={form.passwordCheck}
-                onChange={handleChange}
-                className={errors.passwordCheck ? 'error' : ''}
-              />
-              <span className="eye_icon" onClick={() => setShowPwCheck(!showPwCheck)}>
-                {showPwCheck ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
-              </span>
-              {errors.passwordCheck && <ErrorMessage>{errors.passwordCheck}</ErrorMessage>}
-            </div>
-
-            <div className="button_group">
-              <button className="next_btn" onClick={handleNext}>다음</button>
-            </div>
-          </>
-        )}
-
-        {step === 1 && (
-          <>
-            <LabeledInput label="기업명" name="companyName" value={form.companyName} onChange={handleChange} placeholder="기업명을 입력해주세요" error={errors.companyName} />
-            <LabeledInput label="대표자명" name="ceoName" value={form.ceoName} onChange={handleChange} placeholder="대표자 성함을 입력해주세요" error={errors.ceoName} />
-            <LabeledInput label="개업년월일" name="startDate" value={form.startDate} onChange={handleStartDateChange} placeholder="YYYYMMDD" error={errors.startDate} inputMode="numeric" />
-
-            <div className="form_group">
-              <label>사업자등록번호</label>
-              <div className="input_row">
-                <input name="businessNumber" value={form.businessNumber} onChange={handleBizNumberChange} disabled={bizVerified} className={errors.businessNumber ? 'error' : ''} />
-                <button type="button" onClick={handleBizCheck} disabled={bizVerified} style={{ backgroundColor: bizVerified ? '#ccc' : undefined, cursor: bizVerified ? 'not-allowed' : 'pointer' }}>
-                  {bizVerified ? '인증됨' : '인증하기'}
-                </button>
-              </div>
-              {bizVerified && <p style={{ fontSize: '13px', color: '#0f8c3b', marginTop: '4px' }}>사업자등록번호가 인증되었습니다.</p>}
-              {errors.businessNumber && <ErrorMessage>{errors.businessNumber}</ErrorMessage>}
-            </div>
-
-            <div className="form_group">
-              <label>기업 소개</label>
-              <textarea
-                name="companyDesc"
-                value={form.companyDesc}
-                onChange={handleChange}
-                rows="8"
-                placeholder="50자 이상 입력해주세요"
-                className={errors.companyDesc ? 'error' : ''}
-              />
-              <div style={{ fontSize: '13px', textAlign: 'right', marginTop: '4px', color: form.companyDesc.length < 50 ? '#e53935' : '#888' }}>
-                {form.companyDesc.length}/50자
-              </div>
-              {errors.companyDesc && <ErrorMessage>{errors.companyDesc}</ErrorMessage>}
-            </div>
-
-            <div className="button_group">
-              <button className="prev_btn" onClick={() => setStep(0)}>이전</button>
-              <button className="next_btn" onClick={handleNext}>다음</button>
-            </div>
-          </>
-        )}
-
-        {step === 2 && (
-          <>
-            <LabeledInput label="담당자 이름" name="managerName" value={form.managerName} onChange={handleChange} placeholder="담당자 이름을 입력해주세요" error={errors.managerName} />
-            <LabeledInput label="담당자 전화번호" name="managerPhone" value={form.managerPhone} onChange={handleManagerPhoneChange} placeholder="숫자만 입력해 주세요" error={errors.managerPhone} inputMode="numeric" />
-            <LabeledInput label="담당자 이메일" name="managerEmail" value={form.managerEmail} onChange={handleChange} placeholder="이메일을 입력해주세요" error={errors.managerEmail} />
-
-            <div className="button_group">
-              <button className="prev_btn" onClick={() => setStep(1)}>이전</button>
-              <button className="next_btn" onClick={handleSubmit}>다음</button>
-            </div>
-          </>
-        )}
-
-{step === 3 && (
-  <div className="terms_step">
-    <div className="checkbox_row all_agree">
-      <input
-        type="checkbox"
-        checked={form.termsAll}
-        onChange={handleAllTermsToggle}
-      />
-      <label><strong>전체 약관 동의</strong></label>
-    </div>
-
-    <hr />
-
-    <div className="terms_section">
-      <div className="terms_label">[필수] 약관 동의</div>
-      {[1, 2, 3].map((n) => (
-        <div className="checkbox_row" key={`terms${n}`}>
-          <input
-            type="checkbox"
-            checked={form[`terms${n}`]}
-            onChange={() => toggleCheck(`terms${n}`)}
+            }
+            onConfirm={() => setModal(null)}
           />
-          <label>
-            {n === 1 ? '개인정보처리방침' :
-            n === 2 ? '기업회원 이용약관' :
-            '위치기반 서비스 이용약관'}
-          </label>
-          <button
-            className="view_detail"
-            onClick={() => setModal({
-              type: 'term',
-              key: n === 1 ? 'privacy_policy.html' :
-                  n === 2 ? 'company_terms.html' :
-                  'location_terms.html',
-            })}
-          >
-            자세히 보기
-          </button>
-        </div>
-      ))}
-    </div>
+        )}
 
-    <hr />
-
-    <div className="terms_section">
-      <div className="terms_label">[선택] 약관 동의</div>
-      {[4, 5, 6].map((n) => (
-        <div className="checkbox_row" key={`terms${n}`}>
-          <input
-            type="checkbox"
-            checked={form[`terms${n}`]}
-            onChange={() => toggleCheck(`terms${n}`)}
-          />
-          <label>
-            {n === 4 ? '마케팅 이메일 수신 동의' :
-            n === 5 ? '마케팅 SMS 수신 동의' :
-            '마케팅 Push 수신 동의'}
-          </label>
-        </div>
-      ))}
-    </div>
-
-    {errors.agree && <ErrorMessage>{errors.agree}</ErrorMessage>}
-
-    <div className="button_group">
-      <button className="prev_btn" onClick={() => setStep(2)}>이전</button>
-      <button className="next_btn" onClick={handleFinalSubmit}>회원가입 완료</button>
-    </div>
-  </div>
-)}
-</div>
-
-{modal?.type === 'term' && (
-  <Modal
-    className="term_modal"
-    type="green"
-    title="약관 보기"
-    message={
-      <iframe
-        src={`/terms/${modal.key}`}
-        title="약관 보기"
-      />
-    }
-    onConfirm={() => setModal(null)}
-  />
-)}
-
-{modal?.type !== 'term' && modal && <Modal {...modal} />}
-</div>
-);
-};
+        {modal?.type !== 'term' && modal && <Modal {...modal} />}
+      </div>
+    );
+  };
 
 export default CompanySignUpPage;

@@ -2,41 +2,16 @@ import React, { useState, useEffect } from 'react';
 import './MainPage.scss';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
-import { getPopularJobList} from '../../apis/RecruitmentApi';
+import { getPopularJobList, getJobList } from '../../apis/RecruitmentApi';
 import { useNavigate } from 'react-router-dom';
 import MainJobCard from './MainJobCard';
 
 
 
-const JobCard = ({ job }) => {
-  const [isBookmarked, setIsBookmarked] = useState(false);
-
-  const toggleBookmark = () => {
-    setIsBookmarked((prev) => !prev);
-  };
-
-  return (
-    <div className="job_card">
-      <div className="job_top">
-        <span className="company">{job.work_place_name}</span>
-        <h3 className="title">{job.title}</h3>
-        <span className="date">{job.recruit_period_end}</span>
-      </div>
-      <div className="job_bottom">
-        {isBookmarked ? (
-          <FaStar className="star_icon filled" onClick={toggleBookmark} />
-        ) : (
-          <FaRegStar className="star_icon" onClick={toggleBookmark} />
-        )}
-        <span className="location">{job.work_address}</span>
-      </div>
-    </div>
-  );
-};
-
 const MainPage = () => {
   const [keyword, setKeyword] = useState('');
   const [popularJobs, setPopularJobs] = useState([]);
+  const [recentJobs, setRecentJobs] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,7 +24,17 @@ const MainPage = () => {
       }
     };
 
+    const fetchRecentJobs = async () => {
+      try {
+        const res = await getJobList({ skip: 0, limit: 4 });
+        setRecentJobs(res.items || []);
+      } catch (error) {
+        console.error('최근 공고 불러오기 실패', error);
+      }
+    };
+
     fetchPopularJobs();
+    fetchRecentJobs();
   }, []);
 
   const handleSearch = () => {
@@ -105,19 +90,9 @@ const MainPage = () => {
       <section className="section_area recent">
         <h2>최근에 등록된 공고</h2>
         <div className="job_grid">
-          {Array(4)
-            .fill(0)
-            .map((_, i) => (
-              <MainJobCard
-                key={i}
-                job={{
-                  work_place_name: '더미 기업',
-                  title: '더미 공고 제목',
-                  recruit_period_end: '2025-12-31',
-                  work_address: '서울시 강남구'
-                }}
-              />
-            ))}
+          {recentJobs.map((job) => (
+            <MainJobCard key={job.id} job={job} />
+          ))}
         </div>
       </section>
     </div>

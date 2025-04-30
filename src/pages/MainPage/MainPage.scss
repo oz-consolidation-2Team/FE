@@ -131,6 +131,10 @@ $orange-light: #ffa82f;
         }
 
         .job_top {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+
           .company {
             font-size: 14px;
             color: $gray-text;
@@ -147,17 +151,14 @@ $orange-light: #ffa82f;
           .date {
             font-size: 13px;
             color: #999;
+            margin-bottom: 8px;
           }
-        }
 
-        .job_bottom {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-top: 20px;
-
-          .star_icon {
-            font-size: 26px;
+          .bookmark_icon {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 24px;
             cursor: pointer;
             color: $orange-light;
             transition: transform 0.2s;
@@ -170,6 +171,13 @@ $orange-light: #ffa82f;
               transform: scale(1.1);
             }
           }
+        }
+
+        .job_bottom {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          margin-top: 20px;
 
           .location {
             font-size: 14px;

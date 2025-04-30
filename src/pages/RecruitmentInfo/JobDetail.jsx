@@ -8,6 +8,7 @@ import { getJobDetail, applyJobPosting } from '@/apis/RecruitmentApi';
 import KakaoMap from '@/components/KakaoMap/KakaoMap';
 import { CompaniesInfo } from '@/apis/companyApi';
 import { formatPhoneNumber } from '@/utils/format';
+import { addFavorite, deleteFavorite } from '@/apis/favoriteApi';
 
 
 
@@ -20,16 +21,20 @@ const JobDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginPromptOpen, setLoginPromptOpen] = useState(false);
   const accessToken = localStorage.getItem('access_token');
+  const userType = localStorage.getItem('userType');
 
   useEffect(() => {
     const fetchJob = async () => {
       try {
         const data = await getJobDetail(postingId);
         setJob(data);
+        setIsBookmarked(data.is_favorited || false);
         const companyData = await CompaniesInfo(data.company_id);
         setCompanyInfo(companyData);
       } catch (error) {
-        console.error('채용공고 불러오기 실패:', error);
+        if (error.response) {
+          console.error('채용공고 불러오기 실패:', error);
+        }
       }
     };
 
@@ -39,8 +44,23 @@ const JobDetail = () => {
 
   if (!job) return <div>로딩 중...</div>;
 
-  const handleBookmarkClick = () => {
-    setIsBookmarked(prev => !prev);
+  const handleBookmarkClick = async (e) => {
+    e.stopPropagation();
+    if (!accessToken) {
+      setLoginPromptOpen(true);
+      return;
+    }
+    try {
+      if (isBookmarked) {
+        await deleteFavorite(job.id);
+      } else {
+        await addFavorite(job.id);
+      }
+      setIsBookmarked((prev) => !prev);
+    } catch (error) {
+      console.error('즐겨찾기 처리 실패:', error);
+      alert('즐겨찾기 중 오류가 발생했습니다. 다시 시도해주세요.');
+    }
   };
 
   const convertToAMPM = (timeStr) => {
@@ -76,7 +96,7 @@ const JobDetail = () => {
           <div
             className="company"
             style={{ cursor: 'pointer' }}
-            onClick={() => navigate(`/company_info_page/${job.company_id}`)}
+            onClick={() => navigate(`/company-info/${job.company_id}`)}
             >{job.work_place_name}</div>
         </div>
           <h2 className="title">{job.title}</h2>
@@ -238,27 +258,29 @@ const JobDetail = () => {
         )}
       </section>
 
-      <div className="action">
-        <button
-          className="button"
-          onClick={() => {
-            if (!accessToken) {
-              setLoginPromptOpen(true);
-              return;
-            }
-            setIsModalOpen(true);
-          }}
-        >
-          지원하기
-        </button>
-        <div className="bookmark">
-          {isBookmarked ? (
-            <FaStar className="star_icon filled" onClick={handleBookmarkClick} />
-          ) : (
-            <FaRegStar className="star_icon" onClick={handleBookmarkClick} />
-          )}
+      {userType !== 'company' && (
+        <div className="action">
+          <button
+            className="button"
+            onClick={() => {
+              if (!accessToken) {
+                setLoginPromptOpen(true);
+                return;
+              }
+              setIsModalOpen(true);
+            }}
+          >
+            지원하기
+          </button>
+          <div className="bookmark">
+            {isBookmarked ? (
+              <FaStar className="star_icon filled" onClick={handleBookmarkClick} />
+            ) : (
+              <FaRegStar className="star_icon" onClick={handleBookmarkClick} />
+            )}
+          </div>
         </div>
-      </div>
+      )}
       {isModalOpen && (
         <JobApplyModal
           onClose={() => setIsModalOpen(false)}

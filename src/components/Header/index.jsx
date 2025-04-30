@@ -27,7 +27,7 @@ const Header = () => {
           </div>
           <ul className="nav_links">
             <li onClick={goTo('/about')}>회사소개</li>
-            <li onClick={goTo('/recruitment_info')}>채용정보</li>
+            <li onClick={goTo('/recruitment-info')}>채용정보</li>
             <li onClick={goTo('/TrainingSearch')}>직업훈련정보</li>
           </ul>
         </div>
@@ -35,7 +35,7 @@ const Header = () => {
         <nav className="menu">
         {isLoggedIn ? (
           <>
-            {userType === 'user' && (
+            {isLoggedIn && userType === 'user' && (
               <button className="mypage_btn" onClick={goTo('/mypage/user')}>
                 마이페이지
               </button>

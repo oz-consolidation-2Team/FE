@@ -53,7 +53,7 @@ export default function Announcement (props) {
         employment_type: false, // 고용형태
         work_start_time: false, // 근무시간
         work_end_time: false, // 근무시간
-        // 이미지등록: false // 이미지등록
+        이미지등록: false // 이미지등록
     })
     
     if (props.type=== 'edit') {

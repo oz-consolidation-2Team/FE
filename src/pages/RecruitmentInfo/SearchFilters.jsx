@@ -1,6 +1,8 @@
 import React from 'react';
 import './SearchFilters.scss'; 
 import { KoreaRegions } from '../../utils/KoreaRegions';
+import { INTEREST_OPTIONS } from '@/utils/signUpInfoOptions';
+
 
 const districtsByCity = Object.entries(KoreaRegions).reduce((acc, [city, value]) => {
   acc[city] = value.filter((gu) => !gu.includes('전체'));
@@ -59,24 +61,9 @@ function SearchFilters({
 
       <select value={jobCategoryInput} onChange={(e) => setJobCategoryInput(e.target.value)}>
         <option value="">직종 선택</option>
-        <option value="외식·음료">외식·음료</option>
-        <option value="유통·판매">유통·판매</option>
-        <option value="문화·여가·생활">문화·여가·생활</option>
-        <option value="서비스">서비스</option>
-        <option value="사무·회계">사무·회계</option>
-        <option value="고객상담·영업·리서치">고객상담·영업·리서치</option>
-        <option value="생산·건설·노무">생산·건설·노무</option>
-        <option value="IT·인터넷">IT·인터넷</option>
-        <option value="교육·강사">교육·강사</option>
-        <option value="디자인">디자인</option>
-        <option value="미디어">미디어</option>
-        <option value="운전·배달">운전·배달</option>
-        <option value="병원·간호·연구">병원·간호·연구</option>
-        <option value="전문-상담직">전문-상담직</option>
-        <option value="전문-사무직">전문-사무직</option>
-        <option value="전문-BAR">전문-BAR</option>
-        <option value="전문-생산직">전문-생산직</option>
-        <option value="전문-외식업">전문-외식업</option>
+        {INTEREST_OPTIONS.map((option) => (
+          <option key={option} value={option}>{option}</option>
+        ))}
       </select>
 
       <input

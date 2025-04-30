@@ -1,4 +1,4 @@
-import Hr from "@/utils/Hr";
+import Hr from '@/utils/Hr';
 import PropTypes from 'prop-types';
 
 /**props = {
@@ -44,12 +44,11 @@ export default function Content (props) {
                 <p>근무시간: {props.formData.work_start_time}<span>{props.formData.is_work_time_negotiable_str && "(협의 가능)"}</span></p>
             </div>
             <div>근무요일: {props.formData.work_days && props.formData.work_days.join(', ')}<span>{props.formData.is_work_days_negotiable_str && "(협의 가능)"}</span><span>{props.formData.is_schedule_based_str}</span></div>
-        </div>
-    )
+    </div>
+  );
 }
 
 Content.propTypes = {
-    formData: PropTypes.object.isRequired,
-    modalType: PropTypes.oneOf(['add' | 'edit' | 'delete' | 'delete-Success'])
-}
-
+  formData: PropTypes.object.isRequired,
+  modalType: PropTypes.oneOf(['add' | 'edit' | 'delete' | 'delete-Success']),
+};

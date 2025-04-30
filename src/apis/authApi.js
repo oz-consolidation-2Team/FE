@@ -1,10 +1,11 @@
 import axiosInstance from "./axiosInstance";
+import axiosPublicInstance from "./axiosPublicInstance";
 
 // 개인 회원가입 API
 export const signUpUserApi = async (form) => {
   console.log('[회원가입 요청]', '/user/register');
 
-  const response = await axiosInstance.post('/user/register', {
+  const response = await axiosPublicInstance.post('/user/register', {
     name: form.name,
     email: form.email,
     password: form.password,
@@ -19,16 +20,52 @@ export const signUpUserApi = async (form) => {
   return response.data;
 };
 
+// 개인 회원가입 이메일 중복확인 API
+export const checkUserEmailApi = async (email) => {
+  const response = await axiosInstance.get('/check-email', {
+    params: { email },
+  });
+  return response.data;
+};
+
+// 개인 이메일 찾기 API
+export const findUserEmailApi = async (form) => {
+  const response = await axiosInstance.post('/user/find_email', {
+    name: form.name,
+    phone_number: form.phone,
+    birthday: form.birth,
+  });
+  return response.data;
+};
+
+// 개인 비밀번호 찾기 API
+export const verifyUserInfoApi = async ({ email, name, phone_number, birthday }) => {
+  const response = await axiosPublicInstance.post('/user/password/verify', {
+    email,
+    name,
+    phone_number,
+    birthday,
+  });
+  return response.data;
+};
+
+// 개인 비밀번호 재설정 API
+export const resetUserPasswordApi = async ({ user_id, new_password, confirm_password }) => {
+  const response = await axiosPublicInstance.post('/user/password/reset', {
+    user_id,
+    new_password,
+    confirm_password,
+  });
+  return response.data;
+};
+
 // 개인 로그인 API
 export const loginUserApi = async (email, password) => {
-  console.log('[로그인 요청]', '/user/login');
 
-  const response = await axiosInstance.post('/user/login', {
+  const response = await axiosPublicInstance.post('/user/login', {
     email,
     password,
   });
-
-  console.log('[서버 응답]', response.data);
 
   const { accesstoken, refreshtoken, user } = response.data.data;
 
@@ -39,16 +76,14 @@ export const loginUserApi = async (email, password) => {
   };
 };
 
-
 // 개인 로그아웃 API
 export const logoutUserApi = async () => {
-  console.log('[로그아웃 요청]', '/user/logout');
   await axiosInstance.post('/user/logout');
 };
 
 // 기업 회원가입 API
 export const signUpCompanyApi = async (form) => {
-  const response = await axiosInstance.post('/company/register',
+  const response = await axiosPublicInstance.post('/company/register',
     {
     email: form.email,
     password: form.password,
@@ -66,16 +101,53 @@ export const signUpCompanyApi = async (form) => {
   return response.data;
 };
 
+// 기업 회원가입 이메일 중복확인 API
+export const checkCompanyEmailApi = async (email) => {
+  const response = await axiosInstance.get(`/company/register/check-email`, {
+    params: { email },
+  });
+  return response.data;
+};
+
+// 기업 이메일 찾기 API
+export const findCompanyEmailApi = async ({ ceoName, startDate, businessNumber }) => {
+  const response = await axiosPublicInstance.post('/company/find-email', {
+    ceo_name: ceoName,
+    opening_date: startDate.replace(/-/g, ''),
+    business_reg_number: businessNumber,
+  });
+  return response.data;
+};
+
+// 기업 비밀번호 찾기 API
+export const verifyCompanyPasswordInfoApi = async ({ email, ceo_name, opening_date, business_reg_number }) => {
+  const response = await axiosPublicInstance.post('/company/reset-password/verify', {
+    email,
+    ceo_name,
+    opening_date,
+    business_reg_number,
+  });
+
+  return response.data;
+};
+
+// 기업 비밀번호 재설정 API
+export const resetCompanyPasswordApi = async ({ reset_token, new_password, confirm_password }) => {
+  const response = await axiosPublicInstance.post('/company/reset-password', {
+    reset_token,
+    new_password,
+    confirm_password,
+  });
+  return response.data;
+};
+
 // 기업 로그인 API
 export const loginCompanyApi = async ({ email, password }) => {
-  console.log('[로그인 요청]', '/company/login');
 
-  const response = await axiosInstance.post('/company/login', {
+  const response = await axiosPublicInstance.post('/company/login', {
     email,
     password,
   });
-
-  console.log('[서버 응답]', response.data);
 
   const { access_token, refresh_token, company } = response.data.data;
 
@@ -88,6 +160,13 @@ export const loginCompanyApi = async ({ email, password }) => {
 
 // 기업 로그아웃 API
 export const logoutCompanyApi = async () => {
-  console.log('[기업 로그아웃 요청]', '/company/logout');
   await axiosInstance.post('/company/logout');
+};
+
+// 네이버 로그인 API
+export const loginWithNaver = async (code, state) => {
+  const response = await axiosPublicInstance.get('/auth/naver/login', {
+    params: { code, state },
+  });
+  return response.data;
 };

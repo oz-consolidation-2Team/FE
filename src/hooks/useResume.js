@@ -18,7 +18,11 @@ export const useResume = () => {
           const resumeRes = await axiosFormInstance.get(`/resumes`);
 
           const resumeData = resumeRes?.data?.data;
-          const resume = resumeData && resumeData.id ? resumeData : null;
+          const resume = Array.isArray(resumeData)
+            ? resumeData.length > 0
+              ? resumeData[0]
+              : null
+            : resumeData;
 
           if (resume?.id) {
             setFormData({

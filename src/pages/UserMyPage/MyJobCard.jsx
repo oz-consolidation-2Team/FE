@@ -42,7 +42,7 @@ const MyJobCard = ({ job, isBookmarked, toggleBookmark }) => {
         </div>
       </div>
       <div className="job_footer">
-        <div> 지원 일자 : 2025.05.01 </div>
+        <div> {`지원 일자 : ${new Date('2025-04-27T05:33:24.624937Z').toLocaleDateString()}`} </div>
         <div> D-1</div>
       </div>
     </div>
