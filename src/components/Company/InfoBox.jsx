@@ -8,7 +8,6 @@ import { formatPhoneNumber } from '@/utils/format';
  * @param {object} data 기업 마이 페이지 조회 API
  */
 export default function InfoBox ({type, data}) {
-    console.log(data)
     const navigate = useNavigate();
 
     return <div className='InfoBox_cantainer'>

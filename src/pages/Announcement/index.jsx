@@ -4,13 +4,14 @@ import WorkLocation from "../../components/Company/inputs/WorkLocation"
 import WorkRequirement from "../../components/Company/inputs/WorkRequirement"
 import AnnouncementContent from "../../components/Company/inputs/AnnouncementContent"
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Modal from "../../components/Company/Modal/Modal"
 import "./Announcement.scss"
 import { GoArrowLeft } from "react-icons/go";
 import { JobPosting } from "@/apis/companyPostingApi"
+import { padZero } from "@/utils/validation"
 
-const INPUT_BLOCK = ['title', 'summary', 'recruit_period_start', 'recruit_period_end', 'is_always_recruiting', 'recruit_number', 'education', 'benefits', 'preferred_conditions', 'other_conditions', 'work_address', 'work_place_name', 'salary', 'payment_method', 'work_duration', 'is_work_duration_negotiable_str', 'job_category', 'career', 'work_days', 'is_work_days_negotiable_str', 'is_schedule_based_str', 'employment_type', 'work_start_time', 'work_end_time', 'is_work_time_negotiable_str', 'description', 'image_file', 'latitude', 'longitude']
+const INPUT_BLOCK = ['title', 'summary', 'recruit_period_start', 'recruit_period_end', 'is_always_recruiting_str', 'recruit_number', 'education', 'benefits', 'preferred_conditions', 'other_conditions', 'work_address', 'work_place_name', 'salary', 'payment_method', 'work_duration', 'is_work_duration_negotiable_str', 'job_category', 'career', 'work_days', 'is_work_days_negotiable_str', 'is_schedule_based_str', 'employment_type', 'work_start_time', 'work_end_time', 'is_work_time_negotiable_str', 'description', 'image_file', 'latitude', 'longitude']
 const INPUT_BLOCK_BOOLEAN = ['is_always_recruiting_str','is_work_duration_negotiable_str','is_work_days_negotiable_str','is_schedule_based_str','is_work_time_negotiable_str']
 const INPUT_BLOCK_ARRAY = ['benefits', 'preferred_conditions', 'other_conditions']
 
@@ -18,28 +19,19 @@ const INPUT_BLOCK_ARRAY = ['benefits', 'preferred_conditions', 'other_conditions
  * @param {'add' | 'edit'} type 공고 등록인지 수정인지 체크
  */
 export default function Announcement (props) {
+    // const [data, setData] = useState({})
+
     const navigate = useNavigate()
+    const param = useParams()
     const date = new Date()
     
     let data= {};
     INPUT_BLOCK.map(item => {
         if (INPUT_BLOCK_ARRAY.includes(item)) return data[item]= []
         if (INPUT_BLOCK_BOOLEAN.includes(item)) return data[item]= false
-        if (item === 'recruit_period_start') return data[item]= `${date.getFullYear()}-${date.getMonth() +1}-${date.getDate()}}`
+        if (item === 'recruit_period_start') return data[item]= `${date.getFullYear()}-${padZero(date.getMonth() +1)}-${padZero(date.getDate())}`
         data[item]= ''
     })
-    
-    if (props.type=== 'edit') {
-        useEffect(()=>{
-            try {
-                JobPosting().then(res => data.set(res))
-            } catch (error) {
-                console.log('기업 공고 조회 에러', error)
-            } finally {
-                console.log('로딩 끝')
-            }
-        },[])
-    }
 
     const [showModal, setShowModal] = useState(false)
     const [modalType, setModalType] = useState('edit')
@@ -64,6 +56,26 @@ export default function Announcement (props) {
         // 이미지등록: false // 이미지등록
     })
     
+    if (props.type=== 'edit') {
+        useEffect(()=>{
+            try {
+                JobPosting(param.id).then(res => {
+                    setFormData(({
+                        ...res,
+                        'benefits': res['benefits'].split(', '),
+                        'other_conditions': res['other_conditions'].split(', '),
+                        'preferred_conditions': res['preferred_conditions'].split(', '),
+                        'work_days': res['work_days'].split(','),
+                    }))
+                })
+            } catch (error) {
+                console.log('기업 공고 조회 에러', error)
+            } finally {
+                console.log('로딩 끝')
+            }
+        },[])
+    }
+
     const validate = () => {
         console.log('validate 실행됨')
         const newerror = {...error}
@@ -106,7 +118,7 @@ export default function Announcement (props) {
                 }
             }}>등록하기</button>
             <button className="button_preview">공고 미리보기</button>
-            {showModal && <Modal setShowModal={setShowModal} formData={formData} modalType={modalType} />}
+            {showModal && <Modal setShowModal={setShowModal} formData={formData} modalType={modalType} setModalType={setModalType}/>}
         </div>
     )
 }

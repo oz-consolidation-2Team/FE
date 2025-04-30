@@ -34,7 +34,6 @@ export default function DaumLocation (props) {
     }
 
     useEffect(()=>{
-        console.log(location, latitude, longitude)
         if (!location) return console.log('값 없음 리턴됨')
         props.setFormData(el => ({
             ...el,
@@ -47,7 +46,7 @@ export default function DaumLocation (props) {
             work_address: false
         }))
         props.setShowModal(false)
-    },[location])
+    },[latitude,longitude])
 
     return (
         <div className='modal_overlay'>

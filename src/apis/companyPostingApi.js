@@ -1,4 +1,5 @@
 import axiosDev from "./axios.dev";
+import axiosFormInstance from './axiosFormInstance'
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const TOKEN = import.meta.env.VITE_TOKEN;
@@ -23,17 +24,17 @@ export const JobPosting = async (id) => {
 }
 
 export const createJobPosting = async (formData) => {
-    const response = await axiosDev.post(`posting/`, formData)
+    const response = await axiosFormInstance.post(`posting/`, formData)
     console.log('공고 생성 API 호출====')
-    console.log(response.data.data)
-    return response.data.data
+    console.log(response.data)
+    return response.data
 }
 
 export const updateJobPosting = async (jobId, formData) => {
     const response = await axiosDev.patch(`${BASE_URL}posting/${jobId}`, formData)
     console.log('공고 수정 API 호출====')
-    console.log(response.data.data)
-    return response.data.data
+    console.log(response.data)
+    return response.data
 }
 
 export const deleteJobPosting = async (jobId) => {

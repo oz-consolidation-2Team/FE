@@ -12,11 +12,11 @@ export default function InputImage (props) {
 
     const onchangeImageUpload = (e) => {
         setImg(e.target.files[0].name)
-        const fileName = URL.createObjectURL(e.target.files[0]);
-        if (!fileName) return;
+        // const fileName = URL.createObjectURL(e.target.files[0]);
+        // if (!fileName) return;
         props.setFormData((el) => ({
             ...el,
-            company_image: fileName
+            image_file: e.target.files[0]
         }))
     }
 

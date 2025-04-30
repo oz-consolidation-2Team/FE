@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
  * @param {object} companyInfo 기업 정보 api
  */
 export default function AnnouncementCard (props) {
-    console.log(props)
     const navigate = useNavigate();
 
     const handleAnnouncementEditClick = () => {

@@ -19,13 +19,13 @@ export default function Content (props) {
                     <p className="title">{props.formData.title}</p>
                     <p>{props.formData.summary}</p>
                 </div>
-                <p className="time">{props.formData.is_always_recruiting ? "상시모집" : props.formData.recruit_period_start}</p>
+                <p className="time">{props.formData.is_always_recruiting ? "상시모집" : props.formData.recruit_period_end}</p>
             </div>
             <p>근무지주소: {props.formData.work_address}</p>
             <Hr />
 
             <div className="div_box">
-                <p>모집기간: {props.formData.is_always_recruiting ? "상시모집" : props.formData.recruit_period_start}</p>
+                <p>모집기간: {props.formData.is_always_recruiting ? "상시모집" : props.formData.recruit_period_end}</p>
                 <p>모집인원: {props.formData.recruit_number}명</p>
                 <p>학력: {props.formData.education}</p>
             </div>

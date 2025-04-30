@@ -11,13 +11,10 @@ export default function InputRadio (props) {
         const text = label.textContent.trim()
         const NAME_TYPE_ARRAY = ['benefits', 'preferred_conditions', 'other_conditions', 'work_days']
 
-        // 리스트로 받는 것들 중 "근무요일"은 다르게 받기 위함
-        const formDataSpread = typeof props.formData[e.target.name] === 'string' ? props.formData[e.target.name].split(',') : props.formData[e.target.name]
-
         let value;
         if (NAME_TYPE_ARRAY.indexOf(e.target.name) === -1) value = e.target.checked
         else value = new Set([
-            ...formDataSpread,
+            ...props.formData[e.target.name],
             text
         ]);
 
@@ -27,7 +24,7 @@ export default function InputRadio (props) {
         })
     }
     const DATA = {
-        복리후생: ['복리1','복리2','복리3','복리4'],
+        복리후생: ['4대보험', '건강검진 지원','중식 제공','간식 무제한'],
         우대조건: ['동종업계 경력자', '장기근무 경력자', '운전면허 소지자', '차량 소지자', '인근 거주자', '경력단절자', '컴퓨터활용 가능자'],
         기타조건: ['초보 가능', '주부 가능', '직장인 가능', '정규직 전환 가능'],
         근무요일: ['월','화','수','목','금','토','일'],
