@@ -2,7 +2,6 @@ import AgePopularityCard from './AgePopularityCard';
 import './AgePopularity.scss';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
-
 import { userInfoPropTypes } from '@/utils/UserMyPagePropTypes';
 import axiosInstance from '@/apis/axiosInstance';
 

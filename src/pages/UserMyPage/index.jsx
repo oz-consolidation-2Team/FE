@@ -1,7 +1,7 @@
 import JobPosting from './JobPosting/JobPosting';
 import './UserInfo/';
 import UserInfo from './UserInfo';
-import JobRecommend from './JobRecommend';
+import JobBookmark from './JobBookmark';
 import AgePopularity from './AgePopularity';
 import InterestAnnouncement from './InterestAnnouncement';
 import { useEffect, useState } from 'react';
@@ -36,7 +36,7 @@ function UserMyPage() {
       </div>
       <UserInfo userInfo={userInfo} />
       <JobPosting userInfo={userInfo} />
-      <JobRecommend userInfo={userInfo} />
+      <JobBookmark userInfo={userInfo} />
       <InterestAnnouncement userInfo={userInfo} />
       <AgePopularity userInfo={userInfo} />
     </div>

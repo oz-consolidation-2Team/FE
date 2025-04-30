@@ -123,7 +123,7 @@ function EducationSection({ data, setData }) {
         />
 
         <button type="button" onClick={handleAddEducation}>
-          +
+          추가
         </button>
       </div>
       {educations.map((edu, index) => (

@@ -1,10 +1,12 @@
-import './InterestAnnouncement.scss';
-import { bookmarkJobPropsType } from '@/utils/UserMyPagePropTypes';
-import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
+import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-const InterestJobCard = ({ job }) => {
+import './JobBookmark.scss';
+import { bookmarkJobPropsType } from '@/utils/UserMyPagePropTypes';
+import axiosInstance from '@/apis/axiosInstance';
+
+const JobBookmarkCard = ({ job }) => {
   const [isBookmarked, setIsBookmarked] = useState(job.is_favorited);
   const navigate = useNavigate();
 
@@ -16,14 +18,26 @@ const InterestJobCard = ({ job }) => {
     setIsBookmarked(job.is_favorited);
   }, [job.is_favorited]);
 
+  const handleBookmarkClick = async (e) => {
+    e.stopPropagation();
+
+    try {
+      if (isBookmarked) {
+        await axiosInstance.post('/favorites');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <div className="job_card" key={job.id} onClick={handleCardClick}>
         <div className="job_left">
-          <p className="company">{job.company_name}</p>
+          <p className="company">{job.work_place_name}</p>
           <h3 className="title">{job.title}</h3>
           <p className="date">{job.recruit_period_end}</p>
-          <p className="location">{job.location}</p>
+          <p className="location">{job.work_address}</p>
         </div>
         <div className="job_right">
           {isBookmarked ? (
@@ -37,7 +51,7 @@ const InterestJobCard = ({ job }) => {
   );
 };
 
-InterestJobCard.propTypes = {
+JobBookmarkCard.propTypes = {
   job: bookmarkJobPropsType.isRequired,
 };
-export default InterestJobCard;
+export default JobBookmarkCard;

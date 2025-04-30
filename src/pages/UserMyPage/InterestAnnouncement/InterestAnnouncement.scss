@@ -33,8 +33,7 @@
       pointer-events: none; /* 아예 클릭 못 하게 막을 수도 있음 */
     }
   }
-  /* 슬라이더 구조*/
-
+  /* 슬라이더 구조 */
   .interest_slider-container {
     width: 98%;
     overflow: hidden;
@@ -44,9 +43,9 @@
       width: fit-content;
       display: flex;
       justify-content: center;
-      gap: 17px;
+      gap: 18px;
       transition: transform 0.3s ease;
-      width: 100%;
+
       .no_jobs {
         min-width: 940px; // (300px * 3 카드 + 여유 간격 정도 맞춰서)
         padding: 60px 0;
@@ -60,24 +59,20 @@
 
       .job_card {
         min-width: 300px;
-        width: calc(35% - 17px);
-        height: 160px;
-        background: white;
         border: 1px solid #eee;
-        border-radius: 12px;
+        border-radius: 10px;
         padding: 20px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-        display: flex;
-        transition: box-shadow 0.2s;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+        transition: 0.2s;
+        position: relative;
 
         &:hover {
-          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.03);
         }
 
-        .job_top {
+        .job_left {
           display: flex;
           flex-direction: column;
-          width: 100%; // ⭐️ 이거 추가!!
 
           .company {
             font-size: 15px;
@@ -86,6 +81,7 @@
           }
 
           .title {
+            width: 200px;
             font-size: 16px;
             font-weight: 600;
             color: $gray-dark;
@@ -93,7 +89,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            width: 100%;
           }
 
           .date {
@@ -108,28 +103,16 @@
           }
         }
 
-        .job_bottom {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-top: 20px;
+        .job_right {
+          font-size: 22px;
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          cursor: pointer;
+          color: $border-color;
 
-          .star_icon {
-            position: relative;
-            left: 6rem;
-            bottom: 4rem;
-            font-size: 22px;
-            cursor: pointer;
-            color: $border-color;
-            transition: transform 0.2s;
-
-            &.filled {
-              color: $orange;
-            }
-
-            &:hover {
-              transform: scale(1.1);
-            }
+          &.filled {
+            color: $orange;
           }
         }
       }

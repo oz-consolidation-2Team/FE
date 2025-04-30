@@ -1,29 +1,35 @@
-import { useState } from 'react';
-import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import './AgePopularity.scss';
+import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import { bookmarkJobPropsType } from '@/utils/UserMyPagePropTypes';
+import { useEffect, useState } from 'react';
 
 const AgePopularityCard = ({ job }) => {
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(job.is_favorited);
+  const navigate = useNavigate();
 
-  const toggleBookmark = () => {
-    setIsBookmarked((prev) => !prev);
+  const handleCardClick = () => {
+    navigate(`/job-detail/${job.id}`);
   };
+
+  useEffect(() => {
+    setIsBookmarked(job.is_favorited);
+  }, [job.is_favorited]);
 
   return (
     <>
-      <div className="job_card" key={job.id}>
-        <div className="job_top">
+      <div className="job_card" key={job.id} onClick={handleCardClick}>
+        <div className="job_left">
           <p className="company">{job.work_place_name}</p>
           <h3 className="title">{job.title}</h3>
           <p className="date">{job.recruit_period_end}</p>
           <p className="location">{job.work_address}</p>
         </div>
-        <div className="job_bottom">
+        <div className="job_right">
           {isBookmarked ? (
-            <FaBookmark className="star_icon filled" onClick={toggleBookmark} />
+            <FaBookmark className="bookmark_icon filled" />
           ) : (
-            <FaRegBookmark className="star_icon" onClick={toggleBookmark} />
+            <FaRegBookmark className="bookmark_icon" />
           )}
         </div>
       </div>

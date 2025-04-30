@@ -95,7 +95,7 @@ function CareerSection({ data, setData }) {
           onChange={(e) => handleFixedChange('description', e.target.value)}
         />
         <button type="button" onClick={handleAddExperiences}>
-          +
+          추가
         </button>
       </div>
       {experiences.map((career, index) => (

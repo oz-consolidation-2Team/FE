@@ -1,17 +1,16 @@
-import JobRecommendCard from './JobRecommendCard.jsx';
-import './JobRecommend.scss';
+import './JobBookmark.scss';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
 import { userInfoPropTypes } from '@/utils/UserMyPagePropTypes.js';
 import axiosInstance from '@/apis/axiosInstance.js';
+import JobBookmarkCard from './JobBookmarkCard';
 
-JobRecommend.propTypes = {
-  userInfo: userInfoPropTypes.isRequired,
-};
+function JobBookmark({ userInfo }) {
+  //const [favorites, setFavorites] = useState([]);
 
-function JobRecommend({ userInfo }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [recommendJobs, setRecommendJobs] = useState([]);
+
   const handlerPrev = () => {
     if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
   };
@@ -25,13 +24,13 @@ function JobRecommend({ userInfo }) {
   useEffect(() => {
     const fetchRecommendJobs = async () => {
       try {
-        const response = await axiosInstance.get('/posting');
+        const response = await axiosInstance.get('/posting/');
 
-        const allJobs = response.data.data;
-
-        const favoritedJobs = allJobs.filter((job) => job.is_favorited);
-        setRecommendJobs(favoritedJobs);
+        const allJobs = response.data.items;
+        console.log(allJobs);
+        setRecommendJobs(allJobs);
       } catch (err) {
+        console.log('🔥 axios 요청 에러 발생:', err);
         console.log(err);
       }
     };
@@ -58,8 +57,8 @@ function JobRecommend({ userInfo }) {
             className="reco_slider-wrapper"
             style={{ transform: `translateX(-${currentIndex * 317}px)` }}
           >
-            {recommendJobs.map((job) => (
-              <JobRecommendCard key={job.job_id} job={job} />
+            {recommendJobs?.map((job) => (
+              <JobBookmarkCard key={job.id} job={job} />
             ))}
           </div>
         ) : (
@@ -72,4 +71,7 @@ function JobRecommend({ userInfo }) {
   );
 }
 
-export default JobRecommend;
+export default JobBookmark;
+JobBookmark.propTypes = {
+  userInfo: userInfoPropTypes.isRequired,
+};

@@ -1,7 +1,6 @@
 import './InterestAnnouncement.scss';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
-import { Bookmark } from '../BookmarkDummy.js';
 import { userInfoPropTypes } from '@/utils/UserMyPagePropTypes.js';
 import axiosInstance from '@/apis/axiosInstance.js';
 import InterestJobCard from './InterestJobCard';
@@ -18,7 +17,7 @@ function InterestAnnouncement({ userInfo }) {
   };
 
   const visibleCount = 3;
-  const maxIndex = Bookmark.length - visibleCount;
+  const maxIndex = interestJobs.length - visibleCount;
   const handlerNext = () => {
     if (currentIndex < maxIndex) setCurrentIndex(currentIndex + 1);
   };
@@ -38,6 +37,8 @@ function InterestAnnouncement({ userInfo }) {
 
     fetchInterestJobs();
   }, []);
+
+  console.log(interestJobs);
   return (
     <section className="interest_announcement">
       <h3 className="interest_announcement_title">{userInfo.name}님 관심있을 만한 공고</h3>
