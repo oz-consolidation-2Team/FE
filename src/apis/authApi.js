@@ -170,3 +170,11 @@ export const loginWithNaver = async (code, state) => {
   });
   return response.data;
 };
+
+// 카카오 로그인 API
+export const loginWithKakao = async (code) => {
+  const response = await axiosPublicInstance.get('/auth/kakao/login', {
+    params: { code },
+  });
+  return response.data;
+};
