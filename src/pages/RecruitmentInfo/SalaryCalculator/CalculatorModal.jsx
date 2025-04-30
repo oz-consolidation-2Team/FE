@@ -13,12 +13,10 @@ export const CalculatorModalContent = ({
   id
 }) => {
   // 사용자 입력 관련 상태값들
-  const [wageInput, setWageInput] = useState('10030');
+  const [wageInput, setWageInput] = useState('');
   const wage = Number(wageInput);
-  const [hoursPerDay, setHoursPerDay] = useState(6);
-  const [daysPerWeek, setDaysPerWeek] = useState(5);
-  const [weeks, setWeeks] = useState(4);
-  const [includeHoliday, setIncludeHoliday] = useState(false);
+  const [hoursPerDay, setHoursPerDay] = useState('');
+  const [daysPerWeek, setDaysPerWeek] = useState('');
   const [taxRate, setTaxRate] = useState(0);
   const [applyTax, setApplyTax] = useState(false);
   const [baseMethod, setBaseMethod] = useState(payment_method || '시급');
@@ -31,7 +29,6 @@ export const CalculatorModalContent = ({
       setWageInput(String(salary));
     }
 
-    // Use empty string if work_days is null/undefined
     if (work_days) {
       const dayCount = work_days.split(',').length;
       setDaysPerWeek(dayCount);
@@ -41,7 +38,6 @@ export const CalculatorModalContent = ({
 
     setBaseMethod(payment_method || '시급');
 
-    // Use empty string if work_start_time or work_end_time are null/undefined
     if (
       work_start_time &&
       work_end_time &&
@@ -59,11 +55,9 @@ export const CalculatorModalContent = ({
     }
   }, [salary, payment_method, work_days, work_start_time, work_end_time]);
 
-  const totalBase = wage * hoursPerDay * daysPerWeek * weeks;
   const totalWeeklyHours = hoursPerDay * daysPerWeek;
 
   const avgMonthlyHours = hoursPerDay * daysPerWeek * 4.345; // 1달 평균 근무시간
-  const hourlyFromMonthly = baseMethod === '월급' ? wage / avgMonthlyHours : wage;
 
   // 단위 변환 함수: 시급 ↔ 일급, 주급, 월급, 연봉
   const convertSalary = (value, from, to) => {
@@ -96,7 +90,7 @@ export const CalculatorModalContent = ({
 
   // 세금 계산
   const tax = applyTax ? Math.round(wage * taxRate) : 0;
-  const total = totalBase - tax;
+  // const total = totalBase - tax;
 
   // 기준 시급 계산: 입력 급여 단위에 따라 시급으로 환산
   const hourly = baseMethod === '시급'
@@ -189,22 +183,38 @@ export const CalculatorModalContent = ({
             onChange={(e) => setHoursPerDay(Number(e.target.value))}
           >
             <option value="">선택하세요</option>
-            {timeOptions.map(({ label, value }) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
+            {timeOptions.map(({ value }) => {
+              const [hourStr, minuteStr] = value.split(':');
+              const hour = Number(hourStr);
+              const minute = Number(minuteStr);
+              const label =
+                minute === 0
+                  ? `${hour}시간`
+                  : `${hour}시간 ${minute}분`;
+
+              return (
+                <option key={value} value={hour + (minute === 30 ? 0.5 : 0)}>
+                  {label}
+                </option>
+              );
+            })}
           </select>
         </div>
 
         {/* 주간 근무일수 */}
         <div className="form-group">
           <label>주간 근무일수</label>
-          <input
-            type="number"
+          <select
             value={daysPerWeek}
             onChange={(e) => setDaysPerWeek(Number(e.target.value))}
-          />
+          >
+            <option value="">선택하세요</option>
+            {[1, 2, 3, 4, 5, 6, 7].map((day) => (
+              <option key={day} value={day}>
+                {day}일
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* 세금 공제 선택 */}
@@ -244,16 +254,12 @@ export const CalculatorModalContent = ({
                 ).toLocaleString()}원
               </p>
             )}
-          {(includeHoliday || applyTax) && (
-            <>
-              {applyTax && (
-                <p>
-                  세금: {targetMethod
-                    ? Math.round(convertSalary(wage, baseMethod, targetMethod) * taxRate).toLocaleString()
-                    : tax.toLocaleString()}원 -
-                </p>
-              )}
-            </>
+          {applyTax && (
+            <p>
+              세금: {targetMethod
+                ? Math.round(convertSalary(wage, baseMethod, targetMethod) * taxRate).toLocaleString()
+                : tax.toLocaleString()}원 -
+            </p>
           )}
           {showHolidayPay && (
             <p>
@@ -284,7 +290,7 @@ const CalculatorModal = ({ job, onClose }) => {
 
     if (newWindow) {
       newWindow.document.body.appendChild(containerEl);
-      newWindow.document.title = '시급 계산기';
+      newWindow.document.title = '급여 계산기';
       document.querySelectorAll('style, link[rel="stylesheet"]').forEach((node) => {
         newWindow.document.head.appendChild(node.cloneNode(true));
       });
