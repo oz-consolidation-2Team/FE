@@ -9,6 +9,11 @@ import './LoginPage.scss';
 import { handleUserLogin } from '@/utils/userLogin';
 import { handleCompanyLogin } from '@/utils/companyLogin';
 
+const NAVER_CLIENT_ID = 'qsyAd0OOqPsU3TrO8Ais';
+const NAVER_REDIRECT_URI = 'http://localhost:5173/auth/naver/login';
+const STATE = 'naver_login_test';
+const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${encodeURIComponent(NAVER_REDIRECT_URI)}&state=${STATE}`;
+
 const LoginPage = () => {
   const navigate = useNavigate();
 
@@ -113,7 +118,12 @@ const LoginPage = () => {
             <img className="icon_kakao" src="/kakao-logo.png" alt="카카오" />
             카카오 로그인
           </button>
-          <button className="naver">
+          <button
+            className="naver"
+            onClick={() => {
+              window.location.href = NAVER_AUTH_URL;
+            }}
+          >
             <img className="icon_naver" src="/naver-logo.png" alt="네이버" />
             네이버 로그인
           </button>

@@ -186,7 +186,8 @@
     }
 
     &:hover {
-      background-color: #ffe0ba;
+      background-color: #D5E7DB;
+      border-color: rgba($green, 0.3);
     }
   }
 
@@ -225,7 +226,7 @@
           height: 9px;
           border: solid white;
           border-width: 0 2px 2px 0;
-          transform: translate(-50%, -50%) rotate(45deg); // ✅ 중심 정렬
+          transform: translate(-50%, -50%) rotate(45deg);
         }
   
         &:focus {
@@ -329,4 +330,15 @@
   .checkbox_row {
     margin-bottom: 12px;
   }
+}
+
+.readonly_input {
+  background-color: #f0f0f0;
+  color: #888;
+  cursor: not-allowed;
+}
+
+input:focus {
+  border-color: #0F8C3B;
+  outline: none;
 }
