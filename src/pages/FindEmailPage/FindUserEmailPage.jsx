@@ -67,9 +67,9 @@ const FindUserEmailPage = ({ onBack }) => {
         type: 'success',
         title: '이메일 찾기 완료',
         message: (
-          <>
+          <p>
             회원님의 이메일은 <strong>{response.data.email}</strong> 입니다.
-          </>
+          </p>
         ),
         onConfirm: () => {
           setModal(null);
