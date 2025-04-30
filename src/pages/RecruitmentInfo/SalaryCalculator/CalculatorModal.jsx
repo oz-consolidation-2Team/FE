@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './CalculatorModal.scss';
+import { timeOptions } from '@/utils/checktime';
 
 export const CalculatorModalContent = ({
   onClose,
@@ -183,7 +184,17 @@ export const CalculatorModalContent = ({
         {/* 일일 근무시간 */}
         <div className="form-group">
           <label>일일 근무시간</label>
-          <input type="number" value={hoursPerDay} onChange={(e) => setHoursPerDay(Number(e.target.value))} />
+          <select
+            value={hoursPerDay}
+            onChange={(e) => setHoursPerDay(Number(e.target.value))}
+          >
+            <option value="">선택하세요</option>
+            {timeOptions.map(({ label, value }) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* 주간 근무일수 */}
