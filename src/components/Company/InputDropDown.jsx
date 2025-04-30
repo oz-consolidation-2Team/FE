@@ -4,6 +4,7 @@ import { GoChevronRight, GoChevronDown  } from "react-icons/go";
 import TimeDropDown from "./TimeDropDown";
 import DayDropDown from "./DayDropDown";
 import PropTypes from 'prop-types';
+import { CAREER_OPTIONS, EDUCATION_OPTIONS, EMPLOYMENT_TYPE_OPTIONS, INTEREST_OPTIONS, PAYMENT_OPTIONS, WORK_DURATION_OPTIONS } from "@/utils/signUpInfoOptions";
 
 /**
  * @param {상태관리} formData input값 저장
@@ -17,12 +18,12 @@ export default function InputDropDown (props) {
     const [viewDropDown, setViewDropDown] = useState(false)
 
     const data_dropDown = {
-        "education": ['학력 무관','고졸','초대졸','대졸','대학원'],
-        "employment_type": ['정규직', '아르바이트, 계약직', '일용직', '파견직', '위촉직 (프리랜서)'],
-        "work_duration": ['3개월 이상','3개월 ~ 6개월','6개월 이상','6개월 ~ 1년', '1년 이상','1년 ~ 3년', '3년 이상'],
-        "payment_method": ['시급','일급','주급','월급','연봉'],
-        "job_category": ['외식·음료', '유통·판매', '문화·여가·생활', '서비스', '사무·회계', '고객상담·영업·리서치', '생산·건설·노무', 'IT·인터넷', '교육·강사', '디자인', '미디어', '운전·배달','병원·간호·연구','전문-상담직','전문-사무직','전문-BAR','전문-생산직','전문-외식업'],
-        "career": ['경력 무관', '1~3년', '3년 이상', '5년 이상']
+        "education": EDUCATION_OPTIONS,
+        "employment_type": EMPLOYMENT_TYPE_OPTIONS,
+        "work_duration": WORK_DURATION_OPTIONS,
+        "payment_method": PAYMENT_OPTIONS,
+        "job_category": INTEREST_OPTIONS,
+        "career": CAREER_OPTIONS
     }
 
     let content;

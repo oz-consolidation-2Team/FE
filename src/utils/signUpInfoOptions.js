@@ -34,3 +34,39 @@ export const CHANNEL_OPTIONS = [
   '지인추천',
   '기타',
 ];
+export const EDUCATION_OPTIONS = [
+  '학력 무관',
+  '고졸',
+  '초대졸',
+  '대졸',
+  '대학원'
+]
+export const EMPLOYMENT_TYPE_OPTIONS = [
+  '정규직',
+  '아르바이트, 계약직',
+  '일용직',
+  '파견직',
+  '위촉직 (프리랜서)'
+]
+export const WORK_DURATION_OPTIONS = [
+  '3개월 이상',
+  '6개월 이상',
+  '1년 이상',
+  '3년 이상',
+  '3개월 ~ 6개월',
+  '6개월 ~ 1년',
+  '1년 ~ 3년'
+]
+export const PAYMENT_OPTIONS = [
+  '시급',
+  '일급',
+  '주급',
+  '월급',
+  '연봉'
+]
+export const CAREER_OPTIONS = [
+  '경력 무관',
+  '1~3년',
+  '3년 이상',
+  '5년 이상'
+]
