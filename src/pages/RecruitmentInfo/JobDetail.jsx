@@ -9,6 +9,7 @@ import KakaoMap from '@/components/KakaoMap/KakaoMap';
 import { CompaniesInfo } from '@/apis/companyApi';
 import { formatPhoneNumber } from '@/utils/format';
 import { addFavorite, deleteFavorite } from '@/apis/favoriteApi';
+import CalculatorModal from './SalaryCalculator/CalculatorModal';
 
 
 
@@ -20,6 +21,7 @@ const JobDetail = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginPromptOpen, setLoginPromptOpen] = useState(false);
+  const [isCalcOpen, setIsCalcOpen] = useState(false);
   const accessToken = localStorage.getItem('access_token');
   const userType = localStorage.getItem('userType');
 
@@ -122,14 +124,20 @@ const JobDetail = () => {
         <div className="conditions">
           <div className="condition_row">
             <div className="condition_label">급여</div>
-            <div className="condition_value">
-              <span className={`payment_method_badge ${
-                job.payment_method === '시급' ? 'payment-hourly' :
-                job.payment_method === '일급' ? 'payment-daily' :
-                job.payment_method === '월급' ? 'payment-monthly' :
-                'payment-default'
-              }`}>{job.payment_method}</span>
-              <span className="salary">{job.salary.toLocaleString()}원</span>
+            <div className="condition_value salary_with_button">
+              <div className="salary_display">
+                <span className={`payment_method_badge ${
+                  job.payment_method === '시급' ? 'payment-hourly' :
+                  job.payment_method === '일급' ? 'payment-daily' :
+                  job.payment_method === '월급' ? 'payment-monthly' :
+                  'payment-default'
+                }`}>{job.payment_method}</span>
+                <span className="salary">{job.salary.toLocaleString()}원</span>
+              </div>
+              <div className="salary_sub_info">
+                <button className="salary_calc_button" onClick={() => setIsCalcOpen(true)}>급여계산기</button>
+                <span className="salary_note">2025년 최저시급 <strong>10,030원</strong></span>
+              </div>
             </div>
           </div>
           <div className="condition_row">
@@ -301,6 +309,13 @@ const JobDetail = () => {
         <LoginPromptModal
           onClose={() => setLoginPromptOpen(false)}
           navigate={navigate}
+        />
+      )}
+      {isCalcOpen && (
+        <CalculatorModal
+          key={job.id}
+          job={job}
+          onClose={() => setIsCalcOpen(false)}
         />
       )}
     </div>
