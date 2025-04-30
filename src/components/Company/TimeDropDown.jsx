@@ -7,7 +7,7 @@ export default function TimeDropDown (props) {
     const [hour, setHour] = useState(0)
     const [minute, setMinute] = useState(0)
 
-    const arrayFill = basics === 'hour' ? 24 : 6
+    const arrayFill = basics === 'hour' ? 24 : 2
 
     return (
         <>
@@ -32,7 +32,7 @@ export default function TimeDropDown (props) {
                             props.setError(el => ({...el, [props.name]: false}))
                         }}>{basics === 'hour' ? 
                             (index < 10 ? `0` + `${index}` : index)
-                            : (`${index === 0 ? 0 : ""}${10 * index}`)}</li>
+                            : (`${padZero(30 * index)}`)}</li>
                     })}
                 </div>
             </ul>
