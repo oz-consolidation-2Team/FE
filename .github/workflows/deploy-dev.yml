@@ -29,9 +29,10 @@ jobs:
           echo "VITE_KAKAO_MAP_KEY=${{secrets.VITE_KAKAO_MAP_KEY}}" >> .env
           echo "VITE_KAKAO_CLIENT_ID=${{secrets.VITE_KAKAO_CLIENT_ID}}" >> .env
           echo "VITE_KAKAO_REDIRECT_URI=${{ secrets.VITE_KAKAO_REDIRECT_URI }}" >> .env
-        #  echo "VITE_NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}" >> .env
-        #  echo "VITE_NAVER_REDIRECT_URI=${{ secrets.DEV_NAVER_REDIRECT_URI }}" >> .env
-        #  echo "VITE_NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}" >> .env
+          echo "VITE_KAKAO_SECRET=${{secrets.VITE_KAKAO_SECRET}}" >> .env
+          echo "VITE_NAVER_CLIENT_ID=${{ secrets.VITE_NAVER_CLIENT_ID }}" >> .env
+          echo "VITE_NAVER_REDIRECT_URI=${{ secrets.VITE_NAVER_CLIENT_SECRET }}" >> .env
+          echo "VITE_NAVER_CLIENT_SECRET=${{ secrets.VITE_NAVER_REDIRECT_URI }}" >> .env
 
       - name: 빌드
         run: npm run build
