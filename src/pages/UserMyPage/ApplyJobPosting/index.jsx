@@ -27,6 +27,8 @@ function ApplyJobPosting({ userInfo }) {
     }
   };
 
+  console.log('📌지원한 공고', appliedJobs);
+
   useEffect(() => {
     fetchAppliedJobs();
   }, []);

@@ -24,6 +24,7 @@ const MyApplyJobList = ({ appliedJobs, userInfo, onUpdate }) => {
           toggleBookmark={toggleBookmark}
           userInfo={userInfo}
           onUpdate={onUpdate}
+          appliedJobs={job}
         />
       ))}
     </div>
@@ -31,8 +32,15 @@ const MyApplyJobList = ({ appliedJobs, userInfo, onUpdate }) => {
 };
 
 MyApplyJobList.propTypes = {
-  appliedJobs: PropTypes.arrayOf(jobPropsType),
+  appliedJobs: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      job_posting_id: PropTypes.number.isRequired,
+      job_posting: jobPropsType.isRequired,
+    })
+  ).isRequired,
   userInfo: PropTypes.object.isRequired,
   onUpdate: PropTypes.func,
 };
+
 export default MyApplyJobList;

@@ -6,7 +6,7 @@ import { jobPropsType } from '@/utils/UserMyPagePropTypes';
 import axiosInstance from '@/apis/axiosInstance';
 import Modal from '@/components/Modal';
 
-const MyApplyJobCard = ({ job, userInfo, onUpdate }) => {
+const MyApplyJobCard = ({ appliedJobs, job, userInfo, onUpdate }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState({
@@ -15,6 +15,8 @@ const MyApplyJobCard = ({ job, userInfo, onUpdate }) => {
     buttons: [],
   });
 
+  const jobPostingId = appliedJobs.job_posting_id;
+
   const openModal = (info) => {
     setModalInfo(info);
     setIsModalOpen(true);
@@ -22,6 +24,10 @@ const MyApplyJobCard = ({ job, userInfo, onUpdate }) => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleCardClick = () => {
+    navigate(`/job-detail/${jobPostingId}`);
   };
 
   const ApplyDelete = () => {
@@ -90,11 +96,6 @@ const MyApplyJobCard = ({ job, userInfo, onUpdate }) => {
     });
   };
 
-  const handleCardClick = () => {
-    navigate(`/job-detail/${job.id}`, { state: { job } });
-  };
-
-  console.log('✨', userInfo);
   const getDDay = (endDate) => {
     const today = new Date();
     const end = new Date(endDate);
@@ -111,8 +112,8 @@ const MyApplyJobCard = ({ job, userInfo, onUpdate }) => {
   return (
     <>
       <div className="apply_job_list_container">
-        <div className="apply_job_card">
-          <div className="company_card" onClick={handleCardClick}>
+        <div className="apply_job_card" onClick={handleCardClick}>
+          <div className="company_card">
             <div className="job_left">
               <div className="company_info">
                 <p className="company_name">{job.work_place_name}</p>
@@ -149,6 +150,8 @@ MyApplyJobCard.propTypes = {
   job: jobPropsType.isRequired,
   userInfo: PropTypes.object.isRequired,
   onUpdate: PropTypes.func,
+  appliedJobs: PropTypes.arrayOf(jobPropsType),
+  RedirectParams: PropTypes.number,
 };
 
 export default MyApplyJobCard;

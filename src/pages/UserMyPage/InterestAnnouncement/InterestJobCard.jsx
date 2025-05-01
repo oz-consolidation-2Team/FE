@@ -11,7 +11,6 @@ const InterestJobCard = ({ job }) => {
 
   const handleCardClick = () => {
     navigate(`/job-detail/${job.job_id}`);
-    console.log('마이페이지에서 보낸', job.job_id);
   };
 
   const handleBookmarkClick = async (e) => {
