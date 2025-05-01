@@ -1,6 +1,6 @@
 @use '@/utils/variables' as *;
 
-.modal {
+.common_modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -13,7 +13,7 @@
   z-index: 999;
 }
 
-.modal_content {
+.common_modal_content {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -26,18 +26,18 @@
   height: 280px;
   box-shadow: 0 5px 5px rgba(71, 71, 71, 0.2);
 
-  h3 {
+  .common_modal_title {
     padding-top: 20px;
     font-size: 27px;
   }
 
-  p {
+  .common_modal_description {
     padding-top: 20px;
     font-size: 18px;
   }
 }
 
-.modal_buttons {
+.common_modal_buttons {
   margin-top: 3rem;
   display: flex;
   justify-content: center;
