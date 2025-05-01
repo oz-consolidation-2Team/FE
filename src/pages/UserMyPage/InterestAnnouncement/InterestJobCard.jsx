@@ -1,40 +1,27 @@
 import './InterestAnnouncement.scss';
 import { bookmarkJobPropsType } from '@/utils/UserMyPagePropTypes';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '@/apis/axiosInstance';
+import { useFavoriteStore } from '@/store/useFavoriteStore';
 
 const InterestJobCard = ({ job }) => {
-  const [isBookmarked, setIsBookmarked] = useState(job.is_favorited);
+  const { toggleFavorite } = useFavoriteStore();
+
   const navigate = useNavigate();
 
   const handleCardClick = () => {
     navigate(`/job-detail/${job.job_id}`);
+    console.log('마이페이지에서 보낸', job.job_id);
   };
-
-  useEffect(() => {
-    setIsBookmarked(job.is_favorited);
-  }, [job.is_favorited]);
 
   const handleBookmarkClick = async (e) => {
     e.stopPropagation();
-
-    try {
-      if (isBookmarked) {
-        await axiosInstance.delete(`/favorites/${job.job_id}`);
-      } else {
-        await axiosInstance.post(`favorites`, { job_posting_id: job.job_id });
-      }
-      setIsBookmarked(!isBookmarked);
-    } catch (err) {
-      console.error('❌ 북마크 토글 실패', err);
-    }
+    toggleFavorite(job);
   };
 
   return (
     <>
-      <div className="job_card" key={job.id} onClick={handleCardClick}>
+      <div className="job_card" key={job.job_id} onClick={handleCardClick}>
         <div className="job_left">
           <p className="company">{job.company_name}</p>
           <h3 className="title">{job.title}</h3>
@@ -42,7 +29,7 @@ const InterestJobCard = ({ job }) => {
           <p className="location">{job.location}</p>
         </div>
         <div className="job_right">
-          {isBookmarked ? (
+          {job.is_favorited ? (
             <FaBookmark className="bookmark_icon filled" onClick={handleBookmarkClick} />
           ) : (
             <FaRegBookmark className="bookmark_icon" onClick={handleBookmarkClick} />

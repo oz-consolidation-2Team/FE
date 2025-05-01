@@ -22,19 +22,20 @@ function InterestAnnouncement({ userInfo }) {
     if (currentIndex < maxIndex) setCurrentIndex(currentIndex + 1);
   };
 
+  const fetchInterestJobs = async () => {
+    try {
+      const response = await axiosInstance.get('/user/recommend');
+
+      const recommendRes = response.data.data;
+      console.log('관심 있을만한', recommendRes);
+
+      setInterestJobs(recommendRes);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    const fetchInterestJobs = async () => {
-      try {
-        const response = await axiosInstance.get('/user/recommend');
-
-        const recommendRes = response.data.data;
-
-        setInterestJobs(recommendRes);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     fetchInterestJobs();
   }, []);
 
@@ -58,7 +59,7 @@ function InterestAnnouncement({ userInfo }) {
             style={{ transform: `translateX(-${currentIndex * 317}px)` }}
           >
             {interestJobs.map((job) => (
-              <InterestJobCard key={job.job_id} job={job} />
+              <InterestJobCard key={job.job_id} job={job} onBookmarkChange={fetchInterestJobs} />
             ))}
           </div>
         ) : (

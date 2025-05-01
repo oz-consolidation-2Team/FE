@@ -2,34 +2,20 @@ import './AgePopularity.scss';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { bookmarkJobPropsType } from '@/utils/UserMyPagePropTypes';
-import { useEffect, useState } from 'react';
-import axiosInstance from '@/apis/axiosInstance';
+import { useFavoriteStore } from '@/store/useFavoriteStore';
 
 const AgePopularityCard = ({ job }) => {
-  const [isBookmarked, setIsBookmarked] = useState(job.is_favorited);
+  const { toggleFavorite } = useFavoriteStore();
+
   const navigate = useNavigate();
 
   const handleCardClick = () => {
     navigate(`/job-detail/${job.id}`);
   };
 
-  useEffect(() => {
-    setIsBookmarked(job.is_favorited);
-  }, [job.is_favorited]);
-
   const handleBookmarkClick = async (e) => {
     e.stopPropagation();
-
-    try {
-      if (isBookmarked) {
-        await axiosInstance.delete(`/favorites/${job.id}`);
-      } else {
-        await axiosInstance.post(`favorites`, { job_posting_id: job.id });
-      }
-      setIsBookmarked(!isBookmarked);
-    } catch (err) {
-      console.error('❌ 북마크 토글 실패', err);
-    }
+    toggleFavorite(job);
   };
   return (
     <>
@@ -41,7 +27,7 @@ const AgePopularityCard = ({ job }) => {
           <p className="location">{job.work_address}</p>
         </div>
         <div className="job_right">
-          {isBookmarked ? (
+          {job.is_favorited ? (
             <FaBookmark className="bookmark_icon filled" onClick={handleBookmarkClick} />
           ) : (
             <FaRegBookmark className="bookmark_icon" onClick={handleBookmarkClick} />
@@ -54,5 +40,6 @@ const AgePopularityCard = ({ job }) => {
 
 AgePopularityCard.propTypes = {
   job: bookmarkJobPropsType.isRequired,
+  onBookmarkChange: bookmarkJobPropsType.func,
 };
 export default AgePopularityCard;

@@ -23,21 +23,20 @@ function AgePopularity({ userInfo }) {
     if (currentIndex < maxIndex) setCurrentIndex(currentIndex + 1);
   };
 
+  const fetchPopularJobs = async () => {
+    try {
+      const response = await axiosInstance.get('/posting/popular-by-my-age', {
+        params: { limit: 10 },
+      });
+
+      const popularData = response.data.items;
+      console.log('연령대별 공고', popularData);
+      setPopularJobs(popularData); // items 배열만 저장해야 함!
+    } catch (err) {
+      console.error('나이별 인기 공고 불러오기 실패', err);
+    }
+  };
   useEffect(() => {
-    const fetchPopularJobs = async () => {
-      try {
-        const response = await axiosInstance.get('/posting/popular-by-my-age', {
-          params: { limit: 10 },
-        });
-
-        const popularData = response.data.items;
-
-        setPopularJobs(popularData); // items 배열만 저장해야 함!
-      } catch (err) {
-        console.error('나이별 인기 공고 불러오기 실패', err);
-      }
-    };
-
     fetchPopularJobs();
   }, []);
 
@@ -60,7 +59,9 @@ function AgePopularity({ userInfo }) {
           style={{ transform: `translateX(-${currentIndex * 317}px)` }}
         >
           {popularJobs.length > 0 ? (
-            popularJobs.map((job) => <AgePopularityCard key={job.id} job={job} />)
+            popularJobs.map((job) => (
+              <AgePopularityCard key={job.id} job={job} onBookmarkChange={fetchPopularJobs} />
+            ))
           ) : (
             <div className="no_jobs">아직 추천할 공고가 없습니다 🙏</div>
           )}
