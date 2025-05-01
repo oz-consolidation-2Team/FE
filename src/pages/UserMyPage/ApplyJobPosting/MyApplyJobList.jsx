@@ -4,7 +4,7 @@ import { jobPropsType } from '@/utils/UserMyPagePropTypes';
 import PropTypes from 'prop-types';
 import MyApplyJobCard from './MyApplyJobCard';
 
-const MyApplyJobList = ({ appliedJobs }) => {
+const MyApplyJobList = ({ appliedJobs, userInfo }) => {
   const [isBookmarked, setIsBookmarked] = useState({});
 
   const toggleBookmark = (id) => {
@@ -19,9 +19,10 @@ const MyApplyJobList = ({ appliedJobs }) => {
       {appliedJobs.map((job) => (
         <MyApplyJobCard
           key={job.id}
-          job={job}
+          job={job.job_posting}
           isBookmarked={isBookmarked[job.id]}
           toggleBookmark={toggleBookmark}
+          userInfo={userInfo}
         />
       ))}
     </div>
@@ -30,5 +31,6 @@ const MyApplyJobList = ({ appliedJobs }) => {
 
 MyApplyJobList.propTypes = {
   appliedJobs: PropTypes.arrayOf(jobPropsType),
+  userInfo: PropTypes.object.isRequired,
 };
 export default MyApplyJobList;

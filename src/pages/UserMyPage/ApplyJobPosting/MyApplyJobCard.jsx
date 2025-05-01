@@ -1,57 +1,84 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaStar, FaRegStar } from 'react-icons/fa';
-import PropTypes from 'prop-types';
 import './ApplyJobPosting.scss';
+import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { jobPropsType } from '@/utils/UserMyPagePropTypes';
+import axiosInstance from '@/apis/axiosInstance';
 
-const MyApplyJobCard = ({ job, isBookmarked, toggleBookmark }) => {
+const MyApplyJobCard = ({ job, userInfo }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
     navigate(`/job-detail/${job.id}`, { state: { job } });
   };
 
-  const handleBookmarkClick = (e) => {
+  console.log('✨', userInfo);
+  const getDDay = (endDate) => {
+    const today = new Date();
+    const end = new Date(endDate);
+
+    // 시간 차이 계산 (ms → 일 단위로 변환)
+    const diffTime = end.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays > 0) return `D-${diffDays}`;
+    if (diffDays === 0) return `D-day`;
+    return `마감`;
+  };
+
+  const ApplyDelete = (e) => {
     e.stopPropagation();
-    toggleBookmark(job.id);
+
+    const applicationsId = userInfo?.applications?.[0]?.id;
+
+    console.log(applicationsId);
+    if (!applicationsId) {
+      console.warn('지원이력 ID가 없습니다');
+      return;
+    }
+    const fetchApplyCancel = async () => {
+      try {
+        const response = await axiosInstance.delete(`/applications/${applicationsId}`);
+
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchApplyCancel();
   };
 
   return (
-    <div className="job_list_container">
-      <div className="job_card">
+    <div className="apply_job_list_container">
+      <div className="apply_job_card">
         <div className="company_card" onClick={handleCardClick}>
-          <div className="job-header">
-            <div className="company-info">
-              <div className="company-name">{job.work_place_name}</div>
-              <div className="job-title">{job.title}</div>
-              <div className="job-description">{job.other_conditions}</div>
+          <div className="job_left">
+            <div className="company_info">
+              <p className="company_name">{job.work_place_name}</p>
+              <p className="job_title">{job.title}</p>
+              <p className="job_description">{job.other_conditions}</p>
+              <p className="company_address">{job.work_address}</p>
+              <p className="job_deadlin">{`${job.recruit_period_end?.split('T')[0]} 마감`}</p>
             </div>
           </div>
-          <div className="recruitment_info">
-            <p className="company-address">{job.work_address}</p>
-            <p className="job-deadlin">{new Date(job.deadline_at).toLocaleDateString()} 마감</p>
+          <div className="job_right">
+            <button type="button" className="cancel_btn" onClick={ApplyDelete}>
+              지원 취소하기
+            </button>
           </div>
         </div>
-        <div className="star">
-          {isBookmarked ? (
-            <FaStar className="star_icon filled" onClick={handleBookmarkClick} />
-          ) : (
-            <FaRegStar className="star_icon" onClick={handleBookmarkClick} />
-          )}
+        <div className="job_footer">
+          <div>{`지원 일자 : ${job.recruit_period_start?.split('T')[0]}`}</div>
+          <div>{getDDay(job.recruit_period_end)}</div>
         </div>
-      </div>
-      <div className="job_footer">
-        <div> {`지원 일자 : ${new Date('2025-04-27T05:33:24.624937Z').toLocaleDateString()}`} </div>
-        <div> D-1</div>
       </div>
     </div>
   );
 };
+
 MyApplyJobCard.propTypes = {
   job: jobPropsType.isRequired,
-  isBookmarked: PropTypes.bool.isRequired,
-  toggleBookmark: PropTypes.func.isRequired,
+  userInfo: PropTypes.object.isRequired,
 };
 
 export default MyApplyJobCard;

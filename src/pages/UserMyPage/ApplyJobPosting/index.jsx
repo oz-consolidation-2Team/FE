@@ -35,7 +35,7 @@ function ApplyJobPosting({ userInfo }) {
     <section className="job_positing">
       <h3>{userInfo.name}님이 지원한 공고</h3>
       {appliedJobs && appliedJobs.length > 0 ? (
-        <MyApplyJobList appliedJobs={appliedJobs || []} />
+        <MyApplyJobList appliedJobs={appliedJobs || []} userInfo={userInfo} />
       ) : (
         <p className="null_applied_jobs">지원한 공고가 없습니다!</p>
       )}
