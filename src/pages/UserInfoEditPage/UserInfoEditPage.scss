@@ -1,6 +1,7 @@
 @use '@/utils/variables' as *;
 
 .userinfo_edit_page {
+  position: relative;
   background-color: $light-green;
   min-height: 100vh;
   display: flex;
@@ -193,13 +194,13 @@
         cursor: not-allowed;
       }
     }
-
-    .account_deletion {
-      margin-top: 10px;
-      font-size: 13px;
-      color: $light-gray-text;
-      border: none;
-      background-color: #fff;
-    }
+  }
+  .account_deletion {
+    font-size: 13px;
+    color: $light-gray-text;
+    border: none;
+    background-color: #fff;
+    position: absolute;
+    bottom: 80px;
   }
 }
