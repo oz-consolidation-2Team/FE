@@ -18,7 +18,7 @@ const FindEmailPage = () => {
 
       <div className="findemail_card_area">
         <div
-          className="findemail_card orange"
+          className="findemail_card green"
           onClick={() => setType('user')}
           role="button"
           tabIndex={0}
@@ -28,7 +28,7 @@ const FindEmailPage = () => {
           <p>가입 시 입력한 정보로<br />이메일을 찾을 수 있어요</p>
         </div>
         <div
-          className="findemail_card green"
+          className="findemail_card orange"
           onClick={() => setType('company')}
           role="button"
           tabIndex={0}

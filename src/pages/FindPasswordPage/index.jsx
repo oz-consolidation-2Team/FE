@@ -18,7 +18,7 @@ const FindPasswordPage = () => {
 
       <div className="findpassword_card_area">
         <div
-          className="findpassword_card orange"
+          className="findpassword_card green"
           onClick={() => setType('user')}
           role="button"
           tabIndex={0}
@@ -28,7 +28,7 @@ const FindPasswordPage = () => {
           <p>가입 시 입력한 정보로<br />비밀번호를 찾을 수 있어요</p>
         </div>
         <div
-          className="findpassword_card green"
+          className="findpassword_card orange"
           onClick={() => setType('company')}
           role="button"
           tabIndex={0}
@@ -51,4 +51,3 @@ const FindPasswordPage = () => {
 };
 
 export default FindPasswordPage;
-

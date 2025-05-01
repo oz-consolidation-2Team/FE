@@ -174,6 +174,38 @@
           font-weight: 700;
           color: #222;
         }
+
+        .salary_with_button {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+
+          .salary_display {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+          }
+        }
+
+        .salary_calc_button {
+          font-size: 0.85rem;
+          padding: 6px 14px;
+          border: none;
+          background-color: #00796b;
+          color: #fff;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 500;
+          transition: background-color 0.2s ease;
+          margin-top: 10px;
+          margin-right: 10px;
+
+          &:hover {
+            background-color: #005f52;
+          }
+        }
       }
     }
   }
@@ -206,6 +238,19 @@
     #map {
       width: 100%;
       height: 100%;
+    }
+  }
+
+  .salary_sub_info {
+    .salary_note {
+      color: #bbb;
+      font-size: 0.75rem;
+      font-weight: 400;
+
+      strong {
+        font-weight: 600;
+        color: #666;
+      }
     }
   }
 }
