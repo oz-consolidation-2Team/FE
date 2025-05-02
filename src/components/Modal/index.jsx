@@ -12,14 +12,18 @@ function Modal({ isOpen, onClose, title, description, buttons }) {
   if (!isOpen) return null;
 
   return (
-    <div className="modal" onClick={onClose}>
-      <div className="modal_content" onClick={(e) => e.stopPropagation()}>
-        {title && <h3>{title}</h3>}
-        {description && <p>{description}</p>}
-        <div className="modal_buttons">
+    <div className="common_modal" onClick={onClose}>
+      <div className="common_modal_content" onClick={(e) => e.stopPropagation()}>
+        {title && <h3 className="common_modal_title">{title}</h3>}
+        {description && <p className="common_modal_description">{description}</p>}
+        <div className="common_modal_buttons">
           {Array.isArray(buttons)
             ? buttons.map((btn, i) => (
-                <button key={i} onClick={btn.onClick} className={`modal_btn ${btn.className}`}>
+                <button
+                  key={i}
+                  onClick={btn.onClick}
+                  className={`common_modal_btn ${btn.className}`}
+                >
                   {btn.label}
                 </button>
               ))
