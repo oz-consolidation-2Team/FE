@@ -151,7 +151,7 @@ const SearchResults = () => {
         activePage={currentPage}
         totalItemsCount={totalCount}
         itemsCountPerPage={itemsPerPage}
-        pageRangeDisplayed={5}
+        pageRangeDisplayed={10}
         onChange={(newPage) => {
           handleSearch(newPage);
           window.scrollTo({ top: 0 });

@@ -4,6 +4,7 @@ import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import { addFavorite, deleteFavorite } from '@/apis/favoriteApi';
 import './JobCard.scss';
 import LoginPromptModal from '@/components/Company/Modal/LoginPromptModal';
+import { BsBoxArrowUpRight } from 'react-icons/bs';
 
 const JobCard = ({ job }) => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const JobCard = ({ job }) => {
     try {
       if (isBookmarked) {
         await deleteFavorite(job.id);
-        setIsBookmarked(null); //
+        setIsBookmarked(false); //
       } else {
         await addFavorite(job.id);
         setIsBookmarked(true); //
@@ -48,39 +49,56 @@ const JobCard = ({ job }) => {
         return 'payment-monthly';
       case '일급':
         return 'payment-daily';
+      case '주급':
+        return 'payment-weekly';
+      case '연봉':
+        return 'payment-yearly';
       default:
         return 'payment-default';
-    }
-  };
-
-  return (
-    <>
-      <div className="job_card" onClick={handleCardClick}>
-        <div className="header">
-          <div className="company">
-            <div className="name">{job.work_place_name}</div>
-            <div className="title">{job.title}</div>
-            <div className="payment">
-              <span className={getPaymentClass(job.payment_method)}>{job.payment_method}</span> {job.salary.toLocaleString()}원
-            </div>
-            <div className="description">{job.job_category}</div>
+      }
+    };
+    
+    return (
+      <>
+      <div className="job_card_container">
+        <div className="job_card_row" onClick={handleCardClick}>
+          <div className="col_utillbutton">
+            {userType !== 'company' && (
+              <div className="bookmark">
+                {isBookmarked ? (
+                  <FaBookmark className="bookmark_icon filled" onClick={handleBookmarkClick} />
+                ) : (
+                  <FaRegBookmark className="bookmark_icon" onClick={handleBookmarkClick} />
+                )}
+              </div>
+            )}
+            <button
+              className="external_link_btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(`/job-detail/${job.id}`, '_blank');
+              }}
+            >
+              <BsBoxArrowUpRight />
+            </button>
           </div>
-          {userType !== 'company' && (
-            <div className="bookmark-icon">
-              {isBookmarked ? (
-                <FaBookmark className="bookmark_icon filled" onClick={handleBookmarkClick} />
-              ) : (
-                <FaRegBookmark className="bookmark_icon" onClick={handleBookmarkClick} />
-              )}
-            </div>
-          )}
-        </div>
-        <div className="footer">
-          <div className="company-address">{job.work_address}</div>
-          <div className="recruitStatus">
+          <div className="col_company">
+            <div className="company_name">{job.work_place_name}</div>
+            <div className="job_title">{job.title}</div>
+          </div>
+          <div className="col_location">{job.work_address}</div>
+          <div className="col_time">
+            {job.work_start_time && job.work_end_time
+              ? `${job.work_start_time} ~ ${job.work_end_time}`
+              : '협의 가능'}
+          </div>
+          <div className="col_pay">
+            <span className={getPaymentClass(job.payment_method)}>{job.payment_method}</span> {job.salary.toLocaleString()}원
+          </div>
+          <div className="col_date">
             {job.is_always_recruiting
               ? '상시 모집'
-              : `${new Date(job.recruit_period_end).toLocaleDateString()} 마감`}
+              : `${new Date(job.recruit_period_end).toLocaleDateString()} `}
           </div>
         </div>
       </div>

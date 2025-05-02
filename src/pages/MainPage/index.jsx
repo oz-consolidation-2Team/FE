@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './MainPage.scss';
-import { FaRegStar, FaStar } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
 import { getPopularJobList, getJobList } from '../../apis/RecruitmentApi';
 import { useNavigate } from 'react-router-dom';
 import MainJobCard from './MainJobCard';
-
-
 
 const MainPage = () => {
   const [keyword, setKeyword] = useState('');
@@ -36,6 +33,15 @@ const MainPage = () => {
     fetchPopularJobs();
     fetchRecentJobs();
   }, []);
+
+  const handleFavoriteToggle = (jobId, newStatus) => {
+    setPopularJobs((prev) =>
+      prev.map((job) => (job.id === jobId ? { ...job, is_favorited: newStatus } : job))
+    );
+    setRecentJobs((prev) =>
+      prev.map((job) => (job.id === jobId ? { ...job, is_favorited: newStatus } : job))
+    );
+  };
 
   const handleSearch = () => {
     if (keyword.trim()) {
@@ -82,7 +88,7 @@ const MainPage = () => {
         <h2>인기 공고</h2>
         <div className="job_grid">
           {popularJobs.slice(0, 4).map((job) => (
-            <MainJobCard key={job.id} job={job} />
+            <MainJobCard key={job.id} job={job} onToggleFavorite={handleFavoriteToggle} />
           ))}
         </div>
       </section>
@@ -91,7 +97,7 @@ const MainPage = () => {
         <h2>최근에 등록된 공고</h2>
         <div className="job_grid">
           {recentJobs.map((job) => (
-            <MainJobCard key={job.id} job={job} />
+            <MainJobCard key={job.id} job={job} onToggleFavorite={handleFavoriteToggle} />
           ))}
         </div>
       </section>

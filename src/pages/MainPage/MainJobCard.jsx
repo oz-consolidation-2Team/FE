@@ -6,9 +6,8 @@ import LoginPromptModal from '@/components/Company/Modal/LoginPromptModal';
 
 import './MainPage.scss';
 
-const MainJobCard = ({ job }) => {
+const MainJobCard = ({ job, onToggleFavorite }) => {
   const navigate = useNavigate();
-  const [isBookmarked, setIsBookmarked] = useState(job?.is_favorited || false);
   const [token, setToken] = useState(null);
   const [userType, setUserType] = useState(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -27,12 +26,13 @@ const MainJobCard = ({ job }) => {
     }
 
     try {
-      if (isBookmarked) {
+      if (job.is_favorited) {
         await deleteFavorite(job.id);
+        onToggleFavorite?.(job.id, false);
       } else {
         await addFavorite(job.id);
+        onToggleFavorite?.(job.id, true);
       }
-      setIsBookmarked((prev) => !prev);
     } catch (error) {
       console.error('즐겨찾기 처리 실패:', error);
     }
@@ -47,7 +47,7 @@ const MainJobCard = ({ job }) => {
         <div className="job_top">
           <span className="company">{job?.work_place_name}</span>
           {userType !== 'company' && (
-            isBookmarked ? (
+            job.is_favorited ? (
               <FaBookmark className="bookmark_icon filled" onClick={toggleBookmark} />
             ) : (
               <FaRegBookmark className="bookmark_icon" onClick={toggleBookmark} />

@@ -1,80 +1,187 @@
 @use "../../utils/variables" as *;
 
-.job_card {
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s;
-    
-    .header {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      position: relative;
 
-      .company {
-        font-weight: 600;
-        font-size: 0.8rem;
-        margin-bottom: 8px;
+.job_card_row {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem 0 0;
+  margin: 0;
+  min-height: 150px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #f9f9f9;
+  }
+
+  .bookmark {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    .bookmark_icon {
+      font-size: 1.5rem;
+      color: #ccc;
+      cursor: pointer;
+      transition: color 0.3s;
+
+      &.filled {
+        color: $orange;
       }
-      .title {
-        font-weight: bold;
-        font-size: 1rem;
-        margin-bottom: 8px;
-      }
-      .description {
-        color: #555;
-        font-size: 0.9rem;
-        margin-bottom: 8px;
-      }
-      .bookmark_icon {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        font-size: 1.4rem;
-        cursor: pointer;
-        color: #ccc;
-        transition: color 0.3s;
-      }
-      .bookmark_icon.filled {
-        color: $orange; // 빨간색 (채워진 북마크 색상)
-      }
-      .bookmark_icon:hover {
+
+      &:hover {
         color: #ff9800;
       }
     }
+  }
+
+  .col_company {
+    flex: 3.8;
+    text-align: left;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+
+    .company_name {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 4px;
+    }
+
+    .job_title {
+      font-size: 1.2rem;
+      color: #222;
+      font-weight: 600;
+    }
+  }
+
+  .col_location,
+  .col_time,
+  .col_pay,
+  .col_date {
+    font-size: 0.9rem;
+  }
+
+  .col_location {
+    flex: 2;
+    text-align: center;
+  }
+
+  .col_time {
+    flex: 1.8;
+    text-align: center;
+  }
+
+  .col_pay {
+    flex: 1.3;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .payment_method_badge {
+      margin-bottom: 4px;
+    }
+  }
+
+  .col_date {
+    flex: 1;
+    text-align: center;
+  }
+
+  .col_utillbutton {
+    flex: 0.3;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0.5rem;
+
+    .bookmark,
+    .external_link_btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+  }
+
+  .external_link_btn {
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    margin-top: 6px;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s;
+    width: 24px;
+    height: 24px;
+
     &:hover {
-      transform: translateY(-4px);
+      color: #333;
     }
-
-    .payment-hourly {
-      color: #009688; // 청록색 (시급)
-      font-weight: bold;
-    }
-
-    .payment-monthly {
-      color: #3f51b5; // 진한 파랑 (월급)
-      font-weight: bold;
-    }
-
-    .payment-daily {
-      color: #ff9800; // 주황색 (일급)
-      font-weight: bold;
-    }
-
-    .payment-default {
-      color: #666; // 기본 회색
-    }
-} 
-
-.footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  }
 }
 
-.recruitStatus{
-  font-size: 0.8rem;
-  color: #888;
+// Responsive styles for smaller screens
+@media (max-width: 768px) {
+  .job_card_row {
+    padding: 0.9rem 1.2rem;
+
+    .col_company,
+    .col_location,
+    .col_time,
+    .col_pay,
+    .col_date {
+      font-size: 0.85rem;
+    }
+
+    .bookmark_icon {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.job_card_payment {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+
+// Payment method badges
+.payment_method_badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.payment-hourly {
+  color: #009688;
+}
+
+.payment-daily {
+  color: #ff9800;
+}
+
+.payment-monthly {
+  color: #3f51b5;
+}
+
+.payment-weekly {
+  color: #4caf50;
+}
+
+.payment-yearly {
+  color: #9c27b0;
+}
+
+.payment-default {
+  color: #666;
 }
