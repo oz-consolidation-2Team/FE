@@ -46,8 +46,16 @@ const toggleBookmark = (id) => {
 };
 
   return (
-        <div className="job-list">
+        <div className="job_list">
           <h2 className="section_title">일반 채용 정보</h2>
+          <div className="job_list_header">
+            <div className="col_bookmark"></div>
+            <div className="col_company">기업명 / 공고제목</div>
+            <div className="col_location">근무지</div>
+            <div className="col_time">근무시간</div>
+            <div className="col_pay">급여</div>
+            <div className="col_date">마감일</div>
+          </div>
         {jobList.map((job) => (
           <JobCard
             key={job.id}

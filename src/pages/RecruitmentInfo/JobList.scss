@@ -4,24 +4,9 @@
   font-size: 20px;
   font-weight: bold;
   color: #2e7d32;
+  margin: 1rem 0 1rem;
 }
 
-
-.star_icon {
-  font-size: 26px;
-  cursor: pointer;
-  color: $orange;
-  transition: transform 0.2s;
-
-  &.filled {
-    color: $orange;
-
-  }
-
-  &:hover {
-    transform: scale(1.1);
-  }
-}
 
 .pagination {
   display: flex;
@@ -66,5 +51,44 @@
       background-color: #f9f9f9;
       cursor: default;
     }
+  }
+}
+
+.job_list_header {
+  display: flex;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  font-weight: bold;
+  font-size: 15px;
+  color: #555;
+
+  .col_bookmark {
+  flex: 0.3;
+}
+  .col_company {
+    flex: 3.8;
+    text-align: left;
+    margin-left: 20px;
+  }
+
+  .col_location {
+    flex: 2;
+    text-align: center;
+  }
+
+  .col_time {
+    flex: 1.8;
+    text-align: center;
+  }
+
+  .col_pay {
+    flex: 1.3;
+    text-align: center;
+  }
+
+  .col_date {
+    flex: 1;
+    text-align: center;
   }
 }
