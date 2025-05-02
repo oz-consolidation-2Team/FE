@@ -45,7 +45,7 @@ function SearchFilters({
         }}
       >
         <option value="">지역 선택</option>
-        {Object.keys(districtsByCity).map((city) => (
+        {Object.keys(KoreaRegions).map((city) => (
           <option key={city} value={city}>{city}</option>
         ))}
       </select>
