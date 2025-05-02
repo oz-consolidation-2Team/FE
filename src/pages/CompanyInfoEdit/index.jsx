@@ -143,7 +143,7 @@ export default function CompanyInfoEdit () {
 
                     <div className='div_box'>
                         <Category text='비밀번호확인' />
-                        <InputText {...state} type='text' name='confirm_password' text='비밀번호확인' />
+                        <InputText {...state} type='text' name='confirm_password' text='비밀번호 재확인' />
                     </div>
                     {validateError['confirm_password'] && <span className="error_message">비밀번호를 다시 확인해주세요</span>}
                 </div>
