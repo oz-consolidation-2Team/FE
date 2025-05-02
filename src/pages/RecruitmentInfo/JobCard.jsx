@@ -30,7 +30,7 @@ const JobCard = ({ job }) => {
     try {
       if (isBookmarked) {
         await deleteFavorite(job.id);
-        setIsBookmarked(null); //
+        setIsBookmarked(false); //
       } else {
         await addFavorite(job.id);
         setIsBookmarked(true); //
@@ -48,6 +48,10 @@ const JobCard = ({ job }) => {
         return 'payment-monthly';
       case '일급':
         return 'payment-daily';
+      case '주급':
+        return 'payment-weekly';
+      case '연봉':
+        return 'payment-yearly';
       default:
         return 'payment-default';
     }
