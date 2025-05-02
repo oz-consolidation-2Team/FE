@@ -5,8 +5,6 @@ import { getPopularJobList, getJobList } from '../../apis/RecruitmentApi';
 import { useNavigate } from 'react-router-dom';
 import MainJobCard from './MainJobCard';
 
-
-
 const MainPage = () => {
   const [keyword, setKeyword] = useState('');
   const [popularJobs, setPopularJobs] = useState([]);
@@ -37,15 +35,11 @@ const MainPage = () => {
   }, []);
 
   const handleFavoriteToggle = (jobId, newStatus) => {
-    setPopularJobs(prev =>
-      prev.map(job =>
-        job.id === jobId ? { ...job, is_favorited: newStatus } : job
-      )
+    setPopularJobs((prev) =>
+      prev.map((job) => (job.id === jobId ? { ...job, is_favorited: newStatus } : job))
     );
-    setRecentJobs(prev =>
-      prev.map(job =>
-        job.id === jobId ? { ...job, is_favorited: newStatus } : job
-      )
+    setRecentJobs((prev) =>
+      prev.map((job) => (job.id === jobId ? { ...job, is_favorited: newStatus } : job))
     );
   };
 
