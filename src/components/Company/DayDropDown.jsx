@@ -17,7 +17,7 @@ export default function DayDropDown (props) {
     else arrayFill= new Date(year, month, 0).getDate()
 
     return (
-        <>
+        <div className="div_dropdown">
             <div className="div_button_tap">
                 <button
                 className={basics === 'year' ? "disabled" : ""}
@@ -49,7 +49,7 @@ export default function DayDropDown (props) {
                         :  index +1}</li>
                 })}
             </ul>
-        </>
+        </div>
     )
 }
 

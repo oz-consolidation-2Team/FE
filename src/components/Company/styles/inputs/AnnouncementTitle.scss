@@ -1,17 +1,19 @@
+@use '@/utils/variables' as v;
+
 .AnnouncementTitle_container {
     padding: 30px;
     .div_box {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        margin-top: 15px;
-
-        .recruite_peple {
-            width: 50px;
+        margin-top: 30px;
+        >.Category_condainer {
+            width: 120px !important;
         }
-
-        :nth-child(2) {
-            padding-left: 40px;
-        }
+    }
+    .error_message {
+        color: v.$error-red;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin-left: 120px;
     }
 }

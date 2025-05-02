@@ -23,11 +23,11 @@ export default function InputImage (props) {
     return (
         <div className="InputImage_container">
             <div className="div_box">
-                <input id='input_for_button' type='file' accept = "image/*" onChange={onchangeImageUpload} />
+                <input id='input_for_button' type='file' accept=".jpg,.jpeg,.png" onChange={onchangeImageUpload} />
                 <div>{img || "선택된 파일이 없습니다"}</div>
-                <label htmlFor="input_for_button" className="color-change">파일 선택</label>
+                <label htmlFor="input_for_button" className="color">파일 선택</label>
             </div>
-            <p>PNG, JPG ... 어쩌구 저쩌구 확장자의 파일만 등록할 수 있습니다</p>
+            <p>jpg, jpeg, png 파일만 등록할 수 있습니다</p>
         </div>
     )
 }

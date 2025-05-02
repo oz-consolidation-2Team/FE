@@ -88,37 +88,39 @@ export default function Announcement (props) {
     }
 
     return (
-        <div className="AnnouncementAdd_container">
-            <GoArrowLeft 
-            className="button_back"
-            onClick={() => navigate(-1)} />
-            <h1>채용 공고 {props.type === 'add' ? "등록" : "수정"}</h1>
-            {props.type === 'edit' && <button 
-                className="button_delete"
-                onClick={()=>{
-                setModalType('delete')
-                setShowModal(true)
-            }}>삭제하기</button>}
-
-            <div className="input_group">
-                <AnnouncementTitle formData={formData} setFormData={setFormData} error={error} setError={setError} />
-                <JobRequirement formData={formData} setFormData={setFormData} error={error} setError={setError} />
-                <WorkLocation formData={formData} setFormData={setFormData} error={error} setError={setError} />
-                <WorkRequirement formData={formData} setFormData={setFormData} error={error} setError={setError} />
-                <AnnouncementContent formData={formData} setFormData={setFormData} error={error} setError={setError} />
-            </div>
-
-            <button 
-            className="button_add color-change"
-            onClick={() => {
-                if (validate()) alert('폼을 다시 확인해주세요')
-                else {
+        <div className="company_main">
+            <div className="AnnouncementAdd_container">
+                <GoArrowLeft 
+                className="button_back"
+                onClick={() => navigate(-1)} />
+                <h1>채용 공고 {props.type === 'add' ? "등록" : "수정"}</h1>
+                {props.type === 'edit' && <button 
+                    className="button_delete"
+                    onClick={()=>{
+                    setModalType('delete')
                     setShowModal(true)
-                    setModalType(props.type)
-                }
-            }}>등록하기</button>
-            <button className="button_preview">공고 미리보기</button>
-            {showModal && <Modal setShowModal={setShowModal} formData={formData} modalType={modalType} setModalType={setModalType}/>}
+                }}>삭제하기</button>}
+
+                <div className="input_group">
+                    <AnnouncementTitle formData={formData} setFormData={setFormData} error={error} setError={setError} />
+                    <JobRequirement formData={formData} setFormData={setFormData} error={error} setError={setError} />
+                    <WorkLocation formData={formData} setFormData={setFormData} error={error} setError={setError} />
+                    <WorkRequirement formData={formData} setFormData={setFormData} error={error} setError={setError} />
+                    <AnnouncementContent formData={formData} setFormData={setFormData} error={error} setError={setError} />
+                </div>
+
+                <button 
+                className="button_add color-change"
+                onClick={() => {
+                    if (validate()) alert('폼을 다시 확인해주세요')
+                    else {
+                        setShowModal(true)
+                        setModalType(props.type)
+                    }
+                }}>등록하기</button>
+                <button className="button_preview">공고 미리보기</button>
+                {showModal && <Modal setShowModal={setShowModal} formData={formData} modalType={modalType} setModalType={setModalType}/>}
+            </div>
         </div>
     )
 }
