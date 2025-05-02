@@ -1,0 +1,54 @@
+@use "../../utils/variables" as v;
+.job_section {
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 10px;
+
+    .PublicJobList_container {
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+
+            .title {
+                font-size: 20px;
+                font-weight: bold;
+                color: v.$green;
+            }
+
+            .buttons {
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 16px;
+
+                button {
+                    background-color: v.$green;
+                    color: white;
+                    border: none;
+                    padding: 5px 10px;
+                    font-size: 18px;
+                    border-radius: 8px;
+                    cursor: pointer;
+
+                    &:disabled {
+                        background-color: #ddd;
+                        cursor: not-allowed;
+                    }
+                }
+            }
+        }
+    }
+
+    .public-job-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        grid-auto-flow: row dense;
+        grid-auto-rows: 1fr;
+        justify-items: stretch;
+    }
+
+}

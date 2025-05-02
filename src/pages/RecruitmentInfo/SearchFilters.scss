@@ -1,0 +1,63 @@
+@use "../../utils/variables" as v;
+.Search_container {
+  width: 100%;
+  margin: 0 auto;
+
+  .search_filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 12px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    width: 100%;
+
+    select,
+    input[type="text"] {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      flex: 1 1 auto;
+      min-width: 150px;
+    }
+
+    input[type="text"] {
+      flex: 2 1 auto;
+    }
+
+    button {
+      flex: 0 0 auto;
+      background-color: v.$orange;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      white-space: nowrap;
+
+      &:hover {
+        background-color: v.$deep-orange;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .search_filters {
+      flex-direction: column;
+      align-items: stretch;
+
+      select,
+      input[type="text"],
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

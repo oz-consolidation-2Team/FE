@@ -1,0 +1,138 @@
+@use '@/utils/variables' as v;
+
+.modal_overlay {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.2);
+    height: 100%;
+    z-index: 1001;
+}
+
+.modal_container {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background-color: white;
+    width: 40%;
+    height: auto;
+    padding: 50px;
+
+    .Content_container {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        width: 100%;
+
+        .announcement_card {
+            display: flex;
+            border: 2px solid v.$deep-green;
+            border-radius: 10px;
+            width: 100%;
+            height: 100px;
+            padding: 13px;
+            margin: 30px 0;
+            margin-top: 50px;
+            
+            > .hr {
+                border-color: #f0f0f0 !important;
+                margin: 0 15px;
+            }
+
+            > .company {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding-bottom: 10px;
+                :nth-child(1) {
+                    font-weight: bold;
+                    font-size: 0.8rem;
+                }
+                :nth-child(2) {
+                    font-size: 0.7rem;
+                }
+            }
+
+            > .announcement {
+                flex-grow: 1;
+                text-align: start;
+
+                :nth-child(1) {
+                    font-weight: bold;
+                    font-size: 1.1rem;
+                    margin-bottom: 5px;
+                }
+                :nth-child(2) {
+                    font-size: 0.9rem;
+                }
+            }
+
+            .time {
+                align-self: end;
+                margin-right: 20px;
+                font-size: 0.9rem;
+            }
+        }
+        > .hr {
+            border-color: v.$deep-green !important;
+            width: 100%;
+            margin-top: 20px;
+        }
+        > div {
+            margin-top: 10px;
+        }
+        > .box {
+            display: flex;
+            text-align: start;
+            width: 100%;
+            :nth-child(1) {
+                flex-basis: 300px;
+            }
+            :nth-child(2) {
+                flex-basis: 230px;
+            }
+        }
+    }
+
+    .Button_container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        .button_box {
+            display: flex;
+            width: 100%;
+            margin-top: 40px;
+            button {
+                border: none;
+                border-radius: 10px;
+                background-color: v.$green;
+                color: white;
+                font-size: 1.2rem;
+                width: 100%;
+                padding: 10px 0;
+            }
+            :nth-child(1) {
+                background-color: #c92e2e;
+                flex-grow: 1;
+            }
+            :nth-child(2) {
+                flex-basis: 300px;
+                margin-left: 20px;
+            }
+        }
+        > button {
+            border: none;
+            border-radius: 10px;
+            background-color: v.$green;
+            font-size: 1.2rem;
+            color: white;
+            width: 70%;
+            padding: 10px 0;
+            margin-top: 40px;
+        }
+    }
+}

@@ -1,0 +1,16 @@
+@use '@/utils/variables' as v;
+
+.InputRadio_container {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+
+    .div_checkBoxs {
+        margin-right: 30px;
+
+        input {
+            accent-color: v.$green;
+            margin-right: 5px;
+        }
+    }
+}

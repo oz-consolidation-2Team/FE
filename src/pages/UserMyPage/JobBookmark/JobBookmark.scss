@@ -1,0 +1,122 @@
+@use '@/utils/variables' as *;
+
+.job_recommend {
+  margin-top: 40px;
+  margin-bottom: 30px;
+  width: 100%;
+  height: 250px;
+
+  .job_recommend_title {
+    margin-top: 70px;
+    margin-bottom: -20px;
+    font-size: 20px;
+    color: $deep-green;
+  }
+
+  .job_recommend_btn_group {
+    width: 101%;
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+    position: relative;
+    top: 90px;
+    right: 15px;
+    .reco_left_btn,
+    .reco_right_btn {
+      font-size: 35px;
+      cursor: pointer;
+      color: $green;
+    }
+    .reco_left_btn.disabled,
+    .reco_right_btn.disabled {
+      opacity: 0.4; /* 흐릿하게 */
+      cursor: not-allowed; /* 클릭 불가 느낌 */
+      pointer-events: none; /* 아예 클릭 못 하게 막을 수도 있음 */
+    }
+  }
+  /* 슬라이더 구조*/
+  .reco_slider-container {
+    width: 98%;
+    overflow: hidden;
+    display: flex;
+
+    .reco_slider-wrapper {
+      width: fit-content;
+      display: flex;
+      justify-content: center;
+      gap: 17px;
+      transition: transform 0.3s ease;
+
+      .no_jobs {
+        min-width: 940px; // (300px * 3 카드 + 여유 간격 정도 맞춰서)
+        padding: 60px 0;
+        background-color: $light-orange;
+        border: 1px dashed #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        color: #999;
+        text-align: center;
+      }
+
+      .job_card {
+        min-width: 300px;
+        border: 1px solid #eee;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+        transition: 0.2s;
+        position: relative;
+
+        &:hover {
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.03);
+        }
+
+        .job_left {
+          display: flex;
+          flex-direction: column;
+
+          .company {
+            font-size: 15px;
+            color: $gray-text;
+            margin-bottom: 8px;
+          }
+
+          .title {
+            width: 200px;
+            font-size: 16px;
+            font-weight: 600;
+            color: $gray-dark;
+            margin-bottom: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          .date {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 10px;
+          }
+
+          .location {
+            font-size: 13px;
+            color: $gray-text;
+          }
+        }
+        .job_right {
+          font-size: 22px;
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          .bookmark_icon {
+            cursor: pointer;
+            color: $border-color;
+            &.filled {
+              color: $orange;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.CategoryTitle_condainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+
+    .title {
+        font-weight: bold;
+        font-size: 2rem;
+        margin-right: 10px;
+    }
+
+    .hr {
+        flex-grow: 1;
+    }
+}

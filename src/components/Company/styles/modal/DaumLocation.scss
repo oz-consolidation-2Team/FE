@@ -1,0 +1,23 @@
+
+.modal_overlay {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.2);
+    height: 100%;
+    z-index: 1001;
+}
+
+.DaumLocation_container {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background-color: white;
+    width: 40%;
+    height: auto;
+    padding: 50px;
+}

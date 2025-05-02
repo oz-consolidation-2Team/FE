@@ -1,0 +1,235 @@
+@use '@/utils/variables' as *;
+
+.login_page {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .login_card {
+    width: 100%;
+    max-width: 480px;
+    padding: 48px;
+    background-color: #f9f9f9;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .login_title {
+    font-size: 26px;
+    text-align: center;
+    font-weight: 700;
+    color: $gray-dark;
+    margin-bottom: 24px;
+  }
+
+  .user_type_toggle {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+
+    button {
+      flex: 1;
+      height: 48px;
+      border-radius: 8px;
+      background-color: #e0e0e0;
+      color: $gray-text;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+
+      &.active.user {
+        background-color: $green;
+        color: #fff;
+      }
+
+      &.active.company {
+        background-color: $orange;
+        color: #fff;
+      }
+    }
+  }
+
+  .input_group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      color: $gray-dark;
+    }
+  
+    input,
+    .password_wrapper input {
+      height: 48px;
+      padding: 0 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border 0.2s ease;
+
+      &:focus {
+        border-color: $green;
+        outline: none;
+      }
+
+      &.company_focus:focus {
+        border-color: $orange;
+      }
+
+      &.error {
+        border-color: #e53935;
+      }
+    }
+  }
+
+  .input_group + .input_group {
+    margin-top: 12px;
+  }
+
+  .password_wrapper {
+    position: relative;
+  
+    input {
+      width: 100%;
+    }
+  
+    span {
+      position: absolute;
+      top: 50%;
+      right: 14px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 20px;
+      color: #ccc;
+      transition: color 0.2s ease;
+  
+      &.user:hover {
+        color: $green;
+      }
+  
+      &.company:hover {
+        color: $orange;
+      }
+    }
+  }
+
+  .login_btn {
+    margin-top: 20px;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s ease;
+  }
+  
+  .login_btn.user {
+    background-color: $green;
+    color: #fff;
+  
+    &:hover {
+      background-color: $deep-green;
+    }
+  }
+  
+  .login_btn.company {
+    background-color: $orange;
+    color: #fff;
+  
+    &:hover {
+      background-color: $deep-orange;
+    }
+  }
+
+  .bottom_links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: $gray-text;
+    margin-top: 20px;
+
+    span {
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    span:nth-child(2) {
+      color: #ccc;
+      pointer-events: none;
+    }
+
+    &.user span:hover {
+      color: $green;
+    }
+
+    &.company span:hover {
+      color: $orange;
+    }
+  }
+
+  .sns_login {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+
+    button {
+      height: 48px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: bold;
+      font-size: 16px;
+      padding: 0 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+
+      img {
+        object-fit: contain;
+      }
+    }
+
+    .kakao {
+      background-color: #fee500;
+      color: #000;
+
+      .icon_kakao {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .naver {
+      background-color: #03c75a;
+      color: #fff;
+
+      .icon_naver {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+
+  .error_msg {
+    font-size: 12px;
+    color: red;
+    margin-top: 4px;
+  }
+}

@@ -1,0 +1,344 @@
+@use '@/utils/variables' as *;
+
+.user_signup_page {
+  margin-top: 60px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px 16px;
+  border-radius: 20px;
+
+  .signup_card {
+    max-width: 720px;
+    width: 100%;
+    background: white;
+    border-radius: 16px;
+    padding: 40px 32px;
+  }
+
+  .signup_title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 60px;
+
+    .icon {
+      font-size: 28px;
+      color: $green;
+    }
+
+    h2 {
+      font-size: 30px;
+      font-weight: 750;
+      color: $green;
+    }
+  }
+
+  .step_indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 60px;
+
+    .step {
+      padding: 0 16px;
+      height: 36px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 36px;
+      text-align: center;
+      background-color: #eee;
+      color: #888;
+      white-space: nowrap;
+
+      &.active {
+        background-color: $green;
+        color: white;
+      }
+    }
+
+    .step_line {
+      width: 24px;
+      height: 2px;
+      background-color: #ccc;
+    }
+  }
+
+  .password_row {
+    position: relative;
+
+    .eye_icon {
+      position: absolute;
+      right: 12px;
+      top: 36px;
+      font-size: 20px;
+      color: #999;
+      cursor: pointer;
+      z-index: 1;
+
+      &:hover {
+        color: $green;
+      }
+    }
+  }
+
+  .input_row {
+    display: flex;
+    gap: 8px;
+
+    input {
+      flex: 1;
+    }
+
+    button {
+      padding: 0 14px;
+      height: 48px;
+      font-size: 13px;
+      background-color: $green;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $deep-green;
+      }
+    }
+  }
+
+  .gender_group {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+
+    button {
+      flex: 1;
+      height: 44px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #fff;
+      cursor: pointer;
+      font-size: 14px;
+
+      &.selected {
+        background-color: $green;
+        border-color: $green;
+        color: white;
+      }
+
+      &:hover {
+        background-color: $green;
+        border-color: $green;
+        color: white;
+      }
+    }
+  }
+
+  .section_box {
+    margin-bottom: 32px;
+
+    .section_title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #333;
+
+      span {
+        font-size: 13px;
+        font-weight: normal;
+        color: #888;
+        margin-left: 6px;
+      }
+    }
+
+    .error_msg {
+      font-size: 13px;
+      color: #e53935;
+      margin-top: 6px;
+    }
+  }
+
+  .checkbox_grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .check_btn {
+    padding: 10px 16px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &.selected {
+      background-color: $green;
+      color: white;
+      border-color: $green;
+    }
+
+    &:hover {
+      background-color: #D5E7DB;
+      border-color: rgba($green, 0.3);
+    }
+  }
+
+  .terms_step {
+    margin-top: 20px;
+  
+    .checkbox_row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+  
+      input[type='checkbox'] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        border: 2px solid #ccc;
+        border-radius: 50%;
+        background-color: white;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s ease;
+  
+        &:checked {
+          background-color: $green;
+          border-color: $green;
+        }
+  
+        &:checked::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 4px;
+          height: 9px;
+          border: solid white;
+          border-width: 0 2px 2px 0;
+          transform: translate(-50%, -50%) rotate(45deg);
+        }
+  
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 0 2px rgba($green, 0.3);
+        }
+      }
+  
+      label {
+        font-size: 14px;
+        color: #333;
+        flex: 1;
+        line-height: 1.5;
+      }
+  
+      .view_detail {
+        font-size: 12px;
+        color: $green;
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+        padding: 0;
+      }
+  
+      &.all_agree {
+        margin-top: 30px;
+      }
+    }
+  
+    .terms_section {
+      margin-top: 24px;
+  
+      .terms_label {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #333;
+      }
+    }
+  
+    .error_msg {
+      font-size: 13px;
+      color: #e53935;
+      margin: 12px 0 0 0;
+    }
+  
+    .button_group {
+      margin-top: 32px;
+    }
+  }
+
+  .button_group {
+    margin-top: 28px;
+    display: flex;
+    gap: 12px;
+
+    .prev_btn,
+    .next_btn {
+      flex: 1;
+      height: 48px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .prev_btn {
+      background-color: #ccc;
+      color: #333;
+    }
+
+    .next_btn {
+      background-color: $green;
+      color: white;
+
+      &:hover {
+        background-color: $deep-green;
+      }
+
+      &:disabled {
+        background-color: #ddd;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.terms_section {
+  margin-top: 24px;
+
+  .terms_label {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #333;
+  }
+
+  .checkbox_row {
+    margin-bottom: 12px;
+  }
+}
+
+.readonly_input {
+  background-color: #f0f0f0;
+  color: #888;
+  cursor: not-allowed;
+}
+
+input:focus {
+  border-color: #0F8C3B;
+  outline: none;
+}

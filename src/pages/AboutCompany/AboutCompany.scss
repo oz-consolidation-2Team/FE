@@ -1,0 +1,120 @@
+@use "../../utils/variables" as v;
+
+.about-company {
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #333;
+
+  .hero {
+    background: url('/introduce_main2.png') center center / cover no-repeat;
+    color: white;
+    padding: 100px 20px;
+    position: relative;
+
+    .overlay {
+      padding: 40px;
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: 10px;
+      text-align: left;
+      margin-left: 0;
+      margin-right: auto;
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        font-weight: 400;
+        margin-bottom: 20px;
+      }
+
+      .quote {
+        font-style: italic;
+        margin-bottom: 20px;
+        font-size: 1.3rem;
+      }
+
+      .desc {
+        font-size: 1.2rem;
+        line-height: 1.8;
+      }
+    }
+  }
+
+  .what-we-do {
+    padding: 60px 20px;
+    background-color: #fff;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .intro-container {
+      margin-right: 20px;
+    }
+
+    .intro {
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .feature-wrapper {
+        border-bottom: 1px solid #ddd;
+        margin-top: 10px;
+      }
+      
+      .feature-wrapper:last-child {
+        border-bottom: none;
+      }
+
+    .content {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 40px;
+
+      .features {
+        flex: 1;
+        min-width: 300px;
+
+        .feature {
+          margin-bottom: 30px;
+
+          h3 {
+            font-size: 1.2rem;
+            color: v.$green;
+            margin-bottom: 8px;
+          }
+
+          p {
+            font-size: 0.9rem;
+            color: #444;
+            line-height: 1.6;
+          }
+        }
+      }
+
+      .image-box {
+        flex: 1;
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+
+        img {
+          width: 100%;
+          height: auto;
+          max-height: 100%;
+          object-fit: cover;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+}

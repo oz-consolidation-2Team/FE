@@ -1,0 +1,67 @@
+import DaumPostcode from 'react-daum-postcode';
+import "@/components/Company/styles/modal/DaumLocation.scss"
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+
+const { kakao } = window;
+
+/**
+ * @param {*} setFormData input값 저장
+ * @param {*} setError 유효성검사
+ * @param {*} setShowModal 모달찯 닫기 위함
+ */
+export default function DaumLocation (props) {
+    const [location, setLocation] = useState(null)
+    const [latitude, setLatitude] = useState(null)
+    const [longitude, setLongitude] = useState(null)
+
+    const daumPostcode = (data) => {
+        setLocation(data)
+        // console.log(data)
+        // console.log('도로명주소 : ' + data.roadAddress);
+        // console.log('지번주소 : ' + data.jibunAddress);
+        // console.log('우편번호 : ' + data.zonecode);
+
+        const geocoder = new window.kakao.maps.services.Geocoder();
+        geocoder.addressSearch(data.roadAddress, (result, status) => {
+        if (status === window.kakao.maps.services.Status.OK) {
+            setLatitude(result[0].y)
+            setLongitude(result[0].x)
+        } else {
+            console.error('좌표 검색 실패', status);
+            }
+    })
+    }
+
+    useEffect(()=>{
+        if (!location) return console.log('값 없음 리턴됨')
+        props.setFormData(el => ({
+            ...el,
+            work_address: location.roadAddress,
+            latitude: latitude,
+            longitude: longitude
+        }))
+        props.setError(el => ({
+            ...el,
+            work_address: false
+        }))
+        props.setShowModal(false)
+    },[latitude,longitude])
+
+    return (
+        <div className='modal_overlay'>
+            <div className='DaumLocation_container'>
+                <DaumPostcode 
+                style={{height: '500px'}}
+                onComplete={daumPostcode}
+                />
+            </div>
+        </div>
+    )
+}
+
+DaumLocation.propTypes = {
+    setFormData: PropTypes.string.isRequired,
+    setError: PropTypes.node.isRequired,
+    setShowModal: PropTypes.node.isRequired
+}

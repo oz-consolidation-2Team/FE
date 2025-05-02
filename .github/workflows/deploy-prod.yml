@@ -1,0 +1,53 @@
+name: Deploy To Dev AWS
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Github Repository 파일 불러오기
+        uses: actions/checkout@v4
+
+      - name: 의존성 설치
+        run: npm install
+
+      - name: .env 파일 생성
+        run: |
+          echo "VITE_SERVICE_KEY=${{secrets.VITE_SERVICE_KEY}}" >> .env
+          echo "VITE_API_BASE_URL=${{secrets.VITE_API_BASE_URL}}" >> .env
+          echo "VITE_PUBLIC_RECRUITMENT_API_URL=${{secrets.VITE_PUBLIC_RECRUITMENT_API_URL}}" >> .env
+          echo "VITE_WORK24_API_KEY=${{secrets.VITE_WORK24_API_KEY}}" >> .env
+          echo "VITE_WORK24_URL=${{secrets.VITE_WORK24_URL}}" >> .env
+          echo "VITE_KAKAO_MAP_KEY=${{secrets.VITE_KAKAO_MAP_KEY}}" >> .env
+          echo "VITE_KAKAO_CLIENT_ID=${{secrets.VITE_KAKAO_CLIENT_ID}}" >> .env
+          echo "VITE_KAKAO_REDIRECT_URI=${{ secrets.VITE_KAKAO_REDIRECT_URI }}" >> .env
+          echo "VITE_KAKAO_SECRET=${{secrets.VITE_KAKAO_SECRET}}" >> .env
+          echo "VITE_NAVER_CLIENT_ID=${{ secrets.VITE_NAVER_CLIENT_ID }}" >> .env
+          echo "VITE_NAVER_REDIRECT_URI=${{ secrets.VITE_NAVER_CLIENT_SECRET }}" >> .env
+          echo "VITE_NAVER_CLIENT_SECRET=${{ secrets.VITE_NAVER_REDIRECT_URI }}" >> .env
+
+      - name: 빌드
+        run: npm run build
+
+      - name: AWS 인증 절차
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ap-northeast-2
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID}}
+
+      - name: S3 기존 파일들 삭제 후 새로 업로드
+        run: |
+          aws s3 rm --recursive s3://prod-toseniors
+          aws s3 cp ./dist s3://prod-toseniors/ --recursive
+
+      - name: Cloudfront 캐시 무효화
+        run: aws cloudfront create-invalidation --distribution-id E2Z35PE4F54HSV --paths "/*"
