@@ -4,6 +4,9 @@ import Button from "./Button"
 import SimpleModal from "./SimpleModal"
 import "../styles/modal/modal.scss"
 import PropTypes from 'prop-types';
+import { useEffect } from "react"
+import { createJobPosting, updateJobPosting, deleteJobPosting } from "@/apis/companyPostingApi"
+import { useParams } from "react-router-dom"
 
 /**
  * @param {상태관리} formData 상태관리
@@ -12,7 +15,25 @@ import PropTypes from 'prop-types';
  * @param {'add' | 'edit' | 'delete' | 'delete-Success' | 'cencel-resume'} modalType 상태관리
  */
 export default function Modal (props) {
-    //api 기업 정보 수정 (기업 ID로 해당 기업 정보 수정) /company/{company_user_id}
+    const formData = new FormData()
+    Object.entries(props.formData).map(item => {
+        if (typeof item[1] === 'object' && item[1] && item[0] != 'image_file') return formData.append(item[0], item[1].join(','))
+        formData.append(item[0], item[1])
+    })
+
+    const param = useParams()
+
+    useEffect(()=>{
+        try {
+            if (props.modalType === 'add') createJobPosting(formData).then(res => console.log(res))
+            else if (props.modalType === 'edit') updateJobPosting(param.id, formData).then(res => console.log(res))
+            else if (props.modalType === 'delete-Success') deleteJobPosting(param.id).then(res => console.log(res))
+        } catch (error) {
+            console.log('에러 발생', error)
+        } finally {
+            console.log('로딩 완료')
+        }
+    },[props.modalType])
 
     return (
         <div className="modal_overlay">

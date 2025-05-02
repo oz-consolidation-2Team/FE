@@ -16,7 +16,7 @@ export default function WorkLocation (props) {
     return (
         <div className="WorkLocation_container">
             <CategoryTitle title='근무지 정보' />
-            <div className="box">
+            <div className="div_box">
                 <Category text='근무지 주소' />
                 <button
                 className="search"
@@ -25,7 +25,7 @@ export default function WorkLocation (props) {
             </div>
             {props.error['work_address'] && <span className="error_message">근무지주소를 입력해주세요</span>}
 
-            <div className="box">
+            <div className="div_box">
                 <Category text='근무지명' />
                 <InputText {...props} text='근무지명' type='text' name='work_place_name' placeholder={props.formData.work_place_name} />
             </div>

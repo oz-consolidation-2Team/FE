@@ -1,12 +1,13 @@
 import { useState } from "react";
 import PropTypes from 'prop-types';
+import { padZero } from "@/utils/validation";
 
 export default function TimeDropDown (props) {
     const [basics, setBasics] = useState('hour')
     const [hour, setHour] = useState(0)
     const [minute, setMinute] = useState(0)
 
-    const arrayFill = basics === 'hour' ? 24 : 6
+    const arrayFill = basics === 'hour' ? 24 : 2
 
     return (
         <>
@@ -27,11 +28,11 @@ export default function TimeDropDown (props) {
                     {Array(arrayFill).fill("").map((_, index) => {
                         return <li key={index} onClick={() => {
                             basics === 'hour' ? setHour(index) : setMinute(10 * index)
-                            props.setFormData(el => ({...el, [props.name]: `${hour}:${minute}`}))
+                            props.setFormData(el => ({...el, [props.name]: `${padZero(hour)}:${padZero(minute)}`}))
                             props.setError(el => ({...el, [props.name]: false}))
                         }}>{basics === 'hour' ? 
                             (index < 10 ? `0` + `${index}` : index)
-                            : (`${index === 0 ? 0 : ""}${10 * index}`)}</li>
+                            : (`${padZero(30 * index)}`)}</li>
                     })}
                 </div>
             </ul>

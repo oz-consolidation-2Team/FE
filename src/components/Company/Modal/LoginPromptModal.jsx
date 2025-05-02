@@ -4,7 +4,7 @@ import "../styles/modal/JobApplyModal.scss";
 const LoginPromptModal = ({ onClose, navigate }) => {
   return (
     <div className="modal_overlay">
-      <div className="box">
+      <div className="div_box">
         <button className="close_button" onClick={onClose}>×</button>
         <p><strong>로그인 후 이용해주세요.</strong></p>
         <div className="buttons">

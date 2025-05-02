@@ -10,6 +10,10 @@ export const validatePassword = (pw) =>
 export const hasHangul = (text) =>
   /[\u3131-\u318E\uAC00-\uD7A3]/.test(text);
 
+// 고정적인 두자리 숫자 ex) 7 -> 07
+export const padZero = (num) =>
+  num < 10 ? `0${num}` : `${num}`;
+
 // 이름 공백 검사
 export const validateName = (name) => name.trim() !== '';
 
