@@ -5,9 +5,13 @@ import { bookmarkJobPropsType } from '@/utils/UserMyPagePropTypes';
 import { useFavoriteStore } from '@/store/useFavoriteStore';
 
 const AgePopularityCard = ({ job }) => {
-  const { toggleFavorite } = useFavoriteStore();
+  const { toggleFavorite, favorites } = useFavoriteStore();
 
   const navigate = useNavigate();
+
+  const isFavorites = favorites.some(
+    (fav) => (fav.job_posting_id || fav.id || fav.job_id) === job.job_id
+  );
 
   const handleCardClick = () => {
     navigate(`/job-detail/${job.id}`);
@@ -27,7 +31,7 @@ const AgePopularityCard = ({ job }) => {
           <p className="location">{job.work_address}</p>
         </div>
         <div className="job_right">
-          {job.is_favorited ? (
+          {isFavorites ? (
             <FaBookmark className="bookmark_icon filled" onClick={handleBookmarkClick} />
           ) : (
             <FaRegBookmark className="bookmark_icon" onClick={handleBookmarkClick} />
