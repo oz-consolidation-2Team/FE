@@ -11,7 +11,7 @@ import { GoArrowLeft } from "react-icons/go";
 import { JobPosting } from "@/apis/companyPostingApi"
 import { padZero } from "@/utils/validation"
 
-const INPUT_BLOCK = ['title', 'summary', 'recruit_period_start', 'recruit_period_end', 'is_always_recruiting_str', 'recruit_number', 'education', 'benefits', 'preferred_conditions', 'other_conditions', 'work_address', 'work_place_name', 'salary', 'payment_method', 'work_duration', 'is_work_duration_negotiable_str', 'job_category', 'career', 'work_days', 'is_work_days_negotiable_str', 'is_schedule_based_str', 'employment_type', 'work_start_time', 'work_end_time', 'is_work_time_negotiable_str', 'description', 'image_file', 'latitude', 'longitude']
+const INPUT_BLOCK = ['title', 'summary', 'recruit_period_start', 'recruit_period_end', 'is_always_recruiting_str', 'recruit_number', 'education', 'benefits', 'preferred_conditions', 'other_conditions', 'work_address', 'work_place_name', 'salary', 'payment_method', 'work_duration', 'is_work_duration_negotiable_str', 'job_category', 'career', 'work_days', 'is_work_days_negotiable_str', 'is_schedule_based_str', 'employment_type', 'work_start_time', 'work_end_time', 'is_work_time_negotiable_str', 'description', 'image_file', 'latitude', 'longitude','region1','region2']
 const INPUT_BLOCK_BOOLEAN = ['is_always_recruiting_str','is_work_duration_negotiable_str','is_work_days_negotiable_str','is_schedule_based_str','is_work_time_negotiable_str']
 const INPUT_BLOCK_ARRAY = ['benefits', 'preferred_conditions', 'other_conditions']
 
