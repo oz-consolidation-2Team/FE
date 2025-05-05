@@ -42,7 +42,7 @@ export default function Announcement (props) {
         recruit_period_end: false, // 모집 마감일
         recruit_number: false, // 모집인원
         education: false, // 학력
-        // work_address: false, // 근무지주소
+        work_address: false, // 근무지주소
         work_place_name: false, // 근무지명
         salary: false, // 급여
         payment_method: false, // 급여지급방법
@@ -53,7 +53,7 @@ export default function Announcement (props) {
         employment_type: false, // 고용형태
         work_start_time: false, // 근무시간
         work_end_time: false, // 근무시간
-        이미지등록: false // 이미지등록
+        image_file: false // 이미지등록
     })
     
     if (props.type=== 'edit') {
@@ -112,7 +112,10 @@ export default function Announcement (props) {
                 <button 
                 className="button_add color-change"
                 onClick={() => {
-                    if (validate()) alert('폼을 다시 확인해주세요')
+                    if (validate()) {
+                        alert('폼을 다시 확인해주세요')
+                        console.log(error)
+                    }
                     else {
                         setShowModal(true)
                         setModalType(props.type)

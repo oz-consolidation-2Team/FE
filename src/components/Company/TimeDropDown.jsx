@@ -28,7 +28,8 @@ export default function TimeDropDown (props) {
             <ul className="ul_listBox">
                 <div>
                     {Array(arrayFill).fill("").map((_, index) => {
-                        return <li key={index} onClick={() => {
+                        return <li key={index} onClick={(e) => {
+                            e.stopPropagation()
                             basics === 'hour' ? setHour(index) : setMinute(10 * index)
                             props.setFormData(el => ({...el, [props.name]: `${padZero(hour)}:${padZero(minute)}`}))
                             props.setError(el => ({...el, [props.name]: false}))

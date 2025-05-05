@@ -41,7 +41,8 @@ export default function DayDropDown (props) {
             </div>
             <ul className="ul_listBox" ref={scrollRef}>
                 {Array(arrayFill).fill("").map((_, index) => {
-                    return <li key={index} onClick={() => {
+                    return <li key={index} onClick={(e) => {
+                        e.stopPropagation()
                         basics === 'year' ? setYear(date.getFullYear() + index)
                             : basics === 'month' ? setMonth(index + 1) : setDay(index + 1)
                         props.setFormData(el => ({...el, [props.name]: `${year}-${padZero(month)}-${padZero(day)}`}))

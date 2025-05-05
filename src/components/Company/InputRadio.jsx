@@ -20,8 +20,15 @@ export default function InputRadio (props) {
 
         props.setFormData({
             ...props.formData,
-            [e.target.name]: typeof value === 'boolean' ? value : [...value],
+            [e.target.name]: typeof value === 'boolean' ? value : [...value]
         })
+
+        if (e.target.name === 'work_days') {
+            props.setError({
+                ...props.error,
+                work_days: false,
+            })
+        }
     }
     const DATA = {
         복리후생: ['4대보험', '건강검진 지원','중식 제공','간식 무제한'],
