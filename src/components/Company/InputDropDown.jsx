@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./styles/InputDropDown.scss"
 import { GoChevronRight, GoChevronDown  } from "react-icons/go";
 import TimeDropDown from "./TimeDropDown";
@@ -16,6 +16,10 @@ import { CAREER_OPTIONS, EDUCATION_OPTIONS, EMPLOYMENT_TYPE_OPTIONS, INTEREST_OP
 export default function InputDropDown (props) {
     const {formData, setFormData, setError, name, text, type} = props;
     const [viewDropDown, setViewDropDown] = useState(false)
+
+    useEffect(()=>{
+        console.log('드롭다운 온/오프 변경됨',viewDropDown)
+    },[viewDropDown])
 
     const data_dropDown = {
         "education": EDUCATION_OPTIONS,
@@ -46,7 +50,9 @@ export default function InputDropDown (props) {
         <div className="InputDropDown_container">
             <button 
             className={`button_dropDown ${viewDropDown ? "viewDropDown" : ""}`}
-            onClick={() => setViewDropDown(!viewDropDown)}>
+            onClick={() => {
+                    setViewDropDown(!viewDropDown)
+                }}>
                 {formData[name] ? formData[name] : `${text} 선택`}
                 {viewDropDown ? <GoChevronDown /> : <GoChevronRight />}
                 {viewDropDown && content}
