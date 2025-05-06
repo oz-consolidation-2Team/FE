@@ -129,8 +129,8 @@ export const CalculatorModalContent = ({
     <div className="calculator-modal-overlay">
       <div className="calculator-modal">
         <button className="close-button" onClick={onClose}>×</button>
-        <h2>급여 계산기</h2>
-        <p><strong>2025년 최저시급은 10,030원입니다.</strong></p>
+        <h2 className="calculator-title">급여 계산기</h2>
+        <p className="minimum-wage-info"><strong>2025년 최저시급은 <span className="highlight">10,030</span>원입니다.</strong></p>
 
         {/* 기준 급여 단위 선택 */}
         <div className="form-group">
@@ -266,8 +266,9 @@ export const CalculatorModalContent = ({
               주휴수당: {Math.round(holidayPayConverted).toLocaleString()}원 +
             </p>
           )}
+          {(applyTax || showHolidayPay) && <hr />}
           {targetMethod && (applyTax || showHolidayPay) && (
-            <p>최종예상금액 : {Math.round(
+            <p className="final-amount">최종예상금액 : {Math.round(
               convertSalary(wage, baseMethod, targetMethod)
               * (1 - (applyTax ? taxRate : 0))
               + (showHolidayPay ? holidayPayConverted : 0)
