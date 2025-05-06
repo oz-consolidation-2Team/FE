@@ -57,7 +57,7 @@ const MyApplyJobCard = ({ appliedJobs, job, userInfo, onUpdate }) => {
       buttons: [
         {
           label: '네',
-          className: 'modal_btn_green',
+          className: 'modal_btn_orange',
           onClick: () => {
             ApplyDelete();
             closeModal();

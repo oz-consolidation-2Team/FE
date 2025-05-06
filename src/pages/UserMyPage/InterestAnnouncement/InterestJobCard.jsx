@@ -5,10 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { useFavoriteStore } from '@/store/useFavoriteStore';
 
 const InterestJobCard = ({ job }) => {
-  const { toggleFavorite } = useFavoriteStore();
+  const { toggleFavorite, favorites } = useFavoriteStore();
 
   const navigate = useNavigate();
 
+  const isFavorited = favorites.some(
+    (fav) => (fav.job_posting_id || fav.id || fav.job_id) === job.job_id
+  );
   const handleCardClick = () => {
     navigate(`/job-detail/${job.job_id}`);
   };
@@ -17,6 +20,7 @@ const InterestJobCard = ({ job }) => {
     e.stopPropagation();
     toggleFavorite(job);
   };
+  console.log('연령대', job.job_id);
 
   return (
     <>
@@ -28,7 +32,7 @@ const InterestJobCard = ({ job }) => {
           <p className="location">{job.location}</p>
         </div>
         <div className="job_right">
-          {job.is_favorited ? (
+          {isFavorited ? (
             <FaBookmark className="bookmark_icon filled" onClick={handleBookmarkClick} />
           ) : (
             <FaRegBookmark className="bookmark_icon" onClick={handleBookmarkClick} />
