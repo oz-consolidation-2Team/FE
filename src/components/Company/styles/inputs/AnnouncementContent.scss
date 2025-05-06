@@ -1,3 +1,5 @@
+@use '@/utils/variables' as v;
+
 .company_main {
     background-color: rgb(243, 243, 243);
     min-height: 90vh;
@@ -7,9 +9,15 @@
     margin-bottom: 50px;
     > .div_box {
         display: flex;
-        margin: 30px 0;
+        margin-top: 30px;
         >.Category_condainer {
             width: 120px !important;
         }
+    }
+    .error_message {
+        color: v.$error-red;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin-left: 120px;
     }
 }
