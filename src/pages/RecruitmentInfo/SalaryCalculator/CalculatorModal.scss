@@ -1,3 +1,5 @@
+@use "../../../utils/variables" as *;
+
 .calculator-modal-overlay {
   position: fixed;
   top: 0;
@@ -26,12 +28,12 @@
   margin: 0;
 }
 
-.calculator-modal h2 {
+.calculator-title {
   margin-top: 0;
   font-size: 1.75rem;
   margin-bottom: 0.5rem;
   text-align: center;
-  color: #00796b;
+  color: $green;
 }
 
 .close-button {
@@ -110,21 +112,21 @@
   p:first-child {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #00796b;
+    color: $green;
   }
 }
 
 .final-amount {
   margin-top: 1rem;
-  padding-top: 0.5rem;
-  font-size: 1.4rem;
+  padding-top: 0.6rem;
+  font-size: 1.6rem;
   font-weight: bold;
   color: #c62828;
   border-top: 2px solid #ccc;
-  background-color: #fff0f0;
+  background-color: $light-orange;
   padding: 1rem;
   border-radius: 6px;
-  border: 2px solid #ff8a80;
+  border: 2px solid $orange;
 }
 .minimum-wage-info {
   font-size: 0.9rem;

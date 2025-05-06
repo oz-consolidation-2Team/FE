@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FaStar, FaRegStar, FaRegCopy } from 'react-icons/fa';
+import { FaStar, FaRegStar, FaRegCopy, FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import './JobDetail.scss';
 import JobApplyModal from '@/components/Company/Modal/JobApplyModal';
 import LoginPromptModal from '@/components/Company/Modal/LoginPromptModal';
@@ -279,9 +279,9 @@ const JobDetail = () => {
           </button>
           <div className="bookmark">
             {isBookmarked ? (
-              <FaStar className="star_icon filled" onClick={handleBookmarkClick} />
+              <FaBookmark className="bookmark_filled" onClick={handleBookmarkClick} />
             ) : (
-              <FaRegStar className="star_icon" onClick={handleBookmarkClick} />
+              <FaRegBookmark className="bookmark_icon" onClick={handleBookmarkClick} />
             )}
           </div>
         </div>
