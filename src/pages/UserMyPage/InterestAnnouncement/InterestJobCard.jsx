@@ -20,6 +20,7 @@ const InterestJobCard = ({ job }) => {
     e.stopPropagation();
     toggleFavorite(job);
   };
+  console.log('연령대', job.job_id);
 
   return (
     <>
