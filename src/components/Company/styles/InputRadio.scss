@@ -9,9 +9,11 @@
     >.div_checkBoxs {
         margin-right: 30px;
         margin-bottom: 0px !important;
+        cursor: pointer;
             >input {
             accent-color: v.$deep-orange;
             margin-right: 5px;
+            cursor: pointer;
         }
     }
 }

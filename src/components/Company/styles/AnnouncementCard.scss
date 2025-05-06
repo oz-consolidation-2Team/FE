@@ -8,6 +8,14 @@ $LINE_COLOR: #B3B3B3;
     width: 100%;
     padding: 15px;
     margin-top: 20px;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    p,h3 {
+        cursor: default;
+    }
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+      }
 
     .title_name {
         font-weight: bold;
@@ -27,7 +35,11 @@ $LINE_COLOR: #B3B3B3;
             border-radius: 5px;
             background-color: white;
             padding: 5px 20px;
-
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+            &:hover {
+                background-color: rgb(230, 230, 230);
+            }
             &:nth-child(1) {
                 margin-bottom: 10px;
             }
