@@ -1,3 +1,4 @@
+import { padZero } from "@/utils/validation";
 import Category from "../Category";
 import CategoryTitle from "../CategoryTitle";
 import InputDropDown from "../InputDropDown";
@@ -18,13 +19,13 @@ export default function JobRequirement (props) {
         <CategoryTitle title="모집 조건" />
         <div className="div_box">
             <Category text="모집기간" />
-            <div className="div_start_time">{date.getFullYear()}-{date.getMonth() + 1}-{date.getDate()}</div>
+            <div className="div_start_time">{date.getFullYear()}-{padZero(date.getMonth() + 1)}-{padZero(date.getDate())}</div>
             <p className="p_swung_dash">~</p>
             <InputDropDown {...props} name='recruit_period_end' text='모집기간' type='day' />
         </div>
         {props.error['recruit_period_end'] && <span className="error_message">모집기간을 선택해주세요</span>}
 
-        <div className="div_box recruite_peple">
+        <div className="div_box options">
             <Category text="모집인원" />
             <InputText {...props} text='모집인원' type='number' name='recruit_number' placeholder={props.formData.recruit_number || "0"} />
             <InputRadio {...props} type='상시모집' name='is_always_recruiting' />
@@ -54,7 +55,7 @@ export default function JobRequirement (props) {
             <InputRadio {...props} type='복리후생' name='benefits' />
         </div>
 
-        <div className="div_box remove">
+        <div className="div_box">
             <Category text="우대조건" essential={false} />
             <InputRadio {...props} type='우대조건' name='preferred_conditions' />
         </div>

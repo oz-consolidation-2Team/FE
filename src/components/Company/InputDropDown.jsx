@@ -29,7 +29,7 @@ export default function InputDropDown (props) {
     let content;
     if (type === 'day') content = <DayDropDown {...props} />
     else if (type === 'time') content =  <TimeDropDown {...props} />
-    else content = <ul className="ul_listBox">
+    else content = <ul className="ul_listBox ul_dropdown">
         {data_dropDown[name].map((item, index) =>
             <li key={index} onClick={() => {
                 setFormData(el => ({...el, [name]: item}))
@@ -45,12 +45,12 @@ export default function InputDropDown (props) {
     return (
         <div className="InputDropDown_container">
             <button 
-            className={`button_dropDown ${text === '근무시간' ? "resize" : ""}`}
+            className={`button_dropDown ${viewDropDown ? "viewDropDown" : ""}`}
             onClick={() => setViewDropDown(!viewDropDown)}>
                 {formData[name] ? formData[name] : `${text} 선택`}
                 {viewDropDown ? <GoChevronDown /> : <GoChevronRight />}
+                {viewDropDown && content}
             </button>
-            {viewDropDown && content}
         </div>
     )
 }

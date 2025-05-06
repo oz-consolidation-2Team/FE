@@ -10,6 +10,11 @@
         background-color: #EBEBEB;
         border: none;
         float: right;
+        >* {
+            width: 30px;
+            height: 30px;
+            opacity: 0.3;
+        }
     }
 
     > * {
