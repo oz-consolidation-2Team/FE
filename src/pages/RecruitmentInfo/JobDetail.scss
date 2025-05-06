@@ -1,4 +1,4 @@
-@use "../../utils/variables" as v;
+@use "../../utils/variables" as *;
 
 .jobdetail_container {
   width: 100%;
@@ -82,7 +82,7 @@
     .button {
       flex-grow: 1;
       padding: 10px 24px;
-      background-color: v.$green;
+      background-color: $green;
       color: white;
       border: none;
       border-radius: 6px;
@@ -264,5 +264,26 @@
         color: #666;
       }
     }
+  }
+}
+
+.bookmark_icon {
+  color: #ccc;
+  transition: color 0.3s ease;
+
+  &.filled {
+    color: $orange;
+  }
+
+  &:hover {
+    color: $orange;
+  }
+}
+.bookmark_filled {
+  color: $orange; // Tailwind's yellow-400
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #eab308; // Tailwind's yellow-500
   }
 }
