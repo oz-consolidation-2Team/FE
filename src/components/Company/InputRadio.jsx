@@ -40,12 +40,21 @@ export default function InputRadio (props) {
         상시모집: ['상시모집'],
         협의가능: ['협의 가능']
     }
+
+    const isChecked = (item) => {
+        if (!props.formData[props.name]) return 
+        const booleanType = typeof props.formData[props.name] === 'boolean' ? typeof props.formData[props.name] : props.formData[props.name].includes(item)
+        return booleanType
+
+    }
+
     return (
         <div className="InputRadio_container">
             {DATA[props.type].map((item, index)=>{
                 return (
                     <label className="div_checkBoxs" key={index}>
-                        <input type='checkbox' name={props.name} onChange={handleClick}/>
+                        {/* {console.log(props.name, isChecked(item))} */}
+                        <input type='checkbox' name={props.name} onChange={handleClick} defaultChecked={isChecked(item)} />
                         {item}
                     </label>
                 )

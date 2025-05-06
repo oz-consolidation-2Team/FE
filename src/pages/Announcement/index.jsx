@@ -63,7 +63,7 @@ export default function Announcement (props) {
                     setFormData(({
                         ...res,
                         'benefits': res['benefits'].split(', '),
-                        'other_conditions': res['other_conditions'].split(', '),
+                        'other_conditions': res['other_conditions'].split(','),
                         'preferred_conditions': res['preferred_conditions'].split(', '),
                         'work_days': res['work_days'].split(','),
                     }))
@@ -89,6 +89,7 @@ export default function Announcement (props) {
 
     return (
         <div className="company_main">
+            {console.log(formData)}
             <div className="AnnouncementAdd_container">
                 <GoArrowLeft 
                 className="button_back"
