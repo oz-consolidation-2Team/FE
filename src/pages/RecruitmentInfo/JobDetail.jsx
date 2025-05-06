@@ -10,6 +10,7 @@ import { CompaniesInfo } from '@/apis/companyApi';
 import { formatPhoneNumber } from '@/utils/format';
 import { addFavorite, deleteFavorite } from '@/apis/favoriteApi';
 import CalculatorModal from './SalaryCalculator/CalculatorModal';
+import { useResume } from '@/hooks/useResume';
 
 
 
@@ -22,7 +23,8 @@ const JobDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginPromptOpen, setLoginPromptOpen] = useState(false);
   const [isCalcOpen, setIsCalcOpen] = useState(false);
-  const accessToken = localStorage.getItem('access_token');
+  const Token = localStorage.getItem('access_token');
+  const formData = Token ? useResume().formData : null;
   const userType = localStorage.getItem('userType');
 
   useEffect(() => {
@@ -48,7 +50,7 @@ const JobDetail = () => {
 
   const handleBookmarkClick = async (e) => {
     e.stopPropagation();
-    if (!accessToken) {
+    if (!Token) {
       setLoginPromptOpen(true);
       return;
     }
@@ -73,21 +75,6 @@ const JobDetail = () => {
     return `${period} ${hour12}:${minute.toString().padStart(2, '0')}`;
   };
 
-  const getWorkDayLabel = (daysStr) => {
-    const days = daysStr.split(',').map(d => d.trim());
-    const weekday = ['월', '화', '수', '목', '금'];
-    const weekend = ['토', '일'];
-    const fullWeek = [...weekday, ...weekend];
-
-    const isWeekday = days.every(d => weekday.includes(d));
-    const isWeekend = days.every(d => weekend.includes(d));
-    const isFullWeek = fullWeek.every(d => days.includes(d)) && days.length === 7;
-
-    if (isFullWeek) return '주7일';
-    if (isWeekday) return '평일';
-    if (isWeekend) return '주말';
-    return daysStr;
-  };
 
 
   return (
@@ -106,7 +93,9 @@ const JobDetail = () => {
         <div className="tags">
           <span>{job.payment_method}</span>
           <span>
-            {job.is_work_days_negotiable_str ? '협의 가능' : getWorkDayLabel(job.work_days)}
+            {job.is_work_days_negotiable_str
+              ? '협의 가능'
+              : `주${job.work_days?.split(',').length || 0}일`}
           </span>
           <span>
             {job.is_work_duration_negotiable_str ? '협의 가능' : job.work_duration}
@@ -129,7 +118,9 @@ const JobDetail = () => {
                 <span className={`payment_method_badge ${
                   job.payment_method === '시급' ? 'payment-hourly' :
                   job.payment_method === '일급' ? 'payment-daily' :
+                  job.payment_method === '주급' ? 'payment-weekly' :
                   job.payment_method === '월급' ? 'payment-monthly' :
+                  job.payment_method === '연봉' ? 'payment-yearly' :
                   'payment-default'
                 }`}>{job.payment_method}</span>
                 <span className="salary">{job.salary.toLocaleString()}원</span>
@@ -147,7 +138,7 @@ const JobDetail = () => {
           <div className="condition_row">
             <div className="condition_label">근무 요일</div>
             <div className="condition_value">
-              {job.is_work_days_negotiable_str
+              {job.is_work_days_negotiable
                 ? '협의 가능'
                 : job.is_schedule_based_str
                 ? '일정에 따름'
@@ -161,7 +152,7 @@ const JobDetail = () => {
           </div>
           <div className="condition_row">
             <div className="condition_label">근무 시간</div>
-            <div className="condition_value">{job.is_work_time_negotiable_str ? '협의 가능' : `${convertToAMPM(job.work_start_time)} ~ ${convertToAMPM(job.work_end_time)}`}</div>
+            <div className="condition_value">{job.is_work_time_negotiable ? '협의 가능' : `${convertToAMPM(job.work_start_time)} ~ ${convertToAMPM(job.work_end_time)}`}</div>
           </div>
           <div className="condition_row">
             <div className="condition_label">업직종</div>
@@ -271,8 +262,14 @@ const JobDetail = () => {
           <button
             className="button"
             onClick={() => {
-              if (!accessToken) {
+              if (!Token) {
                 setLoginPromptOpen(true);
+                return;
+              }
+
+              // 토큰이 있는 경우에만 formData 체크
+              if (Token && !formData?.resume_id) {
+                alert('이력서가 없습니다. 이력서를 먼저 작성해주세요.');
                 return;
               }
               setIsModalOpen(true);
@@ -289,7 +286,7 @@ const JobDetail = () => {
           </div>
         </div>
       )}
-      {isModalOpen && (
+     {isModalOpen && (
         <JobApplyModal
           onClose={() => setIsModalOpen(false)}
           onApply={async () => {
@@ -299,7 +296,11 @@ const JobDetail = () => {
               alert('지원이 완료되었습니다!');
             } catch (error) {
               console.error('지원 실패:', error);
-              alert('지원 중 오류가 발생했습니다. 다시 시도해주세요.');
+              if (error.response?.data?.detail === '이미 지원한 공고입니다.') {
+                alert('이미 지원한 공고입니다.');
+              } else {
+                alert('지원 중 오류가 발생했습니다. 다시 시도해주세요.');
+              }
             }
           }}
           onEditResume={() => navigate('/mypage/user/resumes')}

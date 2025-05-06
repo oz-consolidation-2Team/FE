@@ -1,9 +1,9 @@
 @use "../../utils/variables" as v;
 .job_section {
     width: 100%;
-    max-width: 1160px;
+    max-width: 100%;
     margin: 0 auto;
-    padding: 0px;
+    padding: 10px;
 
     .PublicJobList_container {
         .header {

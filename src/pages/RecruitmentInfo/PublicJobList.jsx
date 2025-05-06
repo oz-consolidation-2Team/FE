@@ -6,7 +6,6 @@ import './PublicJobList.scss';
 const PublicJobList = () => {
   const [jobs, setJobs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const jobsPerPage = 6;
 
   useEffect(() => {
     const loadJobs = async () => {

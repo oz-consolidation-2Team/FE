@@ -38,6 +38,7 @@ function SearchFilters({
     <div className="Search_container">
       <div className="search_filters">
       <select
+        name="location1"
         value={cityInput}
         onChange={(e) => {
           setCityInput(e.target.value);
@@ -45,13 +46,16 @@ function SearchFilters({
         }}
       >
         <option value="">지역 선택</option>
-        {Object.keys(districtsByCity).map((city) => (
+        {Object.keys(KoreaRegions).map((city) => (
           <option key={city} value={city}>{city}</option>
         ))}
       </select>
 
       {cityInput && (
-        <select value={districtInput} onChange={(e) => setDistrictInput(e.target.value)}>
+        <select
+          name="location2"
+          value={districtInput} onChange={(e) => setDistrictInput(e.target.value)}
+        >
           <option value="">상세 지역 선택</option>
           {(districtsByCity[cityInput] || []).map((gu) => (
             <option key={gu} value={gu}>{gu}</option>

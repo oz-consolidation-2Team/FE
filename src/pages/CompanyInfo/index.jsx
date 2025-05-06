@@ -26,13 +26,13 @@ export default function CompanyInfo () {
     },[])
 
     return (
-        <>
+        <div className="company_main">
             {data ? 
                 <div className="CompanyInfo_container">
                     <h1>{data.company_name}</h1>
                     <Hr />
                     <p className="intro">{data.company_intro}</p>
-                    <div className="box">
+                    <div className="div_box">
                         <div className="info">
                             <div className="icon">
                                 <AiOutlineUser />
@@ -63,6 +63,6 @@ export default function CompanyInfo () {
                 </div>
                 : <h1>회사 정보를 가져올 수 없습니다</h1>
             }
-        </>
+        </div>
     )
 }

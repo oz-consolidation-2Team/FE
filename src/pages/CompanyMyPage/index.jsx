@@ -34,7 +34,9 @@ export default function CompanyMyPage() {
   // 기업 정보 조회
   useEffect(()=>{
     try {
-      CompaniesInfo(jobPosting.company_id).then(res => setCompanyInfo(res))
+      CompaniesInfo(jobPosting.company_id).then(res => {
+        console.log(res)
+        setCompanyInfo(res)})
     } catch (error) {
       if (axios.isAxiosError(error)) setCompanyInfoError(error.response?.data?.message || '요청 실패')
       else setCompanyInfoError('알 수 없는 에러 발생')
@@ -44,21 +46,23 @@ export default function CompanyMyPage() {
   },[jobPosting])
 
   return (
-    <div className="companyMyPage_cantainer">
-      <h1 className="h1_title">기업 이름</h1>
-      <div className="div_info">
-        {jobPosting && <InfoBox type='company' data={jobPosting} />}
-        <button 
-        className="button_add"
-        onClick={() => navigate("/mypage/company/announcement/add")}>공고 작성하기</button>
-      </div>
-      
-      <Hr />
+    <div className="companyMyPage_main">
+      <div className="companyMyPage_cantainer">
+        <h1 className="h1_title">{companyInfo?.company_name}</h1>
+        <div className="div_info">
+          {jobPosting && <InfoBox type='company' data={jobPosting} />}
+          <button 
+          className="button_add"
+          onClick={() => navigate("/mypage/company/announcement/add")}>공고 작성하기</button>
+        </div>
+        
+        <Hr />
 
-      <h2>나의 공고</h2>
-      {jobPosting && companyInfo && jobPosting?.job_postings?.map(item => 
-        <AnnouncementCard {...item} key={item.id} />
-      )}
+        <h2>나의 공고</h2>
+        {jobPosting && companyInfo && jobPosting.length ? jobPosting?.job_postings?.map(item => 
+          <AnnouncementCard {...item} key={item.id} />
+        ) : <div className="div_noting">등록된 공고가 없습니다</div>}
+      </div>
     </div>
   );
 }

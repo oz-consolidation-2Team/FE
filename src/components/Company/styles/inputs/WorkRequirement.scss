@@ -1,26 +1,31 @@
+@use '@/utils/variables' as v;
+
 .WorkRequirement_container {
     padding: 30px;
-    .box {
+    .div_box {
         display: flex;
         align-items: center;
-        margin-bottom: 20px;
-
-        > :nth-child(1) {
-            flex-basis: 122px;
+        margin-top: 30px;
+        .work_day_option { // 근무요일 옵셔널 항목 css
+            display: flex;
         }
-        > :nth-child(3) {
-            margin-left: 10px;
-        }
-    }
-
-    .move_pos {
-        > :nth-child(1) {
-            flex-basis: 150px;
+        .Category_condainer {
+            width: 120px !important;
         }
     }
-    .remove {
-        > :nth-child(1) {
-            flex-basis: 180px;
+    .p_swung_dash { // 모집시간의 물결 css
+        margin: 0 10px;
+    }
+    .options { // 단일 상시/협의 가능 css
+        > .InputRadio_container {
+            flex-shrink: 0;
+            margin-left: 20px;
         }
+    }
+    .error_message {
+        color: v.$error-red;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin-left: 120px;
     }
 }

@@ -154,6 +154,18 @@
           border: 1px solid #3f51b5;
         }
 
+        .payment-weekly {
+          color: #4caf50; // 녹색 (주급)
+          font-weight: bold;
+          border: 1px solid #4caf50;
+        }
+
+        .payment-yearly {
+          color: #9c27b0; // 보라색 (연봉)
+          font-weight: bold;
+          border: 1px solid #9c27b0;
+        }
+
         .payment-default {
           color: #666; // 기본 회색
           border: 1px solid #666;

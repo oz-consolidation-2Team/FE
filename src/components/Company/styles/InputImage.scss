@@ -2,9 +2,12 @@
 
 .InputImage_container {
     width: 100%;
-    .box {
+    .div_box {
         display: flex;
         height: 35px;
+        #input_for_button {
+            display: none;
+        }
         > div {
             flex-grow: 1;
             border-radius: 10px;
@@ -14,13 +17,17 @@
             padding-bottom: auto;
         }
 
-        > button {
+        > label {
             border: none;
             border-radius: 10px;
-            background-color: v.$green;
-            color: white;
-            padding: 0 30px;
+            background-color: v.$orange;
+            color: black;
+            height: 35px;
+            padding: 6px 30px;
             margin-left: 10px;
+            &:hover {
+                background-color: v.$deep-orange;
+            }
         }
     }
 

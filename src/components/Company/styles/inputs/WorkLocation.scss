@@ -1,14 +1,16 @@
+@use '@/utils/variables' as v;
 $LINE_COLOR: #B3B3B3;
 
 .WorkLocation_container {
     padding: 30px;
-    .box {
+    .div_box {
         display: flex;
+        margin-top: 30px;
+        >.Category_condainer {
+            width: 120px !important;
         }
+    }
     > :nth-child(2) {
-        > :nth-child(1) {
-            flex-basis: 122px;
-        }
         .search {
             flex-grow: 1;
             border: 1px solid $LINE_COLOR;
@@ -21,12 +23,10 @@ $LINE_COLOR: #B3B3B3;
             padding-left: 10px;
         }
     }
-    > :nth-child(3) {
-        > :nth-child(1) {
-            flex-basis: 150px;
-        }
-    }
-    > :last-child {
-        margin-top: 20px;
+    .error_message {
+        color: v.$error-red;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin-left: 120px;
     }
 }
