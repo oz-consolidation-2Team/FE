@@ -15,7 +15,7 @@ export const fetchPublicRecruitments = async (params) => {
     const response = await axios.get(PUBLIC_RECRUITMENT_API_URL, {
       params: {
         recrutPbancTtl: "시니어",         // 공시 제목에 "" 포함된 공고
-        numOfRows: 6,                   // 한 페이지에 가져올 공고 수
+        numOfRows: 8,                   // 한 페이지에 가져올 공고 수
         pageNo: 1,                      // 현재 페이지 번호
         resultType: "json",             // 응답 결과 타입
         ...params,                      // 외부에서 전달된 추가 파라미터들

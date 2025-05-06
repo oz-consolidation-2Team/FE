@@ -16,13 +16,13 @@ function RecruitmentInfo() {
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    const fullLocation = cityInput && districtInput
-      ? `${cityInput} ${districtInput}`
-      : cityInput || '';
+    const location1 = cityInput;
+    const location2 = districtInput;
 
     const rawParams = {
       keyword: searchQuery,
-      location: fullLocation,
+      location1,
+      location2,
       job_category: jobCategoryInput,
       page: 1,
     };
