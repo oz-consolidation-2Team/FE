@@ -23,8 +23,8 @@ const JobDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginPromptOpen, setLoginPromptOpen] = useState(false);
   const [isCalcOpen, setIsCalcOpen] = useState(false);
-  const { formData } = useResume();
   const Token = localStorage.getItem('access_token');
+  const formData = Token ? useResume().formData : null;
   const userType = localStorage.getItem('userType');
 
   useEffect(() => {
@@ -266,7 +266,9 @@ const JobDetail = () => {
                 setLoginPromptOpen(true);
                 return;
               }
-              if (!formData?.resume_id) {
+
+              // 토큰이 있는 경우에만 formData 체크
+              if (Token && !formData?.resume_id) {
                 alert('이력서가 없습니다. 이력서를 먼저 작성해주세요.');
                 return;
               }
