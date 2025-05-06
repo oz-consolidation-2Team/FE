@@ -13,7 +13,7 @@ import {
   isValidBirth,
 } from '@/utils/validation';
 import './UserSignUpPage.scss';
-import { signUpUserApi, checkUserEmailApi } from '@/apis/authApi';
+import { signUpUserApi, verifyEmailApi } from '@/apis/authApi';
 import { useLocation } from 'react-router-dom';
 
 const INTEREST_OPTIONS = [
@@ -54,7 +54,7 @@ const UserSignUpPage = () => {
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordCheck, setShowPasswordCheck] = useState(false);
-  const [emailChecked, setEmailChecked] = useState(false);
+  const [emailVerified, setEmailVerified] = useState(false);
   const [modal, setModal] = useState(null);
 
   const handleChange = (e) => {
@@ -67,7 +67,7 @@ const UserSignUpPage = () => {
       if (name === 'name' && val) delete next.name;
       if (name === 'email') {
         if (validateEmail(val)) delete next.email;
-        setEmailChecked(false);
+        setEmailVerified(false);
       }
       if (name === 'password' && validatePassword(val)) delete next.password;
       if (name === 'passwordCheck' && val === form.password) delete next.passwordCheck;
@@ -91,73 +91,78 @@ const UserSignUpPage = () => {
     if (isValidBirth(val)) setErrors((prev) => { const next = { ...prev }; delete next.birth; return next; });
   };
 
-  const handleEmailCheck = async () => {
-    if (!validateEmail(form.email)) {
+  const handleEmailVerification = async () => {
+    const email = form.email?.trim();
+    console.log('[이메일 인증 요청]', email);
+  
+    if (!validateEmail(email)) {
       setErrors((prev) => ({ ...prev, email: '이메일 형식이 올바르지 않습니다.' }));
       return;
     }
-    setErrors((prev) => { const next = { ...prev }; delete next.email; return next; });
   
     try {
-      const result = await checkUserEmailApi(form.email);
+      const result = await verifyEmailApi(email);
+      console.log('서버 응답 결과:', result);
   
-      if (result.is_duplicate) {
-        setEmailChecked(false);
+      if (result?.status === 'success') {
+        setModal({
+          type: 'success',
+          title: '인증 요청 완료',
+          message: result.message || '입력하신 이메일로 인증 메일이 발송되었습니다.',
+          onConfirm: () => setModal(null),
+        });
+        setEmailVerified(true);
+      }
+    } catch (error) {
+      const status = error.response?.status;
+    
+      if (status === 400) {
         setModal({
           type: 'error',
           title: '중복된 이메일',
-          message: '이미 가입된 이메일입니다.',
-          onConfirm: () => {
-            setModal(null);
-            setEmailChecked(false);
-          }
+          message: error.response.data?.message || '이미 가입된 이메일입니다.',
+          onConfirm: () => setModal(null),
+        });
+      } else if (status === 422) {
+        setModal({
+          type: 'error',
+          title: '입력 오류',
+          message: error.response.data?.detail?.[0]?.msg || '입력값이 올바르지 않습니다.',
+          onConfirm: () => setModal(null),
         });
       } else {
-        setEmailChecked(true);
         setModal({
-          type: 'success',
-          title: '사용 가능',
-          message: '사용 가능한 이메일입니다.',
-          onConfirm: () => {
-            setModal(null);
-            setEmailChecked(true);
-          }
+          type: 'error',
+          title: '오류 발생',
+          message: '알 수 없는 오류가 발생했습니다.',
+          onConfirm: () => setModal(null),
         });
       }
-    } catch (err) {
-      setEmailChecked(false);
-      console.error('이메일 중복확인 실패', err);
-      setModal({
-        type: 'error',
-        title: '오류 발생',
-        message: err.response?.data?.message || '이메일 중복확인 중 오류가 발생했습니다.',
-        onConfirm: () => setModal(null),
-      });
+
+      setEmailVerified(false);
     }
-  };
+  }
 
   const validateStep1 = () => {
     const newErrors = {};
     if (!validateName(form.name)) newErrors.name = '이름을 입력해주세요.';
     if (!validateEmail(form.email)) {
       newErrors.email = '이메일 형식이 올바르지 않습니다.';
-    } else if (!fromSocial && !emailChecked) {
-      setModal({
-        type: 'error',
-        title: '중복확인 필요',
-        message: '이메일 중복확인을 먼저 진행해주세요.',
-        onConfirm: () => setModal(null),
-      });
-      return null;
+    } else if (!fromSocial && !emailVerified) {
+        setModal({
+          type: 'error',
+          title: '이메일 인증 필요',
+          message: '이메일 인증을 먼저 완료해주세요.',
+          onConfirm: () => setModal(null),
+        });
+        return null;
     }
-    if (!fromSocial) {
       if (!validatePassword(form.password)) {
         newErrors.password = '비밀번호는 8자 이상, 영문/숫자/특수문자 포함';
       }
       if (form.password !== form.passwordCheck) {
         newErrors.passwordCheck = '비밀번호가 일치하지 않습니다.';
       }
-    }
     if (!isValidPhone(form.phone)) newErrors.phone = '전화번호 형식이 올바르지 않습니다.';
     if (!isValidBirth(form.birth)) newErrors.birth = '생년월일 형식이 올바르지 않습니다.';
     if (!form.gender) newErrors.gender = '성별을 선택해주세요.';
@@ -209,12 +214,23 @@ const UserSignUpPage = () => {
         },
       });
     } catch (err) {
-      setModal({
-        type: 'error',
-        title: '회원가입 실패',
-        message: err.response?.data?.message || '회원가입 중 오류가 발생했습니다.',
-        onConfirm: () => setModal(null),
-      });
+      const status = err.response?.status;
+  
+      if (status === 400) {
+        setModal({
+          type: 'error',
+          title: '이메일 인증 미완료',
+          message: err.response?.data?.message || '이메일 인증이 완료되지 않았습니다.',
+          onConfirm: () => setModal(null),
+        });
+      } else {
+        setModal({
+          type: 'error',
+          title: '회원가입 실패',
+          message: err.response?.data?.message || '회원가입 중 오류가 발생했습니다.',
+          onConfirm: () => setModal(null),
+        });
+      }
     }
   };
 
@@ -288,13 +304,12 @@ const UserSignUpPage = () => {
                   readOnly={fromSocial}
                 />
                 {!fromSocial && (
-                  <button type="button" onClick={handleEmailCheck}>중복확인</button>
+                  <button type="button" onClick={handleEmailVerification}>인증하기</button>
                 )}
                 </div>
                 {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
               </div>
 
-              {!fromSocial && (
                 <>
                   <div className="form_group password_row">
                     <label>비밀번호</label>
@@ -329,7 +344,6 @@ const UserSignUpPage = () => {
                     {errors.passwordCheck && <ErrorMessage>{errors.passwordCheck}</ErrorMessage>}
                   </div>
                 </>
-              )}
 
               <LabeledInput label="전화번호" name="phone" value={form.phone} onChange={handlePhoneChange} placeholder="숫자만 입력해 주세요" error={errors.phone} inputMode="numeric" />
               <LabeledInput label="생년월일" name="birth" value={form.birth} onChange={handleBirthChange} placeholder="YYYYMMDD" error={errors.birth} inputMode="numeric" />

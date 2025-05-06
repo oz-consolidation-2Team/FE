@@ -20,9 +20,9 @@ export const signUpUserApi = async (form) => {
   return response.data;
 };
 
-// 개인 회원가입 이메일 중복확인 API
-export const checkUserEmailApi = async (email) => {
-  const response = await axiosInstance.get('/check-email', {
+// 개인 이메일 인증 요청 API
+export const verifyEmailApi = async (email) => {
+  const response = await axiosPublicInstance.post('/auth/verification', null, {
     params: { email },
   });
   return response.data;
@@ -175,6 +175,15 @@ export const loginWithNaver = async (code, state) => {
 export const loginWithKakao = async (code) => {
   const response = await axiosPublicInstance.get('/auth/kakao/login', {
     params: { code },
+  });
+  return response.data;
+};
+
+// 이메일 인증 확인 API
+export const verifyEmailTokenApi = async ({ token, user_type }) => {
+  const response = await axiosInstance.post('/verify-email', {
+    token,
+    user_type,
   });
   return response.data;
 };
