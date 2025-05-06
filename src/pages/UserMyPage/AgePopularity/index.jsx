@@ -39,7 +39,6 @@ function AgePopularity({ userInfo }) {
         return { ...job, is_favorited: isFavorite };
       });
 
-      console.log('연령대별 공고', popularData);
       setPopularJobs(mergedData); // items 배열만 저장해야 함!
     } catch (err) {
       console.error('나이별 인기 공고 불러오기 실패', err);

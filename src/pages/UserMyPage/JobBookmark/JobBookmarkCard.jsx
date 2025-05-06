@@ -17,7 +17,7 @@ const JobBookmarkCard = ({ job }) => {
   }, [job.is_favorited]);
 
   const handleCardClick = () => {
-    navigate(`/job-detail/${job.id || job.job_id}`);
+    navigate(`/job-detail/${job.job_posting_id}`);
   };
 
   const handleBookmarkClick = async (e) => {
