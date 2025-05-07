@@ -13,7 +13,7 @@
   justify-content: center;
 }
 
-.box {
+.modal_box {
   background-color: #fff;
   padding: 30px 40px;
   border-radius: 12px;
@@ -24,58 +24,62 @@
   position: relative;
 }
 
-.box p {
+.modal_box p {
   font-size: 1rem;
   margin-bottom: 10px;
   color: #333;
 }
 
-.buttons {
+.modal_buttons {
   margin-top: 20px;
   display: flex;
   gap: 12px;
   justify-content: center;
 }
 
-.buttons .confirm,
-.buttons .cancel {
+
+.modal_confirm {
   padding: 10px 20px;
   border: none;
   border-radius: 8px;
   font-size: 0.95rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-}
-
-.buttons .confirm {
   background-color: $green;
   color: white;
+
+  &:hover {
+    background-color: $deep-green !important;
+  }
 }
 
-.buttons .confirm:hover {
-  background-color: $green;
-}
-
-.buttons .cancel {
+.modal_cancel {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
   background-color: #ddd;
   color: #333;
+
+  &:hover {
+    background-color: #ccc;
+  }
 }
 
-.buttons .cancel:hover {
-  background-color: #ccc;
-}
-
-.close_button {
+.close_buttons {
   position: absolute;
   top: 12px;
   right: 16px;
-  background: none;
+  background: none !important;
+  background-color: transparent !important;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: bold;
-  color: #999;
+  color: #333 !important;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: none;
 
   &:hover {
     color: #333;

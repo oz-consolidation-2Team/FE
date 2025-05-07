@@ -15,12 +15,14 @@ const UserInfoEditPage = () => {
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordCheck, setShowPasswordCheck] = useState(false);
+  const [showPasswordCheckRepet, setShowPasswordCheckRepet] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: '',
     email: '',
     password: '',
+    password_check: '',
     current_password: '',
     phone: '',
     birth: '',
@@ -119,8 +121,41 @@ const UserInfoEditPage = () => {
     });
   };
 
+  const validatePasswordChange = () => {
+    const newErrors = {};
+
+    if (form.current_password) {
+      // 새 비밀번호가 비어있으면
+      if (!form.password) {
+        newErrors.password = '새 비밀번호를 입력해주세요.';
+      }
+
+      // 새 비밀번호가 있을 때만 형식 검사 & 확인 검사
+      if (form.password) {
+        if (!validatePassword(form.password)) {
+          newErrors.password = '비밀번호는 8자 이상, 영문+숫자+특수문자를 포함해야 해요.';
+        }
+
+        // 새 비밀번호 확인이 비어있을 때
+        if (!form.password_check) {
+          newErrors.password_check = '새 비밀번호를 한 번 더 입력해주세요!';
+        } else if (form.password !== form.password_check) {
+          newErrors.password_check = '비밀번호가 일치하지 않아요.';
+        }
+      }
+    }
+
+    return newErrors;
+  };
+
   const handleFinalSubmit = async () => {
     console.log('[회원 정보 수정 됨] handleFinalSubmit 실행됨 ✅');
+
+    const pwErrors = validatePasswordChange();
+    if (Object.keys(pwErrors).length > 0) {
+      setErrors(pwErrors); // ✅ 이거 추가!
+      return; // ❗ 에러 있으면 전송 중단!
+    }
 
     try {
       const payload = {
@@ -151,9 +186,18 @@ const UserInfoEditPage = () => {
         ],
       });
     } catch (err) {
+      const status = err.response?.status;
+      // 모달 없이 인풋에만 표시할 때:
+      if (status === 401) {
+        setErrors((prev) => ({
+          ...prev,
+          current_password: '현재 비밀번호가 일치하지 않아요.',
+        }));
+        return;
+      }
       openModal({
         title: '수정 실패',
-        description: `문제가 발생했습니다. 다시 시도해주세요!, ${err}`,
+        description: `문제가 발생했습니다. 다시 시도해주세요!, ${status}`,
         buttons: [
           {
             label: '닫기',
@@ -237,22 +281,23 @@ const UserInfoEditPage = () => {
           </div>
 
           <div className="form_group password_row">
-            <label htmlFor="current_password">이전 비밀번호</label>
+            <label htmlFor="current_password">현재 비밀번호</label>
             <input
               type={showPassword ? 'text' : 'password'}
               name="current_password"
               value={form.current_password}
               onChange={handleChange}
-              placeholder="이전 비밀번호를 입력해주세요"
+              placeholder="현재 비밀번호를 입력해주세요"
               className={errors.current_password ? 'error' : ''}
             />
             <span className="eye_icon" onClick={() => setShowPassword(!showPassword)}>
               {showPassword ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
             </span>
+            {errors.current_password && <p className="error_message">{errors.current_password}</p>}
           </div>
 
           <div className="form_group password_row">
-            <label htmlFor="password">새로운 비밀번호</label>
+            <label htmlFor="password">새 비밀번호</label>
             <input
               type={showPasswordCheck ? 'text' : 'password'}
               name="password"
@@ -260,10 +305,32 @@ const UserInfoEditPage = () => {
               onChange={handleChange}
               placeholder="새로운 비밀번호를 입력해주세요"
               className={errors.password ? 'error' : ''}
+              disabled={!form.current_password}
             />
             <span className="eye_icon" onClick={() => setShowPasswordCheck(!showPasswordCheck)}>
               {showPasswordCheck ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
             </span>
+            {errors.password && <p className="error_message">{errors.password}</p>}
+          </div>
+
+          <div className="form_group password_row">
+            <label htmlFor="password_check">새 비밀번호 확인 </label>
+            <input
+              type={showPasswordCheckRepet ? 'text' : 'password'}
+              name="password_check"
+              value={form.password_check}
+              onChange={handleChange}
+              placeholder="새로운 비밀번호를 다시 한 번 입력해주세요"
+              className={errors.password ? 'error' : ''}
+              disabled={!form.current_password}
+            />
+            <span
+              className="eye_icon"
+              onClick={() => setShowPasswordCheckRepet(!showPasswordCheckRepet)}
+            >
+              {showPasswordCheckRepet ? <LiaEyeSlashSolid /> : <LiaEyeSolid />}
+            </span>
+            {errors.password_check && <p className="error_message">{errors.password_check}</p>}
           </div>
 
           <LabeledInput

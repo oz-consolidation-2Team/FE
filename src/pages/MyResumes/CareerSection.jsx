@@ -68,14 +68,18 @@ function CareerSection({ data, setData }) {
           value={fixedExperiences.company_name}
           onChange={(e) => handleFixedChange('company_name', e.target.value)}
         />
-        <label htmlFor="CareerStartDate">입사년월</label>
+        <label htmlFor="CareerStartDate" className="label_title">
+          입사년월
+        </label>
         <input
           id="CareerStartDate"
           type="date"
           value={fixedExperiences.start_date}
           onChange={(e) => handleFixedChange('start_date', e.target.value)}
         />
-        <label htmlFor="CareerEndDate">퇴사년월</label>
+        <label htmlFor="CareerEndDate" className="label_title">
+          퇴사년월
+        </label>
         <input
           type="date"
           id="CareerEndDate"
@@ -94,7 +98,7 @@ function CareerSection({ data, setData }) {
           value={fixedExperiences.description}
           onChange={(e) => handleFixedChange('description', e.target.value)}
         />
-        <button type="button" onClick={handleAddExperiences}>
+        <button type="button" className="career_btn" onClick={handleAddExperiences}>
           추가
         </button>
       </div>
@@ -142,8 +146,12 @@ function CareerSection({ data, setData }) {
             }}
             disabled
           />
-          <button type="button" onClick={() => handleRemoveExperiences(index)}>
-            -
+          <button
+            type="button"
+            className="career_btn"
+            onClick={() => handleRemoveExperiences(index)}
+          >
+            삭제
           </button>
         </div>
       ))}

@@ -24,8 +24,6 @@ function JobBookmark({ userInfo }) {
     fetchFavorites();
   }, []);
 
-  console.log('북마크 공고', favorites);
-
   return (
     <section className="job_recommend">
       <h3 className="job_recommend_title">{userInfo.name}님이 즐겨찾기한 공고</h3>
@@ -51,7 +49,7 @@ function JobBookmark({ userInfo }) {
           </div>
         ) : (
           <div className="reco_slider-wrapper">
-            <div className="no_jobs">즐겨 찾기한 공고가 없습니다 🙏</div>
+            <div className="no_jobs">즐겨 찾기한 공고가 없습니다</div>
           </div>
         )}
       </div>

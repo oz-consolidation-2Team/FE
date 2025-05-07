@@ -105,7 +105,9 @@ function EducationSection({ data, setData }) {
           <option value="재학중">재학중</option>
         </select>
 
-        <label htmlFor="educationStartDate">입학일자</label>
+        <label htmlFor="educationStartDate" className="label_title">
+          입학일자
+        </label>
         <input
           id="educationStartDate"
           type="date"
@@ -113,7 +115,9 @@ function EducationSection({ data, setData }) {
           onChange={(e) => handleFixedChange('start_date', e.target.value)}
         />
 
-        <label htmlFor="educationEndDate">졸업일자</label>
+        <label htmlFor="educationEndDate" className="label_title">
+          졸업일자
+        </label>
         <input
           id="educationEndDate"
           type="date"
@@ -122,7 +126,7 @@ function EducationSection({ data, setData }) {
           disabled={fixedEducation.education_status === '재학중'}
         />
 
-        <button type="button" onClick={handleAddEducation}>
+        <button type="button" className="edu_btn" onClick={handleAddEducation}>
           추가
         </button>
       </div>
@@ -173,8 +177,8 @@ function EducationSection({ data, setData }) {
             }
             disabled
           />
-          <button type="button" onClick={() => handleRemoveEducation(index)}>
-            -
+          <button type="button" className="edu_btn" onClick={() => handleRemoveEducation(index)}>
+            삭제
           </button>
         </div>
       ))}

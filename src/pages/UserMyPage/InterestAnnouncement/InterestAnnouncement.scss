@@ -2,14 +2,14 @@
 
 .interest_announcement {
   margin-top: 50px;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
   width: 100%;
   height: 200px;
 
   .interest_announcement_title {
-    font-size: 20px;
+    font-size: $font-h5;
     color: $deep-green;
-    margin-bottom: -20px;
+    margin-bottom: -15px;
   }
 
   .interest_announcement_btn_group {
@@ -18,11 +18,11 @@
     justify-content: space-between;
     z-index: 10;
     position: relative;
-    top: 93px;
+    top: 87px;
     right: 15px;
     .interest_left_btn,
     .interest_right_btn {
-      font-size: 35px;
+      font-size: $font-h3;
       cursor: pointer;
       color: $green;
     }
@@ -49,11 +49,10 @@
       .no_jobs {
         min-width: 940px; // (300px * 3 카드 + 여유 간격 정도 맞춰서)
         padding: 60px 0;
-        background-color: $light-orange;
-        border: 1px dashed #ccc;
+        background-color: $white-background;
         border-radius: 8px;
-        font-size: 16px;
-        color: #999;
+        font-size: $font-body;
+        color: $gray-dark;
         text-align: center;
       }
 
@@ -75,14 +74,14 @@
           flex-direction: column;
 
           .company {
-            font-size: 15px;
+            font-size: $font-small;
             color: $gray-text;
             margin-bottom: 8px;
           }
 
           .title {
             width: 200px;
-            font-size: 16px;
+            font-size: $font-body;
             font-weight: 600;
             color: $gray-dark;
             margin-bottom: 10px;
@@ -92,19 +91,19 @@
           }
 
           .date {
-            font-size: 13px;
+            font-size: $font-small;
             color: #999;
             margin-bottom: 10px;
           }
 
           .location {
-            font-size: 13px;
+            font-size: $font-caption;
             color: $gray-text;
           }
         }
 
         .job_right {
-          font-size: 22px;
+          font-size: $font-h5;
           position: absolute;
           top: 20px;
           right: 20px;
