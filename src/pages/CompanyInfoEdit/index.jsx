@@ -12,6 +12,9 @@ import { CompanyEdit } from '@/apis/companyApi'
 import axios from 'axios'
 import { validateName, validateEmail, isValidPhone } from '@/utils/validation'
 import Hr from '@/utils/Hr'
+import Modal from '@/components/Modal'
+import { companyDelete } from '@/apis/companyApi'
+import { logoutCompanyApi } from '@/apis/authApi'
 
 export default function CompanyInfoEdit () {
     const navigate = useNavigate()
@@ -69,11 +72,61 @@ export default function CompanyInfoEdit () {
         try {
             CompanyEdit(formData).then(res => console.log(res))
         } catch (error) {
-            console.log('에러에러 삐용삐용')
-        } finally {
-            console.log('로딩 중')
+            console.log('기업 정보 조회 에러', error)
+    }}
+
+    function deleteAPI () {
+        
+        try {
+            logoutCompanyApi().then(
+                localStorage.removeItem('userType'),
+                localStorage.removeItem('access_token'),
+                localStorage.removeItem('refresh_token')
+            )
+        } catch (error) {
+            console.log('회원 로그아웃 에러', error)
+        }
+
+        try {
+            companyDelete().then(res => console.log(res))
+        } catch (error) {
+            console.log('회원 탈퇴 에러', error)
         }
     }
+
+    const outModal = {
+        isOpen: true,
+        title: '탈퇴가 완료되었습니다',
+        description: '기업과 관련된 모든 정보들이 삭제되었습니다.',
+        buttons: [{
+            onClick: () => navigate('/'),
+            className: 'modal_btn_green',
+            label: '닫기'
+        }
+        ]
+    }
+
+    const outCheckModal = {
+        isOpen: true,
+        title: '정말 탈퇴하시겠습니까?',
+        description: `기업 정보와 등록된 채용 공고, 이력서 등의 정보들이 영원히 삭제됩니다. \n 삭제된 정보는 복구할 수 없습니다.`,
+        buttons: [{
+            onClick: () => {
+                deleteAPI()
+                setShowModal('out')
+            },
+            className: 'modal_btn_delete',
+            label: '탈퇴하기'
+        },
+        {
+            onClick: () => setShowModal(false),
+            className: 'modal_btn_green',
+            label: '취소'
+        }
+        ]
+    }
+
+
 
     return (
         <div className="company_main">
@@ -154,10 +207,16 @@ export default function CompanyInfoEdit () {
                         if (validate()) alert('폼을 다시 확인해주세요')
                         else {
                                 editAPI()
-                                setShowModal(true)
+                                setShowModal('edit')
                             }
                         }}>수정하기</button>
-                {showModal && <InfoEditModal formData={formData} setShowModal={setShowModal} />}
+                <button className='button_out' onClick={() => {
+                    if (validate()) alert('폼을 다시 확인해주세요')
+                    else setShowModal('out_check')
+                }}>회원 탈퇴하기</button>
+                {console.log(showModal)}
+                {showModal && (showModal === "edit" ? <InfoEditModal formData={formData} setShowModal={setShowModal} /> 
+                : (showModal === 'out' ? <Modal {...outModal} /> : <Modal {...outCheckModal} />))}
             </div>
         </div>
     )

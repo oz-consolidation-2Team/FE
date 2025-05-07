@@ -35,3 +35,9 @@ export const resumeInquiryPosting = async () => {
   const response = await axiosDev.get(`/applications/company`)
   return response.data
 }
+
+// 기업 탈퇴
+export const companyDelete = async () => {
+  const response = await axiosDev.delete(`/company/me`)
+  return response.data
+}
