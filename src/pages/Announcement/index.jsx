@@ -11,7 +11,7 @@ import { GoArrowLeft } from "react-icons/go";
 import { JobPosting } from "@/apis/companyPostingApi"
 import { padZero } from "@/utils/validation"
 
-const INPUT_BLOCK = ['title', 'summary', 'recruit_period_start', 'recruit_period_end', 'is_always_recruiting_str', 'recruit_number', 'education', 'benefits', 'preferred_conditions', 'other_conditions', 'work_address', 'work_place_name', 'salary', 'payment_method', 'work_duration', 'is_work_duration_negotiable_str', 'job_category', 'career', 'work_days', 'is_work_days_negotiable_str', 'is_schedule_based_str', 'employment_type', 'work_start_time', 'work_end_time', 'is_work_time_negotiable_str', 'description', 'image_file', 'latitude', 'longitude','region1','region2']
+const INPUT_BLOCK = ['title', 'summary', 'recruit_period_start', 'recruit_period_end', 'is_always_recruiting_str', 'recruit_number', 'education', 'benefits', 'preferred_conditions', 'other_conditions', 'work_address', 'work_place_name', 'salary', 'payment_method', 'work_duration', 'is_work_duration_negotiable_str', 'job_category', 'career', 'work_days', 'is_work_days_negotiable_str', 'is_schedule_based_str', 'employment_type', 'work_start_time', 'work_end_time', 'is_work_time_negotiable_str', 'description', 'image_file', 'latitude', 'longitude']
 const INPUT_BLOCK_BOOLEAN = ['is_always_recruiting_str','is_work_duration_negotiable_str','is_work_days_negotiable_str','is_schedule_based_str','is_work_time_negotiable_str']
 const INPUT_BLOCK_ARRAY = ['benefits', 'preferred_conditions', 'other_conditions']
 
@@ -42,7 +42,7 @@ export default function Announcement (props) {
         recruit_period_end: false, // 모집 마감일
         recruit_number: false, // 모집인원
         education: false, // 학력
-        work_address: false, // 근무지주소
+        // work_address: false, // 근무지주소
         work_place_name: false, // 근무지명
         salary: false, // 급여
         payment_method: false, // 급여지급방법
@@ -53,7 +53,7 @@ export default function Announcement (props) {
         employment_type: false, // 고용형태
         work_start_time: false, // 근무시간
         work_end_time: false, // 근무시간
-        image_file: false // 이미지등록
+        이미지등록: false // 이미지등록
     })
     
     if (props.type=== 'edit') {
@@ -63,7 +63,7 @@ export default function Announcement (props) {
                     setFormData(({
                         ...res,
                         'benefits': res['benefits'].split(', '),
-                        'other_conditions': res['other_conditions'].split(','),
+                        'other_conditions': res['other_conditions'].split(', '),
                         'preferred_conditions': res['preferred_conditions'].split(', '),
                         'work_days': res['work_days'].split(','),
                     }))
@@ -89,7 +89,6 @@ export default function Announcement (props) {
 
     return (
         <div className="company_main">
-            {console.log(formData)}
             <div className="AnnouncementAdd_container">
                 <GoArrowLeft 
                 className="button_back"
@@ -113,16 +112,13 @@ export default function Announcement (props) {
                 <button 
                 className="button_add color-change"
                 onClick={() => {
-                    if (validate()) {
-                        alert('폼을 다시 확인해주세요')
-                        console.log(error)
-                    }
+                    if (validate()) alert('폼을 다시 확인해주세요')
                     else {
                         setShowModal(true)
                         setModalType(props.type)
                     }
                 }}>등록하기</button>
-                <button className="button_preview">공고 미리보기</button>
+                {/* <button className="button_preview">공고 미리보기</button> */}
                 {showModal && <Modal setShowModal={setShowModal} formData={formData} modalType={modalType} setModalType={setModalType}/>}
             </div>
         </div>
