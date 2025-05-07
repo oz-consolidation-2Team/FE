@@ -17,7 +17,7 @@ export default function Button (props) {
             </div>
             : <button onClick={() => {
                 props.setShowModal(false)
-                navigate(-1)
+                navigate('/mypage/company')
                 }}>완료</button>
             }
     </div>

@@ -30,10 +30,8 @@ export default function Modal (props) {
             else if (props.modalType === 'delete-Success') deleteJobPosting(param.id).then(res => console.log(res))
         } catch (error) {
             console.log('에러 발생', error)
-        } finally {
-            console.log('로딩 완료')
         }
-    },[props.modalType])
+    },[])
 
     return (
         <div className="modal_overlay">

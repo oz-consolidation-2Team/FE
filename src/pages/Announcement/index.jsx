@@ -17,8 +17,6 @@ import { INPUT_BLOCK, INPUT_BLOCK_ARRAY, INPUT_BLOCK_BOOLEAN } from "./inputFiel
  * @param {'add' | 'edit'} type 공고 등록인지 수정인지 체크
  */
 export default function Announcement (props) {
-    // const [data, setData] = useState({})
-
     const navigate = useNavigate()
     const param = useParams()
     const date = new Date()
