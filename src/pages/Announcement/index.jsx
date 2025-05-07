@@ -52,6 +52,10 @@ export default function Announcement (props) {
         image_file: false // 이미지등록
     })
     
+    useEffect(()=>{
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    },[])
+
     if (props.type=== 'edit') {
         useEffect(()=>{
             try {
