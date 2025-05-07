@@ -70,3 +70,5 @@ export const CAREER_OPTIONS = [
   '3년 이상',
   '5년 이상'
 ]
+export const MAX_PHONE_LENGTH = 11;
+export const MAX_BIRTH_LENGTH = 8;

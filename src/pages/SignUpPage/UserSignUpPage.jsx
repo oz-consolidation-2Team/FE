@@ -15,18 +15,13 @@ import {
 import './UserSignUpPage.scss';
 import { signUpUserApi, verifyEmailApi, checkEmailVerifiedApi } from '@/apis/authApi';
 import { useLocation } from 'react-router-dom';
-
-const INTEREST_OPTIONS = [
-  '외식·음료', '유통·판매', '문화·여가·생활', '서비스', '사무·회계',
-  '고객상담·영업·리서치', '생산·건설·노무', 'IT·인터넷', '교육·강사',
-  '디자인', '미디어', '운전·배달', '병원·간호·연구',
-  '전문-상담직', '전문-사무직', '전문-BAR', '전문-생산직', '전문-외식업'
-];
-const PURPOSE_OPTIONS = ['일자리 관련 정보', '교육 및 재취업 준비', '창업 및 부업 정보', '네트워킹 및 커뮤니티', '기타'];
-const CHANNEL_OPTIONS = ['네이버 검색', '구글 검색', '네이버 카페', '인스타그램/유튜브', '오프라인(복지관/센터)', '지인추천', '기타'];
-
-const MAX_PHONE_LENGTH = 11;
-const MAX_BIRTH_LENGTH = 8;
+import {
+  INTEREST_OPTIONS,
+  PURPOSE_OPTIONS,
+  CHANNEL_OPTIONS,
+  MAX_PHONE_LENGTH,
+  MAX_BIRTH_LENGTH,
+} from '@/utils/signUpInfoOptions';
 
 const UserSignUpPage = () => {
   const navigate = useNavigate();
@@ -93,9 +88,10 @@ const UserSignUpPage = () => {
 
   const handleEmailVerification = async () => {
     const email = form.email.trim();
-  
+    
     if (!validateEmail(email)) {
       setErrors((prev) => ({ ...prev, email: '이메일 형식이 올바르지 않습니다.' }));
+      setEmailVerified(false);
       return;
     }
   
@@ -106,13 +102,17 @@ const UserSignUpPage = () => {
         setModal({
           type: 'success',
           title: '인증 요청 완료',
-          message: '입력하신 이메일로 인증 메일이 발송되었습니다. 메일함에서 인증을 완료해주세요.',
+          message: '입력하신 이메일로 인증 메일이 발송되었습니다.',
           onConfirm: () => setModal(null),
         });
+        setEmailVerified(true);
+      } else {
+        setEmailVerified(false);
       }
+  
     } catch (error) {
       const status = error.response?.status;
-    
+  
       if (status === 400) {
         setModal({
           type: 'error',
@@ -120,6 +120,8 @@ const UserSignUpPage = () => {
           message: '이미 가입된 이메일입니다.',
           onConfirm: () => setModal(null),
         });
+        setEmailVerified(false);
+  
       } else if (status === 422) {
         setModal({
           type: 'error',
@@ -127,6 +129,8 @@ const UserSignUpPage = () => {
           message: '입력한 이메일이 올바르지 않습니다.',
           onConfirm: () => setModal(null),
         });
+        setEmailVerified(false);
+  
       } else {
         setModal({
           type: 'error',
@@ -134,27 +138,30 @@ const UserSignUpPage = () => {
           message: '이메일 인증 요청 중 오류가 발생했습니다.',
           onConfirm: () => setModal(null),
         });
+        setEmailVerified(false);
       }
-
-      setEmailVerified(false);
     }
-  }
+  };
 
   const validateStep1 = () => {
     const newErrors = {};
+    
     if (!validateName(form.name)) newErrors.name = '이름을 입력해주세요.';
-    if (!validateEmail(form.email)) {
-      newErrors.email = '이메일 형식이 올바르지 않습니다.';
+    
+    if (!emailVerified) newErrors.email = '이메일 인증을 완료해주세요.';
+  
+    if (!validatePassword(form.password)) {
+      newErrors.password = '비밀번호는 8자 이상, 영문/숫자/특수문자 포함';
     }
-      if (!validatePassword(form.password)) {
-        newErrors.password = '비밀번호는 8자 이상, 영문/숫자/특수문자 포함';
-      }
-      if (form.password !== form.passwordCheck) {
-        newErrors.passwordCheck = '비밀번호가 일치하지 않습니다.';
-      }
+  
+    if (form.password !== form.passwordCheck) {
+      newErrors.passwordCheck = '비밀번호가 일치하지 않습니다.';
+    }
+  
     if (!isValidPhone(form.phone)) newErrors.phone = '전화번호 형식이 올바르지 않습니다.';
     if (!isValidBirth(form.birth)) newErrors.birth = '생년월일 형식이 올바르지 않습니다.';
     if (!form.gender) newErrors.gender = '성별을 선택해주세요.';
+  
     return newErrors;
   };
 
@@ -174,49 +181,35 @@ const UserSignUpPage = () => {
   };
 
   const handleNext = async () => {
-    if (!fromSocial) {
-      try {
-        const user_type = 'user';
+    try {
+      const isVerified = await checkEmailVerifiedApi(form.email, 'user');
   
-        console.log('이메일:', form.email);
-        console.log('유저 타입:', user_type);
-  
-        const isVerified = await checkEmailVerifiedApi(form.email, user_type);
-        console.log('이메일 인증 여부:', isVerified);
-  
-        if (!isVerified) {
-          setModal({
-            type: 'error',
-            title: '이메일 인증 필요',
-            message: '이메일 인증을 먼저 완료해주세요.',
-            onConfirm: () => setModal(null),
-          });
-          return;
-        }
-      } catch (error) {
-        console.error('이메일 인증 확인 에러:', error.response?.data);
-  
-        const status = error.response?.status;
-        const errorMsg = 
-          status === 404 
-            ? '이메일 인증이 완료되지 않았습니다.'
-            : error.response?.data?.detail?.[0]?.msg || '이메일 인증 확인 중 오류가 발생했습니다.';
-  
+      if (!isVerified) {
         setModal({
           type: 'error',
-          title: '오류 발생',
-          message: errorMsg,
+          title: '이메일 인증 필요',
+          message: '이메일 인증을 먼저 완료해주세요.',
           onConfirm: () => setModal(null),
         });
         return;
       }
-    }
   
-    const newErrors = validateStep1();
-    setErrors(newErrors);
+      setEmailVerified(true);
   
-    if (Object.keys(newErrors).length === 0) {
-      setStep(1);
+      const newErrors = validateStep1();
+      setErrors(newErrors);
+  
+      if (Object.keys(newErrors).length === 0) {
+        setStep(1);
+      }
+    } catch (error) {
+      console.error('이메일 인증 확인 에러:', error);
+      setModal({
+        type: 'error',
+        title: '이메일 인증 확인 오류',
+        message: '이메일 인증 확인 중 오류가 발생했습니다.',
+        onConfirm: () => setModal(null),
+      });
     }
   };
 
