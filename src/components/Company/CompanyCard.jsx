@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { JobPosting } from "@/apis/companyPostingApi"
+import { useNavigate } from "react-router-dom";
 
 /**
  * @param {string} params 공고 ID
  */
 export default function CompanyCard ({params}) {
+    const navigate = useNavigate();
 
     const [job, setJob] = useState(null)
     const [jobLoading, setJobLoading] = useState(true)
@@ -38,7 +40,7 @@ export default function CompanyCard ({params}) {
               <hr />
               <p>{job.work_address}</p>
               <p>{상시모집}</p>
-              <button>공고 보러 가기</button>
+              <button onClick={() => navigate(`/job-detail/${job.id}`)}>공고 보러 가기</button>
             </div>
           </>
           }

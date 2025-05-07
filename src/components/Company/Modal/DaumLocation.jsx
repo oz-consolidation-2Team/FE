@@ -2,8 +2,7 @@ import DaumPostcode from 'react-daum-postcode';
 import "@/components/Company/styles/modal/DaumLocation.scss"
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-
-const { kakao } = window;
+import { IoCloseSharp } from "react-icons/io5";
 
 /**
  * @param {*} setFormData input값 저장
@@ -53,6 +52,7 @@ export default function DaumLocation (props) {
     return (
         <div className='modal_overlay'>
             <div className='DaumLocation_container'>
+                <IoCloseSharp className='icon_close' onClick={()=>props.setShowModal(false)}/>
                 <DaumPostcode 
                 style={{height: '500px'}}
                 onComplete={daumPostcode}
