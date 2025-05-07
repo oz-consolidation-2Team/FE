@@ -15,10 +15,9 @@ const MyApplyJobCard = ({ appliedJobs, job, onUpdate }) => {
     buttons: [],
   });
 
-  const jobPostingId = appliedJobs.job_posting_id;
+  const jobPostingId = job.id;
 
-  console.log('📌appliedJobs', appliedJobs);
-  console.log('✅job', job);
+  console.log('📌jobPostingId', jobPostingId);
   const openModal = (info) => {
     setModalInfo(info);
     setIsModalOpen(true);
