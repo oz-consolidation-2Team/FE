@@ -12,12 +12,14 @@ export default function InputImage (props) {
 
     const onchangeImageUpload = (e) => {
         setImg(e.target.files[0].name)
-        // const fileName = URL.createObjectURL(e.target.files[0]);
-        // if (!fileName) return;
         props.setFormData((el) => ({
             ...el,
             image_file: e.target.files[0]
         }))
+        props.setError({
+            ...props.error,
+            image_file: false
+        })
     }
 
     return (
@@ -34,5 +36,7 @@ export default function InputImage (props) {
 
 InputImage.propTypes = {
     formData: PropTypes.object,
-    setFormData: PropTypes.node.isRequired
+    setFormData: PropTypes.node.isRequired,
+    error: PropTypes.object,
+    setError: PropTypes.node
 }
