@@ -10,17 +10,13 @@ import "./Announcement.scss"
 import { GoArrowLeft } from "react-icons/go";
 import { JobPosting } from "@/apis/companyPostingApi"
 import { padZero } from "@/utils/validation"
+import { INPUT_BLOCK, INPUT_BLOCK_ARRAY, INPUT_BLOCK_BOOLEAN } from "./inputFieldConfig"
 
-const INPUT_BLOCK = ['title', 'summary', 'recruit_period_start', 'recruit_period_end', 'is_always_recruiting_str', 'recruit_number', 'education', 'benefits', 'preferred_conditions', 'other_conditions', 'work_address', 'work_place_name', 'salary', 'payment_method', 'work_duration', 'is_work_duration_negotiable_str', 'job_category', 'career', 'work_days', 'is_work_days_negotiable_str', 'is_schedule_based_str', 'employment_type', 'work_start_time', 'work_end_time', 'is_work_time_negotiable_str', 'description', 'image_file', 'latitude', 'longitude','region1','region2']
-const INPUT_BLOCK_BOOLEAN = ['is_always_recruiting_str','is_work_duration_negotiable_str','is_work_days_negotiable_str','is_schedule_based_str','is_work_time_negotiable_str']
-const INPUT_BLOCK_ARRAY = ['benefits', 'preferred_conditions', 'other_conditions']
 
 /**
  * @param {'add' | 'edit'} type 공고 등록인지 수정인지 체크
  */
 export default function Announcement (props) {
-    // const [data, setData] = useState({})
-
     const navigate = useNavigate()
     const param = useParams()
     const date = new Date()
@@ -56,6 +52,10 @@ export default function Announcement (props) {
         image_file: false // 이미지등록
     })
     
+    useEffect(()=>{
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    },[])
+
     if (props.type=== 'edit') {
         useEffect(()=>{
             try {
@@ -63,7 +63,7 @@ export default function Announcement (props) {
                     setFormData(({
                         ...res,
                         'benefits': res['benefits'].split(', '),
-                        'other_conditions': res['other_conditions'].split(','),
+                        'other_conditions': res['other_conditions'].split(', '),
                         'preferred_conditions': res['preferred_conditions'].split(', '),
                         'work_days': res['work_days'].split(','),
                     }))
@@ -89,7 +89,6 @@ export default function Announcement (props) {
 
     return (
         <div className="company_main">
-            {console.log(formData)}
             <div className="AnnouncementAdd_container">
                 <GoArrowLeft 
                 className="button_back"
@@ -113,16 +112,13 @@ export default function Announcement (props) {
                 <button 
                 className="button_add color-change"
                 onClick={() => {
-                    if (validate()) {
-                        alert('폼을 다시 확인해주세요')
-                        console.log(error)
-                    }
+                    if (validate()) alert('폼을 다시 확인해주세요')
                     else {
                         setShowModal(true)
                         setModalType(props.type)
                     }
                 }}>등록하기</button>
-                <button className="button_preview">공고 미리보기</button>
+                {/* <button className="button_preview">공고 미리보기</button> */}
                 {showModal && <Modal setShowModal={setShowModal} formData={formData} modalType={modalType} setModalType={setModalType}/>}
             </div>
         </div>

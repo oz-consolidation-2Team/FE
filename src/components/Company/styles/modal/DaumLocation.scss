@@ -10,7 +10,7 @@
 }
 
 .DaumLocation_container {
-    position: fixed;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,4 +20,13 @@
     width: 40%;
     height: auto;
     padding: 50px;
+    .icon_close {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        z-index: 999;
+    }
 }
