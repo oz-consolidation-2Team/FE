@@ -17,7 +17,7 @@ export default function DaumLocation (props) {
 
     const daumPostcode = (data) => {
         setLocation(data)
-        // console.log(data)
+        console.log(data)
         // console.log('도로명주소 : ' + data.roadAddress);
         // console.log('지번주소 : ' + data.jibunAddress);
         // console.log('우편번호 : ' + data.zonecode);
@@ -38,6 +38,8 @@ export default function DaumLocation (props) {
         props.setFormData(el => ({
             ...el,
             work_address: location.roadAddress,
+            region1: location.sido,
+            region2: location.sigungu,
             latitude: latitude,
             longitude: longitude
         }))
