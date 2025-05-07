@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import "./CompanyResumes.scss"
 import Hr from "@/utils/Hr"
 import { resumeInquiryPosting } from "@/apis/companyApi"
-import axios from "axios"
 import { useParams } from "react-router-dom"
 
 export default function CompanyResumes () {
@@ -16,17 +15,18 @@ export default function CompanyResumes () {
 
     useEffect(()=>{
         try {
-            resumeInquiryPosting().then(res => setResumes(res))
+            resumeInquiryPosting().then(res => {
+                setResumes(res)
+                setResumesLoading(false)
+            })
         } catch (error) {
-            if (axios.isAxiosError(error)) setResumesError(error.response?.data?.message || '요청 실패')
-            else setResumesError('알 수 없는 에러 발생')
-        } finally {
+            setResumesError('이력서 조회 에러', error)
             setResumesLoading(false)
         }
     },[])
 
     return (
-        <div className="company_main">
+        <div className="company_main resumes">
             <div className="CompanyResumes_container">
                 <h1>지원자 이력서 관리</h1>
                 <Hr />
@@ -34,7 +34,8 @@ export default function CompanyResumes () {
                     <CompanyCard params={params.id} />
                     <Hr />
                     <div className="resume">
-                        {resumes ? resumes.map((item)=>{
+                        {resumesLoading ? <h2>로딩 중...</h2>
+                        : resumes.length ? resumes.map((item)=>{
                             return (
                                 <div className="resume-content" key={item.id}>
                                     <div>

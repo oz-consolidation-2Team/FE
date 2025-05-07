@@ -21,7 +21,7 @@ export default function AnnouncementCard (props) {
             <p>{props.work_address}</p>
             <div>
                 <h3 className='title_name'>{props.title}</h3>
-                <p>근무요약</p>
+                <p>{props.summary}</p>
             </div>
             <p className='time'>{dayRander}</p>
             <div className='button_group'>
