@@ -1,4 +1,4 @@
-@use "../../utils/variables" as v;
+@use '@/utils/variables' as *;
 
 .about-company {
   font-family: 'Noto Sans KR', sans-serif;
@@ -9,69 +9,73 @@
     color: white;
     padding: 100px 20px;
     position: relative;
+    display: flex;
+    justify-content: start;
 
     .overlay {
-      padding: 40px;
-      max-width: 800px;
-      margin: 0 auto;
+      max-width: 1200px;
+      width: 100%; // 반응형 핵심!
+      padding: 40px 20px; // what-we-do와 동일한 padding
+      margin: 0 auto; // 가운데 정렬되면서 좌우 여백 맞추기
       border-radius: 10px;
       text-align: left;
-      margin-left: 0;
-      margin-right: auto;
 
       h1 {
-        font-size: 3rem;
+        font-size: $font-h2;
         margin-bottom: 10px;
       }
 
       h2 {
-        font-size: 1.8rem;
+        font-size: $font-h3;
         font-weight: 400;
-        margin-bottom: 20px;
+        margin-bottom: 40px;
       }
 
       .quote {
         font-style: italic;
         margin-bottom: 20px;
-        font-size: 1.3rem;
+        font-size: $font-h5;
+        line-height: $lh-normal;
       }
 
       .desc {
-        font-size: 1.2rem;
-        line-height: 1.8;
+        font-size: $font-body-title;
+        line-height: $lh-loose;
       }
     }
   }
 
   .what-we-do {
-    padding: 60px 20px;
+    padding: 80px 20px;
     background-color: #fff;
     max-width: 1200px;
     margin: 0 auto;
 
     h2 {
-      font-size: 2rem;
-      margin-bottom: 10px;
+      font-size: $font-h3;
+      color: $deep-green;
+      margin-bottom: 5px;
     }
 
     .intro-container {
-      margin-right: 20px;
+      margin-right: $font-h3;
+      line-height: $lh-normal;
     }
 
     .intro {
-      font-size: 1rem;
+      font-size: $font-body-title;
       color: #666;
       margin-bottom: 30px;
     }
 
     .feature-wrapper {
-        border-bottom: 1px solid #ddd;
-        margin-top: 10px;
-      }
-      
-      .feature-wrapper:last-child {
-        border-bottom: none;
-      }
+      border-bottom: 1px solid #ddd;
+      margin-top: 50px;
+    }
+
+    .feature-wrapper:last-child {
+      border-bottom: none;
+    }
 
     .content {
       display: flex;
@@ -85,16 +89,16 @@
         min-width: 300px;
 
         .feature {
-          margin-bottom: 30px;
+          margin-bottom: 40px;
 
           h3 {
-            font-size: 1.2rem;
-            color: v.$green;
+            font-size: $font-body-title;
+            color: $green;
             margin-bottom: 8px;
           }
 
           p {
-            font-size: 0.9rem;
+            font-size: $font-body;
             color: #444;
             line-height: 1.6;
           }
