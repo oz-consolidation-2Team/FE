@@ -76,6 +76,11 @@ export default function CompanyInfoEdit () {
     }}
 
     function deleteAPI () {
+        try {
+            companyDelete().then(res => console.log(res))
+        } catch (error) {
+            console.log('회원 탈퇴 에러', error)
+        }
         
         try {
             logoutCompanyApi().then(
@@ -85,12 +90,6 @@ export default function CompanyInfoEdit () {
             )
         } catch (error) {
             console.log('회원 로그아웃 에러', error)
-        }
-
-        try {
-            companyDelete().then(res => console.log(res))
-        } catch (error) {
-            console.log('회원 탈퇴 에러', error)
         }
     }
 
