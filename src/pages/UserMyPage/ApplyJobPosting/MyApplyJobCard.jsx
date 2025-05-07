@@ -6,7 +6,7 @@ import { jobPropsType } from '@/utils/UserMyPagePropTypes';
 import axiosInstance from '@/apis/axiosInstance';
 import Modal from '@/components/Modal';
 
-const MyApplyJobCard = ({ appliedJobs, job, userInfo, onUpdate }) => {
+const MyApplyJobCard = ({ appliedJobs, job, onUpdate }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState({
@@ -17,7 +17,8 @@ const MyApplyJobCard = ({ appliedJobs, job, userInfo, onUpdate }) => {
 
   const jobPostingId = appliedJobs.job_posting_id;
 
-  console.log(job);
+  console.log('📌appliedJobs', appliedJobs);
+  console.log('✅job', job);
   const openModal = (info) => {
     setModalInfo(info);
     setIsModalOpen(true);
@@ -32,7 +33,7 @@ const MyApplyJobCard = ({ appliedJobs, job, userInfo, onUpdate }) => {
   };
 
   const ApplyDelete = () => {
-    const applicationsId = userInfo?.applications?.[0]?.id;
+    const applicationsId = appliedJobs.find((app) => app.job_posting_id === job.id).id;
 
     if (!applicationsId) {
       console.warn('지원이력 ID가 없습니다');
@@ -58,7 +59,7 @@ const MyApplyJobCard = ({ appliedJobs, job, userInfo, onUpdate }) => {
       buttons: [
         {
           label: '네',
-          className: 'modal_btn_orange',
+          className: 'modal_btn_green',
           onClick: () => {
             ApplyDelete();
             closeModal();
@@ -68,7 +69,7 @@ const MyApplyJobCard = ({ appliedJobs, job, userInfo, onUpdate }) => {
 
         {
           label: '아니오',
-          className: 'modal_btn_green',
+          className: 'modal_btn_orange',
           onClick: () => {
             closeModal();
             navigate('/mypage/user');
@@ -97,19 +98,6 @@ const MyApplyJobCard = ({ appliedJobs, job, userInfo, onUpdate }) => {
     });
   };
 
-  const getDDay = (endDate) => {
-    const today = new Date();
-    const end = new Date(endDate);
-
-    // 시간 차이 계산 (ms → 일 단위로 변환)
-    const diffTime = end.getTime() - today.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    if (diffDays > 0) return `D-${diffDays}`;
-    if (diffDays === 0) return `D-day`;
-    return `마감`;
-  };
-
   return (
     <>
       <div className="apply_job_list_container">
@@ -132,7 +120,6 @@ const MyApplyJobCard = ({ appliedJobs, job, userInfo, onUpdate }) => {
           </div>
           <div className="job_footer">
             <div>{`지원 일자 : ${job.recruit_period_start?.split('T')[0]}`}</div>
-            <div>{getDDay(job.recruit_period_end)}</div>
           </div>
         </div>
       </div>
