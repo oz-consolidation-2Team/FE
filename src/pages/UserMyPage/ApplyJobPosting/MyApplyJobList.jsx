@@ -24,7 +24,7 @@ const MyApplyJobList = ({ appliedJobs, userInfo, onUpdate }) => {
           toggleBookmark={toggleBookmark}
           userInfo={userInfo}
           onUpdate={onUpdate}
-          appliedJobs={job}
+          appliedJobs={appliedJobs}
         />
       ))}
     </div>

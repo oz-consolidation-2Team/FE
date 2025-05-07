@@ -136,10 +136,9 @@ const MyApplyJobCard = ({ appliedJobs, job, onUpdate }) => {
 
 MyApplyJobCard.propTypes = {
   job: jobPropsType.isRequired,
-  userInfo: PropTypes.object.isRequired,
+
   onUpdate: PropTypes.func,
   appliedJobs: PropTypes.arrayOf(jobPropsType),
-  RedirectParams: PropTypes.number,
 };
 
 export default MyApplyJobCard;
