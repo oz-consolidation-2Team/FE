@@ -27,11 +27,11 @@ export default function Modal (props) {
         try {
             if (props.modalType === 'add') createJobPosting(formData).then(res => console.log(res))
             else if (props.modalType === 'edit') updateJobPosting(param.id, formData).then(res => console.log(res))
-            else if (props.modalType === 'delete-Success') deleteJobPosting(param.id).then(res => console.log(res))
+            else if (props.modalType === 'delete-Success') deleteJobPosting(param.id).then(res => console.log('삭제됨', param.id))
         } catch (error) {
             console.log('에러 발생', error)
         }
-    },[])
+    },[props.modalType])
 
     return (
         <div className="modal_overlay">
