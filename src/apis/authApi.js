@@ -187,3 +187,17 @@ export const verifyEmailTokenApi = async ({ token, user_type }) => {
   });
   return response.data;
 };
+
+// 이메일 인증 완료 확인 API
+export const checkEmailVerifiedApi = async (email, user_type) => {
+  try {
+    const response = await axiosPublicInstance.get('/auth/check-verification', {
+      params: { email, user_type },
+    });
+
+    return response.data.data.is_verified;
+  } catch (error) {
+    console.error('이메일 인증 확인 API 에러:', error.response?.data);
+    throw error;
+  }
+};

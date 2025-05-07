@@ -13,7 +13,7 @@ import {
   isValidBirth,
 } from '@/utils/validation';
 import './UserSignUpPage.scss';
-import { signUpUserApi, verifyEmailApi } from '@/apis/authApi';
+import { signUpUserApi, verifyEmailApi, checkEmailVerifiedApi } from '@/apis/authApi';
 import { useLocation } from 'react-router-dom';
 
 const INTEREST_OPTIONS = [
@@ -92,8 +92,7 @@ const UserSignUpPage = () => {
   };
 
   const handleEmailVerification = async () => {
-    const email = form.email?.trim();
-    console.log('[이메일 인증 요청]', email);
+    const email = form.email.trim();
   
     if (!validateEmail(email)) {
       setErrors((prev) => ({ ...prev, email: '이메일 형식이 올바르지 않습니다.' }));
@@ -102,16 +101,14 @@ const UserSignUpPage = () => {
   
     try {
       const result = await verifyEmailApi(email);
-      console.log('서버 응답 결과:', result);
   
       if (result?.status === 'success') {
         setModal({
           type: 'success',
           title: '인증 요청 완료',
-          message: result.message || '입력하신 이메일로 인증 메일이 발송되었습니다.',
+          message: '입력하신 이메일로 인증 메일이 발송되었습니다. 메일함에서 인증을 완료해주세요.',
           onConfirm: () => setModal(null),
         });
-        setEmailVerified(true);
       }
     } catch (error) {
       const status = error.response?.status;
@@ -120,21 +117,21 @@ const UserSignUpPage = () => {
         setModal({
           type: 'error',
           title: '중복된 이메일',
-          message: error.response.data?.message || '이미 가입된 이메일입니다.',
+          message: '이미 가입된 이메일입니다.',
           onConfirm: () => setModal(null),
         });
       } else if (status === 422) {
         setModal({
           type: 'error',
           title: '입력 오류',
-          message: error.response.data?.detail?.[0]?.msg || '입력값이 올바르지 않습니다.',
+          message: '입력한 이메일이 올바르지 않습니다.',
           onConfirm: () => setModal(null),
         });
       } else {
         setModal({
           type: 'error',
           title: '오류 발생',
-          message: '알 수 없는 오류가 발생했습니다.',
+          message: '이메일 인증 요청 중 오류가 발생했습니다.',
           onConfirm: () => setModal(null),
         });
       }
@@ -148,14 +145,6 @@ const UserSignUpPage = () => {
     if (!validateName(form.name)) newErrors.name = '이름을 입력해주세요.';
     if (!validateEmail(form.email)) {
       newErrors.email = '이메일 형식이 올바르지 않습니다.';
-    } else if (!fromSocial && !emailVerified) {
-        setModal({
-          type: 'error',
-          title: '이메일 인증 필요',
-          message: '이메일 인증을 먼저 완료해주세요.',
-          onConfirm: () => setModal(null),
-        });
-        return null;
     }
       if (!validatePassword(form.password)) {
         newErrors.password = '비밀번호는 8자 이상, 영문/숫자/특수문자 포함';
@@ -184,11 +173,51 @@ const UserSignUpPage = () => {
     return {};
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    if (!fromSocial) {
+      try {
+        const user_type = 'user';
+  
+        console.log('이메일:', form.email);
+        console.log('유저 타입:', user_type);
+  
+        const isVerified = await checkEmailVerifiedApi(form.email, user_type);
+        console.log('이메일 인증 여부:', isVerified);
+  
+        if (!isVerified) {
+          setModal({
+            type: 'error',
+            title: '이메일 인증 필요',
+            message: '이메일 인증을 먼저 완료해주세요.',
+            onConfirm: () => setModal(null),
+          });
+          return;
+        }
+      } catch (error) {
+        console.error('이메일 인증 확인 에러:', error.response?.data);
+  
+        const status = error.response?.status;
+        const errorMsg = 
+          status === 404 
+            ? '이메일 인증이 완료되지 않았습니다.'
+            : error.response?.data?.detail?.[0]?.msg || '이메일 인증 확인 중 오류가 발생했습니다.';
+  
+        setModal({
+          type: 'error',
+          title: '오류 발생',
+          message: errorMsg,
+          onConfirm: () => setModal(null),
+        });
+        return;
+      }
+    }
+  
     const newErrors = validateStep1();
-    if (newErrors === null) return;
     setErrors(newErrors);
-    if (Object.keys(newErrors).length === 0) setStep(1);
+  
+    if (Object.keys(newErrors).length === 0) {
+      setStep(1);
+    }
   };
 
   const handleSubmit = () => {
