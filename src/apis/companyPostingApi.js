@@ -31,14 +31,14 @@ export const createJobPosting = async (formData) => {
 }
 
 export const updateJobPosting = async (jobId, formData) => {
-    const response = await axiosInstance.patch(`/${BASE_URL}posting/${jobId}`, formData)
+    const response = await axiosInstance.patch(`/posting/${jobId}`, formData)
     console.log('공고 수정 API 호출====')
     console.log(response.data)
     return response.data
 }
 
 export const deleteJobPosting = async (jobId) => {
-  const response = await axiosInstance.delete(`/${BASE_URL}posting/${jobId}`);
+  const response = await axiosInstance.delete(`/posting/${jobId}`);
   console.log('공고 삭제 API 호출====');
   console.log(response.data);
   return response.data;
