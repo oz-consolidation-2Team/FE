@@ -1,7 +1,7 @@
 @use '@/utils/variables' as *;
 
 .signup_container {
-  max-width: 720px; // ✅ 너비 조정 완료
+  max-width: 720px;
   margin: 0 auto;
   padding: 0 20px 40px;
   font-family: 'Noto Sans KR', sans-serif;
@@ -73,14 +73,14 @@
       }
 
       &.orange {
-        border-color: $orange;
+        border-color: $green;
 
         .card_icon {
-          color: $orange;
+          color: $green;
         }
 
         &:hover {
-          background-color: $orange;
+          background-color: $green;
 
           .card_icon,
           strong,
@@ -91,14 +91,14 @@
       }
 
       &.green {
-        border-color: $green;
+        border-color: $orange;
 
         .card_icon {
-          color: $green;
+          color: $orange;
         }
 
         &:hover {
-          background-color: $green;
+          background-color: $orange;
 
           .card_icon,
           strong,
