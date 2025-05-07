@@ -20,18 +20,18 @@ export const verifyBusinessNumber = async (b_no, start_dt, p_nm) => {
 
 // 기업 정보 조회 (유저)
 export const CompaniesInfo = async (companyId) => {
-  const response = await axiosDev.get(`companies/${companyId}`)
+  const response = await axiosDev.get(`/companies/${companyId}`)
   return response.data.data
 }
 
 // 기업 정보 수정
 export const CompanyEdit = async (formData) => {
-  const response = await axiosDev.patch(`company/me`, formData)
+  const response = await axiosDev.patch(`/company/me`, formData)
   return response.data.data
 }
 
 // 기업 내 공고 이력서지원관리
 export const resumeInquiryPosting = async () => {
-  const response = await axiosDev.get(`applications/company`)
+  const response = await axiosDev.get(`/applications/company`)
   return response.data
 }
