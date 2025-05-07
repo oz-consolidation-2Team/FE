@@ -1,5 +1,6 @@
 import axios from 'axios';
 import axiosDev from "./axios.dev";
+import axiosFormInstance from './axiosFormInstance';
 
 const SERVICE_KEY = 'XorKwfsWyU1m5NFjoLu7/CG93NR551B8jKWDBiTuK50ONm1KG/YQZwYblKIzlIbi1lYO6Kc2PrWmeTOJmY/sCA==';
 const BASE_URL = 'https://api.odcloud.kr/api/nts-businessman/v1/validate';
@@ -20,7 +21,7 @@ export const verifyBusinessNumber = async (b_no, start_dt, p_nm) => {
 
 // 기업 정보 조회 (유저)
 export const CompaniesInfo = async (companyId) => {
-  const response = await axiosDev.get(`/companies/${companyId}`)
+  const response = await axiosFormInstance.get(`/companies/${companyId}`)
   return response.data.data
 }
 
