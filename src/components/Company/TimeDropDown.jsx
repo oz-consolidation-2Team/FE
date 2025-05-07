@@ -10,7 +10,7 @@ export default function TimeDropDown (props) {
     const arrayFill = basics === 'hour' ? 24 : 2
 
     return (
-        <div className="div_dropdown">
+        <div className="div_dropdown div_ref">
             <div className="div_button_tap">
                 <span
                 className={basics === 'hour' ? "disabled" : ""}
