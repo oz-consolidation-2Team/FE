@@ -164,19 +164,22 @@ function EducationSection({ data, setData }) {
 
           <input
             type="date"
-            value={edu.start_date}
+            value={edu.start_date.split('T')[0]}
             onChange={(e) => handleChange(index, 'start_date', e.target.value)}
             disabled
           />
-
-          <input
-            type="date"
-            value={edu.end_date || ''}
-            onChange={(e) =>
-              handleChange(index, 'end_date', e.target.value === '' ? null : e.target.value)
-            }
-            disabled
-          />
+          {edu.end_date ? (
+            <input
+              type="date"
+              value={edu.end_date.split('T')[0]}
+              onChange={(e) =>
+                handleChange(index, 'end_date', e.target.value === '' ? null : e.target.value)
+              }
+              disabled
+            />
+          ) : (
+            <input type="text" placeholder="졸업예정일이 없습니다." />
+          )}
           <button type="button" className="edu_btn" onClick={() => handleRemoveEducation(index)}>
             삭제
           </button>

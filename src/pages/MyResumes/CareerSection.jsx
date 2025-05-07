@@ -116,14 +116,14 @@ function CareerSection({ data, setData }) {
           <input
             id="CareerStartDate"
             type="date"
-            value={career.start_date}
+            value={career.start_date.split('T')[0]}
             onChange={(e) => handleChange(index, 'start_date', e.target.value)}
             disabled
           />
 
           <input
             type="date"
-            value={career.end_date}
+            value={career.end_date.split('T')[0]}
             onChange={(e) => {
               handleChange(index, 'end_date', e.target.value);
             }}
