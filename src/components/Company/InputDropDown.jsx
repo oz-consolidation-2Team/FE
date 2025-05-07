@@ -46,7 +46,9 @@ export default function InputDropDown (props) {
         <div className="InputDropDown_container">
             <button 
             className={`button_dropDown ${viewDropDown ? "viewDropDown" : ""}`}
-            onClick={() => setViewDropDown(!viewDropDown)}>
+            onClick={() => {
+                    setViewDropDown(!viewDropDown)
+                }}>
                 {formData[name] ? formData[name] : `${text} 선택`}
                 {viewDropDown ? <GoChevronDown /> : <GoChevronRight />}
                 {viewDropDown && content}

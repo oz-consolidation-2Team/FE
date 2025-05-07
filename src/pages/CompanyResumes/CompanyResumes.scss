@@ -1,10 +1,15 @@
+@use '@/utils/variables' as v;
 $HR_COLOR: #A8A8A8;
+
+.resumes {
+    background-color: white !important;
+}
 
 .CompanyResumes_container {
     width: 70%;
 
     > .hr {
-        margin: 15px 0;
+        margin: 30px 0;
     }
     .div_content {
         display: flex;
@@ -13,6 +18,7 @@ $HR_COLOR: #A8A8A8;
             cursor: pointer;
         }
         > .hr {
+            border-color: #e4e4e47a !important;
             height: 60vh;
             margin: 0 30px;
             margin-right: 40px;
@@ -26,8 +32,10 @@ $HR_COLOR: #A8A8A8;
             min-width: 200px;
             height: 230px;
             padding: 10px;
+            box-shadow: 1px 3px 5px rgba(0,0,0,0.2);
 
             > h3 {
+                color: v.$green;
                 font-size: 1rem;
                 margin-bottom: 15px;
             }
@@ -35,7 +43,7 @@ $HR_COLOR: #A8A8A8;
                 margin-top: auto;
                 
                 > .hr {
-                    border-color: #e6e6e6;
+                    border-color: #f1f1f1;
                     margin: 10px 0;
                 }
                 :nth-child(3) {
@@ -47,6 +55,11 @@ $HR_COLOR: #A8A8A8;
                     background-color: white;
                     width: 100%;
                     margin-top: 10px;
+                    cursor: pointer;
+                    transition: transform 0.2s ease, background-color 0.3s ease;
+                    &:hover {
+                        background-color: #e2e2e2;
+                    }
                 }
             }
         }
@@ -68,10 +81,11 @@ $HR_COLOR: #A8A8A8;
                     flex-grow: 1;
                 }
                 .tage {
-                    margin-top: 10px;
+                    margin-top: 20px;
                     span {
-                        background-color: #d6d6d6;
-                        padding: 0px 5px;
+                        border: 1px solid #d6d6d6;
+                        border-radius: 20%;
+                        padding: 5px 10px;
                         margin: 5px;
                     }
                     :first-child {
@@ -82,18 +96,19 @@ $HR_COLOR: #A8A8A8;
                     }
                 }
                 h2 {
+                    color: #A8A8A8;
                     margin-bottom: 5px;
-                }
-                .hr {
-                    border-color: #e7e7e7 !important;
-                    height: 100%;
-                    margin: 0 20px;
                 }
                 button {
                     border: 1px solid $HR_COLOR;
                     border-radius: 5px;
                     background-color: white;
                     padding: 5px 25px;
+                    cursor: pointer;
+                    transition: transform 0.2s ease, background-color 0.3s ease;
+                    &:hover {
+                        background-color: #e2e2e2;
+                    }
                 }
             }
         }
