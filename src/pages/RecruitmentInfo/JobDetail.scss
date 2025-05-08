@@ -76,39 +76,46 @@
     .conditions_02 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px 32px;
+      gap: 30px 32px;
 
-      .condition_row_02 {
-        display: grid;
-        grid-template-columns: 80px 1fr;
+      .condition_salary_content {
+        display: flex;
         font-size: $font-body;
         align-items: center;
+        gap: 15px;
 
-        .condition_label_02 {
-          color: $light-gray-text;
-          font-weight: $weight-medium;
-        }
+        .content_left {
+          .condition_label_02 {
+            color: $light-gray-text;
+            font-weight: $weight-medium;
+            margin-bottom: 5px;
+          }
 
-        .salary_with_button {
-          padding-top: 25px;
+          .salary_calc_button {
+            width: 65px;
+            font-size: $font-caption;
+            padding: 4px;
+            border: none;
+            background-color: $orange;
+            color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+            position: relative;
+
+            &:hover {
+              background-color: $deep-orange;
+            }
+          }
         }
 
         .condition_value_02 {
           color: $gray-dark;
-          font-weight: 500;
-          display: flex;
+          font-weight: $weight-regular;
           align-items: center;
+          display: flex;
           gap: 0px;
-
-          .day_count {
-            font-weight: $weight-medium;
-            margin-right: 4px;
-          }
-
-          .day_list {
-            color: #999;
-            font-size: 0.85rem;
-          }
 
           .salary_display {
             display: flex;
@@ -181,27 +188,83 @@
             }
           }
         }
+      }
+      .condition_row_02 {
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        font-size: $font-body;
+        align-items: center;
 
-        .salary_calc_button {
-          width: 65px;
-          font-size: $font-caption;
-          padding: 4px;
-          border: none;
-          background-color: $green;
-          color: #fff;
-          border-radius: 6px;
-          cursor: pointer;
+        .condition_label_02 {
+          color: $light-gray-text;
+          font-weight: $weight-medium;
+        }
+
+        .salary_with_button {
+          padding-top: 25px;
+        }
+
+        .condition_value_02 {
+          color: $gray-dark;
           font-weight: 500;
-          transition: background-color 0.2s ease;
-          position: relative;
-          bottom: 8px;
-          &:hover {
-            background-color: $deep-green;
+          align-items: center;
+          display: flex;
+          gap: 0px;
+
+          .day_count {
+            font-weight: $weight-medium;
+            margin-right: 4px;
+          }
+
+          .day_list {
+            color: #999;
+            font-size: 0.85rem;
           }
         }
       }
     }
   }
+
+  /*section 03*/
+  .section03 {
+    border: 1px solid #ddd;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+
+    h3 {
+      font-size: $font-h5;
+      color: $green;
+      margin-bottom: 25px;
+    }
+
+    .conditions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 32px;
+
+      .condition_row {
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        font-size: 0.95rem;
+        align-items: center;
+
+        .condition_label {
+          color: $light-gray-text;
+          font-weight: $weight-medium;
+        }
+
+        .condition_value {
+          color: $gray-dark;
+          font-weight: $weight-regular;
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+      }
+    }
+  }
+
   .section {
     border: 1px solid #ddd;
     padding: 20px;
@@ -216,6 +279,41 @@
     p {
       margin-bottom: 8px;
       font-size: 0.95rem;
+    }
+    .conditions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 32px;
+
+      .condition_row {
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        font-size: 0.95rem;
+        align-items: center;
+
+        .condition_label {
+          color: #999;
+          font-weight: 600;
+        }
+
+        .condition_value {
+          color: #333;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          gap: 20px;
+
+          .day_count {
+            font-weight: 500;
+            margin-right: 4px;
+          }
+
+          .day_list {
+            color: #999;
+            font-size: 0.85rem;
+          }
+        }
+      }
     }
   }
 
@@ -234,20 +332,6 @@
   .title {
     font-size: 1.4rem;
     font-weight: bold;
-  }
-
-  .tags {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-top: 16px;
-
-    span {
-      background-color: #f3f3f3;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 0.85rem;
-    }
   }
 
   .image {

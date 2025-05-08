@@ -103,8 +103,13 @@ const JobDetail = () => {
       <section className="section02">
         <h3>근무조건</h3>
         <div className="conditions_02">
-          <div className="condition_row_02">
-            <div className="condition_label_02">급여</div>
+          <div className="condition_salary_content">
+            <div className="content_left">
+              <div className="condition_label_02">급여</div>
+              <button className="salary_calc_button" onClick={() => setIsCalcOpen(true)}>
+                급여계산기
+              </button>
+            </div>
             <div className="condition_value_02 salary_with_button">
               <div className="salary_display">
                 <span
@@ -132,9 +137,6 @@ const JobDetail = () => {
                 </div>
               </div>
             </div>
-            <button className="salary_calc_button" onClick={() => setIsCalcOpen(true)}>
-              급여계산기
-            </button>
           </div>
           <div className="condition_row_02">
             <div className="condition_label_02">근무 기간</div>
@@ -178,7 +180,7 @@ const JobDetail = () => {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section03">
         <h3>모집조건</h3>
         <div className="conditions">
           <div className="condition_row">
