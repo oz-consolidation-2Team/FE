@@ -1,19 +1,50 @@
 // utils/variables.scss
 //@use '@/utils/variables' as *;
 
+// 💚 메인 컬러
+$light-green: #eef8f1;
 $green: #0f8c3b;
 $deep-green: #10572a;
-$light-green: #eef8f1;
+
+// 🧡 포인트 컬러
+$light-orange: #fffcf7;
 $hover-orange: #ffe9ca;
 $orange: #ffa82f;
-$light-orange: #fffcf7;
 $deep-orange: #e27100;
+$error-red: #d31717;
+
+// 글씨 컬러
 $gray-dark: #333;
 $gray-text: #666;
 $gray-near-white: #eeeeee;
 $light-gray-text: #a5a5a5;
 $white-text: #fff;
 
+// 보더 컬러
 $border-color: #ccc;
 $gray-background: #f6f6f6;
-$white-background: #f3f3f3;
+$white-background: #fbfbfb;
+
+// 🔠 폰트 사이즈 (정석 기준)
+$font-h1: 3rem; // 48px - 페이지 메인 타이틀
+$font-h2: 2.5rem; // 40px - 섹션 타이틀
+$font-h3: 1.85rem; // 32px - 중간 타이틀
+$font-h4: 1.5rem; // 24px - 작은 타이틀
+$font-h5: 1.3rem; // 20.8px - 미니 타이틀
+$font-body-title: 1.125rem; // 18px- 본문 타이틀
+$font-body: 1rem; // 16px - 기본 본문
+$font-small: 0.875rem; // 14px - 부가 설명, 버튼
+$font-caption: 0.75rem; // 12px - 캡션, 툴팁
+
+// 🧵 줄 간격 (line-height) 옵션
+$lh-tight: 1.3;
+$lh-normal: 1.6;
+$lh-loose: 1.75;
+
+// 🖋 폰트 웨이트
+$weight-regular: 400;
+$weight-medium: 500;
+$weight-bold: 700;
+
+// ✍️ 폰트 패밀리
+$font-family-default: 'Pretendard', 'Noto Sans KR', sans-serif;

@@ -2,15 +2,18 @@
 
 .InputRadio_container {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
     font-size: 0.9rem;
 
-    .div_checkBoxs {
+    >.div_checkBoxs {
         margin-right: 30px;
-
-        input {
-            accent-color: v.$green;
+        margin-bottom: 0px !important;
+        cursor: pointer;
+            >input {
+            accent-color: v.$deep-orange;
             margin-right: 5px;
+            cursor: pointer;
         }
     }
 }

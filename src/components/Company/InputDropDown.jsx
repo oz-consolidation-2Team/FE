@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import "./styles/InputDropDown.scss"
 import { GoChevronRight, GoChevronDown  } from "react-icons/go";
 import TimeDropDown from "./TimeDropDown";
@@ -16,6 +16,7 @@ import { CAREER_OPTIONS, EDUCATION_OPTIONS, EMPLOYMENT_TYPE_OPTIONS, INTEREST_OP
 export default function InputDropDown (props) {
     const {formData, setFormData, setError, name, text, type} = props;
     const [viewDropDown, setViewDropDown] = useState(false)
+    const dropdownRef = useRef(null);
 
     const data_dropDown = {
         "education": EDUCATION_OPTIONS,
@@ -25,11 +26,23 @@ export default function InputDropDown (props) {
         "job_category": INTEREST_OPTIONS,
         "career": CAREER_OPTIONS
     }
+    
+    useEffect(() => {
+        function handleClickOutside(e) {
+            if (!viewDropDown) return;
+
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+                setViewDropDown(false)
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [viewDropDown, dropdownRef]);
 
     let content;
     if (type === 'day') content = <DayDropDown {...props} />
     else if (type === 'time') content =  <TimeDropDown {...props} />
-    else content = <ul className="ul_listBox">
+    else content = <ul className="ul_listBox ul_dropdown div_ref">
         {data_dropDown[name].map((item, index) =>
             <li key={index} onClick={() => {
                 setFormData(el => ({...el, [name]: item}))
@@ -43,14 +56,16 @@ export default function InputDropDown (props) {
         </ul>
 
     return (
-        <div className="InputDropDown_container">
+        <div className="InputDropDown_container" ref={dropdownRef}>
             <button 
-            className={`button_dropDown ${text === '근무시간' ? "resize" : ""}`}
-            onClick={() => setViewDropDown(!viewDropDown)}>
+            className={`button_dropDown ${viewDropDown ? "viewDropDown" : ""}`}
+            onClick={() => {
+                    setViewDropDown(!viewDropDown)
+                }}>
                 {formData[name] ? formData[name] : `${text} 선택`}
                 {viewDropDown ? <GoChevronDown /> : <GoChevronRight />}
+                {viewDropDown && content}
             </button>
-            {viewDropDown && content}
         </div>
     )
 }

@@ -67,6 +67,29 @@ function MyResumes() {
   const handleCreateResumes = async (e) => {
     e.preventDefault();
 
+    if (
+      formData.educations.length === 0 &&
+      (formData.education_type ||
+        formData.school_name ||
+        formData.education_status ||
+        formData.start_date ||
+        formData.end_date)
+    ) {
+      alert('학력 정보를 추가하려면 "추가" 버튼을 눌러주세요!');
+      return;
+    }
+
+    if (
+      formData.experiences.length === 0 &&
+      (formData.company_name ||
+        formData.position ||
+        formData.start_date ||
+        formData.end_date ||
+        formData.description)
+    ) {
+      alert('경력 정보를 추가하려면 "추가" 버튼을 눌러주세요!');
+      return;
+    }
     const formDataToSend = makeFormData(formData);
     try {
       await axiosFormInstance.post(`/resumes`, formDataToSend);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FaStar, FaRegStar, FaRegCopy } from 'react-icons/fa';
+import { FaStar, FaRegStar, FaRegCopy, FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import './JobDetail.scss';
 import JobApplyModal from '@/components/Company/Modal/JobApplyModal';
 import LoginPromptModal from '@/components/Company/Modal/LoginPromptModal';
@@ -23,8 +23,8 @@ const JobDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginPromptOpen, setLoginPromptOpen] = useState(false);
   const [isCalcOpen, setIsCalcOpen] = useState(false);
-  const { formData } = useResume();
   const Token = localStorage.getItem('access_token');
+  const formData = Token ? useResume().formData : null;
   const userType = localStorage.getItem('userType');
 
   useEffect(() => {
@@ -266,7 +266,9 @@ const JobDetail = () => {
                 setLoginPromptOpen(true);
                 return;
               }
-              if (!formData?.resume_id) {
+
+              // 토큰이 있는 경우에만 formData 체크
+              if (Token && !formData?.resume_id) {
                 alert('이력서가 없습니다. 이력서를 먼저 작성해주세요.');
                 return;
               }
@@ -277,9 +279,9 @@ const JobDetail = () => {
           </button>
           <div className="bookmark">
             {isBookmarked ? (
-              <FaStar className="star_icon filled" onClick={handleBookmarkClick} />
+              <FaBookmark className="bookmark_filled" onClick={handleBookmarkClick} />
             ) : (
-              <FaRegStar className="star_icon" onClick={handleBookmarkClick} />
+              <FaRegBookmark className="bookmark_icon" onClick={handleBookmarkClick} />
             )}
           </div>
         </div>

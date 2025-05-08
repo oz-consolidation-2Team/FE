@@ -38,7 +38,6 @@ function App() {
         <Route path="/forgot-password" element={<FindPasswordPage />} />
         <Route path="/reset-password/:type" element={<ResetPasswordPage />} />
         <Route path="/about" element={<AboutCompany />} />
-        <Route path="/recruitment-info" element={<RecruitmentInfo />} />
         <Route path="/mypage/user" element={<UserMyPage />} />
         <Route path="/mypage/user/edit_info" element={<UserInfoEditPage />} />
         <Route path="/mypage/user/resumes" element={<MyResumes />} />
@@ -55,6 +54,7 @@ function App() {
         />
         <Route path="/mypage/company/announcement/resumes/:id" element={<CompanyResumes />} />
         <Route path="/trainingSearch" element={<TrainingSearch />} />
+        <Route path="/recruitment-info" element={<RecruitmentInfo />} />
         <Route path="/mypage/user/edit_info" element={<UserInfoEditPage />} />
       </Route>
 

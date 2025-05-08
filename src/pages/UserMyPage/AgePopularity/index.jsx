@@ -4,6 +4,7 @@ import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
 import { userInfoPropTypes } from '@/utils/UserMyPagePropTypes';
 import axiosInstance from '@/apis/axiosInstance';
+import { useFavoriteStore } from '@/store/useFavoriteStore';
 
 AgePopularity.propTypes = {
   userInfo: userInfoPropTypes.isRequired,
@@ -12,6 +13,7 @@ AgePopularity.propTypes = {
 function AgePopularity({ userInfo }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [popularJobs, setPopularJobs] = useState([]);
+  const { favorites } = useFavoriteStore();
 
   const handlerPrev = () => {
     if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
@@ -30,12 +32,19 @@ function AgePopularity({ userInfo }) {
       });
 
       const popularData = response.data.items;
-      console.log('연령대별 공고', popularData);
-      setPopularJobs(popularData); // items 배열만 저장해야 함!
+
+      const mergedData = popularData.map((job) => {
+        const jobId = job.job_posting_id || job.id || job.job_id;
+        const isFavorite = favorites.some((f) => (f.job_posting_id || f.id || f.job_id) === jobId);
+        return { ...job, is_favorited: isFavorite };
+      });
+
+      setPopularJobs(mergedData); // items 배열만 저장해야 함!
     } catch (err) {
       console.error('나이별 인기 공고 불러오기 실패', err);
     }
   };
+
   useEffect(() => {
     fetchPopularJobs();
   }, []);
@@ -63,7 +72,7 @@ function AgePopularity({ userInfo }) {
               <AgePopularityCard key={job.id} job={job} onBookmarkChange={fetchPopularJobs} />
             ))
           ) : (
-            <div className="no_jobs">아직 추천할 공고가 없습니다 🙏</div>
+            <div className="no_jobs">아직 추천할 공고가 없습니다</div>
           )}
         </div>
       </div>

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { JobPosting } from "@/apis/companyPostingApi"
+import { useNavigate } from "react-router-dom";
 
 /**
  * @param {string} params 공고 ID
  */
 export default function CompanyCard ({params}) {
+    const navigate = useNavigate();
 
     const [job, setJob] = useState(null)
     const [jobLoading, setJobLoading] = useState(true)
@@ -14,12 +16,13 @@ export default function CompanyCard ({params}) {
     // 공고 상세 조회
     useEffect(()=>{
       try {
-        JobPosting(params).then(res => setJob(res))
+        JobPosting(params).then(res => {
+          setJob(res)
+          setJobLoading(false)
+        })
       } catch (error) {
-        if (axios.isAxiosError(error)) setJobLoading(error.response?.data?.message || '요청 실패')
-        else setJobLoading('알 수 없는 에러 발생')
-      } finally {
-        setJobError(false)
+        setJobError('공고 상세 조회 에러', error)
+        setJobLoading(false)
       }
     },[])
 
@@ -28,15 +31,19 @@ export default function CompanyCard ({params}) {
     const 상시모집 = job.is_always_recruiting ? "상시 모집" : job.recruit_period_end + " 까지"
     return (
         <div className="CompanyCard_container">
+          {jobLoading ? <p>로딩 중...</p>
+          : <>
             <p>{job.work_place_name}</p>
             <h3>{job.title}</h3>
-            <p>공고 근무 요약</p>
+            <p>{job.summary}</p>
             <div className="bottom">
               <hr />
               <p>{job.work_address}</p>
               <p>{상시모집}</p>
-              <button>공고 보러 가기</button>
+              <button onClick={() => navigate(`/job-detail/${job.id}`)}>공고 보러 가기</button>
             </div>
+          </>
+          }
         </div>
     )
 }

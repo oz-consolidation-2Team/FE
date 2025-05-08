@@ -20,8 +20,15 @@ export default function InputRadio (props) {
 
         props.setFormData({
             ...props.formData,
-            [e.target.name]: typeof value === 'boolean' ? value : [...value],
+            [e.target.name]: typeof value === 'boolean' ? value : [...value]
         })
+
+        if (e.target.name === 'work_days') {
+            props.setError({
+                ...props.error,
+                work_days: false,
+            })
+        }
     }
     const DATA = {
         복리후생: ['4대보험', '건강검진 지원','중식 제공','간식 무제한'],
@@ -33,12 +40,21 @@ export default function InputRadio (props) {
         상시모집: ['상시모집'],
         협의가능: ['협의 가능']
     }
+
+    const isChecked = (item) => {
+        if (!props.formData[props.name]) return 
+        const booleanType = typeof props.formData[props.name] === 'boolean' ? typeof props.formData[props.name] : props.formData[props.name].includes(item)
+        return booleanType
+
+    }
+
     return (
         <div className="InputRadio_container">
             {DATA[props.type].map((item, index)=>{
                 return (
                     <label className="div_checkBoxs" key={index}>
-                        <input type='checkbox' name={props.name} onChange={handleClick}/>
+                        {/* {console.log(props.name, isChecked(item))} */}
+                        <input type='checkbox' name={props.name} onChange={handleClick} defaultChecked={isChecked(item)} />
                         {item}
                     </label>
                 )

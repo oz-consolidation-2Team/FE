@@ -3,24 +3,20 @@ import JobRequirement from "../../components/Company/inputs/JobRequirement"
 import WorkLocation from "../../components/Company/inputs/WorkLocation"
 import WorkRequirement from "../../components/Company/inputs/WorkRequirement"
 import AnnouncementContent from "../../components/Company/inputs/AnnouncementContent"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import Modal from "../../components/Company/Modal/Modal"
 import "./Announcement.scss"
 import { GoArrowLeft } from "react-icons/go";
 import { JobPosting } from "@/apis/companyPostingApi"
 import { padZero } from "@/utils/validation"
+import { INPUT_BLOCK, INPUT_BLOCK_ARRAY, INPUT_BLOCK_BOOLEAN } from "./inputFieldConfig"
 
-const INPUT_BLOCK = ['title', 'summary', 'recruit_period_start', 'recruit_period_end', 'is_always_recruiting_str', 'recruit_number', 'education', 'benefits', 'preferred_conditions', 'other_conditions', 'work_address', 'work_place_name', 'salary', 'payment_method', 'work_duration', 'is_work_duration_negotiable_str', 'job_category', 'career', 'work_days', 'is_work_days_negotiable_str', 'is_schedule_based_str', 'employment_type', 'work_start_time', 'work_end_time', 'is_work_time_negotiable_str', 'description', 'image_file', 'latitude', 'longitude']
-const INPUT_BLOCK_BOOLEAN = ['is_always_recruiting_str','is_work_duration_negotiable_str','is_work_days_negotiable_str','is_schedule_based_str','is_work_time_negotiable_str']
-const INPUT_BLOCK_ARRAY = ['benefits', 'preferred_conditions', 'other_conditions']
 
 /**
  * @param {'add' | 'edit'} type 공고 등록인지 수정인지 체크
  */
 export default function Announcement (props) {
-    // const [data, setData] = useState({})
-
     const navigate = useNavigate()
     const param = useParams()
     const date = new Date()
@@ -42,7 +38,7 @@ export default function Announcement (props) {
         recruit_period_end: false, // 모집 마감일
         recruit_number: false, // 모집인원
         education: false, // 학력
-        // work_address: false, // 근무지주소
+        work_address: false, // 근무지주소
         work_place_name: false, // 근무지명
         salary: false, // 급여
         payment_method: false, // 급여지급방법
@@ -53,9 +49,13 @@ export default function Announcement (props) {
         employment_type: false, // 고용형태
         work_start_time: false, // 근무시간
         work_end_time: false, // 근무시간
-        이미지등록: false // 이미지등록
+        image_file: false // 이미지등록
     })
     
+    useEffect(()=>{
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    },[])
+
     if (props.type=== 'edit') {
         useEffect(()=>{
             try {
@@ -88,37 +88,39 @@ export default function Announcement (props) {
     }
 
     return (
-        <div className="AnnouncementAdd_container">
-            <GoArrowLeft 
-            className="button_back"
-            onClick={() => navigate(-1)} />
-            <h1>채용 공고 {props.type === 'add' ? "등록" : "수정"}</h1>
-            {props.type === 'edit' && <button 
-                className="button_delete"
-                onClick={()=>{
-                setModalType('delete')
-                setShowModal(true)
-            }}>삭제하기</button>}
-
-            <div className="input_group">
-                <AnnouncementTitle formData={formData} setFormData={setFormData} error={error} setError={setError} />
-                <JobRequirement formData={formData} setFormData={setFormData} error={error} setError={setError} />
-                <WorkLocation formData={formData} setFormData={setFormData} error={error} setError={setError} />
-                <WorkRequirement formData={formData} setFormData={setFormData} error={error} setError={setError} />
-                <AnnouncementContent formData={formData} setFormData={setFormData} error={error} setError={setError} />
-            </div>
-
-            <button 
-            className="button_add color-change"
-            onClick={() => {
-                if (validate()) alert('폼을 다시 확인해주세요')
-                else {
+        <div className="company_main">
+            <div className="AnnouncementAdd_container">
+                <GoArrowLeft 
+                className="button_back"
+                onClick={() => navigate(-1)} />
+                <h1>채용 공고 {props.type === 'add' ? "등록" : "수정"}</h1>
+                {props.type === 'edit' && <button 
+                    className="button_delete"
+                    onClick={()=>{
+                    setModalType('delete')
                     setShowModal(true)
-                    setModalType(props.type)
-                }
-            }}>등록하기</button>
-            <button className="button_preview">공고 미리보기</button>
-            {showModal && <Modal setShowModal={setShowModal} formData={formData} modalType={modalType} setModalType={setModalType}/>}
+                }}>삭제하기</button>}
+
+                <div className="input_group">
+                    <AnnouncementTitle formData={formData} setFormData={setFormData} error={error} setError={setError} />
+                    <JobRequirement formData={formData} setFormData={setFormData} error={error} setError={setError} />
+                    <WorkLocation formData={formData} setFormData={setFormData} error={error} setError={setError} />
+                    <WorkRequirement formData={formData} setFormData={setFormData} error={error} setError={setError} />
+                    <AnnouncementContent formData={formData} setFormData={setFormData} error={error} setError={setError} />
+                </div>
+
+                <button 
+                className="button_add color-change"
+                onClick={() => {
+                    if (validate()) alert('폼을 다시 확인해주세요')
+                    else {
+                        setShowModal(true)
+                        setModalType(props.type)
+                    }
+                }}>등록하기</button>
+                {/* <button className="button_preview">공고 미리보기</button> */}
+                {showModal && <Modal setShowModal={setShowModal} formData={formData} modalType={modalType} setModalType={setModalType}/>}
+            </div>
         </div>
     )
 }

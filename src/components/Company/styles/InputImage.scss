@@ -17,13 +17,19 @@
             padding-bottom: auto;
         }
 
-        > button {
+        > label {
             border: none;
             border-radius: 10px;
-            background-color: v.$green;
-            color: white;
-            padding: 0 30px;
+            background-color: v.$orange;
+            color: black;
+            height: 35px;
+            padding: 6px 30px;
             margin-left: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+            &:hover {
+                background-color: v.$deep-orange;
+            }
         }
     }
 

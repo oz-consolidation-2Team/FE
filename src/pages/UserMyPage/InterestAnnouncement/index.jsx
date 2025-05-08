@@ -27,7 +27,6 @@ function InterestAnnouncement({ userInfo }) {
       const response = await axiosInstance.get('/user/recommend');
 
       const recommendRes = response.data.data;
-      console.log('관심 있을만한', recommendRes);
 
       setInterestJobs(recommendRes);
     } catch (err) {
@@ -64,7 +63,7 @@ function InterestAnnouncement({ userInfo }) {
           </div>
         ) : (
           <div className="interest_slider-wrapper">
-            <div className="no_jobs">추천할 공고가 없습니다 🙏</div>
+            <div className="no_jobs">추천할 공고가 없습니다</div>
           </div>
         )}
       </div>

@@ -10,23 +10,27 @@ import PropTypes from 'prop-types';
 export default function AnnouncementCard (props) {
     const navigate = useNavigate();
 
-    const handleAnnouncementEditClick = () => {
+    const handleAnnouncementEditClick = (e) => {
+        e.stopPropagation()
         navigate(`/mypage/company/announcement/edit/${props.id}`);
     };
 
     const dayRander = props.is_always_recruiting ? "상시 모집" : props.recruit_period_end
-
+    console.log(props)
     return (
-        <div className='AnnouncementCard_cantainer'>
+        <div className='AnnouncementCard_cantainer' onClick={() => navigate(`/job-detail/${props.id}`)}>
             <p>{props.work_address}</p>
             <div>
                 <h3 className='title_name'>{props.title}</h3>
-                <p>근무요약</p>
+                <p>{props.summary}</p>
             </div>
             <p className='time'>{dayRander}</p>
             <div className='button_group'>
                 <button onClick={handleAnnouncementEditClick}>수정하기</button>
-                <button onClick={() => navigate(`/mypage/company/announcement/resumes/${props.id}`)}>이력서 확인하기</button>
+                <button onClick={(e) => {
+                        e.stopPropagation()
+                        navigate(`/mypage/company/announcement/resumes/${props.id}`)
+                    }}>이력서 확인하기</button>
             </div>
         </div>
     )

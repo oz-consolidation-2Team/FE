@@ -26,7 +26,7 @@ export default function CompanyInfo () {
     },[])
 
     return (
-        <>
+        <div className="company_main">
             {data ? 
                 <div className="CompanyInfo_container">
                     <h1>{data.company_name}</h1>
@@ -63,6 +63,6 @@ export default function CompanyInfo () {
                 </div>
                 : <h1>회사 정보를 가져올 수 없습니다</h1>
             }
-        </>
+        </div>
     )
 }

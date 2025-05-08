@@ -15,17 +15,18 @@ const SearchResults = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const keyword = searchParams.get('keyword') || '';
-  const locationParam = searchParams.get('location') || '';
+  const location1Param = searchParams.get('location1') || '';
+  const location2Param = searchParams.get('location2') || '';
   const jobCategory = searchParams.get('job_category') || '';
   const page = Number(searchParams.get('page')) || 1;
 
   useEffect(() => {
     setSearchQueryState(keyword);
     setCommittedKeyword(keyword);
-    setCityInput(locationParam.split(' ')[0] || '');
-    setDistrictInput(locationParam.split(' ')[1] || '');
+    setCityInput(location1Param || '');
+    setDistrictInput(location2Param || '');
     setJobCategoryInput(jobCategory);
-  }, [keyword, locationParam, jobCategory]);
+  }, [keyword, location1Param,location2Param, jobCategory]);
 
   /**
    * 검색 결과 상태 및 입력값 상태를 관리하는 훅
@@ -44,8 +45,8 @@ const SearchResults = () => {
 
   const [searchQueryState, setSearchQueryState] = useState(keyword);
   const [committedKeyword, setCommittedKeyword] = useState(keyword);
-  const [cityInput, setCityInput] = useState(locationParam.split(' ')[0] || '');
-  const [districtInput, setDistrictInput] = useState(locationParam.split(' ')[1] || '');
+  const [cityInput, setCityInput] = useState(location1Param || '');
+  const [districtInput, setDistrictInput] = useState(location2Param || '');
   const [jobCategoryInput, setJobCategoryInput] = useState(jobCategory);
 
   const [selectedCity, setSelectedCity] = useState(cityInput);
@@ -63,10 +64,10 @@ const SearchResults = () => {
     setSelectedJobCategory(jobCategoryInput);
     setCommittedKeyword(searchQueryState);
 
-    const location = `${cityInput}${districtInput ? ` ${districtInput}` : ''}`;
     const params = new URLSearchParams({
       keyword: searchQueryState,
-      location,
+      location1: cityInput,
+      location2: districtInput,
       job_category: jobCategoryInput,
       page,
     });
@@ -80,10 +81,10 @@ const SearchResults = () => {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const location = `${selectedCity}${selectedDistrict ? ` ${selectedDistrict}` : ''}`;
         const rawParams = {
           keyword: committedKeyword,
-          location,
+          location1: selectedCity,
+          location2: selectedDistrict,
           job_category: selectedJobCategory,
           page,
           limit: 10,

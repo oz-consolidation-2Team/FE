@@ -55,11 +55,11 @@ const JobCard = ({ job }) => {
         return 'payment-yearly';
       default:
         return 'payment-default';
-      }
-    };
-    
-    return (
-      <>
+    }
+  };
+
+  return (
+    <>
       <div className="job_card_container">
         <div className="job_card_row" onClick={handleCardClick}>
           <div className="col_utillbutton">
@@ -93,7 +93,8 @@ const JobCard = ({ job }) => {
               : '협의 가능'}
           </div>
           <div className="col_pay">
-            <span className={getPaymentClass(job.payment_method)}>{job.payment_method}</span> {job.salary.toLocaleString()}원
+            <strong className={getPaymentClass(job.payment_method)}>{job.payment_method}</strong>{' '}
+            {job.salary.toLocaleString()}원
           </div>
           <div className="col_date">
             {job.is_always_recruiting
@@ -103,10 +104,7 @@ const JobCard = ({ job }) => {
         </div>
       </div>
       {showLoginModal && (
-        <LoginPromptModal
-          onClose={() => setShowLoginModal(false)}
-          navigate={navigate}
-        />
+        <LoginPromptModal onClose={() => setShowLoginModal(false)} navigate={navigate} />
       )}
     </>
   );

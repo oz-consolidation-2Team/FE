@@ -1,12 +1,9 @@
 @use '@/utils/variables' as v;
 
-// .main_container {
-//     display: flex;
-//     justify-content: center;
-//     width: 100%;
-//     padding-top: 40px;
-// }
-
+.companyMyPage_main {
+  display: flex;
+  justify-content: center;
+}
 .companyMyPage_cantainer {
   display: flex;
   flex-direction: column;
@@ -15,7 +12,9 @@
   button {
     cursor: pointer;
   }
-
+  h2 {
+    color: v.$green;
+  }
   .hr {
     width: 100%;
     margin: 50px 0;
@@ -38,5 +37,19 @@
     color: white;
     padding: 0 20px;
     margin-left: 20px;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    &:hover {
+      background-color: v.$deep-green;
+    }
+  }
+  .div_noting {
+    background-color: v.$gray-background;
+    border: 1px dashed #ccc;
+    border-radius: 10px;
+    color: v.$light-gray-text;
+    text-align: center;
+    font-size: 1.1rem;
+    padding: 30px 0;
+    margin-top: 20px;
   }
 }

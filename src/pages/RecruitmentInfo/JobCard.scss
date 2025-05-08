@@ -1,16 +1,15 @@
-@use "../../utils/variables" as *;
-
+@use '../../utils/variables' as *;
 
 .job_card_row {
   display: flex;
   align-items: center;
-  padding: 0 1rem 0 0;
   margin: 0;
-  min-height: 150px;
+  min-height: 130px;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
   cursor: pointer;
   transition: background-color 0.2s;
+  padding: 0 10px;
 
   &:hover {
     background-color: #f9f9f9;
@@ -23,8 +22,8 @@
     width: 100%;
 
     .bookmark_icon {
-      font-size: 1.5rem;
-      color: #ccc;
+      font-size: $font-h5;
+      color: $border-color;
       cursor: pointer;
       transition: color 0.3s;
 
@@ -46,14 +45,14 @@
     flex-direction: column;
 
     .company_name {
-      font-size: 0.85rem;
-      color: #666;
+      font-size: $font-small;
+      color: $gray-text;
       margin-bottom: 4px;
     }
 
     .job_title {
-      font-size: 1.2rem;
-      color: #222;
+      font-size: $font-body-title;
+      color: $gray-dark;
       font-weight: 600;
     }
   }
@@ -62,7 +61,7 @@
   .col_time,
   .col_pay,
   .col_date {
-    font-size: 0.9rem;
+    font-size: $font-body;
   }
 
   .col_location {
@@ -112,13 +111,11 @@
   .external_link_btn {
     background: none;
     border: none;
-    font-size: 1.3rem;
-    margin-top: 6px;
-    color: #888;
+    font-size: $font-h5;
+    margin-top: 3px;
+    color: $border-color;
     cursor: pointer;
     transition: color 0.2s;
-    width: 24px;
-    height: 24px;
 
     &:hover {
       color: #333;
@@ -150,7 +147,6 @@
   font-weight: 500;
   margin-bottom: 8px;
 }
-
 
 // Payment method badges
 .payment_method_badge {

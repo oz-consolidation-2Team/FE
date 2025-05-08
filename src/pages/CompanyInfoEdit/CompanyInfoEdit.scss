@@ -5,10 +5,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: white;
+    border-radius: 50px;
     width: 60%;
     padding: 0 10%;
     padding-top: 60px;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);  
+    margin: 50px 0;
+    box-shadow: 0px 3px 10px rgba(25, 85, 2, 0.2); 
 
     button {
         cursor: pointer;
@@ -20,15 +23,15 @@
         width: 100%;
         margin-top: 50px;
     }
-
-    .div_company-info > .div_box, .div_manager-info > .div_box, .div_password > .div_box {
+    .div_box {
         display: flex;
-        margin-bottom: 20px;
-
-        > :nth-child(1) {
-            flex-basis: 150px;
+        align-items: center;
+        margin-top: 30px;
+        >.Category_condainer {
+            width: 120px !important;
         }
     }
+
     .button_back {
         position: absolute;
         left: 30px;
@@ -46,6 +49,26 @@
         width: 50%;
         padding: 10px 0;
         margin-top: 50px;
+    }
+    .button_out {
+        border: none;
+        background-color: white;
+        color: #747474;
+        font-size: 0.85rem;
+        margin-top: 10px;
         margin-bottom: 30px;
+    }
+    .disabled {
+        .InputText_container {
+            >input {
+                background-color: #e0e0e0;
+            }
+        }
+    }
+    .error_message {
+        color: v.$error-red;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin-left: 120px;
     }
 }

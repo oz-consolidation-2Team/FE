@@ -1,5 +1,15 @@
+@use '@/utils/variables' as *;
+
 .recruitment_container {
   width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 50px 110px;
+  padding: 1.5rem;
+
+  .title {
+    font-size: $font-h3;
+    color: $deep-green;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+  }
 }
