@@ -14,6 +14,7 @@ const LabeledInput = ({
   disabled = false,
   readOnly = false,
   autoComplete = 'off',
+  className = '',
 }) => {
   return (
     <div className="form_group">
@@ -29,7 +30,7 @@ const LabeledInput = ({
         disabled={disabled}
         readOnly={readOnly}
         autoComplete={autoComplete}
-        className={error ? 'error' : ''}
+        className={`${className} ${error ? 'error' : ''}`.trim()}
       />
       {error && <ErrorMessage>{error}</ErrorMessage>}
     </div>
