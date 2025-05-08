@@ -214,17 +214,17 @@ const JobDetail = () => {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section04">
         <h3>근무지 정보</h3>
         <div
           className="address_row"
           style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}
         >
           <div>
-            <strong>근무지명:</strong> {job.work_place_name}
+            <strong>근무지명</strong> {job.work_place_name}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <strong>근무지 주소:</strong>
+            <strong>근무지 주소</strong>
             <span style={{ userSelect: 'text' }}>{job.work_address}</span>
             <button
               onClick={() => {
@@ -245,7 +245,7 @@ const JobDetail = () => {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section05">
         <h3>상세 내용</h3>
         <pre className="description">{job.description}</pre>
         {job.postings_image && (
@@ -258,18 +258,21 @@ const JobDetail = () => {
         )}
       </section>
 
-      <section className="section">
+      <section className="section06">
         <h3>기업 정보</h3>
         {companyInfo ? (
           <>
             <p>
-              <strong>담당자 전화번호</strong>: {formatPhoneNumber(companyInfo.manager_phone)}
+              <strong>담당자 전화번호</strong> {formatPhoneNumber(companyInfo.manager_phone)}
             </p>
             <p>
-              <strong>이메일</strong>: {companyInfo.manager_email || '정보 없음'}
+              <strong>이메일</strong>
+              {companyInfo.manager_email || '정보 없음'}
             </p>
             <p>
-              <strong>기업 소개</strong>: {companyInfo.company_intro || '정보 없음'}
+              <strong>기업 소개</strong>
+              <br />
+              {companyInfo.company_intro || '정보 없음'}
             </p>
           </>
         ) : (

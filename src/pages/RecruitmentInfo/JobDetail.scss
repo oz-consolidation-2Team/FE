@@ -7,6 +7,18 @@
   padding: 20px;
   font-family: 'Pretendard', sans-serif;
 
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    .address,
+    .company {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+  }
+
   /*section01*/
 
   .section01 {
@@ -16,7 +28,7 @@
     margin-bottom: 20px;
 
     .header_01 {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       display: flex;
       justify-content: space-between;
 
@@ -76,7 +88,7 @@
     .conditions_02 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 30px 32px;
+      gap: 25px 32px;
 
       .condition_salary_content {
         display: flex;
@@ -228,7 +240,7 @@
   /*section 03*/
   .section03 {
     border: 1px solid #ddd;
-    padding: 25px;
+    padding: 30px 25px;
     border-radius: 8px;
     margin-bottom: 20px;
 
@@ -241,12 +253,12 @@
     .conditions {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px 32px;
+      gap: 25px 32px;
 
       .condition_row {
         display: grid;
         grid-template-columns: 80px 1fr;
-        font-size: 0.95rem;
+        font-size: $font-body;
         align-items: center;
 
         .condition_label {
@@ -265,86 +277,113 @@
     }
   }
 
-  .section {
+  /*section 04*/
+  .section04 {
     border: 1px solid #ddd;
-    padding: 20px;
+    padding: 30px 25px;
     border-radius: 8px;
     margin-bottom: 20px;
 
     h3 {
-      font-size: 1.2rem;
-      margin-bottom: 12px;
+      font-size: $font-h5;
+      color: $green;
+      margin-bottom: 25px;
     }
 
-    p {
-      margin-bottom: 8px;
-      font-size: 0.95rem;
+    strong {
+      color: $light-gray-text;
+      font-weight: $weight-medium;
+      margin-right: 10px;
     }
-    .conditions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px 32px;
 
-      .condition_row {
-        display: grid;
-        grid-template-columns: 80px 1fr;
-        font-size: 0.95rem;
+    span {
+      color: $gray-dark;
+      font-weight: $weight-regular;
+    }
+
+    .address_row {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+
+      button {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        display: inline-flex;
         align-items: center;
+      }
+    }
 
-        .condition_label {
-          color: #999;
-          font-weight: 600;
-        }
+    .map_container {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px;
+      background-color: #fafafa;
+      margin-top: 16px;
+      width: 100%;
+      height: 370px;
 
-        .condition_value {
-          color: #333;
-          font-weight: 500;
-          display: flex;
-          align-items: center;
-          gap: 20px;
-
-          .day_count {
-            font-weight: 500;
-            margin-right: 4px;
-          }
-
-          .day_list {
-            color: #999;
-            font-size: 0.85rem;
-          }
-        }
+      #map {
+        width: 100%;
+        height: 100%;
       }
     }
   }
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+  /*section 05*/
+  .section05 {
+    border: 1px solid #ddd;
+    padding: 30px 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
 
-    .address,
-    .company {
+    h3 {
+      font-size: $font-h5;
+      color: $green;
+      margin-bottom: 25px;
+    }
+
+    .image {
+      width: 100%;
+      max-width: 250px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+
+    .description {
+      white-space: pre-wrap;
       font-size: 0.95rem;
-      font-weight: 500;
+      line-height: 1.5;
     }
   }
 
-  .title {
-    font-size: 1.4rem;
-    font-weight: bold;
-  }
+  /*section06*/
+  .section06 {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding-top: 35px;
 
-  .image {
-    width: 100%;
-    max-width: 250px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-  }
+    h3 {
+      font-size: $font-h5;
+      color: $green;
+      margin-bottom: 25px;
+    }
 
-  .description {
-    white-space: pre-wrap;
-    font-size: 0.95rem;
-    line-height: 1.5;
+    strong {
+      color: $light-gray-text;
+      font-weight: $weight-medium;
+      margin-right: 10px;
+    }
+    p {
+      color: $gray-dark;
+      font-weight: $weight-regular;
+      margin-bottom: 20px;
+    }
   }
 
   .action {
@@ -509,37 +548,6 @@
           }
         }
       }
-    }
-  }
-
-  .address_row {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-
-    button {
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-    }
-  }
-
-  .map_container {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 12px;
-    background-color: #fafafa;
-    margin-top: 16px;
-    width: 100%;
-    height: 370px;
-
-    #map {
-      width: 100%;
-      height: 100%;
     }
   }
 }
