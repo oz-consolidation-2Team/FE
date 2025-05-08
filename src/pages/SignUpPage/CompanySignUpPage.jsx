@@ -1,4 +1,4 @@
-import { verifyBusinessNumber } from '@/apis/companyApi';
+import { verifyBusinessNumber, checkBizNumberDuplicate } from '@/apis/companyApi';
 import React, { useState } from 'react';
 import { FaBuilding } from 'react-icons/fa';
 import { LiaEyeSolid, LiaEyeSlashSolid } from 'react-icons/lia';
@@ -45,8 +45,8 @@ const CompanySignUpPage = () => {
   const [errors, setErrors] = useState({});
   const [showPw, setShowPw] = useState(false);
   const [showPwCheck, setShowPwCheck] = useState(false);
-  const [setEmailChecked] = useState(false);
-  const [bizVerified] = useState(false);
+  const [emailChecked, setEmailChecked] = useState(false);
+  const [bizVerified, setBizVerified] = useState(false);
   const [modal, setModal] = useState(null);
 
   const showModal = (type, title, message, callback) => {
@@ -190,7 +190,24 @@ const CompanySignUpPage = () => {
   const handleBizCheck = async () => {
     const { businessNumber, startDate, ceoName } = form;
   
+    if (!businessNumber) {
+      setErrors((prev) => ({
+        ...prev,
+        businessNumber: '사업자등록번호를 입력해주세요.',
+      }));
+      return;
+    }
+  
     try {
+  
+      const duplicateCheckResult = await checkBizNumberDuplicate(businessNumber);
+  
+      if (duplicateCheckResult.is_duplicate) {
+        showModal('error', '중복된 사업자등록번호', '이미 등록된 사업자등록번호입니다.');
+        setForm((prev) => ({ ...prev, bizVerified: false }));
+        return;
+      }
+  
       const result = await verifyBusinessNumber(
         businessNumber,
         startDate.replace(/-/g, ''),
@@ -205,18 +222,22 @@ const CompanySignUpPage = () => {
         return;
       }
   
-      setForm((prev) => {
-        const updatedForm = { ...prev, bizVerified: true };
-        return updatedForm;
-      });
-  
+      setForm((prev) => ({ ...prev, bizVerified: true }));
       showModal('success', '인증 성공', '유효한 사업자등록번호입니다.');
   
-    } catch (err) {
-      showModal('error', '서버 오류', '국세청과의 연결에 실패했습니다.');
+    } catch (error) {
+  
+      const status = error.response?.status;
+      const detail = error.response?.data?.detail;
+  
+      if (status === 409) {
+        showModal('error', '중복된 사업자등록번호', detail || '이미 등록된 사업자등록번호입니다.');
+      } else {
+        showModal('error', '서버 오류', '사업자등록번호 확인 중 오류가 발생했습니다.');
+      }
     }
   };
-
+  
   const handleNext = async () => {
   
     if (step === 0) {
@@ -404,13 +425,36 @@ const CompanySignUpPage = () => {
               <div className="form_group">
                 <label>사업자등록번호</label>
                 <div className="input_row">
-                  <input name="businessNumber" value={form.businessNumber} onChange={handleBizNumberChange} disabled={bizVerified} className={errors.businessNumber ? 'error' : ''} />
-                  <button type="button" onClick={handleBizCheck} disabled={bizVerified} style={{ backgroundColor: bizVerified ? '#ccc' : undefined, cursor: bizVerified ? 'not-allowed' : 'pointer' }}>
-                    {bizVerified ? '인증됨' : '인증하기'}
+                  <input 
+                    name="businessNumber" 
+                    value={form.businessNumber} 
+                    onChange={handleBizNumberChange} 
+                    disabled={form.bizVerified} 
+                    className={errors.businessNumber ? 'error' : ''} 
+                  />
+                  
+                  <button 
+                    type="button" 
+                    onClick={handleBizCheck} 
+                    disabled={form.bizVerified}
+                    style={{
+                      backgroundColor: form.bizVerified ? '#ccc' : '#0f8c3b',
+                      cursor: form.bizVerified ? 'not-allowed' : 'pointer',
+                    }}
+                  >
+                    {form.bizVerified ? '인증됨' : '인증하기'}
                   </button>
                 </div>
-                {bizVerified && <p style={{ fontSize: '13px', color: '#0f8c3b', marginTop: '4px' }}>사업자등록번호가 인증되었습니다.</p>}
-                {errors.businessNumber && <ErrorMessage>{errors.businessNumber}</ErrorMessage>}
+
+                {form.bizVerified && (
+                  <p style={{ fontSize: '13px', color: '#0f8c3b', marginTop: '4px' }}>
+                    사업자등록번호가 인증되었습니다.
+                  </p>
+                )}
+
+                {errors.businessNumber && (
+                  <ErrorMessage>{errors.businessNumber}</ErrorMessage>
+                )}
               </div>
 
               <div className="form_group">
