@@ -4,7 +4,6 @@ import './CalculatorModal.scss';
 import { timeOptions } from '@/utils/checktime';
 
 export const CalculatorModalContent = ({
-  onClose,
   salary,
   payment_method,
   work_days,
@@ -128,7 +127,6 @@ export const CalculatorModalContent = ({
   return (
     <div className="calculator-modal-overlay">
       <div className="calculator-modal">
-        <button className="close-button" onClick={onClose}>×</button>
         <h2 className="calculator-title">급여 계산기</h2>
         <p className="minimum-wage-info"><strong>2025년 최저시급은 <span className="highlight">10,030</span>원입니다.</strong></p>
 
