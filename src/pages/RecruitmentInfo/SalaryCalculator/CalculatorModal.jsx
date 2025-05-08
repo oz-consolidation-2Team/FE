@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './CalculatorModal.scss';
 import { timeOptions } from '@/utils/checktime';
 import HolidayInfo from './HolidayInfo';
-import TaxInfo from './Taxinfo';
+import TaxInfo from './TaxInfo';
 
 export const CalculatorModalContent = ({
   salary,
