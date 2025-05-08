@@ -111,7 +111,7 @@
       flex-wrap: wrap;
       gap: 20px;
 
-      .job_card {
+      .main_job_card {
         width: calc(25% - 15px);
         background: white;
         border: 1px solid #eee;
@@ -127,7 +127,7 @@
           box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
         }
 
-        .job_top {
+        .main_job_top {
           position: relative;
           display: flex;
           flex-direction: column;
@@ -139,23 +139,21 @@
           }
 
           .title {
-            font-size: $font-body-title;
+            font-size: $font-body;
             font-weight: 600;
             color: $gray-dark;
-            margin-bottom: 10px;
-          }
+            margin-bottom: 25px;
 
-          .date {
-            font-size: 13px;
-            color: #999;
-            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
 
           .bookmark_icon {
             position: absolute;
             top: 0;
             right: 0;
-            font-size: 24px;
+            font-size: $font-h5;
             cursor: pointer;
             color: $orange;
             transition: transform 0.2s;
@@ -170,15 +168,20 @@
           }
         }
 
-        .job_bottom {
+        .main_job_bottom {
           display: flex;
+          flex-direction: column;
           justify-content: flex-start;
-          align-items: center;
-          margin-top: 20px;
 
           .location {
-            font-size: 14px;
+            font-size: $font-small;
             color: $gray-text;
+            margin-top: 10px;
+            margin-bottom: 5px;
+          }
+          .date {
+            font-size: $font-caption;
+            color: #999;
           }
         }
       }

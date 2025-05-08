@@ -41,35 +41,29 @@ const MainJobCard = ({ job, onToggleFavorite }) => {
   return (
     <>
       <div
-        className="job_card"
+        className="main_job_card"
         onClick={() => navigate(`/job-detail/${job.id}`, { state: { job } })}
       >
-        <div className="job_top">
+        <div className="main_job_top">
           <span className="company">{job?.work_place_name}</span>
-          {userType !== 'company' && (
-            job.is_favorited ? (
+          {userType !== 'company' &&
+            (job.is_favorited ? (
               <FaBookmark className="bookmark_icon filled" onClick={toggleBookmark} />
             ) : (
               <FaRegBookmark className="bookmark_icon" onClick={toggleBookmark} />
-            )
-          )}
+            ))}
           <div className="title_and_bookmark">
             <h3 className="title">{job?.title}</h3>
           </div>
         </div>
-        <div className="job_bottom">
+        <div className="main_job_bottom">
           <span className="location">{job?.work_address}</span>
-        </div>
-        <div className="job_footer">
-          <span className="date">{job?.recruit_period_end}</span>
+          {/* <span className="date">{job?.recruit_period_end}</span> */}
         </div>
       </div>
 
       {showLoginModal && (
-        <LoginPromptModal
-          onClose={() => setShowLoginModal(false)}
-          navigate={navigate}
-        />
+        <LoginPromptModal onClose={() => setShowLoginModal(false)} navigate={navigate} />
       )}
     </>
   );
