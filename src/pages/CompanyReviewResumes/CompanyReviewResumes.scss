@@ -1,0 +1,290 @@
+@use '@/utils/variables' as *;
+
+.resumes_wrapper {
+  background-color: $light-green;
+  height: 100%;
+  padding-top: 100px;
+  padding-bottom: 100px;
+
+  .resumes_container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 50px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .resumes_title {
+      font-size: $font-h3;
+      margin-bottom: 50px;
+      color: $deep-green;
+    }
+
+    .resumes_submit {
+      background-color: $green;
+      width: 100%;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+
+      &:hover {
+        background-color: $deep-green;
+      }
+    }
+
+    /* UserInfoSection */
+
+    .resumes_user_info {
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+      height: 200px;
+      margin-bottom: 4rem;
+
+      .user_image_box {
+        width: 160px;
+        height: 100%;
+        background-color: $white-background;
+        border: 1px dashed $deep-green;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: $deep-green;
+        border-radius: 8px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 8px;
+          display: block;
+        }
+      }
+      .user_info_inputs {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        flex: 1;
+
+        label {
+          width: 100%;
+          font-weight: bold;
+          font-size: 0.9rem;
+          color: $gray-dark;
+          text-align: right;
+
+          input {
+            width: 80%;
+            margin-top: 0.25rem;
+            margin-left: 20px;
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid $border-color;
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+
+    /* EducationSection */
+    .review_resumes_education {
+      margin-bottom: 2rem;
+
+      .review_education_title {
+        font-size: $font-h5;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: $deep-green;
+      }
+
+      .review_education_row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+
+        .label_title {
+          font-size: $font-small;
+          padding-top: 10px;
+        }
+
+        select,
+        input {
+          flex: 1 1 200px;
+          padding: 0.5rem;
+          border: 1px solid $border-color;
+          border-radius: 0.4rem;
+        }
+
+        .edu_btn {
+          width: 2rem;
+          height: 2rem;
+          background-color: $orange;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          cursor: pointer;
+          font-size: $font-small;
+          font-weight: $weight-medium;
+        }
+
+        &.fixed {
+          background-color: #f8f9fa;
+          padding: 1rem;
+          border-radius: 0.5rem;
+        }
+      }
+    }
+
+    /* CareerSection */
+    .resumes_career {
+      margin-bottom: 2rem;
+
+      .career_title {
+        font-size: $font-h5;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: $deep-green;
+      }
+      .label_title {
+        font-size: $font-small;
+        padding-top: 10px;
+      }
+      .career_row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+
+        input {
+          flex: 170px;
+          padding: 0.5rem;
+          border: 1px solid #ccc;
+          border-radius: 0.4rem;
+        }
+
+        .career_btn {
+          width: 2rem;
+          height: 2rem;
+          background-color: $orange;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          cursor: pointer;
+          font-size: $font-small;
+          font-weight: $weight-medium;
+        }
+
+        &.fixed {
+          background-color: #f8f9fa;
+          padding: 1rem;
+          border-radius: 0.5rem;
+        }
+      }
+    }
+
+    /* RegionSection */
+    .review_resumes_region {
+      margin-bottom: 4rem;
+      width: 100%;
+
+      .review_region_title {
+        font-size: $font-h5;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: $deep-green;
+      }
+
+      .review_selected_tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 20px;
+
+        .tag {
+          background-color: $deep-orange;
+          color: #fff;
+          padding: 6px 12px;
+          border-radius: 20px;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+      }
+    }
+
+    /*IntroSection*/
+    .resumes_introduce {
+      margin-bottom: 2rem;
+      width: 100%;
+
+      .introduce_title {
+        font-size: $font-h5;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: $deep-green;
+      }
+
+      .introduce_input {
+        width: 100%;
+        min-height: 150px;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        resize: vertical;
+      }
+    }
+  }
+
+  .skeleton_wrapper {
+    padding: 1rem;
+  }
+
+  .skeleton_title,
+  .skeleton_input,
+  .skeleton_button {
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+
+  .skeleton_title {
+    width: 40%;
+    height: 24px;
+  }
+
+  .skeleton_input {
+    width: 100%;
+    height: 40px;
+  }
+
+  .skeleton_button {
+    width: 30%;
+    height: 48px;
+  }
+
+  @keyframes pulse {
+    0% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.6;
+    }
+  }
+}
