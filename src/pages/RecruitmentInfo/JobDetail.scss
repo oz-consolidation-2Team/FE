@@ -1,28 +1,11 @@
-@use "../../utils/variables" as *;
+@use '@/utils/variables' as *;
 
 .jobdetail_container {
   width: 100%;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 20px;
   font-family: 'Pretendard', sans-serif;
-
-  .section {
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-
-    h3 {
-      font-size: 1.2rem;
-      margin-bottom: 12px;
-    }
-
-    p {
-      margin-bottom: 8px;
-      font-size: 0.95rem;
-    }
-  }
 
   .header {
     display: flex;
@@ -36,36 +19,371 @@
     }
   }
 
-  .title {
-    font-size: 1.4rem;
-    font-weight: bold;
-  }
+  /*section01*/
 
-  .tags {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-top: 16px;
+  .section01 {
+    border: 1px solid #ddd;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
 
-    span {
-      background-color: #f3f3f3;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 0.85rem;
+    .header_01 {
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+
+      .address {
+        font-size: $font-small;
+        color: $light-gray-text;
+      }
+
+      .company {
+        font-size: $font-small;
+        color: $light-gray-text;
+      }
+    }
+
+    .title {
+      font-size: $font-h3;
+      font-weight: $weight-bold;
+      margin-bottom: 7px;
+      color: $deep-green;
+      text-align: left;
+    }
+
+    .job-tag {
+      font-size: $font-body;
+    }
+
+    .tags {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+
+      span {
+        background-color: $light-green;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: $font-small;
+        color: $gray-dark;
+      }
     }
   }
 
-  .image {
-    width: 100%;
-    max-width: 250px;
-    margin-bottom: 10px;
-    border-radius: 4px;
+  /*section 02*/
+
+  .section02 {
+    border: 1px solid #ddd;
+    padding: 30px 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+
+    h3 {
+      font-size: $font-h5;
+      color: $green;
+      margin-bottom: 25px;
+    }
+
+    .conditions_02 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px 32px;
+
+      .condition_salary_content {
+        display: flex;
+        font-size: $font-body;
+        align-items: center;
+        gap: 15px;
+
+        .content_left {
+          .condition_label_02 {
+            color: $light-gray-text;
+            font-weight: $weight-medium;
+            margin-bottom: 5px;
+          }
+
+          .salary_calc_button {
+            width: 65px;
+            font-size: $font-caption;
+            padding: 4px;
+            border: none;
+            background-color: $orange;
+            color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+            position: relative;
+
+            &:hover {
+              background-color: $deep-orange;
+            }
+          }
+        }
+
+        .condition_value_02 {
+          color: $gray-dark;
+          font-weight: $weight-regular;
+          align-items: center;
+          display: flex;
+          gap: 0px;
+
+          .salary_display {
+            display: flex;
+
+            .payment_method_badge {
+              padding: 3px 8px;
+              color: #ff5722;
+              border-radius: 12px;
+              font-size: $font-small;
+              margin: 5px 0 7px;
+              margin-right: 8px;
+            }
+
+            .payment-hourly {
+              color: #009688; // 청록색 (시급)
+              font-weight: bold;
+              border: 1px solid #009688;
+            }
+
+            .payment-daily {
+              color: #ff9800; // 주황색 (일급)
+              font-weight: bold;
+              border: 1px solid #ff9800;
+            }
+
+            .payment-monthly {
+              color: #3f51b5; // 진한 파랑 (월급)
+              font-weight: bold;
+              border: 1px solid #3f51b5;
+            }
+
+            .payment-weekly {
+              color: #4caf50; // 녹색 (주급)
+              font-weight: bold;
+              border: 1px solid #4caf50;
+            }
+
+            .payment-yearly {
+              color: #9c27b0; // 보라색 (연봉)
+              font-weight: bold;
+              border: 1px solid #9c27b0;
+            }
+
+            .payment-default {
+              color: $gray-text; // 기본 회색
+              border: 1px solid $gray-text;
+            }
+
+            .salary_content {
+              display: flex;
+              flex-direction: column;
+
+              .salary {
+                font-size: $font-body-title;
+                font-weight: 700;
+                color: $gray-dark;
+                margin-bottom: 3px;
+              }
+
+              .salary_note {
+                color: $light-gray-text;
+                font-size: 0.75rem;
+                font-weight: $weight-regular;
+
+                strong {
+                  font-weight: $weight-bold;
+                  color: $gray-text;
+                }
+              }
+            }
+          }
+        }
+      }
+      .condition_row_02 {
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        font-size: $font-body;
+        align-items: center;
+
+        .condition_label_02 {
+          color: $light-gray-text;
+          font-weight: $weight-medium;
+        }
+
+        .salary_with_button {
+          padding-top: 25px;
+        }
+
+        .condition_value_02 {
+          color: $gray-dark;
+          font-weight: 500;
+          align-items: center;
+          display: flex;
+          gap: 0px;
+
+          .day_count {
+            font-weight: $weight-medium;
+            margin-right: 4px;
+          }
+
+          .day_list {
+            color: #999;
+            font-size: 0.85rem;
+          }
+        }
+      }
+    }
   }
 
-  .description {
-    white-space: pre-wrap;
-    font-size: 0.95rem;
-    line-height: 1.5;
+  /*section 03*/
+  .section03 {
+    border: 1px solid #ddd;
+    padding: 30px 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+
+    h3 {
+      font-size: $font-h5;
+      color: $green;
+      margin-bottom: 25px;
+    }
+
+    .conditions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px 32px;
+
+      .condition_row {
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        font-size: $font-body;
+        align-items: center;
+
+        .condition_label {
+          color: $light-gray-text;
+          font-weight: $weight-medium;
+        }
+
+        .condition_value {
+          color: $gray-dark;
+          font-weight: $weight-regular;
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+      }
+    }
+  }
+
+  /*section 04*/
+  .section04 {
+    border: 1px solid #ddd;
+    padding: 30px 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+
+    h3 {
+      font-size: $font-h5;
+      color: $green;
+      margin-bottom: 25px;
+    }
+
+    strong {
+      color: $light-gray-text;
+      font-weight: $weight-medium;
+      margin-right: 10px;
+    }
+
+    span {
+      color: $gray-dark;
+      font-weight: $weight-regular;
+    }
+
+    .address_row {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+
+      button {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    .map_container {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px;
+      background-color: #fafafa;
+      margin-top: 16px;
+      width: 100%;
+      height: 370px;
+
+      #map {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  /*section 05*/
+  .section05 {
+    border: 1px solid #ddd;
+    padding: 30px 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+
+    h3 {
+      font-size: $font-h5;
+      color: $green;
+      margin-bottom: 25px;
+    }
+
+    .image {
+      width: 100%;
+      max-width: 250px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+
+    .description {
+      white-space: pre-wrap;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+  }
+
+  /*section06*/
+  .section06 {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding-top: 35px;
+
+    h3 {
+      font-size: $font-h5;
+      color: $green;
+      margin-bottom: 25px;
+    }
+
+    strong {
+      color: $light-gray-text;
+      font-weight: $weight-medium;
+      margin-right: 10px;
+    }
+    p {
+      color: $gray-dark;
+      font-weight: $weight-regular;
+      margin-bottom: 20px;
+    }
   }
 
   .action {
@@ -105,164 +423,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-  }
-
-  .conditions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px 32px;
-
-    .condition_row {
-      display: grid;
-      grid-template-columns: 80px 1fr;
-      font-size: 0.95rem;
-      align-items: center;
-
-      .condition_label {
-        color: #999;
-        font-weight: 600;
-      }
-
-      .condition_value {
-        color: #333;
-        font-weight: 500;
-
-        .payment_method_badge {
-          display: inline-block;
-          padding: 2px 8px;
-          color: #ff5722;
-          border-radius: 12px;
-          font-size: 0.85rem;
-          margin-right: 8px;
-        }
-        .payment-hourly {
-          color: #009688; // 청록색 (시급)
-          font-weight: bold;
-          border: 1px solid #009688;
-        }
-
-        .payment-daily {
-          color: #ff9800; // 주황색 (일급)
-          font-weight: bold;
-          border: 1px solid #ff9800;
-        }
-
-        .payment-monthly {
-          color: #3f51b5; // 진한 파랑 (월급)
-          font-weight: bold;
-          border: 1px solid #3f51b5;
-        }
-
-        .payment-weekly {
-          color: #4caf50; // 녹색 (주급)
-          font-weight: bold;
-          border: 1px solid #4caf50;
-        }
-
-        .payment-yearly {
-          color: #9c27b0; // 보라색 (연봉)
-          font-weight: bold;
-          border: 1px solid #9c27b0;
-        }
-
-        .payment-default {
-          color: #666; // 기본 회색
-          border: 1px solid #666;
-        }
-
-        .day_count {
-          font-weight: 500;
-          margin-right: 4px;
-        }
-
-        .day_list {
-          color: #999;
-          font-size: 0.85rem;
-        }
-
-        .salary {
-          font-size: 1.1rem;
-          font-weight: 700;
-          color: #222;
-        }
-
-        .salary_with_button {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 8px;
-
-          .salary_display {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 4px;
-          }
-        }
-
-        .salary_calc_button {
-          font-size: 0.85rem;
-          padding: 6px 14px;
-          border: none;
-          background-color: #00796b;
-          color: #fff;
-          border-radius: 6px;
-          cursor: pointer;
-          font-weight: 500;
-          transition: background-color 0.2s ease;
-          margin-top: 10px;
-          margin-right: 10px;
-
-          &:hover {
-            background-color: #005f52;
-          }
-        }
-      }
-    }
-  }
-
-  .address_row {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-
-    button {
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-    }
-  }
-
-  .map_container {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 12px;
-    background-color: #fafafa;
-    margin-top: 16px;
-    width: 100%;
-    height: 370px;
-  
-    #map {
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  .salary_sub_info {
-    .salary_note {
-      color: #bbb;
-      font-size: 0.75rem;
-      font-weight: 400;
-
-      strong {
-        font-weight: 600;
-        color: #666;
-      }
     }
   }
 }
