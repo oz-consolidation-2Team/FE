@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './CalculatorModal.scss';
 import { timeOptions } from '@/utils/checktime';
+import HolidayInfo from './HolidayInfo';
+import TaxInfo from './TaxInfo';
 
 export const CalculatorModalContent = ({
   salary,
@@ -217,7 +219,10 @@ export const CalculatorModalContent = ({
 
         {/* 세금 공제 선택 */}
         <div className="form-group">
-          <label>세금 공제</label>
+          <div className="label-row">
+            <label className="tax-label">세금 공제</label>
+            <TaxInfo />
+          </div>
           <select value={taxRate} onChange={(e) => {
             const val = Number(e.target.value);
             setTaxRate(val);
@@ -239,10 +244,10 @@ export const CalculatorModalContent = ({
             />
             주휴수당 계산 포함
           </label>
+          <HolidayInfo />
         </div>
 
         <hr />
-
         {/* 결과 영역: 변환 급여, 세금, 주휴수당, 최종금액 */}
         <div className="result">
             {targetMethod && (
