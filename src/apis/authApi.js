@@ -101,12 +101,17 @@ export const signUpCompanyApi = async (form) => {
   return response.data;
 };
 
-// 기업 회원가입 이메일 중복확인 API
-export const checkCompanyEmailApi = async (email) => {
-  const response = await axiosInstance.get(`/company/register/check-email`, {
-    params: { email },
-  });
-  return response.data;
+// 기업 이메일 인증 요청 API
+export const verifyCompanyEmailApi = async (email) => {
+  try {
+    const response = await axiosPublicInstance.post('/company/auth/verification', null, {
+      params: { email },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('🔴 이메일 인증 요청 에러:', error.response?.data);
+    throw error;
+  }
 };
 
 // 기업 이메일 찾기 API
@@ -120,15 +125,15 @@ export const findCompanyEmailApi = async ({ ceoName, startDate, businessNumber }
 };
 
 // 기업 비밀번호 찾기 API
-export const verifyCompanyPasswordInfoApi = async ({ email, ceo_name, opening_date, business_reg_number }) => {
-  const response = await axiosPublicInstance.post('/company/reset-password/verify', {
-    email,
-    ceo_name,
-    opening_date,
-    business_reg_number,
-  });
-
-  return response.data;
+  export const verifyCompanyPasswordInfoApi = async ({ email, ceo_name, opening_date, business_reg_number }) => {
+    const response = await axiosPublicInstance.post('/company/reset-password/verify', {
+      email,
+      ceo_name,
+      opening_date,
+      business_reg_number,
+    });
+  
+    return response.data;
 };
 
 // 기업 비밀번호 재설정 API
@@ -179,25 +184,29 @@ export const loginWithKakao = async (code) => {
   return response.data;
 };
 
-// 이메일 인증 확인 API
+// 공통 이메일 인증 확인 API
 export const verifyEmailTokenApi = async ({ token, user_type }) => {
-  const response = await axiosInstance.post('/verify-email', {
+  const response = await axiosPublicInstance.post('/verify-email', {
     token,
     user_type,
   });
   return response.data;
 };
 
-// 이메일 인증 완료 확인 API
+// 공통 이메일 인증 완료 확인 API
 export const checkEmailVerifiedApi = async (email, user_type) => {
+  console.log('📍 [checkEmailVerifiedApi] 호출됨:', { email, user_type });
+
   try {
     const response = await axiosPublicInstance.get('/auth/check-verification', {
       params: { email, user_type },
     });
 
+    console.log('✅ [checkEmailVerifiedApi] 서버 응답:', response.data);
+
     return response.data.data.is_verified;
   } catch (error) {
-    console.error('이메일 인증 확인 API 에러:', error.response?.data);
+    console.error('❌ [checkEmailVerifiedApi] 에러 발생:', error);
     throw error;
   }
 };

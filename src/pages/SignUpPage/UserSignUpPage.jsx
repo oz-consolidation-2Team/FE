@@ -87,6 +87,8 @@ const UserSignUpPage = () => {
   };
 
   const handleEmailVerification = async () => {
+    if (fromSocial) return;
+
     const email = form.email.trim();
     
     if (!validateEmail(email)) {
@@ -148,7 +150,9 @@ const UserSignUpPage = () => {
     
     if (!validateName(form.name)) newErrors.name = '이름을 입력해주세요.';
     
-    if (!emailVerified) newErrors.email = '이메일 인증을 완료해주세요.';
+    if (!fromSocial && !emailVerified) {
+      newErrors.email = '이메일 인증을 완료해주세요.';
+    }
   
     if (!validatePassword(form.password)) {
       newErrors.password = '비밀번호는 8자 이상, 영문/숫자/특수문자 포함';
@@ -182,20 +186,25 @@ const UserSignUpPage = () => {
 
   const handleNext = async () => {
     try {
-      const isVerified = await checkEmailVerifiedApi(form.email, 'user');
+      if (!fromSocial) {
+        const isVerified = await checkEmailVerifiedApi(form.email, 'user');
   
-      if (!isVerified) {
-        setModal({
-          type: 'error',
-          title: '이메일 인증 필요',
-          message: '이메일 인증을 먼저 완료해주세요.',
-          onConfirm: () => setModal(null),
-        });
-        return;
+        if (!isVerified) {
+          setEmailVerified(false);
+          setModal({
+            type: 'error',
+            title: '이메일 인증 필요',
+            message: '이메일 인증을 먼저 완료해주세요.',
+            onConfirm: () => setModal(null),
+          });
+          return;
+        }
+  
+        // 이메일 인증이 완료된 경우, emailVerified를 true로 설정
+        setEmailVerified(true);
       }
   
-      setEmailVerified(true);
-  
+      // 이메일 인증이 완료된 후에만 validateStep1() 호출
       const newErrors = validateStep1();
       setErrors(newErrors);
   
@@ -203,13 +212,25 @@ const UserSignUpPage = () => {
         setStep(1);
       }
     } catch (error) {
-      console.error('이메일 인증 확인 에러:', error);
-      setModal({
-        type: 'error',
-        title: '이메일 인증 확인 오류',
-        message: '이메일 인증 확인 중 오류가 발생했습니다.',
-        onConfirm: () => setModal(null),
-      });
+      const status = error.response?.status;
+  
+      if (status === 404) {
+        setModal({
+          type: 'error',
+          title: '이메일 인증 확인 오류',
+          message: '해당 이메일은 인증되지 않았습니다.',
+          onConfirm: () => setModal(null),
+        });
+      } else {
+        setModal({
+          type: 'error',
+          title: '이메일 인증 확인 오류',
+          message: '이메일 인증 확인 중 오류가 발생했습니다.',
+          onConfirm: () => setModal(null),
+        });
+      }
+  
+      setEmailVerified(false);
     }
   };
 
