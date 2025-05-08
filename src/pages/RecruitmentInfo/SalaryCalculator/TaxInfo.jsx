@@ -8,7 +8,6 @@ const TaxInfo = () => {
   return (
     <>
       <div className="label-row">
-        <label>세금 공제</label>
         <button
           type="button"
           className="info-icon-trigger"
