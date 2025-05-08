@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FaStar, FaRegStar, FaRegCopy, FaBookmark, FaRegBookmark } from 'react-icons/fa';
+import { FaRegCopy, FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import './JobDetail.scss';
 import JobApplyModal from '@/components/Company/Modal/JobApplyModal';
 import LoginPromptModal from '@/components/Company/Modal/LoginPromptModal';
@@ -11,8 +11,6 @@ import { formatPhoneNumber } from '@/utils/format';
 import { addFavorite, deleteFavorite } from '@/apis/favoriteApi';
 import CalculatorModal from './SalaryCalculator/CalculatorModal';
 import { useResume } from '@/hooks/useResume';
-
-
 
 const JobDetail = () => {
   const { postingId } = useParams();
@@ -75,21 +73,21 @@ const JobDetail = () => {
     return `${period} ${hour12}:${minute.toString().padStart(2, '0')}`;
   };
 
-
-
   return (
     <div className="jobdetail_container">
-      <section className="section">
-        <div className="header">
+      <section className="section01">
+        <div className="header_01">
           <div className="address">{job.work_address}</div>
           <div
             className="company"
             style={{ cursor: 'pointer' }}
             onClick={() => navigate(`/company-info/${job.company_id}`)}
-            >{job.work_place_name}</div>
+          >
+            {job.work_place_name}
+          </div>
         </div>
-          <h2 className="title">{job.title}</h2>
-          <span className="job-tag">{job.job_category}</span>
+        <h2 className="title">{job.title}</h2>
+        <span className="job-tag">{job.job_category}</span>
         <div className="tags">
           <span>{job.payment_method}</span>
           <span>
@@ -97,74 +95,85 @@ const JobDetail = () => {
               ? '협의 가능'
               : `주${job.work_days?.split(',').length || 0}일`}
           </span>
-          <span>
-            {job.is_work_duration_negotiable_str ? '협의 가능' : job.work_duration}
-          </span>
-          {job.benefits && (
-            <span>
-              {job.benefits}
-            </span>
-          )}
+          <span>{job.is_work_duration_negotiable_str ? '협의 가능' : job.work_duration}</span>
+          {job.benefits && <span>{job.benefits}</span>}
         </div>
       </section>
 
-      <section className="section">
+      <section className="section02">
         <h3>근무조건</h3>
-        <div className="conditions">
-          <div className="condition_row">
-            <div className="condition_label">급여</div>
-            <div className="condition_value salary_with_button">
+        <div className="conditions_02">
+          <div className="condition_row_02">
+            <div className="condition_label_02">급여</div>
+            <div className="condition_value_02 salary_with_button">
               <div className="salary_display">
-                <span className={`payment_method_badge ${
-                  job.payment_method === '시급' ? 'payment-hourly' :
-                  job.payment_method === '일급' ? 'payment-daily' :
-                  job.payment_method === '주급' ? 'payment-weekly' :
-                  job.payment_method === '월급' ? 'payment-monthly' :
-                  job.payment_method === '연봉' ? 'payment-yearly' :
-                  'payment-default'
-                }`}>{job.payment_method}</span>
-                <span className="salary">{job.salary.toLocaleString()}원</span>
-              </div>
-              <div className="salary_sub_info">
-                <button className="salary_calc_button" onClick={() => setIsCalcOpen(true)}>급여계산기</button>
-                <span className="salary_note">2025년 최저시급 <strong>10,030원</strong></span>
+                <span
+                  className={`payment_method_badge ${
+                    job.payment_method === '시급'
+                      ? 'payment-hourly'
+                      : job.payment_method === '일급'
+                        ? 'payment-daily'
+                        : job.payment_method === '주급'
+                          ? 'payment-weekly'
+                          : job.payment_method === '월급'
+                            ? 'payment-monthly'
+                            : job.payment_method === '연봉'
+                              ? 'payment-yearly'
+                              : 'payment-default'
+                  }`}
+                >
+                  {job.payment_method}
+                </span>
+                <div className="salary_content">
+                  <span className="salary">{job.salary.toLocaleString()}원</span>
+                  <span className="salary_note">
+                    2025년 최저시급 <strong>10,030원</strong>
+                  </span>
+                </div>
               </div>
             </div>
+            <button className="salary_calc_button" onClick={() => setIsCalcOpen(true)}>
+              급여계산기
+            </button>
           </div>
-          <div className="condition_row">
-            <div className="condition_label">근무 기간</div>
-            <div className="condition_value">{job.work_duration}</div>
+          <div className="condition_row_02">
+            <div className="condition_label_02">근무 기간</div>
+            <div className="condition_value_02">{job.work_duration}</div>
           </div>
-          <div className="condition_row">
-            <div className="condition_label">근무 요일</div>
-            <div className="condition_value">
-              {job.is_work_days_negotiable
+          <div className="condition_row_02">
+            <div className="condition_label_02">근무 요일</div>
+            <div className="condition_value_02">
+              {job.is_work_days_negotiable ? (
+                '협의 가능'
+              ) : job.is_schedule_based_str ? (
+                '일정에 따름'
+              ) : (
+                <>
+                  <span className="day_count">주{job.work_days?.split(',').length}일</span>
+                  <span className="day_list">({job.work_days?.split(',').join(', ')})</span>
+                </>
+              )}
+            </div>
+          </div>
+          <div className="condition_row_02">
+            <div className="condition_label_02">근무 시간</div>
+            <div className="condition_value_02">
+              {job.is_work_time_negotiable
                 ? '협의 가능'
-                : job.is_schedule_based_str
-                ? '일정에 따름'
-                : (
-                  <>
-                    <span className="day_count">주{job.work_days?.split(',').length}일</span>
-                    <span className="day_list">({job.work_days?.split(',').join(', ')})</span>
-                  </>
-                )}
+                : `${convertToAMPM(job.work_start_time)} ~ ${convertToAMPM(job.work_end_time)}`}
             </div>
           </div>
-          <div className="condition_row">
-            <div className="condition_label">근무 시간</div>
-            <div className="condition_value">{job.is_work_time_negotiable ? '협의 가능' : `${convertToAMPM(job.work_start_time)} ~ ${convertToAMPM(job.work_end_time)}`}</div>
+          <div className="condition_row_02">
+            <div className="condition_label_02">업직종</div>
+            <div className="condition_value_02">{job.job_category}</div>
           </div>
-          <div className="condition_row">
-            <div className="condition_label">업직종</div>
-            <div className="condition_value">{job.job_category}</div>
+          <div className="condition_row_02">
+            <div className="condition_label_02">고용 형태</div>
+            <div className="condition_value_02">{job.employment_type}</div>
           </div>
-          <div className="condition_row">
-            <div className="condition_label">고용 형태</div>
-            <div className="condition_value">{job.employment_type}</div>
-          </div>
-          <div className="condition_row">
-            <div className="condition_label">복리후생</div>
-            <div className="condition_value">{job.benefits}</div>
+          <div className="condition_row_02">
+            <div className="condition_label_02">복리후생</div>
+            <div className="condition_value_02">{job.benefits}</div>
           </div>
         </div>
       </section>
@@ -205,7 +214,10 @@ const JobDetail = () => {
 
       <section className="section">
         <h3>근무지 정보</h3>
-        <div className="address_row" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div
+          className="address_row"
+          style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}
+        >
           <div>
             <strong>근무지명:</strong> {job.work_place_name}
           </div>
@@ -235,22 +247,28 @@ const JobDetail = () => {
         <h3>상세 내용</h3>
         <pre className="description">{job.description}</pre>
         {job.postings_image && (
-            <img
-              src={job.postings_image}
-              alt="채용 공고 이미지"
-              className="job-image"
-              style={{ width: '100%', maxHeight: '600px', objectFit: 'cover', marginTop: '20px' }}
-            />
-          )}
+          <img
+            src={job.postings_image}
+            alt="채용 공고 이미지"
+            className="job-image"
+            style={{ width: '100%', maxHeight: '600px', objectFit: 'cover', marginTop: '20px' }}
+          />
+        )}
       </section>
 
       <section className="section">
         <h3>기업 정보</h3>
         {companyInfo ? (
           <>
-            <p><strong>담당자 전화번호</strong>: {formatPhoneNumber(companyInfo.manager_phone)}</p>
-            <p><strong>이메일</strong>: {companyInfo.manager_email || '정보 없음'}</p>
-            <p><strong>기업 소개</strong>: {companyInfo.company_intro || '정보 없음'}</p>
+            <p>
+              <strong>담당자 전화번호</strong>: {formatPhoneNumber(companyInfo.manager_phone)}
+            </p>
+            <p>
+              <strong>이메일</strong>: {companyInfo.manager_email || '정보 없음'}
+            </p>
+            <p>
+              <strong>기업 소개</strong>: {companyInfo.company_intro || '정보 없음'}
+            </p>
           </>
         ) : (
           <p>기업 정보를 불러오는 중...</p>
@@ -286,7 +304,7 @@ const JobDetail = () => {
           </div>
         </div>
       )}
-     {isModalOpen && (
+      {isModalOpen && (
         <JobApplyModal
           onClose={() => setIsModalOpen(false)}
           onApply={async () => {
@@ -307,17 +325,10 @@ const JobDetail = () => {
         />
       )}
       {isLoginPromptOpen && (
-        <LoginPromptModal
-          onClose={() => setLoginPromptOpen(false)}
-          navigate={navigate}
-        />
+        <LoginPromptModal onClose={() => setLoginPromptOpen(false)} navigate={navigate} />
       )}
       {isCalcOpen && (
-        <CalculatorModal
-          key={job.id}
-          job={job}
-          onClose={() => setIsCalcOpen(false)}
-        />
+        <CalculatorModal key={job.id} job={job} onClose={() => setIsCalcOpen(false)} />
       )}
     </div>
   );

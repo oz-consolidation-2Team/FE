@@ -1,12 +1,207 @@
-@use "../../utils/variables" as *;
+@use '@/utils/variables' as *;
 
 .jobdetail_container {
   width: 100%;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 20px;
   font-family: 'Pretendard', sans-serif;
 
+  /*section01*/
+
+  .section01 {
+    border: 1px solid #ddd;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+
+    .header_01 {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+
+      .address {
+        font-size: $font-small;
+        color: $light-gray-text;
+      }
+
+      .company {
+        font-size: $font-small;
+        color: $light-gray-text;
+      }
+    }
+
+    .title {
+      font-size: $font-h3;
+      font-weight: $weight-bold;
+      margin-bottom: 7px;
+      color: $deep-green;
+      text-align: left;
+    }
+
+    .job-tag {
+      font-size: $font-body;
+    }
+
+    .tags {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+
+      span {
+        background-color: $light-green;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: $font-small;
+        color: $gray-dark;
+      }
+    }
+  }
+
+  /*section 02*/
+
+  .section02 {
+    border: 1px solid #ddd;
+    padding: 30px 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+
+    h3 {
+      font-size: $font-h5;
+      color: $green;
+      margin-bottom: 25px;
+    }
+
+    .conditions_02 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 32px;
+
+      .condition_row_02 {
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        font-size: $font-body;
+        align-items: center;
+
+        .condition_label_02 {
+          color: $light-gray-text;
+          font-weight: $weight-medium;
+        }
+
+        .salary_with_button {
+          padding-top: 25px;
+        }
+
+        .condition_value_02 {
+          color: $gray-dark;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          gap: 0px;
+
+          .day_count {
+            font-weight: $weight-medium;
+            margin-right: 4px;
+          }
+
+          .day_list {
+            color: #999;
+            font-size: 0.85rem;
+          }
+
+          .salary_display {
+            display: flex;
+
+            .payment_method_badge {
+              padding: 3px 8px;
+              color: #ff5722;
+              border-radius: 12px;
+              font-size: $font-small;
+              margin: 5px 0 7px;
+              margin-right: 8px;
+            }
+
+            .payment-hourly {
+              color: #009688; // 청록색 (시급)
+              font-weight: bold;
+              border: 1px solid #009688;
+            }
+
+            .payment-daily {
+              color: #ff9800; // 주황색 (일급)
+              font-weight: bold;
+              border: 1px solid #ff9800;
+            }
+
+            .payment-monthly {
+              color: #3f51b5; // 진한 파랑 (월급)
+              font-weight: bold;
+              border: 1px solid #3f51b5;
+            }
+
+            .payment-weekly {
+              color: #4caf50; // 녹색 (주급)
+              font-weight: bold;
+              border: 1px solid #4caf50;
+            }
+
+            .payment-yearly {
+              color: #9c27b0; // 보라색 (연봉)
+              font-weight: bold;
+              border: 1px solid #9c27b0;
+            }
+
+            .payment-default {
+              color: $gray-text; // 기본 회색
+              border: 1px solid $gray-text;
+            }
+
+            .salary_content {
+              display: flex;
+              flex-direction: column;
+
+              .salary {
+                font-size: $font-body-title;
+                font-weight: 700;
+                color: $gray-dark;
+                margin-bottom: 3px;
+              }
+
+              .salary_note {
+                color: $light-gray-text;
+                font-size: 0.75rem;
+                font-weight: $weight-regular;
+
+                strong {
+                  font-weight: $weight-bold;
+                  color: $gray-text;
+                }
+              }
+            }
+          }
+        }
+
+        .salary_calc_button {
+          width: 65px;
+          font-size: $font-caption;
+          padding: 4px;
+          border: none;
+          background-color: $green;
+          color: #fff;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 500;
+          transition: background-color 0.2s ease;
+          position: relative;
+          bottom: 8px;
+          &:hover {
+            background-color: $deep-green;
+          }
+        }
+      }
+    }
+  }
   .section {
     border: 1px solid #ddd;
     padding: 20px;
@@ -111,7 +306,7 @@
   .conditions {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px 32px;
+    gap: 20px 32px;
 
     .condition_row {
       display: grid;
@@ -127,49 +322,9 @@
       .condition_value {
         color: #333;
         font-weight: 500;
-
-        .payment_method_badge {
-          display: inline-block;
-          padding: 2px 8px;
-          color: #ff5722;
-          border-radius: 12px;
-          font-size: 0.85rem;
-          margin-right: 8px;
-        }
-        .payment-hourly {
-          color: #009688; // 청록색 (시급)
-          font-weight: bold;
-          border: 1px solid #009688;
-        }
-
-        .payment-daily {
-          color: #ff9800; // 주황색 (일급)
-          font-weight: bold;
-          border: 1px solid #ff9800;
-        }
-
-        .payment-monthly {
-          color: #3f51b5; // 진한 파랑 (월급)
-          font-weight: bold;
-          border: 1px solid #3f51b5;
-        }
-
-        .payment-weekly {
-          color: #4caf50; // 녹색 (주급)
-          font-weight: bold;
-          border: 1px solid #4caf50;
-        }
-
-        .payment-yearly {
-          color: #9c27b0; // 보라색 (연봉)
-          font-weight: bold;
-          border: 1px solid #9c27b0;
-        }
-
-        .payment-default {
-          color: #666; // 기본 회색
-          border: 1px solid #666;
-        }
+        display: flex;
+        align-items: center;
+        gap: 20px;
 
         .day_count {
           font-weight: 500;
@@ -181,41 +336,92 @@
           font-size: 0.85rem;
         }
 
-        .salary {
-          font-size: 1.1rem;
-          font-weight: 700;
-          color: #222;
-        }
-
-        .salary_with_button {
+        .salary_display {
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 8px;
 
-          .salary_display {
+          .payment_method_badge {
+            padding: 3px 8px;
+            color: #ff5722;
+            border-radius: 12px;
+            font-size: $font-small;
+            margin: 5px 0 7px;
+            margin-right: 8px;
+          }
+
+          .payment-hourly {
+            color: #009688; // 청록색 (시급)
+            font-weight: bold;
+            border: 1px solid #009688;
+          }
+
+          .payment-daily {
+            color: #ff9800; // 주황색 (일급)
+            font-weight: bold;
+            border: 1px solid #ff9800;
+          }
+
+          .payment-monthly {
+            color: #3f51b5; // 진한 파랑 (월급)
+            font-weight: bold;
+            border: 1px solid #3f51b5;
+          }
+
+          .payment-weekly {
+            color: #4caf50; // 녹색 (주급)
+            font-weight: bold;
+            border: 1px solid #4caf50;
+          }
+
+          .payment-yearly {
+            color: #9c27b0; // 보라색 (연봉)
+            font-weight: bold;
+            border: 1px solid #9c27b0;
+          }
+
+          .payment-default {
+            color: #666; // 기본 회색
+            border: 1px solid #666;
+          }
+
+          .salary_content {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            gap: 4px;
+
+            .salary {
+              font-size: $font-body-title;
+              font-weight: 700;
+              color: #222;
+              margin-bottom: 3px;
+            }
+
+            .salary_note {
+              color: #bbb;
+              font-size: 0.75rem;
+              font-weight: 400;
+
+              strong {
+                font-weight: 600;
+                color: #666;
+              }
+            }
           }
         }
 
         .salary_calc_button {
-          font-size: 0.85rem;
-          padding: 6px 14px;
+          font-size: $font-caption;
+          padding: 4px 6px;
           border: none;
-          background-color: #00796b;
+          background-color: $orange;
           color: #fff;
           border-radius: 6px;
           cursor: pointer;
           font-weight: 500;
           transition: background-color 0.2s ease;
-          margin-top: 10px;
+          margin-top: -10px;
           margin-right: 10px;
 
           &:hover {
-            background-color: #005f52;
+            background-color: $deep-green;
           }
         }
       }
@@ -246,23 +452,10 @@
     margin-top: 16px;
     width: 100%;
     height: 370px;
-  
+
     #map {
       width: 100%;
       height: 100%;
-    }
-  }
-
-  .salary_sub_info {
-    .salary_note {
-      color: #bbb;
-      font-size: 0.75rem;
-      font-weight: 400;
-
-      strong {
-        font-weight: 600;
-        color: #666;
-      }
     }
   }
 }
