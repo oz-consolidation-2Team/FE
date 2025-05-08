@@ -54,15 +54,32 @@ export const validateCompanyStep0 = (form, emailChecked) => {
 };
 
 // ✅ 2단계: 기업정보 검사
-export const validateCompanyStep1 = (form, bizVerified) => {
+export const validateCompanyStep1 = (form) => {
   const errors = {};
 
-  if (!form.companyName) errors.companyName = '기업명을 입력해주세요.';
-  if (!form.ceoName) errors.ceoName = '대표자명을 입력해주세요.';
-  if (!isValidDate(form.startDate)) errors.startDate = 'YYYY-MM-DD 형식으로 입력해주세요.';
-  if (!form.businessNumber) errors.businessNumber = '사업자등록번호를 입력해주세요.';
-  if (!bizVerified) errors.businessNumber = '사업자등록번호 인증이 필요합니다.';
-  if (form.companyDesc.length < 50) errors.companyDesc = '기업 소개는 최소 50자 이상 입력해주세요.';
+  if (!form.companyName) {
+    errors.companyName = '기업명을 입력해주세요.';
+  }
+
+  if (!form.ceoName) {
+    errors.ceoName = '대표자명을 입력해주세요.';
+  }
+
+  if (!isValidDate(form.startDate)) {
+    errors.startDate = 'YYYYNNDD 형식으로 입력해주세요.';
+  }
+
+  if (!form.businessNumber) {
+    errors.businessNumber = '사업자등록번호를 입력해주세요.';
+  }
+
+  if (!form.bizVerified) {
+    errors.businessNumber = '사업자등록번호 인증이 필요합니다.';
+  }
+
+  if (form.companyDesc.length < 50) {
+    errors.companyDesc = '기업 소개를 최소 50자 이상 입력해주세요.';
+  }
 
   return errors;
 };
