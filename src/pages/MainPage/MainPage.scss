@@ -1,14 +1,11 @@
-$main-color: #0f8c3b;
-$gray-dark: #333;
-$gray-text: #666;
-$orange-light: #ffa82f;
+@use '@/utils/variables' as *;
 
 .main_page {
   .hero_section {
     .hero_inner {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 100px 80px;
+      padding: 120px 100px;
       border-radius: 12px;
       background:
         linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
@@ -16,17 +13,17 @@ $orange-light: #ffa82f;
       color: white;
 
       h1 {
-        font-size: 40px;
-        font-weight: 700;
+        font-size: $font-h2;
+        font-weight: $weight-bold;
         margin-bottom: 20px;
       }
 
       p {
-        font-size: 18px;
+        font-size: $font-h5;
         line-height: 1.6;
 
         strong {
-          font-size: 30px;
+          font-size: $font-h3;
           font-weight: 700;
         }
 
@@ -43,12 +40,12 @@ $orange-light: #ffa82f;
               content: '';
               position: absolute;
               left: 0;
-              bottom: 4px;
+              bottom: 0.15em;
               width: 100%;
-              height: 10px;
-              background-color: $main-color;
+              height: 0.6em;
+              background-color: #0f8c3b50; //$green에 오퍼시티 추가
               border-radius: 4px;
-              z-index: -1;
+              z-index: 1;
             }
           }
         }
@@ -104,7 +101,7 @@ $orange-light: #ffa82f;
 
     h2 {
       font-size: 22px;
-      color: $main-color;
+      color: $green;
       margin-bottom: 24px;
     }
 
@@ -114,7 +111,7 @@ $orange-light: #ffa82f;
       flex-wrap: wrap;
       gap: 20px;
 
-      .job_card {
+      .main_job_card {
         width: calc(25% - 15px);
         background: white;
         border: 1px solid #eee;
@@ -130,41 +127,39 @@ $orange-light: #ffa82f;
           box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
         }
 
-        .job_top {
+        .main_job_top {
           position: relative;
           display: flex;
           flex-direction: column;
 
           .company {
-            font-size: 14px;
+            font-size: $font-small;
             color: $gray-text;
             margin-bottom: 8px;
           }
 
           .title {
-            font-size: 16px;
+            font-size: $font-body;
             font-weight: 600;
             color: $gray-dark;
-            margin-bottom: 10px;
-          }
+            margin-bottom: 25px;
 
-          .date {
-            font-size: 13px;
-            color: #999;
-            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
 
           .bookmark_icon {
             position: absolute;
             top: 0;
             right: 0;
-            font-size: 24px;
+            font-size: $font-h5;
             cursor: pointer;
-            color: $orange-light;
+            color: $orange;
             transition: transform 0.2s;
 
             &.filled {
-              color: $orange-light;
+              color: $orange;
             }
 
             &:hover {
@@ -173,15 +168,20 @@ $orange-light: #ffa82f;
           }
         }
 
-        .job_bottom {
+        .main_job_bottom {
           display: flex;
+          flex-direction: column;
           justify-content: flex-start;
-          align-items: center;
-          margin-top: 20px;
 
           .location {
-            font-size: 14px;
+            font-size: $font-small;
             color: $gray-text;
+            margin-top: 10px;
+            margin-bottom: 5px;
+          }
+          .date {
+            font-size: $font-caption;
+            color: #999;
           }
         }
       }

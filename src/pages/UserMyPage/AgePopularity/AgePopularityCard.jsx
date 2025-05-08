@@ -32,7 +32,7 @@ const AgePopularityCard = ({ job }) => {
         <div className="job_left">
           <p className="company">{job.work_place_name}</p>
           <h3 className="title">{job.title}</h3>
-          <p className="date">{job.recruit_period_end}</p>
+          {/* <p className="date">{job.recruit_period_end}</p> */}
           <p className="location">{job.work_address}</p>
         </div>
         <div className="job_right">

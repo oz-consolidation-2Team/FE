@@ -1,5 +1,4 @@
-$main-color: #0f8c3b;
-$orange-light: #ffa82f;
+@use '@/utils/variables' as *;
 
 .gnb {
   width: 100%;
@@ -27,7 +26,7 @@ $orange-light: #ffa82f;
         cursor: pointer;
 
         img {
-          height: 60px;
+          height: 65px;
         }
       }
 
@@ -40,11 +39,11 @@ $orange-light: #ffa82f;
 
         li {
           cursor: pointer;
-          font-size: 16px;
+          font-size: $font-body-title;
           color: #444;
 
           &:hover {
-            color: $main-color;
+            color: $green;
           }
         }
       }
@@ -65,22 +64,22 @@ $orange-light: #ffa82f;
         &.signup_btn,
         &.mypage_btn,
         &.companypage_btn {
-          border: 1px solid $orange-light;
-          color: $orange-light;
+          border: 1px solid $orange;
+          color: $orange;
 
           &:hover {
-            background-color: $orange-light;
+            background-color: $orange;
             color: white;
           }
         }
 
         &.login_btn,
         &.logout_btn {
-          border: 1px solid $main-color;
-          color: $main-color;
+          border: 1px solid $green;
+          color: $green;
 
           &:hover {
-            background-color: $main-color;
+            background-color: $green;
             color: white;
           }
         }
