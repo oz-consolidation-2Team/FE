@@ -74,16 +74,16 @@ const LoginPage = () => {
         </div>
 
         <form onSubmit={(e) => { e.preventDefault(); handleLoginClick(); }}>
-          <LabeledInput
-            label="이메일"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            placeholder="이메일을 입력하세요"
-            error={errors.email}
-            className={`no_margin ${userType === 'company' ? 'company_focus' : ''}`}
-            autoComplete="email"
-          />
+        <LabeledInput
+          label="이메일"
+          name="email"
+          value={form.email}
+          onChange={handleChange}
+          placeholder="이메일을 입력하세요"
+          error={errors.email}
+          className={userType === 'company' ? 'company_focus' : ''}
+          autoComplete="email"
+        />
 
           <div className="input_group">
             <label>비밀번호</label>
