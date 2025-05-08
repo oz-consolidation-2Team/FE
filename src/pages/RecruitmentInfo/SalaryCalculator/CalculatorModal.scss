@@ -36,20 +36,6 @@
   color: $green;
 }
 
-.close-button {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-
-  &:hover {
-    color: #d32f2f;
-  }
-}
-
 .form-group {
   margin-bottom: 1rem;
 

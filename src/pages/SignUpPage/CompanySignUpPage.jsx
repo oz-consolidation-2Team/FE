@@ -18,7 +18,8 @@ import { useNavigate } from 'react-router-dom';
 import './CompanySignUpPage.scss';
 import {
   signUpCompanyApi,
-  checkCompanyEmailApi,
+  verifyCompanyEmailApi,
+  checkEmailVerifiedApi,
 } from '@/apis/authApi';
 
 const CompanySignUpPage = () => {
@@ -109,22 +110,87 @@ const CompanySignUpPage = () => {
     }
   };
 
-  const handleEmailCheck = async () => {
-    if (!validateEmail(form.email)) {
-      setErrors((prev) => ({ ...prev, email: '이메일 형식이 올바르지 않습니다.' }));
+  const handleEmailVerification = async () => {
+    console.log('이메일 인증 요청 시작:', form.email);
+    const email = form.email.trim();
+    
+    if (!validateEmail(email)) {
+      setErrors((prev) => ({
+        ...prev,
+        email: '이메일 형식이 올바르지 않습니다.',
+      }));
       return;
     }
   
     try {
-      await checkCompanyEmailApi(form.email);
+      await verifyCompanyEmailApi(email);
   
-      showModal('success', '사용 가능', '사용 가능한 이메일입니다.', () => {
-        setEmailChecked(true);
-      });
-    } catch (err) {
-      const message = err.response?.data?.message || '이미 등록된 이메일입니다.';
-      showModal('error', '중복된 이메일', message);
+      // 이메일 인증 요청 시점에서 emailChecked를 false로 리셋
       setEmailChecked(false);
+  
+      setModal({
+        type: 'success',
+        title: '인증 요청 완료',
+        message: '입력하신 이메일로 인증 메일이 발송되었습니다.',
+        onConfirm: () => setModal(null),
+      });
+  
+    } catch (error) {
+      const status = error.response?.status;
+      let errorMessage = '이메일 인증 요청 중 오류가 발생했습니다.';
+  
+      if (status === 400) {
+        errorMessage = '이미 가입된 이메일입니다.';
+      }
+  
+      setModal({
+        type: 'error',
+        title: '오류 발생',
+        message: errorMessage,
+        onConfirm: () => setModal(null),
+      });
+    }
+  };
+  
+  const handleEmailVerificationCheck = async () => {
+    console.log('📍 이메일 인증 확인 함수 호출됨');
+  
+    try {
+      console.log('🔍 기업 이메일 인증 확인 요청 시작:', form.email);
+      const isVerified = await checkEmailVerifiedApi(form.email, 'company');
+      console.log('✅ 인증 확인 결과:', isVerified);
+  
+      if (isVerified) {
+        setEmailChecked(true);
+  
+        // 이메일 에러 메시지 제거
+        setErrors((prev) => {
+          const next = { ...prev };
+          delete next.email;
+          return next;
+        });
+  
+        console.log('✅ 이메일 인증이 완료되었습니다. 다음 단계로 이동합니다.');
+        setStep((prev) => prev + 1); // ✅ 인증이 완료되면 즉시 다음 단계로 이동
+  
+      } else {
+        setEmailChecked(false);
+        setModal({
+          type: 'error',
+          title: '인증 필요',
+          message: '이메일 인증을 먼저 완료해주세요.',
+          onConfirm: () => setModal(null),
+        });
+      }
+  
+    } catch (error) {
+      console.error('❌ 이메일 인증 확인 에러:', error);
+      setModal({
+        type: 'error',
+        title: '오류 발생',
+        message: '이메일 인증 확인 중 오류가 발생했습니다.',
+        onConfirm: () => setModal(null),
+      });
     }
   };
 
@@ -154,38 +220,32 @@ const CompanySignUpPage = () => {
     }
   };
 
-  const handleNext = () => {
-    let newErrors = {};
-
+  const handleNext = async () => {
+    console.log('🚀 handleNext 함수 호출됨');
+  
     if (step === 0) {
-      newErrors = validateCompanyStep0(form, emailChecked);
-      if (newErrors.email === '이메일 중복확인을 해주세요.') {
-        showModal('error', '중복확인 필요', newErrors.email);
-        return;
-      }
+      console.log('🔍 다음 버튼 클릭 - 기업 이메일 인증 확인 시작');
+      await handleEmailVerificationCheck();
+      return; // ✅ 이메일 인증 확인 로직에서 다음 단계로 이동하기 때문에 return
     }
-
+  
+    let newErrors = {};
+  
     if (step === 1) {
-      newErrors = validateCompanyStep1(form, bizVerified);
-    
-      const keys = Object.keys(newErrors);
-      if (
-        keys.length === 1 &&
-        keys[0] === 'businessNumber' &&
-        newErrors.businessNumber === '사업자등록번호 인증이 필요합니다.'
-      ) {
-        showModal('error', '인증 필요', newErrors.businessNumber);
-        return;
-      }
+      newErrors = validateCompanyStep0(form);
     }
-    
-
+  
+    if (step === 2) {
+      newErrors = validateCompanyStep1(form);
+    }
+  
     setErrors(newErrors);
+  
     if (Object.keys(newErrors).length === 0) {
       setStep((prev) => prev + 1);
     }
   };
-
+  
   const handleSubmit = () => {
     const newErrors = validateCompanyStep2(form);
     setErrors(newErrors);
@@ -287,8 +347,19 @@ const CompanySignUpPage = () => {
               <div className="form_group">
                 <label>이메일</label>
                 <div className="input_row">
-                  <input name="email" value={form.email} onChange={handleChange} className={errors.email ? 'error' : ''} autoComplete="username" />
-                  <button type="button" onClick={handleEmailCheck}>중복확인</button>
+                  <input
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    className={errors.email ? 'error' : ''}
+                    autoComplete="username"
+                  />
+                  <button 
+                    type="button" 
+                    onClick={handleEmailVerification}
+                  >
+                    인증하기
+                  </button>
                 </div>
                 {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
               </div>

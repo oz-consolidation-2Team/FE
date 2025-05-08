@@ -23,6 +23,7 @@ import UserInfoEditPage from '@/pages/UserInfoEditPage';
 import NaverCallbackPage from '@/pages/LoginPage/NaverCallbackPage';
 import UserSignUpPage from '@/pages/SignUpPage/UserSignUpPage';
 import KakaoCallbackPage from '@/pages/LoginPage/KakaoCallbackPage';
+import VerifyEmailPage from '@/pages/SignUpPage/VerifyEmailPage';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/auth/naver/login" element={<NaverCallbackPage />} />
         <Route path="/auth/kakao/login" element={<KakaoCallbackPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/find-email" element={<FindEmailPage />} />
         <Route path="/forgot-password" element={<FindPasswordPage />} />
         <Route path="/reset-password/:type" element={<ResetPasswordPage />} />
