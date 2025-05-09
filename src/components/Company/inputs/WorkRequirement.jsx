@@ -29,7 +29,7 @@ export default function WorkRequirement (props) {
             <div className="div_box options">
                 <Category text='근무기간' />
                 <InputDropDown {...props} name='work_duration' text='근무기간' />
-                <InputRadio {...props} type='협의가능' name='is_work_duration_negotiable_str' />
+                <InputRadio {...props} type='협의가능' name='is_work_duration_negotiable' />
             </div>
             {props.error['work_duration'] && <span className="error_message">근무기간을 선택해주세요</span>}
 
@@ -38,8 +38,8 @@ export default function WorkRequirement (props) {
                 <div>
                     <InputRadio {...props} type='근무요일' name='work_days' />
                     <div className="work_day_option">
-                        <InputRadio {...props} type='근무요일협의' name='is_work_days_negotiable_str' />
-                        <InputRadio {...props} type='근무요일변동' name='is_schedule_based_str' />
+                        <InputRadio {...props} type='근무요일협의' name='is_work_days_negotiable' />
+                        <InputRadio {...props} type='근무요일변동' name='is_schedule_based' />
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@ export default function WorkRequirement (props) {
                 <InputDropDown {...props} name='work_start_time' text='시작시간' type='time' />
                 <p className="p_swung_dash">~</p>
                 <InputDropDown {...props} name='work_end_time' text='종료시간' type='time' />
-                <InputRadio {...props} type='협의가능' name='is_work_time_negotiable_str' />
+                <InputRadio {...props} type='협의가능' name='is_work_time_negotiable' />
             </div>
             {props.error['work_start_time'] && props.error['work_end_time'] && <span className="error_message">근무시간을 선택해주세요</span>}
         </div>

@@ -55,7 +55,11 @@ export default function InputRadio (props) {
 
     const isChecked = (item) => {
         if (!props.formData[props.name]) return 
-        const booleanType = typeof props.formData[props.name] === 'boolean' ? typeof props.formData[props.name] : props.formData[props.name].includes(item)
+        const data = props.formData[props.name]
+
+        const booleanType = typeof data === 'boolean' ? typeof data : (
+            data.length === 1 ? data[0].includes(item) : data.includes(item)
+        )
         return booleanType
 
     }
@@ -63,10 +67,10 @@ export default function InputRadio (props) {
     return (
         <div className="InputRadio_container">
             {DATA[props.type].map((item, index)=>{
+                const defaultChecked = isChecked(item)
                 return (
                     <label className="div_checkBoxs" key={index}>
-                        {/* {console.log(props.name, isChecked(item))} */}
-                        <input type='checkbox' name={props.name} onChange={handleClick} defaultChecked={isChecked(item)} />
+                        <input type='checkbox' name={props.name} onChange={handleClick} defaultChecked={defaultChecked || false} />
                         {item}
                     </label>
                 )
