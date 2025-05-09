@@ -18,10 +18,22 @@ export default function InputRadio (props) {
             text
         ]);
 
-        props.setFormData({
-            ...props.formData,
-            [e.target.name]: typeof value === 'boolean' ? value : [...value]
-        })
+        if (e.target.name === 'is_always_recruiting') {
+            props.setFormData({
+                ...props.formData,
+                is_always_recruiting: value,
+                recruit_period_end: props.formData['recruit_period_start']
+            })
+            props.setError({
+                ...props.error,
+                recruit_period_end: false,
+            })
+        } else {
+            props.setFormData({
+                ...props.formData,
+                [e.target.name]: typeof value === 'boolean' ? value : [...value]
+            })
+        }
 
         if (e.target.name === 'work_days') {
             props.setError({
