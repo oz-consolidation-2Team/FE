@@ -71,6 +71,14 @@ const UserSignUpPage = () => {
     });
   };
 
+  const handleOpenTermsModal = (key, title) => {
+    setModal({
+      type: 'term',
+      key,
+      title,
+    });
+  };
+
   const handlePhoneChange = (e) => {
     let val = e.target.value.replace(/[^\d]/g, '').slice(0, MAX_PHONE_LENGTH);
     if (val.length === 11) val = val.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
@@ -200,11 +208,9 @@ const UserSignUpPage = () => {
           return;
         }
   
-        // 이메일 인증이 완료된 경우, emailVerified를 true로 설정
         setEmailVerified(true);
       }
   
-      // 이메일 인증이 완료된 후에만 validateStep1() 호출
       const newErrors = validateStep1();
       setErrors(newErrors);
   
@@ -455,43 +461,70 @@ const UserSignUpPage = () => {
           )}
 
           {step === 2 && (
-            <>
-              <div className="terms_step">
-                <div className="checkbox_row all_agree">
-                  <input type="checkbox" checked={form.termsAll} onChange={handleAllTermsToggle} />
-                  <label><strong>전체 약관 동의</strong></label>
-                </div>
-                <hr />
-                <div className="terms_section">
-                  <div className="terms_label">[필수] 약관 동의</div>
-                  {[1, 2, 3].map((n) => (
-                    <div className="checkbox_row" key={`terms${n}`}>
-                      <input type="checkbox" checked={form[`terms${n}`]} onChange={() => toggleCheck(`terms${n}`)} />
-                      <label>
-                        {n === 1 ? '개인정보처리방침' :
-                        n === 2 ? '개인회원 이용약관' :
-                        '위치기반 서비스 이용약관'}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-                <hr />
-                <div className="terms_section">
-                  <div className="terms_label">[선택] 약관 동의</div>
-                  {[4, 5, 6].map((n) => (
-                    <div className="checkbox_row" key={`terms${n}`}>
-                      <input type="checkbox" checked={form[`terms${n}`]} onChange={() => toggleCheck(`terms${n}`)} />
-                      <label>
-                        {n === 4 ? '마케팅 이메일 수신 동의' :
-                        n === 5 ? '마케팅 SMS 수신 동의' :
-                        '마케팅 Push 수신 동의'}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-                {errors.agree && <ErrorMessage>{errors.agree}</ErrorMessage>}
+            <div className="terms_step">
+              <div className="checkbox_row all_agree">
+                <input
+                  type="checkbox"
+                  checked={form.termsAll}
+                  onChange={handleAllTermsToggle}
+                />
+                <label><strong>전체 약관 동의</strong></label>
               </div>
-            </>
+
+              <hr />
+              <div className="terms_section">
+                <div className="terms_label">[필수] 약관 동의</div>
+                {[1, 2, 3].map((n) => (
+                  <div className="checkbox_row" key={`terms${n}`}>
+                    <input 
+                      type="checkbox" 
+                      checked={form[`terms${n}`]} 
+                      onChange={() => toggleCheck(`terms${n}`)} 
+                    />
+                    <label>
+                      {n === 1 ? '개인정보처리방침' :
+                      n === 2 ? '개인회원 이용약관' :
+                      '위치기반 서비스 이용약관'}
+                    </label>
+                    <button
+                      className="view_detail"
+                      onClick={() => handleOpenTermsModal(
+                        n === 1 ? 'privacy_policy.html' :
+                        n === 2 ? 'user_terms.html' :
+                        'location_terms.html',
+                        n === 1 ? '개인정보처리방침' :
+                        n === 2 ? '개인회원 이용약관' :
+                        '위치기반 서비스 이용약관'
+                      )}
+                    >
+                      자세히 보기
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <hr />
+
+              <div className="terms_section">
+                <div className="terms_label">[선택] 약관 동의</div>
+                {[4, 5, 6].map((n) => (
+                  <div className="checkbox_row" key={`terms${n}`}>
+                    <input 
+                      type="checkbox" 
+                      checked={form[`terms${n}`]} 
+                      onChange={() => toggleCheck(`terms${n}`)} 
+                    />
+                    <label>
+                      {n === 4 ? '마케팅 이메일 수신 동의' :
+                      n === 5 ? '마케팅 SMS 수신 동의' :
+                      '마케팅 Push 수신 동의'}
+                    </label>
+                  </div>
+                ))}
+              </div>
+
+              {errors.agree && <ErrorMessage>{errors.agree}</ErrorMessage>}
+            </div>
           )}
 
           <div className="button_group">
@@ -504,7 +537,24 @@ const UserSignUpPage = () => {
           </div>
         </form>
       </div>
-      {modal && <Modal {...modal} />}
+      {modal?.type === 'term' && (
+        <Modal
+          type="term"
+          title={modal.title}
+          message={
+            <iframe
+              src={`/terms/${modal.key}`}
+              title={modal.title}
+              width="100%"
+              height="100%"
+              style={{ border: 'none' }}
+            />
+          }
+          onConfirm={() => setModal(null)}
+        />
+      )}
+
+      {modal?.type !== 'term' && modal && <Modal {...modal} />}
     </div>
   );
 };
