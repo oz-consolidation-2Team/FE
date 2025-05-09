@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaRegCopy, FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import './JobDetail.scss';
+import Ai from '@/pages/RecruitmentInfo/Ai/Ai';
 import JobApplyModal from '@/components/Company/Modal/JobApplyModal';
 import LoginPromptModal from '@/components/Company/Modal/LoginPromptModal';
 import { getJobDetail, applyJobPosting } from '@/apis/RecruitmentApi';
@@ -86,8 +87,11 @@ const JobDetail = () => {
             {job.work_place_name}
           </div>
         </div>
-        <h2 className="title">{job.title}</h2>
-        <span className="job-tag">{job.job_category}</span>
+        <div className="title-ai-wrapper">
+          <h2 className="title">{job.title}</h2>
+          <div className="job-tag">{job.job_category}</div>
+          <Ai job={job} />
+        </div>
         <div className="tags">
           <span>{job.payment_method}</span>
           <span>
