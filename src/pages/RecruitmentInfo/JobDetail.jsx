@@ -22,7 +22,7 @@ const JobDetail = () => {
   const [isLoginPromptOpen, setLoginPromptOpen] = useState(false);
   const [isCalcOpen, setIsCalcOpen] = useState(false);
   const Token = localStorage.getItem('access_token');
-  const formData = Token ? useResume().formData : null;
+  const formData = Token && localStorage.getItem('userType') !== 'company' ? useResume().formData : null;
   const userType = localStorage.getItem('userType');
 
   useEffect(() => {
