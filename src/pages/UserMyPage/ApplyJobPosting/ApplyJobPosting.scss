@@ -42,21 +42,20 @@
 }
 
 .apply_job_list_container {
-  height: 175px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s;
+  width: 100%;
 
   &:hover {
     transform: translateY(-4px);
   }
 
   .apply_job_card {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    transition: transform 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    width: 100%;
     display: flex;
     flex-direction: column;
-    height: 185px;
-    width: 100%;
 
     .company_card {
       display: flex;
