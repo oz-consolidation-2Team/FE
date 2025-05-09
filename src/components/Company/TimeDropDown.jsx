@@ -9,6 +9,11 @@ export default function TimeDropDown (props) {
 
     const arrayFill = basics === 'hour' ? 24 : 2
 
+    const validateWorkTime = () => {
+        if (props.name === 'work_start_time') return
+        if (props.formData['work_start_time'] > props.formData['work_end_time']) alert("근무시간을 다시 확인해주세요")
+    }
+
     return (
         <div className="div_dropdown div_ref">
             <div className="div_button_tap">
@@ -33,6 +38,7 @@ export default function TimeDropDown (props) {
                             basics === 'hour' ? setHour(index) : setMinute(10 * index)
                             props.setFormData(el => ({...el, [props.name]: `${padZero(hour)}:${padZero(minute)}`}))
                             props.setError(el => ({...el, [props.name]: false}))
+                            validateWorkTime()
                         }}>{basics === 'hour' ? 
                             (index < 10 ? `0` + `${index}` : index)
                             : (`${padZero(30 * index)}`)}</li>

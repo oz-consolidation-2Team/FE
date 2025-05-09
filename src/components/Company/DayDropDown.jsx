@@ -25,6 +25,10 @@ export default function DayDropDown (props) {
     const getDisabledClass = (disabled) => {
         return basics === disabled ? "disabled" : ""
     }
+    
+    const validateWorkDay = () => {
+        if (props.formData['recruit_period_start'] > props.formData['recruit_period_end']) alert("모집기간을 다시 확인해주세요")
+    }
 
     return (
         <div className="div_dropdown div_ref">
@@ -44,9 +48,10 @@ export default function DayDropDown (props) {
                     return <li key={index} onClick={(e) => {
                         e.stopPropagation()
                         basics === 'year' ? setYear(date.getFullYear() + index)
-                            : basics === 'month' ? setMonth(index + 1) : setDay(index + 1)
+                        : basics === 'month' ? setMonth(index + 1) : setDay(index + 1)
                         props.setFormData(el => ({...el, [props.name]: `${year}-${padZero(month)}-${padZero(day)}`}))
                         props.setError(el => ({...el, [props.name]: false}))
+                        validateWorkDay()
                     }}>{basics === 'year' ? date.getFullYear() + index
                         :  index +1}</li>
                 })}

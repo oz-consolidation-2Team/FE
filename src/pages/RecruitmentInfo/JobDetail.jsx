@@ -95,11 +95,11 @@ const JobDetail = () => {
         <div className="tags">
           <span>{job.payment_method}</span>
           <span>
-            {job.is_work_days_negotiable_str
+            {job.is_work_days_negotiable
               ? '협의 가능'
               : `주${job.work_days?.split(',').length || 0}일`}
           </span>
-          <span>{job.is_work_duration_negotiable_str ? '협의 가능' : job.work_duration}</span>
+          <span>{job.is_work_duration_negotiable ? '협의 가능' : job.work_duration}</span>
           {job.benefits && <span>{job.benefits}</span>}
         </div>
       </section>
@@ -151,7 +151,7 @@ const JobDetail = () => {
             <div className="condition_value_02">
               {job.is_work_days_negotiable ? (
                 '협의 가능'
-              ) : job.is_schedule_based_str ? (
+              ) : job.is_schedule_based ? (
                 '일정에 따름'
               ) : (
                 <>
