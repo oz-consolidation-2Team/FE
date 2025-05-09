@@ -21,7 +21,7 @@ export default function AnnouncementContent (props) {
             <Category text='이미지 등록' />
             <InputImage {...props} />
         </div>
-        {props.error['image_file'] && <span className="error_message">이미지를 등록해주세요</span>}
+        {props.error['postings_image'] && <span className="error_message">이미지를 등록해주세요</span>}
     </div>
     )
 }

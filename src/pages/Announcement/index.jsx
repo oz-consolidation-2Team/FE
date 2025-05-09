@@ -49,7 +49,7 @@ export default function Announcement (props) {
         employment_type: false, // 고용형태
         work_start_time: false, // 근무시간
         work_end_time: false, // 근무시간
-        image_file: false // 이미지등록
+        postings_image: false // 이미지등록
     })
     
     useEffect(()=>{
@@ -64,7 +64,6 @@ export default function Announcement (props) {
                 JobPosting(param.id).then(res => {
                     setFormData(({
                         ...res,
-                        'image_file': res['postings_image'],
                         'benefits': res['benefits'].split(', '),
                         'other_conditions': res['other_conditions'].split(', '),
                         'preferred_conditions': res['preferred_conditions'].split(', '),
