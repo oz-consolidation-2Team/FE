@@ -3,7 +3,7 @@ import Content from "./Content"
 import Button from "./Button"
 import SimpleModal from "./SimpleModal"
 import "../styles/modal/modal.scss"
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import { useEffect, useState } from "react"
 import { createJobPosting, updateJobPosting, deleteJobPosting } from "@/apis/companyPostingApi"
 import { useParams } from "react-router-dom"
@@ -15,11 +15,12 @@ import { useParams } from "react-router-dom"
  * @param {'add' | 'edit' | 'delete' | 'delete-Success' | 'cencel-resume'} modalType 상태관리
  */
 export default function Modal (props) {
-    console.log(props.formData)
+    console.log('최종 수정된 값===', props.formData)
     const formData = new FormData()
     Object.entries(props.formData).map(item => {
+        if (item[0] === 'postings_image' && typeof item[1] === 'string') return console.log(item[1])
         if (typeof item[1] === 'object' && item[1] && item[0] != 'postings_image') return formData.append(item[0], item[1].join(','))
-        formData.append(item[0], item[1])
+            formData.append(item[0], item[1])
     })
 
     const loadingNOTmodalType = props.modalType === 'add' || props.modalType === 'edit' || props.modalType === 'delete-Success' ? false : true
@@ -29,7 +30,9 @@ export default function Modal (props) {
     useEffect(()=>{
         try {
             if (props.modalType === 'add') createJobPosting(formData).then(() => {setLoading(true)})
-            else if (props.modalType === 'edit') updateJobPosting(param.id, formData).then(() => {setLoading(true)})
+            else if (props.modalType === 'edit') updateJobPosting(param.id, formData).then((res) => {
+                console.log(res)
+                setLoading(true)})
             else if (props.modalType === 'delete-Success') deleteJobPosting(param.id).then(() => {setLoading(true)})
         } catch (error) {
             console.log('에러 발생', error)
