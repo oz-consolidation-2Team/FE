@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import "./CompanyResumes.scss"
 import Hr from "@/utils/Hr"
 import { resumeInquiryPosting } from "@/apis/companyApi"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 export default function CompanyResumes () {
     const [resumes, setResumes] = useState(null)
@@ -12,11 +12,14 @@ export default function CompanyResumes () {
     const [resumesLoadingError, setResumesError] = useState(null)
     const [modal, setModal] = useState(false)
     const params = useParams("id")
+    const navigate = useNavigate();
 
     useEffect(()=>{
         try {
             resumeInquiryPosting().then(res => {
-                setResumes(res)
+                const respone = res.filter((item) => item.job_posting_id === Number(params.id))
+                console.log(respone)
+                setResumes(respone)
                 setResumesLoading(false)
             })
         } catch (error) {
@@ -39,7 +42,7 @@ export default function CompanyResumes () {
                             return (
                                 <div className="resume-content" key={item.id}>
                                     <div>
-                                        <h2>이력서 제목</h2>
+                                        <h2>{item.resumes_data.applicant_name}님의 이력서</h2>
                                         <p>{item.resumes_data.introduction}</p>
                                         <div className="tage">
                                             {item.resumes_data.desired_area.split(", ").map((area, index) => {
@@ -49,7 +52,7 @@ export default function CompanyResumes () {
                                             })}
                                         </div>
                                     </div>
-                                    <button onClick={()=>{setModal(true)}}>자세히 보기</button>
+                                    <button onClick={()=>{navigate(`/mypage/company/announcement/resumes/detail/${item.id}`)}}>자세히 보기</button>
                                 </div>
                             )
                         }) : <h2>들어온 이력서가 없습니다</h2>}

@@ -24,6 +24,7 @@ import NaverCallbackPage from '@/pages/LoginPage/NaverCallbackPage';
 import UserSignUpPage from '@/pages/SignUpPage/UserSignUpPage';
 import KakaoCallbackPage from '@/pages/LoginPage/KakaoCallbackPage';
 import VerifyEmailPage from '@/pages/SignUpPage/VerifyEmailPage';
+import CompanyReviewResumes from '@/pages/CompanyReviewResumes';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
           element={<Announcement type="edit" />}
         />
         <Route path="/mypage/company/announcement/resumes/:id" element={<CompanyResumes />} />
+        <Route path="/mypage/company/announcement/resumes/detail/:id" element={<CompanyReviewResumes />} />
         <Route path="/trainingSearch" element={<TrainingSearch />} />
         <Route path="/recruitment-info" element={<RecruitmentInfo />} />
         <Route path="/mypage/user/edit_info" element={<UserInfoEditPage />} />
