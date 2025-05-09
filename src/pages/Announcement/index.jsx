@@ -3,7 +3,7 @@ import JobRequirement from "../../components/Company/inputs/JobRequirement"
 import WorkLocation from "../../components/Company/inputs/WorkLocation"
 import WorkRequirement from "../../components/Company/inputs/WorkRequirement"
 import AnnouncementContent from "../../components/Company/inputs/AnnouncementContent"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import Modal from "../../components/Company/Modal/Modal"
 import "./Announcement.scss"
@@ -80,7 +80,7 @@ export default function Announcement (props) {
         console.log('validate 실행됨')
         const newerror = {...error}
         Object.entries(error).forEach((item) => {
-            if (!formData[item[0]]) newerror[item[0]] = true
+            if (!formData[item[0]]) return newerror[item[0]] = true
         })
         setError(newerror)
         console.log(newerror)
