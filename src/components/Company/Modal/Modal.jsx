@@ -4,7 +4,7 @@ import Button from "./Button"
 import SimpleModal from "./SimpleModal"
 import "../styles/modal/modal.scss"
 import PropTypes from 'prop-types';
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { createJobPosting, updateJobPosting, deleteJobPosting } from "@/apis/companyPostingApi"
 import { useParams } from "react-router-dom"
 
@@ -21,13 +21,15 @@ export default function Modal (props) {
         formData.append(item[0], item[1])
     })
 
+    const loadingNOTmodalType = props.modalType === 'add' || props.modalType === 'edit' || props.modalType === 'delete-Success' ? false : true
+    const [loading, setLoading] = useState(loadingNOTmodalType)
     const param = useParams()
 
     useEffect(()=>{
         try {
-            if (props.modalType === 'add') createJobPosting(formData).then(res => console.log(res))
-            else if (props.modalType === 'edit') updateJobPosting(param.id, formData).then(res => console.log(res))
-            else if (props.modalType === 'delete-Success') deleteJobPosting(param.id).then(res => console.log('삭제됨', param.id))
+            if (props.modalType === 'add') createJobPosting(formData).then(() => {setLoading(true)})
+            else if (props.modalType === 'edit') updateJobPosting(param.id, formData).then(() => {setLoading(true)})
+            else if (props.modalType === 'delete-Success') deleteJobPosting(param.id).then(() => {setLoading(true)})
         } catch (error) {
             console.log('에러 발생', error)
         }
@@ -36,17 +38,19 @@ export default function Modal (props) {
     return (
         <div className="modal_overlay">
             <div className="modal_container">
-                {props.modalType === 'delete-Success' || props.modalType === 'cencel-resume' ? 
-                    (
-                        props.modalType === 'delete-Success' ?
-                        <SimpleModal title="삭제가 완료 되었습니다" content="" setShowModal={props.setShowModal} />
-                        : <SimpleModal title="취소된 이력서입니다" content="이런! 그 사이에 취소된 이력서예요" setShowModal={props.setShowModal} setNavigate={true} />
-                    )
-                    : <>
-                        <Title modalType={props.modalType} />
-                        <Content formData={props.formData} modalType={props.modalType} />
-                        <Button {...props } />
-                    </>
+                {loading ? 
+                    props.modalType === 'delete-Success' || props.modalType === 'cencel-resume' ? 
+                        (
+                            props.modalType === 'delete-Success' ?
+                            <SimpleModal title="삭제가 완료 되었습니다" content="" setShowModal={props.setShowModal} />
+                            : <SimpleModal title="취소된 이력서입니다" content="이런! 그 사이에 취소된 이력서예요" setShowModal={props.setShowModal} setNavigate={true} />
+                        )
+                        : <>
+                            <Title modalType={props.modalType} />
+                            <Content formData={props.formData} modalType={props.modalType} />
+                            <Button {...props } />
+                        </>
+                    : <p>진행 중...</p>
                 }
             </div>
         </div>
