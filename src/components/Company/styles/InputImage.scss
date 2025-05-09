@@ -9,6 +9,7 @@
             display: none;
         }
         > div {
+            overflow: hidden;
             flex-grow: 1;
             border-radius: 10px;
             background-color: #dfdfdf;
@@ -18,6 +19,7 @@
         }
 
         > label {
+            flex-shrink: 0;
             border: none;
             border-radius: 10px;
             background-color: v.$orange;

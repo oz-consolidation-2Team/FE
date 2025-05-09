@@ -17,7 +17,7 @@ import { useParams } from "react-router-dom"
 export default function Modal (props) {
     const formData = new FormData()
     Object.entries(props.formData).map(item => {
-        if (typeof item[1] === 'object' && item[1] && item[0] != 'image_file') return formData.append(item[0], item[1].join(','))
+        if (typeof item[1] === 'object' && item[1] && item[0] != 'image_file' && item[0] != 'postings_image') return formData.append(item[0], item[1].join(','))
         formData.append(item[0], item[1])
     })
 

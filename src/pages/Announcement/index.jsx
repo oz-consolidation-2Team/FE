@@ -64,6 +64,7 @@ export default function Announcement (props) {
                 JobPosting(param.id).then(res => {
                     setFormData(({
                         ...res,
+                        'image_file': res['postings_image'],
                         'benefits': res['benefits'].split(', '),
                         'other_conditions': res['other_conditions'].split(', '),
                         'preferred_conditions': res['preferred_conditions'].split(', '),
