@@ -8,17 +8,17 @@ import PropTypes from 'prop-types';
 } */
 export default function InputImage (props) {
     // 그저 파일명 표시하기 위함
-    const [img, setImg] = useState(null)
+    const [img, setImg] = useState(props.formData['postings_image'])
 
     const onchangeImageUpload = (e) => {
         setImg(e.target.files[0].name)
         props.setFormData((el) => ({
             ...el,
-            image_file: e.target.files[0]
+            postings_image: e.target.files[0],
         }))
         props.setError({
             ...props.error,
-            image_file: false
+            postings_image: false
         })
     }
 

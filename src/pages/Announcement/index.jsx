@@ -49,7 +49,7 @@ export default function Announcement (props) {
         employment_type: false, // 고용형태
         work_start_time: false, // 근무시간
         work_end_time: false, // 근무시간
-        image_file: false // 이미지등록
+        postings_image: false // 이미지등록
     })
     
     useEffect(()=>{
@@ -64,6 +64,7 @@ export default function Announcement (props) {
                 JobPosting(param.id).then(res => {
                     setFormData(({
                         ...res,
+                        // 'postings_image': null,
                         'benefits': res['benefits'].split(', '),
                         'other_conditions': res['other_conditions'].split(', '),
                         'preferred_conditions': res['preferred_conditions'].split(', '),
@@ -76,6 +77,8 @@ export default function Announcement (props) {
             }
         },[])
     }
+
+    console.log('기존 데이터 값=== ',formData)
 
     const validate = () => {
         console.log('validate 실행됨')
@@ -116,7 +119,7 @@ export default function Announcement (props) {
                     <button 
                     className="button_add color-change"
                     onClick={() => {
-                        if (validate()) alert('폼을 다시 확인해주세요')
+                        if (validate() && props.type != 'edit') alert('폼을 다시 확인해주세요')
                         else {
                             setShowModal(true)
                             setModalType(props.type)

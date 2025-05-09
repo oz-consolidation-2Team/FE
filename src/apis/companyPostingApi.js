@@ -31,7 +31,7 @@ export const createJobPosting = async (formData) => {
 }
 
 export const updateJobPosting = async (jobId, formData) => {
-    const response = await axiosInstance.patch(`/posting/${jobId}`, formData)
+    const response = await axiosFormInstance.patch(`/posting/${jobId}`, formData)
     console.log('공고 수정 API 호출====')
     console.log(response.data)
     return response.data

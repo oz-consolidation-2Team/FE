@@ -61,8 +61,8 @@ export default function CompanyInfoEdit () {
             else if (item[0] === 'manager_name' && !validateName(data)) newerror['manager_name'] = true;
             else if (item[0] === 'manager_phone' && !isValidPhone(data)) newerror['manager_phone'] = true;
             else if (item[0] === 'manager_email' && !validateEmail(data)) newerror['manager_email'] = true;
-            else if (item[0] === 'password' && formData['password'] !== 'qwe123!@#') newerror['password'] = true;
-            else if (item[0] === 'confirm_password' && formData['password'] !== formData['confirm_password']) newerror['confirm_password'] = true;
+            // else if (item[0] === 'password' && formData['password'] !== 'qwe123!@#') newerror['password'] = true;
+            // else if (item[0] === 'confirm_password' && formData['password'] !== formData['confirm_password']) newerror['confirm_password'] = true;
         })
         setValidateError(newerror)
         return Object.values(newerror).includes(true)
@@ -158,10 +158,10 @@ export default function CompanyInfoEdit () {
                         <InputText {...state} type='text' name='opening_date' text='개업년월일' disabled={true} placeholder={formData.opening_date} />
                     </div>
 
-                    <div className='div_box'>
+                    {/* <div className='div_box'>
                         <Category text='이미지 등록' />
                         <InputImage setFormData={setFormData} formData={formData} />
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className='div_manager-info'>
@@ -185,7 +185,7 @@ export default function CompanyInfoEdit () {
                     {validateError['manager_email'] && <span className="error_message">이메일을 입력해주세요</span>}
                 </div>
 
-                <div className='div_password'>
+                {/* <div className='div_password'>
                     <Hr />
                     <div className='div_box'>
                         <Category text='비밀번호' />
@@ -198,7 +198,7 @@ export default function CompanyInfoEdit () {
                         <InputText {...state} type='text' name='confirm_password' text='비밀번호 재확인' />
                     </div>
                     {validateError['confirm_password'] && <span className="error_message">비밀번호를 다시 확인해주세요</span>}
-                </div>
+                </div> */}
 
                 <button 
                     className='button_edit'
@@ -210,10 +210,8 @@ export default function CompanyInfoEdit () {
                             }
                         }}>수정하기</button>
                 <button className='button_out' onClick={() => {
-                    if (validate()) alert('폼을 다시 확인해주세요')
-                    else setShowModal('out_check')
+                    setShowModal('out_check')
                 }}>회원 탈퇴하기</button>
-                {console.log(showModal)}
                 {showModal && (showModal === "edit" ? <InfoEditModal formData={formData} setShowModal={setShowModal} /> 
                 : (showModal === 'out' ? <Modal {...outModal} /> : <Modal {...outCheckModal} />))}
             </div>

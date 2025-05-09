@@ -41,7 +41,7 @@ export default function Content (props) {
             </div>
             <div className="div_box">
                 <p>근무기간: {props.formData.work_duration}<span>{props.formData.is_work_duration_negotiable && "(협의 가능)"}</span></p>
-                <p>근무시간: {props.formData.work_start_time}<span>{props.formData.is_work_time_negotiable && "(협의 가능)"}</span></p>
+                <p>근무시간: {props.formData.work_start_time} ~ {props.formData.work_end_time}<span>{props.formData.is_work_time_negotiable && "(협의 가능)"}</span></p>
             </div>
             <div>근무요일: {props.formData.work_days && props.formData.work_days.join(', ')}<span>{props.formData.is_work_days_negotiable && "(협의 가능)"}</span><span>{props.formData.is_schedule_based}</span></div>
     </div>

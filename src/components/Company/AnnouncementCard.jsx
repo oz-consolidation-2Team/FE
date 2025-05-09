@@ -20,7 +20,7 @@ export default function AnnouncementCard (props) {
     return (
         <div className='AnnouncementCard_cantainer' onClick={() => navigate(`/job-detail/${props.id}`)}>
             <p>{props.work_address}</p>
-            <div>
+            <div className='d'>
                 <h3 className='title_name'>{props.title}</h3>
                 <p>{props.summary}</p>
             </div>
