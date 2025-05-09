@@ -342,3 +342,35 @@ input:focus {
   border-color: #0F8C3B;
   outline: none;
 }
+
+.terms_step {
+  .checkbox_row {
+    .view_terms_btn {
+      font-size: 13px;
+      color: $green;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      text-decoration: underline;
+      margin-left: 8px;
+      transition: color 0.3s, background-color 0.3s;
+
+      &:hover {
+        color: $deep-green;
+        background-color: #f0f0f0;
+        border-radius: 4px;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba($green, 0.3);
+      }
+
+      &:active {
+        color: $green;
+        background-color: #e0e0e0;
+      }
+    }
+  }
+}

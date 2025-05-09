@@ -178,7 +178,7 @@ function EducationSection({ data, setData }) {
               disabled
             />
           ) : (
-            <input type="text" placeholder="졸업예정일이 없습니다." />
+            <input type="text" placeholder="졸업예정일이 없습니다." disabled />
           )}
           <button type="button" className="edu_btn" onClick={() => handleRemoveEducation(index)}>
             삭제
