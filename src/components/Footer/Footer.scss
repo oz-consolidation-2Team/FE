@@ -1,9 +1,8 @@
 @use '@/utils/variables' as *;
 
 .footer_container {
-  margin-top: 20px;
   height: 100%;
-  background-color: $light-green;
+  background-color: $gray-dark;
   padding: 0 100px;
   padding-top: 40px;
   padding-bottom: 60px;
@@ -19,7 +18,7 @@
 
       p {
         font-size: $font-body;
-        color: $gray-text;
+        color: $white-text;
         line-height: $lh-normal;
       }
     }
@@ -31,7 +30,7 @@
     p {
       display: inline-block;
       padding-right: 20px;
-      color: $deep-green;
+      color: $white-text;
       font-size: $font-small;
       font-weight: $weight-bold;
     }

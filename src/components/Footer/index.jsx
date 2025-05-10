@@ -5,7 +5,7 @@ export const Footer = () => {
     <footer className="footer_container">
       <div className="footer_wapper">
         <div className="company_footer_info">
-          <img src="public/logo.png" alt="" className="logo" />
+          <img src="public/logo_white.png" alt="" className="logo" />
           <p>
             대표자 : 이한별 | 사업자 등록번호 : 540-86-00384 | 통신판매업 신고번호 :
             2020-경기김포-3725호

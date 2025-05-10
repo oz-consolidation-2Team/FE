@@ -1,10 +1,12 @@
 @use '@/utils/variables' as *;
 
 .main_page {
+  margin-bottom: 80px;
   .hero_section {
     .hero_inner {
       max-width: 1200px;
       margin: 0 auto;
+      margin-bottom: 20px;
       padding: 120px 100px;
       border-radius: 12px;
       background:
