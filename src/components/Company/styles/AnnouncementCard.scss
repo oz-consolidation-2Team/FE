@@ -1,51 +1,80 @@
-$LINE_COLOR: #B3B3B3;
+@use '@/utils/variables' as *;
 
 .AnnouncementCard_cantainer {
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid $LINE_COLOR;
-    border-radius: 10px;
-    width: 100%;
-    padding: 15px;
-    margin-top: 20px;
-    transition: transform 0.2s ease, background-color 0.3s ease;
-    p,h3 {
-        cursor: default;
-    }
-    p {
-        flex-basis: 200px;  
-    }
-    &:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 2px 3px rgba(0,0,0,0.2);
-      }
+  display: flex;
+  border: 1px solid $border-color;
+  border-radius: 10px;
+  width: 100%;
+  padding: 30px;
+  margin-bottom: 20px;
+  transition:
+    transform 0.2s ease,
+    background-color 0.3s ease;
 
+  .company_location {
+    width: 15%;
+    margin: auto 0;
+    font-size: $font-small;
+    color: $light-gray-text;
+    margin-right: 30px;
+    line-height: $lh-normal;
+  }
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  }
+  .d {
+    width: 60%;
+    margin-top: 10px;
     .title_name {
-        font-weight: bold;
-        margin-bottom: 5px;
+      font-weight: 700;
+
+      color: $green;
+      width: 80%;
+      margin-bottom: 10px;
+      font-size: $font-h4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
-    .time {
-        align-self: end;
+    .company_content {
+      font-size: $font-small;
+      padding-bottom: 10px;
     }
 
-    .button_group {
-        display: flex;
-        flex-direction: column;
-
-        > button {
-            border: 1px solid $LINE_COLOR;
-            border-radius: 5px;
-            background-color: white;
-            padding: 5px 20px;
-            cursor: pointer;
-            transition: transform 0.2s ease, background-color 0.3s ease;
-            &:hover {
-                background-color: rgb(230, 230, 230);
-            }
-            &:nth-child(1) {
-                margin-bottom: 10px;
-            }
-        }
+    .date {
+      font-size: $font-small;
+      color: $light-gray-text;
     }
+  }
+
+  .button_group {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+
+    > button {
+      width: 70%;
+      margin: auto 0;
+      margin-left: 50px;
+      border: none;
+      border-radius: 5px;
+      background-color: $green;
+      color: #fff;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition:
+        transform 0.2s ease,
+        background-color 0.3s ease;
+      &:hover {
+        background-color: rgb(230, 230, 230);
+      }
+      &:nth-child(1) {
+        background-color: $orange;
+        margin-bottom: 10px;
+      }
+    }
+  }
 }

@@ -1,19 +1,23 @@
-@use '@/utils/variables' as v;
+@use '@/utils/variables' as *;
 
 .InputRadio_container {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 
-    >.div_checkBoxs {
-        margin-right: 30px;
-        margin-bottom: 0px !important;
-        cursor: pointer;
-            >input {
-            accent-color: v.$deep-orange;
-            margin-right: 5px;
-            cursor: pointer;
-        }
+  > .div_checkBoxs {
+    margin-right: 30px;
+    margin-bottom: 10px !important;
+    cursor: pointer;
+    font-size: $font-small;
+    color: $gray-text;
+    font-weight: $weight-regular;
+
+    > input {
+      accent-color: $deep-orange;
+      margin-right: 5px;
+      cursor: pointer;
+      border: $border-color;
     }
+  }
 }

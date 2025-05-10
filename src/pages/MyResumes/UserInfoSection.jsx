@@ -23,7 +23,12 @@ function UserInfoSection({ data, setData }) {
     if (!file) return;
 
     const maxSize = 1 * 1024 * 1024; // 5MB
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
+    if (!allowedTypes.includes(file.type)) {
+      alert('jpg, jpeg, png, gif 형식의 이미지만 등록할 수 있어요!');
+      return;
+    }
     if (file.size > maxSize) {
       alert('이미지 용량은 1MB 이하로 등록해주세요!');
       return;

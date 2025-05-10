@@ -1,12 +1,19 @@
+@use '@/utils/variables' as *;
 .Category_condainer {
-    display: flex;
-    flex-shrink: 0; 
-    font-weight: bold;
-    cursor: default;
+  display: flex;
+  flex-shrink: 0;
+  font-weight: bold;
+  cursor: default;
+  margin: 0 20px;
+  .category_title {
+    font-size: $font-body;
+    color: $gray-dark;
+    font-weight: $weight-bold;
+  }
 
-    .essential {
-        color: red;
-        padding: 0 !important;
-        line-height: 10px;
-    }
+  .essential {
+    color: $deep-orange;
+    padding: 0 !important;
+    line-height: 10px;
+  }
 }
