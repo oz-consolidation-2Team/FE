@@ -1,43 +1,45 @@
-@use '@/utils/variables' as v;
+@use '@/utils/variables' as *;
 
 .InputImage_container {
-    width: 100%;
-    .div_box {
-        display: flex;
-        height: 35px;
-        #input_for_button {
-            display: none;
-        }
-        > div {
-            overflow: hidden;
-            flex-grow: 1;
-            border-radius: 10px;
-            background-color: #dfdfdf;
-            text-align: center;
-            line-height: 32px;
-            padding-bottom: auto;
-        }
-
-        > label {
-            flex-shrink: 0;
-            border: none;
-            border-radius: 10px;
-            background-color: v.$orange;
-            color: black;
-            height: 35px;
-            padding: 6px 30px;
-            margin-left: 10px;
-            cursor: pointer;
-            transition: transform 0.2s ease, background-color 0.3s ease;
-            &:hover {
-                background-color: v.$deep-orange;
-            }
-        }
+  width: 100%;
+  .div_box {
+    display: flex;
+    height: 35px;
+    #input_for_button {
+      display: none;
+    }
+    > div {
+      overflow: hidden;
+      flex-grow: 1;
+      border-radius: 5px;
+      background-color: $gray-near-white;
+      text-align: center;
+      line-height: 32px;
+      padding-bottom: auto;
     }
 
-    > p {
-        color: #acacac;
-        font-size: 0.8rem;
-        margin-top: 5px;
+    > label {
+      flex-shrink: 0;
+      border: none;
+      border-radius: 5px;
+      background-color: $orange;
+      color: #fff;
+      height: 35px;
+      padding: 6px 30px;
+      margin-left: 10px;
+      cursor: pointer;
+      transition:
+        transform 0.2s ease,
+        background-color 0.3s ease;
+      &:hover {
+        background-color: $deep-orange;
+      }
     }
+  }
+
+  > p {
+    color: #acacac;
+    font-size: 0.8rem;
+    margin-top: 5px;
+  }
 }
