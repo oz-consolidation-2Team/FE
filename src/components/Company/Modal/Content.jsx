@@ -11,7 +11,6 @@ export default function Content (props) {
         <div className="Content_container">
             <div className="announcement_card">
                 <div className="company">
-                    <p>기업명</p>
                     <p>{props.formData.work_place_name}</p>
                 </div>
                 <Hr />

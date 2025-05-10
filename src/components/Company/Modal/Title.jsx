@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
-/**props = {
- * @modalType 'add', 'edit', 'delete', 'delete-Success'; (모달타입)
-*/
+/**
+ * @param {'add' | 'edit' | 'delete' | 'delete-Success'} modalType 모달 타입
+ */
 export default function Title (props) {
     return <h1>{props.modalType === 'delete' ? (
         <>

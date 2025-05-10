@@ -16,10 +16,6 @@ export default function DaumLocation (props) {
 
     const daumPostcode = (data) => {
         setLocation(data)
-        console.log(data)
-        // console.log('도로명주소 : ' + data.roadAddress);
-        // console.log('지번주소 : ' + data.jibunAddress);
-        // console.log('우편번호 : ' + data.zonecode);
 
         const geocoder = new window.kakao.maps.services.Geocoder();
         geocoder.addressSearch(data.roadAddress, (result, status) => {

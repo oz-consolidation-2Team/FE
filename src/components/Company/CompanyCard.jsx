@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { JobPosting } from '@/apis/companyPostingApi';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 /**
  * @param {string} params 공고 ID
@@ -10,7 +11,6 @@ export default function CompanyCard({ params }) {
 
   const [job, setJob] = useState(null);
   const [jobLoading, setJobLoading] = useState(true);
-  const [jobError, setJobError] = useState(null);
 
   // 공고 상세 조회
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function CompanyCard({ params }) {
         setJobLoading(false);
       });
     } catch (error) {
-      setJobError('공고 상세 조회 에러', error);
+      console.log('공고 상세 조회 에러', error);
       setJobLoading(false);
     }
   }, []);
@@ -47,3 +47,7 @@ export default function CompanyCard({ params }) {
     </div>
   );
 }
+
+CompanyCard.propTypes = {
+    params: PropTypes.number.isRequired
+} 

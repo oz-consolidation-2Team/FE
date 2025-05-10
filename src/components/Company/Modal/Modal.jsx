@@ -3,7 +3,7 @@ import Content from "./Content"
 import Button from "./Button"
 import SimpleModal from "./SimpleModal"
 import "../styles/modal/modal.scss"
-import PropTypes, { string } from 'prop-types';
+import PropTypes from 'prop-types';
 import { useEffect, useState } from "react"
 import { createJobPosting, updateJobPosting, deleteJobPosting } from "@/apis/companyPostingApi"
 import { useParams } from "react-router-dom"
@@ -15,7 +15,6 @@ import { useParams } from "react-router-dom"
  * @param {'add' | 'edit' | 'delete' | 'delete-Success' | 'cencel-resume'} modalType 상태관리
  */
 export default function Modal (props) {
-    console.log('최종 수정된 값===', props.formData)
     const formData = new FormData()
     Object.entries(props.formData).map(item => {
         if (item[0] === 'postings_image' && typeof item[1] === 'string') return console.log(item[1])
