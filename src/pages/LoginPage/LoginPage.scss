@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
+  margin-bottom: 80px;
   .login_card {
     width: 100%;
     max-width: 480px;
@@ -57,17 +57,50 @@
     }
   }
 
+  .form_group {
+    margin-bottom: 12px;
+
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    input {
+      width: 100%;
+      height: 48px;
+      padding: 0 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.2s ease;
+
+      &:focus {
+        border-color: $green;
+      }
+
+      &.company_focus:focus {
+        border-color: $orange;
+      }
+
+      &.error {
+        border-color: #e53935;
+      }
+    }
+  }
+
   .input_group {
     display: flex;
     flex-direction: column;
     gap: 6px;
-  
+
     label {
       font-size: 14px;
       font-weight: 600;
       color: $gray-dark;
     }
-  
+
     input,
     .password_wrapper input {
       height: 48px;
@@ -98,11 +131,11 @@
 
   .password_wrapper {
     position: relative;
-  
+
     input {
       width: 100%;
     }
-  
+
     span {
       position: absolute;
       top: 50%;
@@ -112,11 +145,11 @@
       font-size: 20px;
       color: #ccc;
       transition: color 0.2s ease;
-  
+
       &.user:hover {
         color: $green;
       }
-  
+
       &.company:hover {
         color: $orange;
       }
@@ -134,20 +167,20 @@
     width: 100%;
     transition: background-color 0.2s ease;
   }
-  
+
   .login_btn.user {
     background-color: $green;
     color: #fff;
-  
+
     &:hover {
       background-color: $deep-green;
     }
   }
-  
+
   .login_btn.company {
     background-color: $orange;
     color: #fff;
-  
+
     &:hover {
       background-color: $deep-orange;
     }

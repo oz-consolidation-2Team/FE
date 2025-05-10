@@ -1,42 +1,44 @@
-$LINE_COLOR: #A8A8A8;
+@use '@/utils/variables' as *;
 
 .JobRequirement_container {
-    padding: 30px;
-    .div_box {
-        display: flex;
-        margin: 25px 0;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid $border-color;
+  > .div_box {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
 
-        > :nth-child(2) {
-            margin-left: 25px;
-        }
-        > :nth-child(3) {
-            margin: 0;
-        }
-        .div_start_time {
-            border: 1px solid $LINE_COLOR;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            color: $LINE_COLOR;
-            max-height: 33px;
-            padding: 5px 30px;
-        }
-        .p_swung_dash {
-            line-height: 30px;
-            padding: 0 20px;
-        }
-        .InputText_container {
-            padding-left: 40px;
-        }
+    > .Category_condainer {
+      width: 120px !important;
     }
-    .recruite_peple {
-        > :last-child {
-            width: 100px;
-            padding-left: 25px;
-        }
+    > .InputText_container {
+      width: auto !important;
     }
-    .remove {
-        > :nth-child(1) {
-            width: 200px;
-        }
+  }
+  .div_start_time {
+    // 모집기간 시작시간 css
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    color: #a8a8a8;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    cursor: default;
+  }
+  .p_swung_dash {
+    // 모집기간의 물결 css
+    margin: 0 10px;
+  }
+  .options {
+    // 단일 상시/협의 가능 css
+    > .InputRadio_container {
+      margin-left: 20px;
     }
+  }
+  .error_message {
+    color: $error-red;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: 120px;
+  }
 }

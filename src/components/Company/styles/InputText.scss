@@ -1,30 +1,37 @@
-$LINE_COLOR: #A8A8A8;
+@use '@/utils/variables' as *;
 
 .InputText_container {
-    display: flex;
-    align-items: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  > input {
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    background-color: white;
     width: 100%;
-
-    > input {
-        border: 1px solid $LINE_COLOR;
-        border-radius: 10px;
-        background-color: white;
-        width: 100%;
-        padding: 10px;
+    padding: 10px;
+    transition:
+      transform 0.2s ease,
+      border-color 0.3s ease;
+    &:focus {
+      outline: none;
+      border-color: $deep-orange;
     }
-    > input[type="number"] {
-        -moz-appearance: textfield;
-
-        &::-webkit-inner-spin-button,
-        &::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
+  }
+  > input[type='number'] {
+    -moz-appearance: textfield;
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
-    > p {
-        margin-left: 5px;
-    }
-    .resize {
-        width: 40px !important;
-    }
+  }
+  > p {
+    margin-left: 5px;
+  }
+  .resize {
+    width: 40px !important;
+  }
 }

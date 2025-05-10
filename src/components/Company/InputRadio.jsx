@@ -18,10 +18,29 @@ export default function InputRadio (props) {
             text
         ]);
 
-        props.setFormData({
-            ...props.formData,
-            [e.target.name]: typeof value === 'boolean' ? value : [...value],
-        })
+        if (e.target.name === 'is_always_recruiting') {
+            props.setFormData({
+                ...props.formData,
+                is_always_recruiting: value,
+                recruit_period_end: props.formData['recruit_period_start']
+            })
+            props.setError({
+                ...props.error,
+                recruit_period_end: false,
+            })
+        } else {
+            props.setFormData({
+                ...props.formData,
+                [e.target.name]: typeof value === 'boolean' ? value : [...value]
+            })
+        }
+
+        if (e.target.name === 'work_days') {
+            props.setError({
+                ...props.error,
+                work_days: false,
+            })
+        }
     }
     const DATA = {
         복리후생: ['4대보험', '건강검진 지원','중식 제공','간식 무제한'],
@@ -33,12 +52,25 @@ export default function InputRadio (props) {
         상시모집: ['상시모집'],
         협의가능: ['협의 가능']
     }
+
+    const isChecked = (item) => {
+        if (!props.formData[props.name]) return 
+        const data = props.formData[props.name]
+
+        const booleanType = typeof data === 'boolean' ? typeof data : (
+            data.length === 1 ? data[0].includes(item) : data.includes(item)
+        )
+        return booleanType
+
+    }
+
     return (
         <div className="InputRadio_container">
             {DATA[props.type].map((item, index)=>{
+                const defaultChecked = isChecked(item)
                 return (
                     <label className="div_checkBoxs" key={index}>
-                        <input type='checkbox' name={props.name} onChange={handleClick}/>
+                        <input type='checkbox' name={props.name} onChange={handleClick} defaultChecked={defaultChecked || false} />
                         {item}
                     </label>
                 )

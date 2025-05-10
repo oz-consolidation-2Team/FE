@@ -74,16 +74,16 @@ const LoginPage = () => {
         </div>
 
         <form onSubmit={(e) => { e.preventDefault(); handleLoginClick(); }}>
-          <LabeledInput
-            label="이메일"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            placeholder="이메일을 입력하세요"
-            error={errors.email}
-            className={`no_margin ${userType === 'company' ? 'company_focus' : ''}`}
-            autoComplete="email"
-          />
+        <LabeledInput
+          label="이메일"
+          name="email"
+          value={form.email}
+          onChange={handleChange}
+          placeholder="이메일을 입력하세요"
+          error={errors.email}
+          className={userType === 'company' ? 'company_focus' : ''}
+          autoComplete="email"
+        />
 
           <div className="input_group">
             <label>비밀번호</label>
@@ -118,26 +118,28 @@ const LoginPage = () => {
           <span onClick={() => navigate('/forgot-password')}>비밀번호찾기</span>
         </div>
 
-        <div className="sns_login">
-        <button
-          className="kakao"
-          onClick={() => {
-            window.location.href = KAKAO_AUTH_URL;
-          }}
-        >
-          <img className="icon_kakao" src="/kakao-logo.png" alt="카카오" />
-          카카오 로그인
-        </button>
-          <button
-            className="naver"
-            onClick={() => {
-              window.location.href = NAVER_AUTH_URL;
-            }}
-          >
-            <img className="icon_naver" src="/naver-logo.png" alt="네이버" />
-            네이버 로그인
-          </button>
-        </div>
+        {userType === 'user' && (
+          <div className="sns_login">
+            <button
+              className="kakao"
+              onClick={() => {
+                window.location.href = KAKAO_AUTH_URL;
+              }}
+            >
+              <img className="icon_kakao" src="/kakao-logo.png" alt="카카오" />
+              카카오 로그인
+            </button>
+            <button
+              className="naver"
+              onClick={() => {
+                window.location.href = NAVER_AUTH_URL;
+              }}
+            >
+              <img className="icon_naver" src="/naver-logo.png" alt="네이버" />
+              네이버 로그인
+            </button>
+          </div>
+        )}
       </div>
 
       {modal && <Modal {...modal} />}

@@ -62,7 +62,7 @@ const MainPage = () => {
             <strong>경험</strong>과 <strong>가치</strong>를 이어가는 새로운 일자리 매칭!
             <br />
             <span className="highlight">
-              <span className="underline-highlight">일자리</span>, 커뮤니티,{' '}
+              <span className="underline-highlight">일자리</span>, 커뮤니티,
               <span className="underline-highlight">성장의 기회</span>
             </span>
             <br />

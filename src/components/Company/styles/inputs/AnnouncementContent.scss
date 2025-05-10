@@ -1,12 +1,23 @@
-.AnnouncementContent_container {
-    padding: 30px;
-    margin-bottom: 50px;
-    > .div_box {
-        display: flex;
-        margin-bottom: 20px;
+@use '@/utils/variables' as *;
 
-        > :nth-child(1) {
-            flex-basis: 122px;
-        }
+.company_main {
+  background-color: rgb(243, 243, 243);
+  min-height: 90vh;
+}
+.AnnouncementContent_container {
+  padding: 60px 0 80px;
+
+  > .div_box {
+    display: flex;
+    margin-top: 30px;
+    > .Category_condainer {
+      width: 120px !important;
     }
+  }
+  .error_message {
+    color: $error-red;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: 120px;
+  }
 }

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FaStar, FaRegStar, FaRegCopy } from 'react-icons/fa';
+import { FaRegCopy, FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import './JobDetail.scss';
+import Ai from '@/pages/RecruitmentInfo/Ai/Ai';
 import JobApplyModal from '@/components/Company/Modal/JobApplyModal';
 import LoginPromptModal from '@/components/Company/Modal/LoginPromptModal';
 import { getJobDetail, applyJobPosting } from '@/apis/RecruitmentApi';
@@ -12,8 +13,6 @@ import { addFavorite, deleteFavorite } from '@/apis/favoriteApi';
 import CalculatorModal from './SalaryCalculator/CalculatorModal';
 import { useResume } from '@/hooks/useResume';
 
-
-
 const JobDetail = () => {
   const { postingId } = useParams();
   const [job, setJob] = useState(null);
@@ -23,8 +22,8 @@ const JobDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginPromptOpen, setLoginPromptOpen] = useState(false);
   const [isCalcOpen, setIsCalcOpen] = useState(false);
-  const { formData } = useResume();
   const Token = localStorage.getItem('access_token');
+  const formData = Token && localStorage.getItem('userType') !== 'company' ? useResume().formData : null;
   const userType = localStorage.getItem('userType');
 
   useEffect(() => {
@@ -32,6 +31,7 @@ const JobDetail = () => {
       try {
         const data = await getJobDetail(postingId);
         setJob(data);
+        console.log(data)
         setIsBookmarked(data.is_favorited || false);
         const companyData = await CompaniesInfo(data.company_id);
         setCompanyInfo(companyData);
@@ -75,101 +75,117 @@ const JobDetail = () => {
     return `${period} ${hour12}:${minute.toString().padStart(2, '0')}`;
   };
 
-
-
   return (
     <div className="jobdetail_container">
-      <section className="section">
-        <div className="header">
+      <section className="section01">
+        <div className="header_01">
           <div className="address">{job.work_address}</div>
           <div
             className="company"
             style={{ cursor: 'pointer' }}
             onClick={() => navigate(`/company-info/${job.company_id}`)}
-            >{job.work_place_name}</div>
+          >
+            {job.work_place_name}
+          </div>
         </div>
+        <div className="title-ai-wrapper">
           <h2 className="title">{job.title}</h2>
-          <span className="job-tag">{job.job_category}</span>
+          <div className="job-tag">{job.job_category}</div>
+          <Ai job={job} />
+        </div>
         <div className="tags">
           <span>{job.payment_method}</span>
           <span>
-            {job.is_work_days_negotiable_str
+            {job.is_work_days_negotiable
               ? '협의 가능'
               : `주${job.work_days?.split(',').length || 0}일`}
           </span>
-          <span>
-            {job.is_work_duration_negotiable_str ? '협의 가능' : job.work_duration}
-          </span>
-          {job.benefits && (
-            <span>
-              {job.benefits}
-            </span>
-          )}
+          <span>{job.is_work_duration_negotiable ? '협의 가능' : job.work_duration}</span>
+          {job.benefits && <span>{job.benefits}</span>}
         </div>
       </section>
 
-      <section className="section">
+      <section className="section02">
         <h3>근무조건</h3>
-        <div className="conditions">
-          <div className="condition_row">
-            <div className="condition_label">급여</div>
-            <div className="condition_value salary_with_button">
+        <div className="conditions_02">
+          <div className="condition_salary_content">
+            <div className="content_left">
+              <div className="condition_label_02">급여</div>
+              <button className="salary_calc_button" onClick={() => setIsCalcOpen(true)}>
+                급여계산기
+              </button>
+            </div>
+            <div className="condition_value_02 salary_with_button">
               <div className="salary_display">
-                <span className={`payment_method_badge ${
-                  job.payment_method === '시급' ? 'payment-hourly' :
-                  job.payment_method === '일급' ? 'payment-daily' :
-                  job.payment_method === '주급' ? 'payment-weekly' :
-                  job.payment_method === '월급' ? 'payment-monthly' :
-                  job.payment_method === '연봉' ? 'payment-yearly' :
-                  'payment-default'
-                }`}>{job.payment_method}</span>
-                <span className="salary">{job.salary.toLocaleString()}원</span>
-              </div>
-              <div className="salary_sub_info">
-                <button className="salary_calc_button" onClick={() => setIsCalcOpen(true)}>급여계산기</button>
-                <span className="salary_note">2025년 최저시급 <strong>10,030원</strong></span>
+                <span
+                  className={`payment_method_badge ${
+                    job.payment_method === '시급'
+                      ? 'payment-hourly'
+                      : job.payment_method === '일급'
+                        ? 'payment-daily'
+                        : job.payment_method === '주급'
+                          ? 'payment-weekly'
+                          : job.payment_method === '월급'
+                            ? 'payment-monthly'
+                            : job.payment_method === '연봉'
+                              ? 'payment-yearly'
+                              : 'payment-default'
+                  }`}
+                >
+                  {job.payment_method}
+                </span>
+                <div className="salary_content">
+                  <span className="salary">{job.salary.toLocaleString()}원</span>
+                  <span className="salary_note">
+                    2025년 최저시급 <strong>10,030원</strong>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-          <div className="condition_row">
-            <div className="condition_label">근무 기간</div>
-            <div className="condition_value">{job.work_duration}</div>
+          <div className="condition_row_02">
+            <div className="condition_label_02">근무 기간</div>
+            <div className="condition_value_02">{job.work_duration}</div>
           </div>
-          <div className="condition_row">
-            <div className="condition_label">근무 요일</div>
-            <div className="condition_value">
-              {job.is_work_days_negotiable
+          <div className="condition_row_02">
+            <div className="condition_label_02">근무 요일</div>
+            <div className="condition_value_02">
+              {job.is_work_days_negotiable ? (
+                '협의 가능'
+              ) : job.is_schedule_based ? (
+                '일정에 따름'
+              ) : (
+                <>
+                  <span className="day_count">주{job.work_days?.split(',').length}일</span>
+                  <span className="day_list">({job.work_days?.split(',').join(', ')})</span>
+                </>
+              )}
+            </div>
+          </div>
+          <div className="condition_row_02">
+            <div className="condition_label_02">근무 시간</div>
+            <div className="condition_value_02">
+              {job.is_work_time_negotiable
                 ? '협의 가능'
-                : job.is_schedule_based_str
-                ? '일정에 따름'
-                : (
-                  <>
-                    <span className="day_count">주{job.work_days?.split(',').length}일</span>
-                    <span className="day_list">({job.work_days?.split(',').join(', ')})</span>
-                  </>
-                )}
+                : `${convertToAMPM(job.work_start_time)} ~ ${convertToAMPM(job.work_end_time)}`}
             </div>
           </div>
-          <div className="condition_row">
-            <div className="condition_label">근무 시간</div>
-            <div className="condition_value">{job.is_work_time_negotiable ? '협의 가능' : `${convertToAMPM(job.work_start_time)} ~ ${convertToAMPM(job.work_end_time)}`}</div>
+          <div className="condition_row_02">
+            <div className="condition_label_02">업직종</div>
+            <div className="condition_value_02">{job.job_category}</div>
           </div>
-          <div className="condition_row">
-            <div className="condition_label">업직종</div>
-            <div className="condition_value">{job.job_category}</div>
+          <div className="condition_row_02">
+            <div className="condition_label_02">고용 형태</div>
+            <div className="condition_value_02">{job.employment_type}</div>
           </div>
-          <div className="condition_row">
-            <div className="condition_label">고용 형태</div>
-            <div className="condition_value">{job.employment_type}</div>
-          </div>
-          <div className="condition_row">
-            <div className="condition_label">복리후생</div>
-            <div className="condition_value">{job.benefits}</div>
+          <div className="condition_row_02">
+            <div className="condition_label_02">복리후생</div>
+            <div className="condition_value_02">{job.benefits}</div>
           </div>
         </div>
       </section>
 
-      <section className="section">
+      <section className="section03">
         <h3>모집조건</h3>
         <div className="conditions">
           <div className="condition_row">
@@ -203,14 +219,17 @@ const JobDetail = () => {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section04">
         <h3>근무지 정보</h3>
-        <div className="address_row" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div
+          className="address_row"
+          style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}
+        >
           <div>
-            <strong>근무지명:</strong> {job.work_place_name}
+            <strong>근무지명</strong> {job.work_place_name}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <strong>근무지 주소:</strong>
+            <strong>근무지 주소</strong>
             <span style={{ userSelect: 'text' }}>{job.work_address}</span>
             <button
               onClick={() => {
@@ -231,26 +250,35 @@ const JobDetail = () => {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section05">
         <h3>상세 내용</h3>
         <pre className="description">{job.description}</pre>
         {job.postings_image && (
-            <img
-              src={job.postings_image}
-              alt="채용 공고 이미지"
-              className="job-image"
-              style={{ width: '100%', maxHeight: '600px', objectFit: 'cover', marginTop: '20px' }}
-            />
-          )}
+          <img
+            src={job.postings_image}
+            alt="채용 공고 이미지"
+            className="job-image"
+            style={{ width: '100%', maxHeight: '600px', objectFit: 'cover', marginTop: '20px' }}
+          />
+        )}
       </section>
 
-      <section className="section">
+      <section className="section06">
         <h3>기업 정보</h3>
         {companyInfo ? (
           <>
-            <p><strong>담당자 전화번호</strong>: {formatPhoneNumber(companyInfo.manager_phone)}</p>
-            <p><strong>이메일</strong>: {companyInfo.manager_email || '정보 없음'}</p>
-            <p><strong>기업 소개</strong>: {companyInfo.company_intro || '정보 없음'}</p>
+            <p>
+              <strong>담당자 전화번호</strong> {formatPhoneNumber(companyInfo.manager_phone)}
+            </p>
+            <p>
+              <strong>이메일</strong>
+              {companyInfo.manager_email || '정보 없음'}
+            </p>
+            <p>
+              <strong>기업 소개</strong>
+              <br />
+              {companyInfo.company_intro || '정보 없음'}
+            </p>
           </>
         ) : (
           <p>기업 정보를 불러오는 중...</p>
@@ -266,7 +294,9 @@ const JobDetail = () => {
                 setLoginPromptOpen(true);
                 return;
               }
-              if (!formData?.resume_id) {
+
+              // 토큰이 있는 경우에만 formData 체크
+              if (Token && !formData?.resume_id) {
                 alert('이력서가 없습니다. 이력서를 먼저 작성해주세요.');
                 return;
               }
@@ -277,14 +307,14 @@ const JobDetail = () => {
           </button>
           <div className="bookmark">
             {isBookmarked ? (
-              <FaStar className="star_icon filled" onClick={handleBookmarkClick} />
+              <FaBookmark className="bookmark_filled" onClick={handleBookmarkClick} />
             ) : (
-              <FaRegStar className="star_icon" onClick={handleBookmarkClick} />
+              <FaRegBookmark className="bookmark_icon" onClick={handleBookmarkClick} />
             )}
           </div>
         </div>
       )}
-     {isModalOpen && (
+      {isModalOpen && (
         <JobApplyModal
           onClose={() => setIsModalOpen(false)}
           onApply={async () => {
@@ -305,17 +335,10 @@ const JobDetail = () => {
         />
       )}
       {isLoginPromptOpen && (
-        <LoginPromptModal
-          onClose={() => setLoginPromptOpen(false)}
-          navigate={navigate}
-        />
+        <LoginPromptModal onClose={() => setLoginPromptOpen(false)} navigate={navigate} />
       )}
       {isCalcOpen && (
-        <CalculatorModal
-          key={job.id}
-          job={job}
-          onClose={() => setIsCalcOpen(false)}
-        />
+        <CalculatorModal key={job.id} job={job} onClose={() => setIsCalcOpen(false)} />
       )}
     </div>
   );

@@ -105,7 +105,9 @@ function EducationSection({ data, setData }) {
           <option value="재학중">재학중</option>
         </select>
 
-        <label htmlFor="educationStartDate">입학일자</label>
+        <label htmlFor="educationStartDate" className="label_title">
+          입학일자
+        </label>
         <input
           id="educationStartDate"
           type="date"
@@ -113,7 +115,9 @@ function EducationSection({ data, setData }) {
           onChange={(e) => handleFixedChange('start_date', e.target.value)}
         />
 
-        <label htmlFor="educationEndDate">졸업일자</label>
+        <label htmlFor="educationEndDate" className="label_title">
+          졸업일자
+        </label>
         <input
           id="educationEndDate"
           type="date"
@@ -122,7 +126,7 @@ function EducationSection({ data, setData }) {
           disabled={fixedEducation.education_status === '재학중'}
         />
 
-        <button type="button" onClick={handleAddEducation}>
+        <button type="button" className="edu_btn" onClick={handleAddEducation}>
           추가
         </button>
       </div>
@@ -160,21 +164,24 @@ function EducationSection({ data, setData }) {
 
           <input
             type="date"
-            value={edu.start_date}
+            value={edu.start_date.split('T')[0]}
             onChange={(e) => handleChange(index, 'start_date', e.target.value)}
             disabled
           />
-
-          <input
-            type="date"
-            value={edu.end_date || ''}
-            onChange={(e) =>
-              handleChange(index, 'end_date', e.target.value === '' ? null : e.target.value)
-            }
-            disabled
-          />
-          <button type="button" onClick={() => handleRemoveEducation(index)}>
-            -
+          {edu.end_date ? (
+            <input
+              type="date"
+              value={edu.end_date.split('T')[0]}
+              onChange={(e) =>
+                handleChange(index, 'end_date', e.target.value === '' ? null : e.target.value)
+              }
+              disabled
+            />
+          ) : (
+            <input type="text" placeholder="졸업예정일이 없습니다." disabled />
+          )}
+          <button type="button" className="edu_btn" onClick={() => handleRemoveEducation(index)}>
+            삭제
           </button>
         </div>
       ))}

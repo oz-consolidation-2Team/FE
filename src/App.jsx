@@ -23,6 +23,8 @@ import UserInfoEditPage from '@/pages/UserInfoEditPage';
 import NaverCallbackPage from '@/pages/LoginPage/NaverCallbackPage';
 import UserSignUpPage from '@/pages/SignUpPage/UserSignUpPage';
 import KakaoCallbackPage from '@/pages/LoginPage/KakaoCallbackPage';
+import VerifyEmailPage from '@/pages/SignUpPage/VerifyEmailPage';
+import CompanyReviewResumes from '@/pages/CompanyReviewResumes';
 
 function App() {
   return (
@@ -32,11 +34,11 @@ function App() {
         <Route path="/auth/naver/login" element={<NaverCallbackPage />} />
         <Route path="/auth/kakao/login" element={<KakaoCallbackPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/find-email" element={<FindEmailPage />} />
         <Route path="/forgot-password" element={<FindPasswordPage />} />
         <Route path="/reset-password/:type" element={<ResetPasswordPage />} />
         <Route path="/about" element={<AboutCompany />} />
-        <Route path="/recruitment-info" element={<RecruitmentInfo />} />
         <Route path="/mypage/user" element={<UserMyPage />} />
         <Route path="/mypage/user/edit_info" element={<UserInfoEditPage />} />
         <Route path="/mypage/user/resumes" element={<MyResumes />} />
@@ -52,7 +54,9 @@ function App() {
           element={<Announcement type="edit" />}
         />
         <Route path="/mypage/company/announcement/resumes/:id" element={<CompanyResumes />} />
+        <Route path="/mypage/company/announcement/resumes/detail/:id" element={<CompanyReviewResumes />} />
         <Route path="/trainingSearch" element={<TrainingSearch />} />
+        <Route path="/recruitment-info" element={<RecruitmentInfo />} />
         <Route path="/mypage/user/edit_info" element={<UserInfoEditPage />} />
       </Route>
 

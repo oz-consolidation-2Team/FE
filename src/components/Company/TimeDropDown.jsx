@@ -9,34 +9,43 @@ export default function TimeDropDown (props) {
 
     const arrayFill = basics === 'hour' ? 24 : 2
 
+    const validateWorkTime = () => {
+        if (props.name === 'work_start_time') return
+        if (props.formData['work_start_time'] > props.formData['work_end_time']) alert("근무시간을 다시 확인해주세요")
+    }
+
     return (
-        <>
+        <div className="div_dropdown div_ref">
             <div className="div_button_tap">
-                <button
+                <span
                 className={basics === 'hour' ? "disabled" : ""}
-                onClick={()=>{
+                onClick={(e)=>{
+                    e.stopPropagation()
                     setBasics('hour')
-                }}>시</button>
-                <button
+                }}>시</span>
+                <span
                 className={basics === 'minute' ? "disabled" : ""}
-                onClick={()=>{
+                onClick={(e)=>{
+                    e.stopPropagation()
                     setBasics('minute')
-                }}>분</button>
+                }}>분</span>
             </div>
             <ul className="ul_listBox">
                 <div>
                     {Array(arrayFill).fill("").map((_, index) => {
-                        return <li key={index} onClick={() => {
+                        return <li key={index} onClick={(e) => {
+                            e.stopPropagation()
                             basics === 'hour' ? setHour(index) : setMinute(10 * index)
                             props.setFormData(el => ({...el, [props.name]: `${padZero(hour)}:${padZero(minute)}`}))
                             props.setError(el => ({...el, [props.name]: false}))
+                            validateWorkTime()
                         }}>{basics === 'hour' ? 
                             (index < 10 ? `0` + `${index}` : index)
                             : (`${padZero(30 * index)}`)}</li>
                     })}
                 </div>
             </ul>
-        </>
+        </div>
     )
 }
 

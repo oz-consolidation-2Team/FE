@@ -1,73 +1,100 @@
-$LINE_COLOR: #A8A8A8;
+@use '@/utils/variables' as *;
 
 .InputDropDown_container {
-    .button_dropDown {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: start;
-        border: 1px solid $LINE_COLOR;
-        border-radius: 10px;
-        background-color: white;
-        color: $LINE_COLOR;
-        text-align: left;
-        min-width: 250px;
-        padding: 8px;
+  display: flex;
+  .button_dropDown {
+    position: relative;
+    display: flex;
+    flex-shrink: 2;
+    align-items: center;
+    justify-content: start;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    background-color: white;
+    color: $border-color;
+    text-align: left;
+    width: 150px;
+    padding: 8px;
+    cursor: pointer;
 
-        > * {
-            margin-left: auto;
-        }
+    > * {
+      margin-left: auto;
     }
-    .resize {
-        min-width: 120px;
+    > .div_dropdown {
+      position: absolute;
+      top: 35px;
+      left: 0;
+      z-index: 1000;
     }
-    .div_button_tap {
-        display: flex;
-        border: 1px solid $LINE_COLOR;
-        border-bottom: none;
-        border-radius: 10px 10px 0 0;
-        overflow: hidden;
-        min-width: 250px;
-        margin-top: 5px;
+    > .ul_dropdown {
+      position: absolute;
+      top: 40px;
+      left: 0;
+      z-index: 1000;
+    }
+  }
+  .div_button_tap {
+    display: flex;
+    border: 1px solid $deep-orange;
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+    min-width: 150px;
+    margin-top: 5px;
 
-        .disabled {
-            background-color: rgb(207, 207, 207);
-            cursor: default;
-        }
-        button {
-            flex-grow: 1;
-            cursor: pointer;
-            border: none;
-            border-right: 1px solid $LINE_COLOR;
-            font-size: 1rem;
-            width: 100%;
-            height: 100%;
-            padding: 5px;
-        }
-        :last-child {
-            border: none;
-        }
+    .disabled {
+      // 드롭다운 탭 선택 시
+      cursor: default;
+      background-color: $orange;
+      color: white;
     }
-    .ul_listBox {
-        border: 1px solid $LINE_COLOR;
-        border-radius: 0 0 10px 10px;
-        background-color: #f8f8f8;
-        overflow: scroll;
-        margin-bottom: 20px;
-        width: 100%;
-        max-width: 250px;
-        max-height: 200px;
-
-        li {
-            border-bottom: 1px solid $LINE_COLOR;
-            cursor: pointer;
-            list-style: none;
-            padding: 3px;
-            margin: 3px 10px;
-
-            &:last-child {
-                border: none;
-            }
-        }
+    span {
+      flex-grow: 1;
+      cursor: pointer;
+      background-color: white;
+      border: none;
+      border-right: 1px solid $deep-orange;
+      font-size: 1rem;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      padding: 5px;
     }
+    :last-child {
+      border: none;
+    }
+  }
+  .ul_listBox {
+    border: 1px solid $border-color;
+    border-radius: 0 0 10px 10px;
+    background-color: #f8f8f8;
+    overflow: scroll;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 250px;
+    max-height: 200px;
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 0;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: $deep-orange;
+      border-radius: 8px;
+      border: 2px solid #f0f0f0;
+    }
+    li {
+      border-bottom: 1px solid $border-color;
+      cursor: pointer;
+      list-style: none;
+      padding: 3px;
+      margin: 3px 10px;
+
+      &:last-child {
+        border: none;
+      }
+    }
+  }
+  .viewDropDown {
+    border: 1px solid $deep-orange;
+  }
 }
