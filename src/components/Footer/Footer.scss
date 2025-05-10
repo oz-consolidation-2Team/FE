@@ -1,0 +1,39 @@
+@use '@/utils/variables' as *;
+
+.footer_container {
+  margin-top: 20px;
+  height: 100%;
+  background-color: $light-green;
+  padding: 0 100px;
+  padding-top: 40px;
+  padding-bottom: 60px;
+
+  .footer_wapper {
+    margin: 0 auto;
+    max-width: 1200px;
+
+    .company_footer_info {
+      .logo {
+        width: 150px;
+      }
+
+      p {
+        font-size: $font-body;
+        color: $gray-text;
+        line-height: $lh-normal;
+      }
+    }
+  }
+
+  .company_footer_policy {
+    margin-top: 30px;
+
+    p {
+      display: inline-block;
+      padding-right: 20px;
+      color: $deep-green;
+      font-size: $font-small;
+      font-weight: $weight-bold;
+    }
+  }
+}
