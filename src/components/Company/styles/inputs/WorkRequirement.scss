@@ -1,31 +1,35 @@
-@use '@/utils/variables' as v;
+@use '@/utils/variables' as *;
 
 .WorkRequirement_container {
-    padding: 30px;
-    .div_box {
-        display: flex;
-        align-items: center;
-        margin-top: 30px;
-        .work_day_option { // 근무요일 옵셔널 항목 css
-            display: flex;
-        }
-        .Category_condainer {
-            width: 120px !important;
-        }
+  padding: 60px 0;
+  border-bottom: 1px solid $border-color;
+  .div_box {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    .work_day_option {
+      // 근무요일 옵셔널 항목 css
+      display: flex;
     }
-    .p_swung_dash { // 모집시간의 물결 css
-        margin: 0 10px;
+    .Category_condainer {
+      width: 120px !important;
     }
-    .options { // 단일 상시/협의 가능 css
-        > .InputRadio_container {
-            flex-shrink: 0;
-            margin-left: 20px;
-        }
+  }
+  .p_swung_dash {
+    // 모집시간의 물결 css
+    margin: 0 10px;
+  }
+  .options {
+    // 단일 상시/협의 가능 css
+    > .InputRadio_container {
+      flex-shrink: 0;
+      margin-left: 20px;
     }
-    .error_message {
-        color: v.$error-red;
-        font-size: 0.8rem;
-        font-weight: bold;
-        margin-left: 120px;
-    }
+  }
+  .error_message {
+    color: $error-red;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: 120px;
+  }
 }

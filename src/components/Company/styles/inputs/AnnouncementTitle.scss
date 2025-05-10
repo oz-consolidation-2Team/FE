@@ -1,19 +1,18 @@
-@use '@/utils/variables' as v;
+@use '@/utils/variables' as *;
 
 .AnnouncementTitle_container {
-    padding: 30px;
-    .div_box {
-        display: flex;
-        align-items: center;
-        margin-top: 30px;
-        >.Category_condainer {
-            width: 120px !important;
-        }
-    }
-    .error_message {
-        color: v.$error-red;
-        font-size: 0.8rem;
-        font-weight: bold;
-        margin-left: 120px;
-    }
+  border-bottom: 1px solid $border-color;
+  padding-bottom: 50px;
+  margin-top: 20px;
+  .div_box {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .error_message {
+    color: $error-red;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: 120px;
+  }
 }
