@@ -1,74 +1,91 @@
-@use '@/utils/variables' as v;
+@use '@/utils/variables' as *;
 
 .CompanyInfoEdit_container {
-    position: relative;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  width: 800px;
+  padding-top: 60px;
+  margin: 50px 0 80px;
+  box-shadow: 0px 3px 10px rgba(25, 85, 2, 0.2);
+
+  button {
+    cursor: pointer;
+  }
+
+  .button_back {
+    position: absolute;
+    left: 50px;
+    top: 40px;
+    border: none;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+
+  h1 {
+    margin-top: 30px;
+    font-size: $font-h3;
+    color: $deep-green;
+    margin-bottom: 20px;
+  }
+
+  .div_company-info,
+  .div_password {
+    width: 80%;
+    margin-top: 50px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid $border-color;
+  }
+
+  .div_manager-info {
+    width: 80%;
+    margin-top: 50px;
+    padding-bottom: 40px;
+  }
+
+  .div_box {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    margin-top: 30px;
+    > .Category_condainer {
+      width: 120px !important;
+    }
+  }
+
+  .button_edit {
+    border: none;
+    border-radius: 10px;
+    background-color: $green;
+    color: white;
+    font-size: 1.2rem;
+    width: 80%;
+    padding: 10px 0;
+    margin-top: 30px;
+  }
+
+  .button_out {
+    border: none;
     background-color: white;
-    border-radius: 50px;
-    width: 60%;
-    padding: 0 10%;
-    padding-top: 60px;
-    margin: 50px 0;
-    box-shadow: 0px 3px 10px rgba(25, 85, 2, 0.2); 
-
-    button {
-        cursor: pointer;
+    color: #747474;
+    font-size: 0.85rem;
+    margin-top: 10px;
+    margin-bottom: 60px;
+  }
+  .disabled {
+    .InputText_container {
+      > input {
+        background-color: #e0e0e0;
+      }
     }
-    .div_password > .hr {
-        margin-bottom: 30px;
-    }
-    .div_company-info, .div_manager-info, .div_password {
-        width: 100%;
-        margin-top: 50px;
-    }
-    .div_box {
-        display: flex;
-        align-items: center;
-        margin-top: 30px;
-        >.Category_condainer {
-            width: 120px !important;
-        }
-    }
-
-    .button_back {
-        position: absolute;
-        left: 30px;
-        border: none;
-        width: 50px;
-        height: 50px;
-        cursor: pointer;
-    }
-    .button_edit {
-        border: none;
-        border-radius: 10px;
-        background-color: v.$green;
-        color: white;
-        font-size: 1.2rem;
-        width: 50%;
-        padding: 10px 0;
-        margin-top: 50px;
-    }
-    .button_out {
-        border: none;
-        background-color: white;
-        color: #747474;
-        font-size: 0.85rem;
-        margin-top: 10px;
-        margin-bottom: 30px;
-    }
-    .disabled {
-        .InputText_container {
-            >input {
-                background-color: #e0e0e0;
-            }
-        }
-    }
-    .error_message {
-        color: v.$error-red;
-        font-size: 0.8rem;
-        font-weight: bold;
-        margin-left: 120px;
-    }
+  }
+  .error_message {
+    color: $error-red;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: 120px;
+  }
 }
