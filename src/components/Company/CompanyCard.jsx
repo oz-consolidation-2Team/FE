@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { JobPosting } from '@/apis/companyPostingApi';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,7 +29,7 @@ export default function CompanyCard({ params }) {
 
   const 상시모집 = job.is_always_recruiting ? '상시 모집' : job.recruit_period_end + ' 까지';
   return (
-    <div className="CompanyMyPage_cantainer">
+    <div className="CompanyCard_container">
       {jobLoading ? (
         <p>로딩 중...</p>
       ) : (
@@ -39,7 +38,6 @@ export default function CompanyCard({ params }) {
           <h3>{job.title}</h3>
           <p>{job.summary}</p>
           <div className="bottom">
-            <hr />
             <p>{job.work_address}</p>
             <p>{상시모집}</p>
             <button onClick={() => navigate(`/job-detail/${job.id}`)}>공고 보러 가기</button>
