@@ -35,13 +35,11 @@ export default function TimeDropDown (props) {
                     {Array(arrayFill).fill("").map((_, index) => {
                         return <li key={index} onClick={(e) => {
                             e.stopPropagation()
-                            basics === 'hour' ? setHour(index) : setMinute(10 * index)
+                            basics === 'hour' ? setHour(index) : setMinute(30 * index)
                             props.setFormData(el => ({...el, [props.name]: `${padZero(hour)}:${padZero(minute)}`}))
                             props.setError(el => ({...el, [props.name]: false}))
                             validateWorkTime()
-                        }}>{basics === 'hour' ? 
-                            (index < 10 ? `0` + `${index}` : index)
-                            : (`${padZero(30 * index)}`)}</li>
+                        }}>{basics === 'hour' ? padZero(index) : padZero(30 * index)}</li>
                     })}
                 </div>
             </ul>

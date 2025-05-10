@@ -2,12 +2,12 @@ import { useNavigate } from "react-router-dom"
 import "../styles/modal/SimpleModal.scss"
 import PropTypes from 'prop-types';
 
-/**props = {
- * @setModal 상태관리 (모달창 닫기 위함)
- * @title string; (모달제목)
- * @content string; (모달내용)
- * @notNavigate boolean | undefind; (true 아니면 뒤로가기)
-} */
+/**
+ * @param {상태관리} setModal  모달창 닫기 위함
+ * @param {string} title 모달 제목
+ * @param {string} content 모달 내용
+ * @param {boolean | undefind} notNavigate true 아니면 뒤로가기
+ */
 export default function SimpleModal (props) {
     const navigate = useNavigate()
 
