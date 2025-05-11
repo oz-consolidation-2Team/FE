@@ -21,11 +21,27 @@
     justify-content: flex-start;
   }
 
-  .select {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
+  .select-wrapper {
+    position: relative;
+    display: inline-block;
+
+    .select {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      appearance: none;
+      width: 200px;
+    }
+    .select-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: $gray-text;
+      font-size: 0.8rem;
+    }
   }
 
   .button {

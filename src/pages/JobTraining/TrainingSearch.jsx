@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Pagination from 'react-js-pagination';
+import { FaChevronDown } from 'react-icons/fa';
+
 import './TrainingSearch.scss';
 
 const WORK24_URL = import.meta.env.VITE_WORK24_URL;
@@ -63,19 +65,6 @@ const TrainingSearch = () => {
   const fetchTrainings = async (pageNum = 1) => {
     setLoading(true);
     try {
-      /**
-       * @typedef {Object} Params
-       * @property {string} authKey - 인증 키 (환경변수에서 가져옴)
-       * @property {string} returnType - 응답 형식: JSON
-       * @property {number} outType - 출력 형태 (1: 목록 출력)
-       * @property {number} pageNum - 현재 페이지 번호
-       * @property {number} pageSize - 한 페이지에 보여줄 항목 수
-       * @property {string} sort - 정렬 방식 (ASC: 오름차순) ,(DESC: 내림차순)
-       * @property {string} sortCol - 정렬 기준 컬럼: (TRNG_BGDE: 훈련 시작일), (TRNG_CRSN: 훈련 과정명), (TOT_FXNUM: 모집인원순)
-       * @property {string} [srchNcs1] - 선택된 직종 필터 (NCS 대분류 코드)
-       * @property {string} [srchTraArea1] - 선택된 지역 필터 (훈련지역 대분류 코드)
-       */
-      /** @type {Params} */
       const params = {
         authKey: import.meta.env.VITE_WORK24_API_KEY,
         returnType: 'JSON',
@@ -87,9 +76,7 @@ const TrainingSearch = () => {
         ...(selectedJob && { srchNcs1: selectedJob }),
         ...(selectedArea && { srchTraArea1: selectedArea }),
       };
-
       const response = await axios.get(WORK24_URL, { params });
-
       const items = response.data?.srchList || [];
       setResults(items);
       setTotalCount(response.data?.scn_cnt || 0);
@@ -110,30 +97,36 @@ const TrainingSearch = () => {
     <div className="TrainingSearch_container">
       <h1 className="title">직업 훈련 검색</h1>
       <div className="filters">
-        <select
-          className="select"
-          value={selectedArea}
-          onChange={(e) => setSelectedArea(e.target.value)}
-        >
-          <option value="">전체 지역</option>
-          {areaOptions.map((area) => (
-            <option key={area.code} value={area.code}>
-              {area.name}
-            </option>
-          ))}
-        </select>
-        <select
-          className="select"
-          value={selectedJob}
-          onChange={(e) => setSelectedJob(e.target.value)}
-        >
-          <option value="">전체 직종</option>
-          {jobCategories.map((job) => (
-            <option key={job.code} value={job.code}>
-              {job.name}
-            </option>
-          ))}
-        </select>
+        <div className="select-wrapper">
+          <select
+            className="select"
+            value={selectedArea}
+            onChange={(e) => setSelectedArea(e.target.value)}
+          >
+            <option value="">전체 지역</option>
+            {areaOptions.map((area) => (
+              <option key={area.code} value={area.code}>
+                {area.name}
+              </option>
+            ))}
+          </select>
+          <FaChevronDown className="select-icon" />
+        </div>
+        <div className="select-wrapper">
+          <select
+            className="select"
+            value={selectedJob}
+            onChange={(e) => setSelectedJob(e.target.value)}
+          >
+            <option value="">전체 직종</option>
+            {jobCategories.map((job) => (
+              <option key={job.code} value={job.code}>
+                {job.name}
+              </option>
+            ))}
+          </select>
+          <FaChevronDown className="select-icon" />
+        </div>
 
         <button className="button" onClick={() => fetchTrainings(1)}>
           검색
