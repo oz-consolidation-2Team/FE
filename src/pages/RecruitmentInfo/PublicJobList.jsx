@@ -32,8 +32,8 @@ const PublicJobList = () => {
         <div className="header">
           <h2 className="title">공공 일자리 정보</h2>
           <div className="buttons">
-            <button onClick={handlePrevPage} disabled={currentPage === 1}>이전</button>
-            <button onClick={handleNextPage} disabled={currentPage === totalPages}>다음</button>
+            <button onClick={handlePrevPage} className={currentPage === 1 || 'button_animation'} disabled={currentPage === 1}>이전</button>
+            <button onClick={handleNextPage} className={currentPage === totalPages || 'button_animation'} disabled={currentPage === totalPages}>다음</button>
           </div>
         </div>
         <div className="public-job-grid">
