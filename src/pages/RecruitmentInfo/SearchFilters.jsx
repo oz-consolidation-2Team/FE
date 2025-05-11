@@ -1,8 +1,8 @@
 import React from 'react';
-import './SearchFilters.scss'; 
+import './SearchFilters.scss';
 import { KoreaRegions } from '../../utils/KoreaRegions';
 import { INTEREST_OPTIONS } from '@/utils/signUpInfoOptions';
-
+import { FaChevronDown } from 'react-icons/fa';
 
 const districtsByCity = Object.entries(KoreaRegions).reduce((acc, [city, value]) => {
   acc[city] = value.filter((gu) => !gu.includes('전체'));
@@ -10,7 +10,7 @@ const districtsByCity = Object.entries(KoreaRegions).reduce((acc, [city, value])
 }, {});
 
 /**
- * 채용공고 검색 필터 
+ * 채용공고 검색 필터
  * 검색어 엔터 또는 검색 버튼 클릭 시 검색 실행
  * @param {string} searchQuery - 검색어 문자열
  * @param {function} setSearchQuery - 검색어 상태 업데이트 함수
@@ -31,58 +31,73 @@ function SearchFilters({
   setDistrictInput,
   jobCategoryInput,
   setJobCategoryInput,
-  onSearch
+  onSearch,
 }) {
-
   return (
     <div className="Search_container">
       <div className="search_filters">
-      <select
-        name="location1"
-        value={cityInput}
-        onChange={(e) => {
-          setCityInput(e.target.value);
-          setDistrictInput(''); 
-        }}
-      >
-        <option value="">지역 선택</option>
-        {Object.keys(KoreaRegions).map((city) => (
-          <option key={city} value={city}>{city}</option>
-        ))}
-      </select>
+        <div className="select-wrapper">
+          <select
+            name="location1"
+            value={cityInput}
+            onChange={(e) => {
+              setCityInput(e.target.value);
+              setDistrictInput('');
+            }}
+          >
+            <option value="">지역 선택</option>
+            {Object.keys(KoreaRegions).map((city) => (
+              <option key={city} value={city}>
+                {city}
+              </option>
+            ))}
+          </select>
+          <FaChevronDown className="select-icon" />
+        </div>
 
-      {cityInput && (
-        <select
-          name="location2"
-          value={districtInput} onChange={(e) => setDistrictInput(e.target.value)}
-        >
-          <option value="">상세 지역 선택</option>
-          {(districtsByCity[cityInput] || []).map((gu) => (
-            <option key={gu} value={gu}>{gu}</option>
-          ))}
-        </select>
-      )}
+        {cityInput && (
+          <div className="select-wrapper">
+            <select
+              name="location2"
+              value={districtInput}
+              onChange={(e) => setDistrictInput(e.target.value)}
+            >
+              <option value="">상세 지역 선택</option>
+              {(districtsByCity[cityInput] || []).map((gu) => (
+                <option key={gu} value={gu}>
+                  {gu}
+                </option>
+              ))}
+            </select>
+            <FaChevronDown className="select-icon" />
+          </div>
+        )}
 
-      <select value={jobCategoryInput} onChange={(e) => setJobCategoryInput(e.target.value)}>
-        <option value="">직종 선택</option>
-        {INTEREST_OPTIONS.map((option) => (
-          <option key={option} value={option}>{option}</option>
-        ))}
-      </select>
+        <div className="select-wrapper">
+          <select value={jobCategoryInput} onChange={(e) => setJobCategoryInput(e.target.value)}>
+            <option value="">직종 선택</option>
+            {INTEREST_OPTIONS.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          <FaChevronDown className="select-icon" />
+        </div>
 
-      <input
-        type="text"
-        placeholder="검색어를 입력하세요"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            onSearch();
-          }
-        }}
-      />
+        <input
+          type="text"
+          placeholder="검색어를 입력하세요"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              onSearch();
+            }
+          }}
+        />
 
-      <button onClick={onSearch}>검색</button>
+        <button onClick={onSearch}>검색</button>
       </div>
     </div>
   );
