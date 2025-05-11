@@ -28,7 +28,7 @@ export default function CompanyInfo() {
   return (
     <div className="company_main">
       {data ? (
-        <div className="companyInfo_container">
+        <div className="CompanyInfo_container">
           <h1>{data.company_name}</h1>
           <Hr />
           <p className="intro">{data.company_intro}</p>
