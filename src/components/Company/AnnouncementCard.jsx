@@ -15,7 +15,6 @@ export default function AnnouncementCard(props) {
   };
 
   const dayRander = props.is_always_recruiting ? '상시 모집' : props.recruit_period_end;
-  console.log(props);
   return (
     <div className="AnnouncementCard_cantainer" onClick={() => navigate(`/job-detail/${props.id}`)}>
       <p className="company_location">{props.work_address}</p>
@@ -46,4 +45,5 @@ AnnouncementCard.propTypes = {
   recruit_period_end: PropTypes.string.isRequired,
   is_always_recruiting: PropTypes.bool.isRequired,
   id: PropTypes.number.isRequired,
+  summary: PropTypes.string.isRequired,
 };
