@@ -152,7 +152,6 @@ const CompanySignUpPage = () => {
   };
   
   const handleEmailVerificationCheck = async () => {
-  
     try {
       const isVerified = await checkEmailVerifiedApi(form.email, 'company');
   
@@ -166,24 +165,33 @@ const CompanySignUpPage = () => {
         });
   
         setStep((prev) => prev + 1);
-  
       } else {
         setEmailChecked(false);
         setModal({
           type: 'error',
           title: '인증 필요',
-          message: '이메일 인증을 먼저 완료해주세요.',
+          message: '이메일 인증이 완료되지 않았습니다.',
           onConfirm: () => setModal(null),
         });
       }
-  
     } catch (error) {
-      setModal({
-        type: 'error',
-        title: '오류 발생',
-        message: '이메일 인증 확인 중 오류가 발생했습니다.',
-        onConfirm: () => setModal(null),
-      });
+      const status = error.response?.status;
+  
+      if (status === 404) {
+        setModal({
+          type: 'error',
+          title: '인증 필요',
+          message: '이메일 인증이 완료되지 않았습니다.',
+          onConfirm: () => setModal(null),
+        });
+      } else {
+        setModal({
+          type: 'error',
+          title: '오류 발생',
+          message: '이메일 인증 확인 중 오류가 발생했습니다.',
+          onConfirm: () => setModal(null),
+        });
+      }
     }
   };
 
@@ -239,11 +247,22 @@ const CompanySignUpPage = () => {
   };
   
   const handleNext = async () => {
-  
     if (step === 0) {
-      await handleEmailVerificationCheck();
-      return;
-    }
+      const errors = validateCompanyStep0(form, emailChecked);
+      setErrors(errors);
+  
+      if (Object.keys(errors).length > 0) return;
+  
+      try {
+        await handleEmailVerificationCheck();
+      } catch (error) {
+        return;
+      }
+      
+      if (Object.keys(errors).length === 0 && emailChecked) {
+        setStep(1);
+      }
+    }  
   
     let newErrors = {};
   
@@ -295,10 +314,16 @@ const CompanySignUpPage = () => {
 
   const handleSubmitByStep = (e) => {
     e.preventDefault();
-    if (step === 0) handleNext();
-    else if (step === 1) handleNext();
-    else if (step === 2) handleSubmit();
-    else if (step === 3) handleFinalSubmit();
+    
+    if (step === 0) {
+      handleNext();
+    } else if (step === 1) {
+      handleNext();
+    } else if (step === 2) {
+      handleSubmit();
+    } else if (step === 3) {
+      handleFinalSubmit();
+    }
   };
 
   const toggleCheck = (key) => {

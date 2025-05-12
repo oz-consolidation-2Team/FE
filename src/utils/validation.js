@@ -33,20 +33,22 @@ export const isValidBizNumber = (value) =>
   /^\d{10}$/.test(value.replace(/-/g, ''));
 
 // ✅ 1단계: 기본정보 검사
-export const validateCompanyStep0 = (form, emailChecked) => {
+export const validateCompanyStep0 = (form) => {
   const errors = {};
 
   if (!validateEmail(form.email)) {
     errors.email = '이메일 형식이 올바르지 않습니다.';
-  } else if (!emailChecked) {
-    errors.email = '이메일 중복확인을 해주세요.';
   }
 
-  if (!validatePassword(form.password)) {
+  if (!form.password) {
+    errors.password = '비밀번호를 입력해주세요.';
+  } else if (!validatePassword(form.password)) {
     errors.password = '8자 이상, 영문+숫자+특수문자 포함';
   }
 
-  if (form.password !== form.passwordCheck) {
+  if (form.password && !form.passwordCheck) {
+    errors.passwordCheck = '비밀번호 확인을 입력해주세요.';
+  } else if (form.password && form.password !== form.passwordCheck) {
     errors.passwordCheck = '비밀번호가 일치하지 않습니다.';
   }
 
