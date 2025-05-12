@@ -35,8 +35,8 @@ const VerifyEmailPage = () => {
   return (
     <div className="verify-email-page">
       <div className="email-container">
-        <img src="/public/senior_logo.png" alt="Secondary Logo" className="secondary-logo" />
-        <img src="/public/logo.png" alt="Main Logo" className="main-logo" />
+        <img src="/senior_logo.png" alt="Secondary Logo" className="secondary-logo" />
+        <img src="/logo.png" alt="Main Logo" className="main-logo" />
 
         <h1>{message}</h1>
 
