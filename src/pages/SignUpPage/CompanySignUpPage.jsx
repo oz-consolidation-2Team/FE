@@ -521,6 +521,7 @@ const CompanySignUpPage = () => {
                       '위치기반 서비스 이용약관'}
                     </label>
                     <button
+                      type="button"
                       className="view_detail"
                       onClick={() => setModal({
                         type: 'term',
