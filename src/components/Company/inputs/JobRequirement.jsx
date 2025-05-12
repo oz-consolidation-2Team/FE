@@ -22,13 +22,13 @@ export default function JobRequirement (props) {
             <div className="div_start_time">{date.getFullYear()}-{padZero(date.getMonth() + 1)}-{padZero(date.getDate())}</div>
             <p className="p_swung_dash">~</p>
             <InputDropDown {...props} name='recruit_period_end' text='모집기간' type='day' />
+            <InputRadio {...props} type='상시모집' name='is_always_recruiting' />
         </div>
         {props.error['recruit_period_end'] && <span className="error_message">모집기간을 선택해주세요</span>}
 
         <div className="div_box options">
             <Category text="모집인원" />
             <InputText {...props} text='모집인원' type='number' name='recruit_number' placeholder={props.formData.recruit_number || "0"} />
-            <InputRadio {...props} type='상시모집' name='is_always_recruiting' />
         </div>
         {props.error['recruit_number'] && <span className="error_message">모집인원을 입력해주세요</span>}
 

@@ -15,6 +15,9 @@
     > .InputText_container {
       width: auto !important;
     }
+    >:nth-child(5) {
+      margin-left: 20px;
+    }
   }
   .div_start_time {
     // 모집기간 시작시간 css
