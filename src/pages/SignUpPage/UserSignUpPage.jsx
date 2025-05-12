@@ -487,6 +487,7 @@ const UserSignUpPage = () => {
                       '위치기반 서비스 이용약관'}
                     </label>
                     <button
+                      type="button"
                       className="view_detail"
                       onClick={() => handleOpenTermsModal(
                         n === 1 ? 'privacy_policy.html' :
