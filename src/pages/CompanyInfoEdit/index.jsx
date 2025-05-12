@@ -78,19 +78,19 @@ export default function CompanyInfoEdit() {
 
   function deleteAPI() {
     try {
-      companyDelete().then((res) => console.log(res));
+      companyDelete().then(() => {
+        try {
+          logoutCompanyApi().then(
+            localStorage.removeItem('userType'),
+            localStorage.removeItem('access_token'),
+            localStorage.removeItem('refresh_token')
+          );
+        } catch (error) {
+          console.log('회원 로그아웃 에러', error);
+        }
+      });
     } catch (error) {
       console.log('회원 탈퇴 에러', error);
-    }
-
-    try {
-      logoutCompanyApi().then(
-        localStorage.removeItem('userType'),
-        localStorage.removeItem('access_token'),
-        localStorage.removeItem('refresh_token')
-      );
-    } catch (error) {
-      console.log('회원 로그아웃 에러', error);
     }
   }
 
