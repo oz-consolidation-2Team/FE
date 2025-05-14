@@ -31,7 +31,6 @@ const JobDetail = () => {
       try {
         const data = await getJobDetail(postingId);
         setJob(data);
-        console.log(data)
         setIsBookmarked(data.is_favorited || false);
         const companyData = await CompaniesInfo(data.company_id);
         setCompanyInfo(companyData);

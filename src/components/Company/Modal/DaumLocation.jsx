@@ -29,7 +29,7 @@ export default function DaumLocation (props) {
     }
 
     useEffect(()=>{
-        if (!location) return console.log('값 없음 리턴됨')
+        if (!location) return
         props.setFormData(el => ({
             ...el,
             work_address: location.roadAddress,

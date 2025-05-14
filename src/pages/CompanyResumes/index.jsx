@@ -9,7 +9,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 export default function CompanyResumes() {
   const [resumes, setResumes] = useState(null);
   const [resumesLoading, setResumesLoading] = useState(true);
-  const [resumesLoadingError, setResumesError] = useState(null);
   const [modal, setModal] = useState(false);
   const params = useParams('id');
   const navigate = useNavigate();
@@ -18,12 +17,11 @@ export default function CompanyResumes() {
     try {
       resumeInquiryPosting().then((res) => {
         const respone = res.filter((item) => item.job_posting_id === Number(params.id));
-        console.log(respone);
         setResumes(respone);
         setResumesLoading(false);
       });
     } catch (error) {
-      setResumesError('이력서 조회 에러', error);
+      console.log('이력서 조회 에러', error);
       setResumesLoading(false);
     }
   }, []);

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { padZero } from "@/utils/validation";
 
 export default function DayDropDown (props) {
-    console.log(props.formData)
     const date = new Date()
     const scrollRef = useRef(null)
     const didMount = useRef(false)

@@ -11,6 +11,7 @@ import { GoArrowLeft } from 'react-icons/go';
 import { JobPosting } from '@/apis/companyPostingApi';
 import { padZero } from '@/utils/validation';
 import { INPUT_BLOCK, INPUT_BLOCK_ARRAY, INPUT_BLOCK_BOOLEAN } from './inputFieldConfig';
+import PropTypes from 'prop-types';
 
 /**
  * @param {'add' | 'edit'} type 공고 등록인지 수정인지 체크
@@ -79,16 +80,13 @@ export default function Announcement(props) {
     }, []);
   }
 
-  console.log('기존 데이터 값=== ', formData);
 
   const validate = () => {
-    console.log('validate 실행됨');
     const newerror = { ...error };
     Object.entries(error).forEach((item) => {
       if (!formData[item[0]]) return (newerror[item[0]] = true);
     });
     setError(newerror);
-    console.log(newerror);
     return Object.values(newerror).includes(true);
   };
 
@@ -174,3 +172,7 @@ export default function Announcement(props) {
     </div>
   );
 }
+
+Announcement.propTypes = {
+    type: PropTypes.string.isRequired
+} 
