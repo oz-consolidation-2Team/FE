@@ -1,18 +1,48 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PropTypes from 'prop-types';
 import { padZero } from "@/utils/validation";
 
 export default function TimeDropDown (props) {
+
     const [basics, setBasics] = useState('hour')
-    const [hour, setHour] = useState(0)
-    const [minute, setMinute] = useState(0)
+    const [hour, setHour] = useState(initTime('hour'))
+    const [minute, setMinute] = useState(initTime('minute'))
+    const didMount = useRef(false)
 
     const arrayFill = basics === 'hour' ? 24 : 2
 
-    const validateWorkTime = () => {
-        if (props.name === 'work_start_time') return
-        if (props.formData['work_start_time'] > props.formData['work_end_time']) alert("근무시간을 다시 확인해주세요")
+    function initTime (unit) {
+        const startTime = props.formData['work_start_time'].split(':')
+        const endTime = props.formData['work_end_time'].split(':')
+        const isStartType = props.name === 'work_start_time'
+
+        if (isStartType) return Number(startTime[unit === 'hour' ? 0 : 1]) || 0
+        else return Number(endTime[unit === 'hour' ? 0 : 1]) || Number(startTime[unit === 'hour' ? 0 : 1]) || 0
+        
     }
+
+    const validateWorkTime = (endTime) => {
+        if (props.name === 'work_start_time') return true
+        if (props.formData['work_start_time'] > endTime) {
+            alert(`시작시간보다 이전인 시간은 선택할 수 없습니다
+                시작 시간: ${props.formData['work_start_time']}
+                선택 시간: ${endTime}`)
+            return false
+        }
+        else return true
+        }
+
+    useEffect(()=>{
+        if (!didMount.current) {
+            const endTime = `${padZero(hour)}:${padZero(minute)}`
+            
+            if (!validateWorkTime(endTime)) return
+
+            props.setFormData(el => ({...el, [props.name]: endTime}))
+            props.setError(el => ({...el, [props.name]: false}))
+        }
+        else didMount.current = true
+    },[hour, minute])
 
     return (
         <div className="div_dropdown div_ref">
@@ -36,9 +66,6 @@ export default function TimeDropDown (props) {
                         return <li key={index} onClick={(e) => {
                             e.stopPropagation()
                             basics === 'hour' ? setHour(index) : setMinute(30 * index)
-                            props.setFormData(el => ({...el, [props.name]: `${padZero(hour)}:${padZero(minute)}`}))
-                            props.setError(el => ({...el, [props.name]: false}))
-                            validateWorkTime()
                         }}>{basics === 'hour' ? padZero(index) : padZero(30 * index)}</li>
                     })}
                 </div>
