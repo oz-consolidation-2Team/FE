@@ -55,11 +55,17 @@ export default function InputDropDown (props) {
         )}
         </ul>
 
+    const alwaysRecruiting = name === 'recruit_period_end' && formData['is_always_recruiting']
+
     return (
         <div className="InputDropDown_container" ref={dropdownRef}>
             <button 
-            className={`button_dropDown ${viewDropDown ? "viewDropDown" : ""}`}
+            className={
+                `button_dropDown ${viewDropDown ? "viewDropDown" : ""}
+                ${alwaysRecruiting ? "disabled" : ""}`
+            }
             onClick={() => {
+                    if (alwaysRecruiting) return
                     setViewDropDown(!viewDropDown)
                 }}>
                 {formData[name] ? formData[name] : `${text} 선택`}

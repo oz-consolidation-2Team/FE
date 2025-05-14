@@ -94,6 +94,9 @@
       }
     }
   }
+  >.disabled {
+    cursor: no-drop;
+  }
   .viewDropDown {
     border: 1px solid $deep-orange;
   }

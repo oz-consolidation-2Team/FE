@@ -17,7 +17,7 @@ import { useParams } from "react-router-dom"
 export default function Modal (props) {
     const formData = new FormData()
     Object.entries(props.formData).map(item => {
-        if (item[0] === 'postings_image' && typeof item[1] === 'string') return console.log(item[1])
+        if (item[0] === 'postings_image' && typeof item[1] === 'string') return
         if (typeof item[1] === 'object' && item[1] && item[0] != 'postings_image') return formData.append(item[0], item[1].join(','))
             formData.append(item[0], item[1])
     })
@@ -30,7 +30,6 @@ export default function Modal (props) {
         try {
             if (props.modalType === 'add') createJobPosting(formData).then(() => {setLoading(true)})
             else if (props.modalType === 'edit') updateJobPosting(param.id, formData).then((res) => {
-                console.log(res)
                 setLoading(true)})
             else if (props.modalType === 'delete-Success') deleteJobPosting(param.id).then(() => {setLoading(true)})
         } catch (error) {

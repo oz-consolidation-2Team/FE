@@ -9,7 +9,6 @@ import { companyMe } from '@/apis/companyPostingApi';
 export default function CompanyMyPage() {
   const [jobPosting, setJobPosting] = useState(null);
   const [jobPostingLoading, setJobPostingLoading] = useState(true);
-  const [jobPostingError, setJobPostingError] = useState(null);
   const navigate = useNavigate();
 
   // 기업 마이 페이지 조회
@@ -21,7 +20,6 @@ export default function CompanyMyPage() {
       });
     } catch (error) {
       console.log('기업 마이 페이지 조회 에러', error);
-      setJobPostingError(true);
       setJobPostingLoading(false);
     }
   }, []);
