@@ -1,15 +1,17 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import PropTypes from 'prop-types';
 import { padZero } from "@/utils/validation";
 
 export default function DayDropDown (props) {
+    console.log(props.formData)
     const date = new Date()
     const scrollRef = useRef(null)
+    const didMount = useRef(false)
     
     const [basics, setBasics] = useState('year')
     const [year, setYear] = useState(date.getFullYear())
     const [month, setMonth] = useState(date.getMonth() + 1) // month 0부터 시작
-    const [day, setDay] = useState(date.getDay())
+    const [day, setDay] = useState(date.getDate())
 
     let arrayFill;
     if (basics === "year") arrayFill= 10
@@ -26,9 +28,27 @@ export default function DayDropDown (props) {
         return basics === disabled ? "disabled" : ""
     }
     
-    const validateWorkDay = () => {
-        if (props.formData['recruit_period_start'] > props.formData['recruit_period_end']) alert("모집기간을 다시 확인해주세요")
+    const validateWorkDay = (endDay) => {
+        if (props.formData['recruit_period_start'] > endDay) {
+            alert(`현재날짜보다 이전인 날짜는 선택할 수 없습니다
+    현재 날짜: ${date.getFullYear()}-${padZero(date.getMonth() + 1)}-${padZero(date.getDate())}
+    선택 날짜: ${endDay}`)
+            return false
+        }
+        else return true
     }
+
+    useEffect(()=>{
+        if (!didMount.current) {
+            const endDay = `${year}-${padZero(month)}-${padZero(day)}`
+
+            if (!validateWorkDay(endDay)) return
+
+            props.setFormData(el => ({...el, [props.name]: endDay}))
+            props.setError(el => ({...el, [props.name]: false}))
+        }
+        else didMount.current = true
+    },[year, month, day])
 
     return (
         <div className="div_dropdown div_ref">
@@ -49,9 +69,6 @@ export default function DayDropDown (props) {
                         e.stopPropagation()
                         basics === 'year' ? setYear(date.getFullYear() + index)
                         : basics === 'month' ? setMonth(index + 1) : setDay(index + 1)
-                        props.setFormData(el => ({...el, [props.name]: `${year}-${padZero(month)}-${padZero(day)}`}))
-                        props.setError(el => ({...el, [props.name]: false}))
-                        validateWorkDay()
                     }}>{basics === 'year' ? date.getFullYear() + index
                         :  index +1}</li>
                 })}
