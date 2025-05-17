@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import PublicJobList from './PublicJobList';
 import JobList from './JobList';
 import SearchFilters from './SearchFilters';
-import { searchJobPostings } from '@/apis/RecruitmentApi';
+
 
 
 
